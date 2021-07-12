@@ -18,10 +18,11 @@ module.exports = {
             modifyVars: {
               // fonts
               "@font-family": "Montserrat, sans-serif",
-              "@secondary-font": "Space Grotesk, sans-serif",
+              "@secondary-font": "HK Grotesk, sans-serif",
 
               // colors
               "@primary-color": "#2f49d1",
+              "@secondary-text": "#435465",
             },
             javascriptEnabled: true,
           },
