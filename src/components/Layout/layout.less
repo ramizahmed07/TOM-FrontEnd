@@ -74,7 +74,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 1rem;
+  padding-right: 1.5rem;
 }
 
 .layout__breadcrumbs {
@@ -82,23 +82,46 @@
   margin: 42px 24px 12px;
 }
 
+.header__notif__icon__container {
+  display: flex;
+}
+
+.header__divider {
+  width: 1px;
+  height: 50%;
+  background: @secondary-text;
+  opacity: 0.3;
+  margin: 0 1.5rem 0 1.8rem;
+}
+
 .profile__menu__toggle {
   display: flex;
+  cursor: pointer;
 
-  height: 100%;
+  height: 80%;
   width: auto;
+  align-items: center;
 
   .profile__menu__text__container {
     display: flex;
     flex-direction: column;
+    margin-right: 1.5rem;
+    margin-left: 0.7rem;
 
     .profile__menu__user__name {
-      line-height: 1;
-      background: red;
+      line-height: 17.1px;
+      font-size: @text-sm;
+      font-weight: 700;
     }
     .profile__menu__user__role {
-      line-height: 1;
-      background: pink;
+      line-height: 14.6px;
+      font-size: @text-xs;
+      font-weight: 500;
     }
+  }
+
+  .profile__menu__icon__container {
+    height: min-content;
+    line-height: 1;
   }
 }

@@ -11,6 +11,7 @@ import {
 import "./layout.less";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
+import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
 
@@ -68,6 +69,10 @@ const Layout = () => {
         </Sider>
         <AntdLayout style={{ padding: "0" }}>
           <Header className="layout__header">
+            <div className="header__notif__icon__container">
+              <Bell className="header__notif__icon" />
+            </div>
+            <div className="header__divider"></div>
             <Dropdown
               overlay={menu}
               onVisibleChange={open => setIsMenuVisible(open)}
