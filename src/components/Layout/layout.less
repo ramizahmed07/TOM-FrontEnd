@@ -71,9 +71,34 @@
 .layout__header {
   padding: 0;
   background: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1rem;
 }
 
 .layout__breadcrumbs {
   font-size: @text-xs;
   margin: 42px 24px 12px;
+}
+
+.profile__menu__toggle {
+  display: flex;
+
+  height: 100%;
+  width: auto;
+
+  .profile__menu__text__container {
+    display: flex;
+    flex-direction: column;
+
+    .profile__menu__user__name {
+      line-height: 1;
+      background: red;
+    }
+    .profile__menu__user__role {
+      line-height: 1;
+      background: pink;
+    }
+  }
 }

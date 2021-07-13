@@ -1,12 +1,32 @@
-import { Layout as AntdLayout, Menu, Breadcrumb, Button } from "antd";
+import React from "react";
+import {
+  Layout as AntdLayout,
+  Menu,
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Avatar,
+} from "antd";
 
 import "./layout.less";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
+import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import config from "./sidebar-config";
+import profilePic from "@assets/images/profile-pic.jpeg";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = () => {
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="1">Clicking me will not close the menu.</Menu.Item>
+      <Menu.Item key="2">Clicking me will not close the menu also.</Menu.Item>
+      <Menu.Item key="3">Clicking me will close the menu.</Menu.Item>
+    </Menu>
+  );
+
   return (
     <AntdLayout className="layout__container">
       <AntdLayout>
@@ -47,7 +67,25 @@ const Layout = () => {
           })}
         </Sider>
         <AntdLayout style={{ padding: "0" }}>
-          <Header className="layout__header"></Header>
+          <Header className="layout__header">
+            <Dropdown
+              overlay={menu}
+              onVisibleChange={open => setIsMenuVisible(open)}
+              visible={isMenuVisible}
+              trigger={["click"]}
+            >
+              <div className="profile__menu__toggle">
+                <Avatar size={32} src={profilePic} />
+                <div className="profile__menu__text__container">
+                  <span className="profile__menu__user__name">Salman Ali</span>
+                  <span className="profile__menu__user__role">Admin</span>
+                </div>
+                <div className="profile__menu__icon__container">
+                  <Down className="profile__menu__icon" />
+                </div>
+              </div>
+            </Dropdown>
+          </Header>
           <Breadcrumb className="layout__breadcrumbs">
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
