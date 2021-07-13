@@ -1,8 +1,9 @@
 import "./styles/index.less";
 import Login from "@pages/Login";
+import Layout from "@components/Layout";
 
 function App() {
-  return <Login />;
+  return <Layout />;
 }
 
 export default App;

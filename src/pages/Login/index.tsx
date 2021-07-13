@@ -49,7 +49,6 @@ const Login = () => {
                 className="form__input"
                 type="email"
                 placeholder="Enter your email here..."
-                width="100%"
               />
             </Form.Item>
 
