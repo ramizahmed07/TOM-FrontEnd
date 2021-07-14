@@ -1,3 +1,4 @@
+import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "./login.less";
@@ -5,6 +6,7 @@ import loginPhoto from "@assets/images/login.png";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 
 const Login = () => {
+  const history = useHistory();
   return (
     <Row className="login__container">
       <Col span={14} className="login__left">
@@ -87,6 +89,9 @@ const Login = () => {
                 htmlType="submit"
                 className="login__btn"
                 size="large"
+                onClick={() => {
+                  history.push("/");
+                }}
               >
                 Sign In
               </Button>
