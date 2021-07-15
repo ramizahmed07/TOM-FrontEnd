@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./styles/index.less";
-import Login from "@pages/Login";
 import Layout from "@components/Layout";
+import Login from "@pages/Login";
+import TableTest from "@pages/TableTest";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
           <Login />
         </Route>
         <Route path="/">
-          <Layout />
+          <Layout>
+            <TableTest />
+          </Layout>
         </Route>
       </Switch>
     </Router>

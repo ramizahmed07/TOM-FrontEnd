@@ -17,7 +17,7 @@ import profilePic from "@assets/images/profile-pic.jpeg";
 
 const { Header, Content, Sider } = AntdLayout;
 
-const Layout = () => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
 
   const menu = (
@@ -104,7 +104,7 @@ const Layout = () => {
               minHeight: 280,
             }}
           >
-            Content
+            {children}
           </Content>
         </AntdLayout>
       </AntdLayout>
