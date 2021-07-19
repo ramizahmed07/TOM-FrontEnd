@@ -1,3 +1,4 @@
+import React from "react";
 import { Col, Row, Table, Dropdown, Menu, TableColumnsType } from "antd";
 
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
