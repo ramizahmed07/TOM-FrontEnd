@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# The Talent Accelerator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Repository for the frontend of The Talent Accelerator
 
-## Available Scripts
+## Development
 
-In the project directory, you can run:
+### Directory Structure
 
-### `yarn start`
+```
+src
+  - assets
+      - fonts
+      - images
+  - components
+      - Input
+          - index.tsx
+          - input.less
+  - pages
+      - admin
+          - APage
+              - index.tsx
+              - apage.less
+      - company
+          - CPage
+              - index.tsx
+              - cpage.less
+  - styles
+      - fonts.less
+      - global.less
+      - index.less
+      - theme.less
+  - utils
+      - date.ts
+      - url.ts
+  - redux 
+      - slices
+          - auth.ts
+          - index.ts
+      - index.ts
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This directory structure is battle-tested and solid. But that doesn't mean it cannot be amended. Please feel free to suggest any improvements.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+We're using a concept called `Colocation` here. Read more about it here: https://kentcdodds.com/blog/colocation
 
-### `yarn test`
+This means we'll colocate the files, components, styles to where they are used. What that means for our codebase is let's say we want to create a component for our page `PageA`, so instead of putting that component in the `components/` directory, we'll create it inside `PageA/` directory because for now that's the only place that component is being used. If that component is used anywhere else so instead of duplicating it we'll move it to `components/` directory so other components or pages can also use it.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Description**:
 
-### `yarn build`
+- `assets`: All the static assets will go in this directory
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `components`: This directory is the dump of all the reusable shared components. If a component doesn't have any styles (.less file), we can avoid creating a directory for that component and instead put the component at the root as `/components/MyComponent.tsx`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `pages`: This directory is divided into 2 sub-directories, `admin` and `company`. The pages related to admin will live inside `admin` sub-directory and likewise for company related pages. If a page is shared for some reason, we'll put that page to the root `/pages`. We'll follow the same rule here as we discussed in the components section, if there are no styles don't create directory for a page.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `styles`: All the styles will live inside this directory. `theme.less` contains all the custom and antd variables overwritten by us. `index.less` imports all the styles and is being used in `App.tsx`.
 
-### `yarn eject`
+- `redux`: All the redux slices will live inside this directory inside the `slices` folder. `redux/index.ts` imports all the slice reducers and configure store.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Git
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Perform work in a feature branch.
+- Branch out from `dev`
+- Never push into `dev` or `master` branch. Make a Pull Request.
+- Update your local `dev` branch and do an interactive rebase before pushing your feature and making a Pull Request.
+- Resolve potential conflicts while rebasing and before making a Pull Request.
+- Keep commits smaller by committing your code at regular intervals.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**Commit messages**:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Capitalize the message first word.
+- Use imperative mood, when writing commit messages. Write commit message to complete this sentence always:
+"When applied, this commit will <your commit message>"
 
-## Learn More
+  Example:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  "Move Table component to /components directory". Now try to place this message in the above sentence and see it makes sense.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- If for some reason you need to commit in the middle of a task you can add `WIP:` prefix before commit message e.g.: `WIP: Style navbar`
