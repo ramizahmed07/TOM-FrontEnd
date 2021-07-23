@@ -1,0 +1,136 @@
+.login__container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login__left {
+  position: relative;
+}
+
+.login__photo {
+  width: 100% !important;
+}
+
+.login__photo__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    38.59deg,
+    #040a2c 0%,
+    rgba(4, 10, 44, 0.62) 0.01%,
+    rgba(11, 18, 55, 0) 100%
+  );
+  z-index: 0;
+}
+
+.login__logo__container {
+  position: absolute;
+  top: 50px;
+  left: 17%;
+  height: auto;
+  width: 11.5rem;
+  z-index: 1;
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.login__heading {
+  color: white !important;
+  font-family: @secondary-font;
+  position: absolute;
+  bottom: 22%;
+  left: 17%;
+  width: 54%;
+  font-size: @text-xxl !important;
+}
+
+.login__right {
+  display: flex;
+  align-items: center;
+}
+
+.login__form__container {
+  width: 70%;
+  margin-left: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.login__form_title {
+  font-family: @secondary-font;
+  font-weight: 700;
+  font-size: @text-xl;
+  margin-bottom: 0 !important;
+
+  .login__company__name {
+    color: @primary-color;
+  }
+}
+
+.login__form__prompt {
+  font-family: @secondary-font;
+  font-weight: 300;
+  font-size: @text-md;
+  color: #435465;
+  margin-bottom: 0 !important;
+}
+
+.login__form {
+  margin-top: 3rem;
+}
+
+.form__item .ant-form-item-label {
+  padding-bottom: 6px;
+
+  .ant-form-item-required {
+    width: 100%;
+  }
+  .ant-form-item-required::before {
+    display: none !important;
+  }
+}
+
+.input__label {
+  font-size: @text-md;
+  font-family: @secondary-font;
+  font-weight: 600;
+}
+
+.login__password__label {
+  font-size: @text-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.login__forgot__password {
+  font-size: @text-sm;
+  font-family: @secondary-font;
+  padding-right: 0;
+  font-weight: 600;
+}
+
+.form__input {
+  border: 1px solid #435465;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.login__checkbox__item {
+  margin-bottom: 3rem;
+  font-family: @secondary-font;
+  font-size: @text-sm;
+}
+
+.login__btn {
+  width: 100%;
+  font-size: @text-md;
+  font-family: @secondary-font;
+}
