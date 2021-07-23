@@ -14,6 +14,7 @@ import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
+import { NavLink } from "react-router-dom";
 
 const { Header, Content, Sider } = AntdLayout;
 
@@ -38,30 +39,29 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           {config.map((config, idx) => {
             return (
               <div className="sider__links__container" key={idx}>
-                <Button
-                  type="link"
+                <NavLink
+                  key={idx}
+                  to={config.path || ""}
                   className="sider__link"
-                  icon={
-                    <div className="sider__icon__container">
-                      <config.icon className="sider__link__icon" />
-                    </div>
-                  }
+                  activeClassName="sider__sub__link--active"
                 >
+                  <div className="sider__icon__container">
+                    <config.icon className="sider__link__icon" />
+                  </div>
                   {config.title}
-                </Button>
+                </NavLink>
                 {config.sub?.map((subLink, i) => (
-                  <Button
+                  <NavLink
                     key={i}
-                    type="link"
+                    to={subLink.path || ""}
                     className="sider__sub__link"
-                    icon={
-                      <div className="sider__icon__container">
-                        <subLink.icon className="sider__link__icon" />
-                      </div>
-                    }
+                    activeClassName="sider__sub__link--active"
                   >
+                    <div className="sider__icon__container">
+                      <subLink.icon className="sider__link__icon" />
+                    </div>
                     {subLink.title}
-                  </Button>
+                  </NavLink>
                 ))}
               </div>
             );

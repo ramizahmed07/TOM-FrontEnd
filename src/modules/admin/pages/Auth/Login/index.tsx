@@ -91,7 +91,7 @@ const Login = () => {
                 className="login__btn"
                 size="large"
                 onClick={() => {
-                  history.push("/");
+                  history.push("/settings");
                 }}
               >
                 Sign In
