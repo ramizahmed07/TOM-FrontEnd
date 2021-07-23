@@ -1,23 +1,19 @@
-import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./styles/index.less";
 import Layout from "@components/Layout";
 import Login from "@/modules/admin/pages/Auth/Login";
-import TableTest from "@/modules/admin/pages/TableTest";
+import Settings from "./modules/admin/pages/Settings";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <Layout>
-            <TableTest />
-          </Layout>
-        </Route>
+        <Route exact path="/login" component={Login} />
+        <Layout>
+          <Route exact path="/" component={() => <div>HOME</div>} />
+          <Route path="/settings" component={Settings} />
+        </Layout>
       </Switch>
     </Router>
   );
