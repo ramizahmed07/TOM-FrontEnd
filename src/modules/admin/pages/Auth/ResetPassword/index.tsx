@@ -1,23 +1,26 @@
+import React from "react";
 import { useHistory } from "react-router";
-import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
+import { Col, Row, Typography, Form, Input, Button } from "antd";
 
 import "../style.less";
 import AuthLandingImg from "@/components/AuthLandingImg";
+import RoutePaths from "@/routes/RoutePaths";
+import { Link } from "react-router-dom";
 
-const Login = () => {
+const ResetPassword = () => {
   const history = useHistory();
-
   return (
     <Row className="auth__container">
       <AuthLandingImg />
+
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Welcome to{" "}
-            <span className="auth__company__name">Talent Accelerator</span>
+            Reset your{" "}
+            <span className="auth__company__name">Password?</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
-            Login to your account to continue
+          Enter your new password below
           </Typography.Paragraph>
 
           {/* FORM */}
@@ -33,32 +36,14 @@ const Login = () => {
           >
             <Form.Item
               className="form__item"
-              label={<label className="input__label">Email Address</label>}
-              name="email"
-              rules={[{ required: true, message: "Please enter your email!" }]}
-            >
-              <Input
-                className="form__input"
-                type="email"
-                placeholder="Enter your email here..."
-              />
-            </Form.Item>
-
-            <Form.Item
-              className="form__item"
               label={
                 <div className="auth__password__label">
-                  <label className={false ? "input__label" : "error__label"}>
-                    Password
-                  </label>
-                  <Button type="link" className="auth__forgot__password">
-                    Forgot password?
-                  </Button>
+                  <label className="input__label">Type new password</label>
                 </div>
               }
               name="password"
               rules={[
-                { required: true, message: "Please enter your password!" },
+                { required: true, message: "Please enter your new password!" },
               ]}
             >
               <Input.Password
@@ -67,17 +52,26 @@ const Login = () => {
               />
             </Form.Item>
 
-            <Typography.Paragraph className="auth__error__msg">
-              You have entered incorrect password
-            </Typography.Paragraph>
-
+            
             <Form.Item
-              name="remember"
-              valuePropName="checked"
-              className="auth__checkbox__item"
+              className="form__item"
+              label={
+                <div className="auth__password__label">
+                  <label className="input__label">Re-type new password</label>
+                </div>
+              }
+              name="retype-password"
+              rules={[
+                { required: true, message: "Please re-enter your new password!" },
+              ]}
             >
-              <Checkbox className="auth__checkbox">Remember me</Checkbox>
+              <Input.Password
+                className="form__input"
+                placeholder="Re-Enter your new password here..."
+              />
             </Form.Item>
+
+
 
             <Form.Item wrapperCol={{ span: 24 }}>
               <Button
@@ -86,17 +80,21 @@ const Login = () => {
                 className="login__btn"
                 size="large"
                 onClick={() => {
-                  history.push("/settings");
+                  history.push(RoutePaths.Auth.login);
                 }}
               >
-                Sign In
+                Reset Password
               </Button>
             </Form.Item>
           </Form>
+
+          <Typography.Paragraph className="auth__form__prompt">
+            Back to <Link className="auth__form__prompt" to={RoutePaths.Auth.login}>Login?</Link>
+          </Typography.Paragraph>
         </div>
       </Col>
     </Row>
   );
 };
 
-export default Login;
+export default ResetPassword;
