@@ -13,6 +13,9 @@ const ForgotPassword = React.lazy(
 const ResetPassword = React.lazy(
   () => import("@/pages/admin/Auth/ResetPassword")
 );
+const CompanyList = React.lazy(
+  () => import("@/pages/admin/User/Companies/company-list")
+);
 
 const AppRoutes = () => {
   return (
@@ -27,6 +30,9 @@ const AppRoutes = () => {
           </Route>
           <Route path={RoutePaths.Auth.resetPassword}>
             <ResetPassword />
+          </Route>
+          <Route path={RoutePaths.User.companyListing}>
+            <CompanyList />
           </Route>
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
