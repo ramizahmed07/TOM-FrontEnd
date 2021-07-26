@@ -14,11 +14,13 @@ import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
+import { useHistory } from "react-router-dom";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+  const history = useHistory();
 
   const menu = (
     <Menu>
@@ -58,6 +60,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                       <div className="sider__icon__container">
                         <subLink.icon className="sider__link__icon" />
                       </div>
+                    }
+                    onClick={() =>
+                      subLink.routingPath && history.push(subLink.routingPath)
                     }
                   >
                     {subLink.title}
