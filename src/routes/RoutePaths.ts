@@ -9,4 +9,5 @@ const Home = {
 }
 
 const RoutePaths = { Auth, Home };
+
 export default RoutePaths;
