@@ -62,7 +62,7 @@ const Login = () => {
               ]}
             >
               <Input.Password
-                className="form__input"
+                className="form__input error__pwd"
                 placeholder="Enter your password here..."
               />
             </Form.Item>
