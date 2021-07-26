@@ -6,6 +6,7 @@ import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 
 const Login = () => {
   const history = useHistory();
+
   return (
     <Row className="auth__container">
       <AuthLandingImg />
