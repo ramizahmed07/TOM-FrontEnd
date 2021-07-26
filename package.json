@@ -31,7 +31,9 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "precommit-msg": "echo 'Starting precommit hooks...' && exit 0"
+    "precommit-msg": "echo 'Starting precommit hooks...' && exit 0",
+    "postinstall": "husky install",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -63,12 +65,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.8",
-<<<<<<< HEAD
-    "craco-alias": "^3.0.1"
-=======
     "craco-alias": "^3.0.1",
-    "husky": "^7.0.1",
     "pretty-quick": "^3.1.1"
->>>>>>> Testing precommit prettier
   }
 }

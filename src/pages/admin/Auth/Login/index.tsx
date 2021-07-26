@@ -10,8 +10,8 @@ const Login = () => {
 =======
   return (
     <Row className="login__container">
-  <Col span={14} className="login__left">
-    <img alt="login" src={loginPhoto} className="login__photo" />
+      <Col span={14} className="login__left">
+        <img alt="login" src={loginPhoto} className="login__photo" />
         <div className="login__photo__overlay"></div>
         <div className="login__logo__container">
           <Logo />
