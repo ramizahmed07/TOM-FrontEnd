@@ -2,6 +2,7 @@ import React from "react";
 import AuthLandingImg from "@/components/AuthLandingImg";
 import RoutePaths from "@/routes/RoutePaths";
 import { Button, Col, Form, Input, Row, Typography } from "antd";
+import {ArrowRightOutlined} from '@ant-design/icons';
 import Countdown from "react-countdown";
 import { Link, useHistory } from "react-router-dom";
 import "../style.less";
@@ -31,8 +32,8 @@ const ForgotPassword = () => {
           // onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            className="form__item"
-            label={<label className="input__label">Email address</label>}
+            className="form__item forgot__pwd_email"
+            label={<label className="input__label ">Email address</label>}
             name="email"
             rules={[{ required: true, message: "Please enter your email!" }]}
           >
@@ -53,7 +54,7 @@ const ForgotPassword = () => {
                 history.push("/");
               }}
             >
-              Send link
+              Send link <ArrowRightOutlined />
             </Button>
           </Form.Item>
         </Form>
@@ -73,7 +74,7 @@ const ForgotPassword = () => {
       );
     };
     return (
-      <>
+      <div className='resend-link-container'>
         <Typography.Paragraph className="auth__form_title">
           Check your <span className="auth__company__name">Email?</span>
         </Typography.Paragraph>
@@ -82,7 +83,7 @@ const ForgotPassword = () => {
           password.
         </Typography.Paragraph>
 
-        <div>
+        <div className='timer-container'>
           <Countdown date={Date.now() + 60000} renderer={renderTimer} />
 
           <Typography.Paragraph className="auth__form__prompt">
@@ -99,9 +100,9 @@ const ForgotPassword = () => {
             history.push("/");
           }}
         >
-          Resend link
+          Resend link <ArrowRightOutlined />
         </Button>
-      </>
+      </div>
     );
   };
   return (
@@ -114,8 +115,8 @@ const ForgotPassword = () => {
 
           <Typography.Paragraph className="auth__form__prompt">
             Back to{" "}
-            <Link className="auth__form__prompt" to={RoutePaths.Auth.login}>
-              Login?
+            <Link className="auth__form__prompt backToLogin" to={RoutePaths.Auth.login}>
+              Login
             </Link>
           </Typography.Paragraph>
         </div>

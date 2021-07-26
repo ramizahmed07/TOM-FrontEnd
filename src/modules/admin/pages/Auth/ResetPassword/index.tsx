@@ -89,7 +89,7 @@ const ResetPassword = () => {
           </Form>
 
           <Typography.Paragraph className="auth__form__prompt">
-            Back to <Link className="auth__form__prompt" to={RoutePaths.Auth.login}>Login?</Link>
+            Back to <Link className="auth__form__prompt backToLogin" to={RoutePaths.Auth.login}>Login?</Link>
           </Typography.Paragraph>
         </div>
       </Col>
