@@ -1,0 +1,34 @@
+/* Modal Styles */
+.create__row {
+  margin: 0 -32px;
+
+  padding: 32px;
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+  &:not(:last-of-type) {
+    border-bottom: @border;
+    margin-bottom: 24px;
+  }
+}
+
+.create__dropdown,
+.create__input {
+  width: 100%;
+  font-size: 14px;
+  height: 40px;
+}
+
+.create__title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.create__dropdown__option {
+  font-weight: 500;
+
+  &--btn {
+    color: @primary-color;
+  }
+}

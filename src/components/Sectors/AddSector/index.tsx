@@ -5,13 +5,11 @@ import "./addSector.less";
 import Modal from "@/components/Modal";
 import { INDUSTRIES, Sector, SECTORS } from "./config";
 import { showSuccessPopup } from "@/utils";
+import { modal_interface } from "@/interfaces";
 
 const { Option } = Select;
 
-interface AddSectorProps {
-  isVisible: boolean;
-  setIsVisible: Dispatch<SetStateAction<boolean>>;
-}
+interface AddSectorProps extends modal_interface {}
 
 const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
   const [sector, setSector] = useState<undefined | string>(undefined);
@@ -46,102 +44,93 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
   // }
 
   return (
-    <>
-      {/* <SuccessPopup
-        isVisible={isPopup}
-        setIsVisible={setIsPopup}
-        title="New Sector Created"
-        desc="You have successfully created new sector."
-      /> */}
-
-      <Modal
-        footer={[
-          <Button
-            onClick={addSector}
-            disabled={!sector || !industries?.length}
-            key="1"
-            type="primary"
-          >
-            Add Sector
-          </Button>,
-          <Button onClick={() => setIsVisible(false)} key="2">
-            Cancel
-          </Button>,
-        ]}
-        title="Create a Sector"
-        isVisible={isVisible}
-      >
-        <>
-          <Row className="addSector__row">
-            <Col span={12}>
-              <label>Select a sector</label>
-              <Select
-                value={sector}
-                size="large"
-                className="addSector__dropdown"
-                placeholder="Select sector from here..."
-                onChange={onChange}
-                // onFocus={onFocus}
-                // onBlur={onBlur}
-              >
-                {SECTORS.map(({ title, id, value }: Sector) => (
-                  <Option
-                    key={id}
-                    className="addSector__dropdown__option"
-                    value={value}
-                  >
-                    {title}
-                  </Option>
-                ))}
-                <Option value="button">
-                  <div
-                    className="addSector__dropdown__option addSector__dropdown__option--btn"
-                    onMouseDown={() => console.log("Add new industry")}
-                  >
-                    Add new industry
-                  </div>
+    <Modal
+      footer={[
+        <Button
+          onClick={addSector}
+          disabled={!sector || !industries?.length}
+          key="1"
+          type="primary"
+        >
+          Add Sector
+        </Button>,
+        <Button onClick={() => setIsVisible(false)} key="2">
+          Cancel
+        </Button>,
+      ]}
+      title="Create a Sector"
+      isVisible={isVisible}
+    >
+      <>
+        <Row className="create__row">
+          <Col span={11}>
+            <label>Select a sector</label>
+            <Select
+              value={sector}
+              size="large"
+              className="create__dropdown"
+              placeholder="Select sector from here..."
+              onChange={onChange}
+              // onFocus={onFocus}
+              // onBlur={onBlur}
+            >
+              {SECTORS.map(({ title, id, value }: Sector) => (
+                <Option
+                  key={id}
+                  className="create__dropdown__option"
+                  value={value}
+                >
+                  {title}
                 </Option>
-              </Select>
-            </Col>
-          </Row>
-          <div className="addSector__title">Choose Industry</div>
-          <Row className="addSector__row">
-            <Col span={12}>
-              <label>Select industry</label>
-              <Select
-                value={industries}
-                size="large"
-                showArrow
-                className="addSector__dropdown"
-                mode="multiple"
-                placeholder="Select industry from here..."
-                showSearch={false}
-                // defaultValue={["a10", "c12"]}
-                onChange={handleChange}
-              >
-                {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                  <Option
-                    key={id}
-                    className="addSector__dropdown__option"
-                    value={value}
-                  >
-                    {title}
-                  </Option>
-                ))}
-                <Option value="button">
-                  <div
-                    className="addSector__dropdown__option addSector__dropdown__option--btn"
-                    onMouseDown={() => console.log("Add new industry")}
-                  >
-                    Add new industry
-                  </div>
+              ))}
+              <Option value="button">
+                <div
+                  className="create__dropdown__option create__dropdown__option--btn"
+                  onMouseDown={() => console.log("Add new industry")}
+                >
+                  Add new industry
+                </div>
+              </Option>
+            </Select>
+          </Col>
+        </Row>
+        <div className="create__title">Choose Industry</div>
+        <Row className="create__row">
+          <Col span={11}>
+            <label>Select industry</label>
+            <Select
+              value={industries}
+              size="large"
+              showArrow
+              className="create__dropdown"
+              mode="multiple"
+              placeholder="Select industry from here..."
+              showSearch={false}
+              // defaultValue={["a10", "c12"]}
+              onChange={handleChange}
+            >
+              {INDUSTRIES.map(({ title, id, value }: Sector) => (
+                <Option
+                  key={id}
+                  className="create__dropdown__option"
+                  value={value}
+                >
+                  {title}
                 </Option>
-              </Select>
-            </Col>
-          </Row>
-        </>
-      </Modal>
-    </>
+              ))}
+              <Option value="button">
+                <div
+                  className="create__dropdown__option create__dropdown__option--btn"
+                  onMouseDown={() => console.log("Add new industry")}
+                >
+                  Add new industry
+                </div>
+              </Option>
+            </Select>
+          </Col>
+        </Row>
+      </>
+    </Modal>
   );
 };
 

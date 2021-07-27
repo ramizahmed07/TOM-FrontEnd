@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { FC } from "react";
 import {
   Button,
   Col,
@@ -8,7 +8,7 @@ import {
   TableColumnsType,
   Typography,
 } from "antd";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./sectors.less";
 import { ReactComponent as UploadIcon } from "@assets/images/upload.svg";
@@ -17,8 +17,8 @@ import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import Table from "../Table";
-import Modal from "../Modal";
 import AddSector from "./AddSector";
+import { modal_interface } from "@/interfaces";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -101,10 +101,7 @@ const data: TableRow[] = [
   },
 ];
 
-interface SectorsProps {
-  isVisible: boolean;
-  setIsVisible: Dispatch<SetStateAction<boolean>>;
-}
+interface SectorsProps extends modal_interface {}
 
 const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
   return (
