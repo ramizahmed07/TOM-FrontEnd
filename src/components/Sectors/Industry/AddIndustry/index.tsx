@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Select } from "antd";
 
 import Modal from "@/components/Modal";
 import { modal_interface } from "@/interfaces";
-import { INDUSTRIES, Sector, SECTORS } from "../../AddSector/config";
+import { INDUSTRIES, Sector } from "@components/Sectors/AddSector/config";
 
 const { Option } = Select;
 
@@ -25,12 +25,7 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
   return (
     <Modal
       footer={[
-        <Button
-          onClick={addIndustry}
-          // disabled={!sector || !industries?.length}
-          key="1"
-          type="primary"
-        >
+        <Button onClick={addIndustry} key="1" type="primary">
           Done
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
@@ -61,7 +56,6 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
               mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
-              // defaultValue={["a10", "c12"]}
               onChange={handleChange}
             >
               {INDUSTRIES.map(({ title, id, value }: Sector) => (
@@ -96,7 +90,6 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
               mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
-              // defaultValue={["a10", "c12"]}
               onChange={handleChange}
             >
               {INDUSTRIES.map(({ title, id, value }: Sector) => (

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Layout as AntdLayout,
-  Menu,
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Avatar,
-} from "antd";
+import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
 
 import "./layout.less";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";

@@ -1,7 +1,6 @@
+import { FC, useState } from "react";
 import { Button, Col, Row, Select } from "antd";
-import { Dispatch, FC, SetStateAction, useState } from "react";
 
-import "./addSector.less";
 import Modal from "@/components/Modal";
 import { INDUSTRIES, Sector, SECTORS } from "./config";
 import { showSuccessPopup } from "@/utils";
@@ -32,16 +31,7 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
       title: "New Sector Created",
       desc: "You have successfully created new sector.",
     });
-    // setIsPopup(true);
-    // info();
   };
-  // function onBlur() {
-  //   console.log("blur");
-  // }
-
-  // function onFocus() {
-  //   console.log("focus");
-  // }
 
   return (
     <Modal
@@ -71,8 +61,6 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
               className="create__dropdown"
               placeholder="Select sector from here..."
               onChange={onChange}
-              // onFocus={onFocus}
-              // onBlur={onBlur}
             >
               {SECTORS.map(({ title, id, value }: Sector) => (
                 <Option
@@ -106,7 +94,6 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
               mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
-              // defaultValue={["a10", "c12"]}
               onChange={handleChange}
             >
               {INDUSTRIES.map(({ title, id, value }: Sector) => (

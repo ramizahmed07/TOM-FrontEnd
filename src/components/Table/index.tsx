@@ -1,12 +1,5 @@
-import React, { FC } from "react";
-import {
-  Col,
-  Row,
-  Table as AntTable,
-  Dropdown,
-  Menu,
-  TableColumnsType,
-} from "antd";
+import { FC } from "react";
+import { Col, Table as AntTable } from "antd";
 
 import "./table.less";
 

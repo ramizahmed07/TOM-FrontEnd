@@ -31,7 +31,6 @@ const Modal: FC<ModalProps> = ({
       visible={isVisible}
       closable={false}
       className={className}
-      // onCancel={showConfirmDialog}
       maskClosable={false}
       destroyOnClose={true}
       footer={footer}
