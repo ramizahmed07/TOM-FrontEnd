@@ -1,12 +1,11 @@
-import { Button, Col, Menu, Row, TableColumnsType, Typography } from "antd";
+import { FC } from "react";
+import { Button, Col, Row, TableColumnsType, Typography } from "antd";
 
 import "../sectors.less";
 import Table from "@/components/Table";
-import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
-import AddIndustry from "./AddIndustry/AddIndustry";
+import AddIndustry from "@/components/Sectors/Industry/AddIndustry";
 import { modal_interface } from "@/interfaces";
-import { FC } from "react";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -21,8 +20,6 @@ const columns: TableColumnsType<TableRow> = [
     dataIndex: "industry",
     key: "industry",
     width: 200,
-    // filters: [],
-    // filterIcon: <FilterIcon className="table__filter__icon" />,
   },
   {
     title: "Sub-Industry",
@@ -36,14 +33,6 @@ const columns: TableColumnsType<TableRow> = [
     fixed: "right",
     width: 80,
     render: () => {
-      const menu = (
-        <Menu>
-          <Menu.Item className="table__action__item">Edit</Menu.Item>
-          <Menu.Item danger className="table__action__item">
-            Delete
-          </Menu.Item>
-        </Menu>
-      );
       return (
         <div>
           <Button className="table__action__btn" type="link">
@@ -52,13 +41,6 @@ const columns: TableColumnsType<TableRow> = [
           <Button className="table__action__btn" type="link">
             Edit
           </Button>
-          {/* <Dropdown
-            overlay={menu}
-            trigger={["click"]}
-            className="table__action__dropdown"
-          >
-            <MenuIcon />
-          </Dropdown> */}
         </div>
       );
     },

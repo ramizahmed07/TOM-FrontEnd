@@ -15,21 +15,10 @@ export const showSuccessPopup = ({
     bodyStyle: { textAlign: "center" },
     content: (
       <div>
-        <img style={{ marginBottom: 24 }} src={CheckLogo} alt="check" />
-        <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 8 }}>
-          {title}
-        </div>
-        <p style={{ marginBottom: 32, color: "#435465" }}>{desc}</p>
-        <Button
-          onClick={() => AntdModal.destroyAll()}
-          style={{
-            height: 40,
-            padding: "0px 40px",
-            fontWeight: 600,
-            fontSize: 16,
-          }}
-          type="primary"
-        >
+        <img src={CheckLogo} alt="check" />
+        <div className="success__popup__title">{title}</div>
+        <p className="success__popup__desc">{desc}</p>
+        <Button onClick={() => AntdModal.destroyAll()} type="primary">
           Done
         </Button>
       </div>

@@ -15,10 +15,9 @@ import { ReactComponent as UploadIcon } from "@assets/images/upload.svg";
 import { ReactComponent as DownloadIcon } from "@assets/images/download.svg";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
-import Table from "../Table";
-import AddSector from "./AddSector";
 import { modal_interface } from "@/interfaces";
+import Table from "@components/Table";
+import AddSector from "./AddSector";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -45,8 +44,6 @@ const columns: TableColumnsType<TableRow> = [
     dataIndex: "industry",
     key: "industry",
     width: 280,
-    // filters: [],
-    // filterIcon: <FilterIcon className="table__filter__icon" />,
   },
   {
     title: <span className="table__action__col">Actions</span>,
