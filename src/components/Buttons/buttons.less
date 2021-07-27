@@ -1,0 +1,31 @@
+.btn {
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+
+  span {
+    font-size: @text-sm;
+    font-weight: 600;
+    padding-left: 16px;
+  }
+  &--upload {
+    background-color: @green-color-light !important;
+  }
+  &--download {
+    background-color: transparent !important;
+    color: @blue-light !important;
+    border: 1px solid @blue-light !important;
+    margin-left: 16px;
+  }
+  &--add {
+    width: 209px;
+    display: flex;
+    justify-content: center;
+  }
+  &--addIndustry {
+    width: 184px;
+    display: flex;
+    justify-content: center;
+  }
+}

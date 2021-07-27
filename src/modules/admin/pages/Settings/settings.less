@@ -1,3 +1,22 @@
+.settings__title {
+  font-size: @text-lg;
+  font-weight: 600;
+  margin-bottom: 16px !important;
+}
+
+.settings__parent__col {
+  display: flex;
+  align-items: center;
+  &--last {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.settings__table {
+  margin-top: 20px;
+}
+
 /* Modal Styles */
 .create__row {
   margin: 0 -32px;
@@ -16,13 +35,13 @@
 .create__dropdown,
 .create__input {
   width: 100%;
-  font-size: 14px;
+  font-size: @text-sm;
   height: 40px;
 }
 
 .create__title {
   font-weight: 600;
-  font-size: 16px;
+  font-size: @text-md;
 }
 
 .create__dropdown__option {

@@ -18,6 +18,7 @@ import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { modal_interface } from "@/interfaces";
 import Table from "@components/Table";
 import AddSector from "./AddSector";
+import { AddBtn, DownloadBtn, UploadBtn } from "../Buttons";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -107,42 +108,27 @@ const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
 
       <Row>
         <Col span={24}>
-          <Typography.Paragraph className="sectors__title">
+          <Typography.Paragraph className="settings__title">
             Sectors, Industry & Sub-Industry
           </Typography.Paragraph>
         </Col>
       </Row>
       <Row>
-        <Col className="sectors__col" span={16}>
-          <Button
-            className="sectors__btn sectors__btn--upload"
-            type="primary"
-            icon={<UploadIcon />}
-            size="large"
-          >
-            <span>Upload Industries</span>
-          </Button>
-          <Button
-            className="sectors__btn sectors__btn--download"
-            icon={<DownloadIcon />}
-            size="large"
-          >
-            <span>Download Industries</span>
-          </Button>
+        <Col className="settings__parent__col" span={16}>
+          <UploadBtn
+            text="Upload Industries"
+            callback={() => console.log("upload btn")}
+          />
+          <DownloadBtn
+            text="Download Industries"
+            callback={() => console.log("download btn")}
+          />
         </Col>
-        <Col className="sectors__col--last" span={8}>
-          <Button
-            onClick={() => setIsVisible(true)}
-            className="sectors__btn sectors__btn--add"
-            type="primary"
-            icon={<PlusIcon />}
-            size="large"
-          >
-            <span>Add New Sector</span>
-          </Button>
+        <Col className="settings__parent__col--last" span={8}>
+          <AddBtn text="Add New Sector" callback={() => setIsVisible(true)} />
         </Col>
       </Row>
-      <Row className="sectors__table">
+      <Row className="settings__table">
         <Table data={data} columns={columns} />
       </Row>
     </>

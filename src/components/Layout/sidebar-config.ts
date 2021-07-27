@@ -41,7 +41,7 @@ const config = [
         path: "/settings/sectors",
       },
       {
-        title: "Job Function & sub-function",
+        title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
         path: "/settings/job-function",
       },

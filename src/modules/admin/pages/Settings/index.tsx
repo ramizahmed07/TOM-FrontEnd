@@ -4,6 +4,7 @@ import { Route, Switch, useHistory, useLocation } from "react-router";
 import "./settings.less";
 import Sectors from "@/components/Sectors";
 import Industry from "@/components/Sectors/Industry";
+import JobFunction from "@/components/JobFunction";
 
 const Settings = () => {
   const location = useLocation();
@@ -28,6 +29,9 @@ const Settings = () => {
             isVisible={isIndustryModal}
             setIsVisible={setIsIndustryModal}
           />
+        </Route>
+        <Route exact path="/settings/job-function">
+          <JobFunction />
         </Route>
       </Switch>
     </div>
