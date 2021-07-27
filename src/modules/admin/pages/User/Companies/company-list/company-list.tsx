@@ -12,14 +12,18 @@ import {
   Button,
   Input,
 } from "antd";
-import {PlusOutlined, SearchOutlined} from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
-import './style.less';
+import "./style.less";
+import { useHistory } from "react-router-dom";
+import AppRoutes from "@/routes";
+import RoutePaths from "@/routes/RoutePaths";
 
 const CompanyList = () => {
+  const history = useHistory();
   const columns: TableColumnsType<TableRow> = [
     {
       title: "Company ID",
@@ -38,7 +42,7 @@ const CompanyList = () => {
       dataIndex: "name",
       key: "name",
       width: 180,
-      align: 'center'
+      align: "center",
     },
     {
       title: "Email",
@@ -62,7 +66,7 @@ const CompanyList = () => {
       render: (value: string) => {
         const color: { [key: string]: string } = {
           Active: "green",
-          'In Progress': "gold",
+          "In Progress": "gold",
           Expired: "red",
         };
         return <Tag color={color[value]}>{value}</Tag>;
@@ -109,16 +113,20 @@ const CompanyList = () => {
       <Layout>
         <Row>
           <Col span={24}>
-            <h1 className='page__heading'>Companies list</h1>
-            <div className='header__container'>
+            <h1 className="page__heading">Companies list</h1>
+            <div className="header__container">
               <Input
                 className="form__input"
                 type="email"
-                placeholder='Search by name or ID...'
-                // width='100vw'
-                prefix={<SearchOutlined style={{color: '#435465'}}/>}
+                placeholder="Search by name or ID..."
+                prefix={<SearchOutlined style={{ color: "#435465" }} />}
               />
-              <Button type="primary"><PlusOutlined /> Create new company</Button>
+              <Button
+                type="primary"
+                onClick={() => history.push(RoutePaths.User.companyCreate)}
+              >
+                <PlusOutlined /> Create new company
+              </Button>
             </div>
             <Table
               scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
