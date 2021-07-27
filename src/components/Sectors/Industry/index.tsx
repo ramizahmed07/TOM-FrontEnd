@@ -4,6 +4,9 @@ import "../sectors.less";
 import Table from "@/components/Table";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
+import AddIndustry from "./AddIndustry/AddIndustry";
+import { modal_interface } from "@/interfaces";
+import { FC } from "react";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -86,9 +89,12 @@ const data: TableRow[] = [
   },
 ];
 
-const Industry = () => {
+interface IndustryProps extends modal_interface {}
+
+const Industry: FC<IndustryProps> = ({ isVisible, setIsVisible }) => {
   return (
     <>
+      <AddIndustry isVisible={isVisible} setIsVisible={setIsVisible} />
       <Row>
         <Col span={16}>
           <Typography.Paragraph className="sectors__title industry__title">
@@ -101,6 +107,7 @@ const Industry = () => {
             type="primary"
             icon={<PlusIcon />}
             size="large"
+            onClick={() => setIsVisible(true)}
           >
             <span>Add Industry</span>
           </Button>
