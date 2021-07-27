@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "../styles/index.less";
 import Layout from "@components/Layout";
-import TableTest from "@/modules/admin/pages/TableTest";
+import TableTest from "@/pages/admin/TableTest";
 import RoutePaths from "./RoutePaths";
 
-const Login = React.lazy(() => import("@/modules/admin/pages/Auth/Login"));
+const Login = React.lazy(() => import("@/pages/admin/Auth/Login"));
 const ForgotPassword = React.lazy(
-  () => import("@/modules/admin/pages/Auth/ForgotPassword")
+  () => import("@/pages/admin/Auth/ForgotPassword")
 );
 const ResetPassword = React.lazy(
-  () => import("@/modules/admin/pages/Auth/ResetPassword")
+  () => import("@/pages/admin/Auth/ResetPassword")
 );
 
 const AppRoutes = () => {
