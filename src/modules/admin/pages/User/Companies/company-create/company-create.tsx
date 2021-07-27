@@ -13,6 +13,7 @@ import {
   Input,
   Form,
   Select,
+  DatePicker,
 } from "antd";
 import { Option } from "antd/lib/mentions";
 
@@ -91,21 +92,128 @@ const CompanyCreate = () => {
                     placeholder="Enter postal code here..."
                   />
                 </Form.Item>
+              </div>
 
-                <Form.Item wrapperCol={{ span: 24 }}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="login__btn"
-                    size="large"
-                    onClick={() => {
-                      console.log("Create Company");
-                    }}
-                  >
-                    Create  Company
-                  </Button>
+              <div className="corporate__information_container">
+                <h1>Corporate Information</h1>
+
+                <Form.Item
+                  className="form__item"
+                  label={
+                    <label className="input__label">Country Headquater </label>
+                  }
+                  name="country_headquater"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter country headquater",
+                    },
+                  ]}
+                >
+                  <Input
+                    className="form__input"
+                    type="text"
+                    placeholder="Enter name of headquater"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  className="form__item"
+                  label={<label className="input__label">Base Currency</label>}
+                  name="base_currency"
+                  rules={[
+                    { required: true, message: "Please enter base currency" },
+                  ]}
+                >
+                  <Select>
+                    <Option value="AED">AED</Option>
+                    <Option value="GBB">GBB</Option>
+                    <Option value="GBB">GBB</Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  className="form__item"
+                  label={<label className="input__label">Financial Year</label>}
+                  name="financial_year"
+                  rules={[
+                    { required: true, message: "Please enter financial year" },
+                  ]}
+                >
+                  <div>
+                    <DatePicker
+                      onChange={() => console.log("Start Date")}
+                      placeholder="Starting Date (DD/MM/YY)"
+                    />
+                    {" - "}
+                    <DatePicker
+                      onChange={() => console.log("Start Date")}
+                      placeholder="Starting Date (DD/MM/YY)"
+                    />
+                  </div>
+                </Form.Item>
+
+                <Form.Item
+                  className="form__item"
+                  label={
+                    <label className="input__label">Stock tracking ID</label>
+                  }
+                  name="stock_tracking_id"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter stock tracking id",
+                    },
+                  ]}
+                >
+                  <Input
+                    className="form__input"
+                    type="text"
+                    placeholder="Enter stock ID here..."
+                  />
                 </Form.Item>
               </div>
+
+              <div className='contact_details_container'>
+              <Form.Item
+                  className="form__item"
+                  label={<label className="input__label">Contract Duration</label>}
+                  name="contract_duration"
+                  rules={[
+                    { required: true, message: "Please enter contract duration" },
+                  ]}
+                >
+                  <div>
+                    <DatePicker
+                      onChange={() => console.log("Start Date")}
+                      placeholder="Starting Date (DD/MM/YY)"
+                    />
+                    {" - "}
+                    <DatePicker
+                      onChange={() => console.log("Start Date")}
+                      placeholder="Starting Date (DD/MM/YY)"
+                    />
+                  </div>
+                </Form.Item>
+
+               
+
+
+              </div>
+
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login__btn"
+                  size="large"
+                  onClick={() => {
+                    console.log("Create Company");
+                  }}
+                >
+                  Create Company
+                </Button>
+              </Form.Item>
             </Form>
             {/* </div> */}
           </Col>
