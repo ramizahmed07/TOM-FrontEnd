@@ -1,5 +1,4 @@
 import { Button, Modal as AntdModal } from "antd";
-
 import CheckLogo from "@assets/images/check.png";
 
 export const showSuccessPopup = ({
