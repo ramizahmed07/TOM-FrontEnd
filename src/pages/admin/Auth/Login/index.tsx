@@ -29,7 +29,6 @@ const Login = () => {
             onFinish={() => {}}
             layout="vertical"
             className="auth__form"
-            // onFinishFailed={onFinishFailed}
           >
             <Form.Item
               className="form__item"

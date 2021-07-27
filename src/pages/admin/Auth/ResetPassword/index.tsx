@@ -1,11 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
 
 import "../style.less";
 import AuthLandingImg from "@/components/AuthLandingImg";
 import RoutePaths from "@/routes/RoutePaths";
-import { Link } from "react-router-dom";
 
 const ResetPassword = () => {
   const history = useHistory();
@@ -32,7 +32,6 @@ const ResetPassword = () => {
             onFinish={() => {}}
             layout="vertical"
             className="auth__form"
-            // onFinishFailed={onFinishFailed}
           >
             <Form.Item
               className="form__item"

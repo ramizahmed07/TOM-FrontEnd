@@ -1,11 +1,12 @@
 import React from "react";
-import AuthLandingImg from "@/components/AuthLandingImg";
-import RoutePaths from "@/routes/RoutePaths";
 import { Button, Col, Form, Input, Row, Typography } from "antd";
 import {ArrowRightOutlined} from '@ant-design/icons';
 import Countdown from "react-countdown";
 import { Link, useHistory } from "react-router-dom";
+
 import "../style.less";
+import AuthLandingImg from "@/components/AuthLandingImg";
+import RoutePaths from "@/routes/RoutePaths";
 
 const ForgotPassword = () => {
   const history = useHistory();
@@ -29,7 +30,6 @@ const ForgotPassword = () => {
           onFinish={() => {}}
           layout="vertical"
           className="auth__form"
-          // onFinishFailed={onFinishFailed}
         >
           <Form.Item
             className="form__item forgot__pwd_email"
