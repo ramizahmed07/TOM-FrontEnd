@@ -1,7 +1,7 @@
 const Auth = {
   login: "/login",
-  forgotPassword: "/forgotPassword",
-  resetPassword: "/resetPassword",
+  forgotPassword: "/forgot-password",
+  resetPassword: "/reset-password",
 };
 
 const Home = {
