@@ -7,7 +7,29 @@
 
   .ant-table-tbody .ant-table-cell {
     color: @secondary-text !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 49px !important;
+  }
+  .ant-table-thead {
+    .ant-table-cell {
+      color: @secondary-text;
+      font-size: @text-sm;
+      font-weight: 600;
+      text-transform: uppercase;
+
+      &::before {
+        display: none;
+      }
+
+      .ant-table-filter-column {
+        width: min-content;
+        white-space: nowrap;
+
+        .ant-table-column-title {
+          margin-right: 2.2rem;
+        }
+      }
+    }
   }
 }

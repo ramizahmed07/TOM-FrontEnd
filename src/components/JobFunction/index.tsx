@@ -7,7 +7,7 @@ import AddJobFunction from "@components/JobFunction/AddJobFunction";
 
 const columns: TableColumnsType<TableRow> = [
   {
-    title: "ID",
+    title: "id",
     dataIndex: "id",
     key: "id",
     width: "10%",

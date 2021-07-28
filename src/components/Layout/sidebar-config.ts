@@ -48,7 +48,7 @@ const config = [
       {
         title: "Grade map table",
         icon: ListIcon,
-        path: "/settings/grade-map",
+        path: "/settings/grade-map-table",
       },
     ],
   },
