@@ -6,6 +6,7 @@ import Sectors from "@/components/Sectors";
 import Industry from "@/components/Sectors/Industry";
 import JobFunction from "@/components/JobFunction";
 import GradeMapTable from "@/components/GradeMapTable";
+import AddGradeCompany from "@/components/GradeMapTable/AddGradeCompany";
 
 const Settings = () => {
   const location = useLocation();
@@ -36,6 +37,9 @@ const Settings = () => {
         </Route>
         <Route exact path="/settings/grade-map-table">
           <GradeMapTable />
+        </Route>
+        <Route exact path="/settings/grade-map-table/add-grade-company">
+          <AddGradeCompany />
         </Route>
       </Switch>
     </div>
