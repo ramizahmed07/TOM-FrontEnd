@@ -7,9 +7,7 @@ const AddGradeCompany = () => {
     <>
       <Row>
         <Col span={24}>
-          <Typography.Paragraph className="settings__title">
-            Add new company
-          </Typography.Paragraph>
+          <div className="main-heading mb-16">Add new company</div>
         </Col>
       </Row>
       <div className="addGradeCompany">

@@ -33,7 +33,7 @@ const config = [
   {
     title: "Settings",
     icon: SettingsIcon,
-    path: "/settings",
+    path: "/sectors",
     sub: [
       {
         title: "Sectors, Industry & Sub-Industry",

@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
 import Table from "@components/Table";
+import { useHistory } from "react-router";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -91,18 +92,21 @@ const data: TableRow[] = [
 
 const GradeMapTable = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const history = useHistory();
+
+  const handleAddBtn = () => {
+    history.push(`/grade-map-table/create-grade-company`);
+  };
 
   return (
     <>
       <Row>
         <Col span={24}>
-          <Typography.Paragraph className="settings__title">
-            Companies grade map table
-          </Typography.Paragraph>
+          <div className="main-heading">Companies grade map table</div>
         </Col>
       </Row>
-      <Row>
-        <Col className="settings__parent__col" span={16}>
+      <Row className="mt-16 mb-20">
+        <Col className="align-start" span={16}>
           <UploadBtn
             text="Upload Grade Map"
             callback={() => console.log("upload job function")}
@@ -112,11 +116,11 @@ const GradeMapTable = () => {
             callback={() => console.log("Download Job Functions")}
           />
         </Col>
-        <Col className="settings__parent__col--last" span={8}>
-          <AddBtn text="Add new company" callback={() => setIsVisible(true)} />
+        <Col className="align-end" span={8}>
+          <AddBtn text="Add new company" callback={handleAddBtn} />
         </Col>
       </Row>
-      <Row className="settings__table">
+      <Row>
         <Table data={data} columns={columns} />
       </Row>
     </>
