@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
 
-import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
+import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
 import AddJobFunction from "./AddJobFunction";
 
@@ -71,17 +71,17 @@ const JobFunction = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadBtn
+          <UploadButton
             text="Upload Job Functions"
             callback={() => console.log("upload job function")}
           />
-          <DownloadBtn
+          <DownloadButton
             text="Download Job Functions"
             callback={() => console.log("Download Job Functions")}
           />
         </Col>
         <Col className="align-end" span={8}>
-          <AddBtn text="Add New Job" callback={() => setIsVisible(true)} />
+          <AddButton text="Add New Job" callback={() => setIsVisible(true)} />
         </Col>
       </Row>
       <Row>

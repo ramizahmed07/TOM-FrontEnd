@@ -1,7 +1,7 @@
-import { Col, Row, TableColumnsType, Typography } from "antd";
+import { Col, Row, TableColumnsType } from "antd";
 import { useState } from "react";
 
-import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
+import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
 import { useHistory } from "react-router";
 
@@ -107,17 +107,17 @@ const GradeMapTable = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadBtn
+          <UploadButton
             text="Upload Grade Map"
             callback={() => console.log("upload job function")}
           />
-          <DownloadBtn
+          <DownloadButton
             text="Download Grade Map"
             callback={() => console.log("Download Job Functions")}
           />
         </Col>
         <Col className="align-end" span={8}>
-          <AddBtn text="Add new company" callback={handleAddBtn} />
+          <AddButton text="Add new company" callback={handleAddBtn} />
         </Col>
       </Row>
       <Row>

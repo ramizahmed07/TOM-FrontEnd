@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
 
 import Table from "@/components/Table";
-import { AddBtn } from "@/components/Buttons";
+import { AddButton } from "@/components/Buttons";
 import AddIndustry from "./AddIndustry";
 
 const columns: TableColumnsType<TableRow> = [
@@ -75,7 +75,7 @@ const Industry = () => {
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
         <Col className="align-end" span={8}>
-          <AddBtn text="Add Industry" callback={() => setIsVisible(true)} />
+          <AddButton text="Add Industry" callback={() => setIsVisible(true)} />
         </Col>
       </Row>
 

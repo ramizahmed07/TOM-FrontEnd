@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import Table from "@components/Table";
-import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
+import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import AddSector from "./AddSector";
 
 const columns: TableColumnsType<TableRow> = [
@@ -91,17 +91,20 @@ const Sectors = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadBtn
+          <UploadButton
             text="Upload Industries"
             callback={() => console.log("upload btn")}
           />
-          <DownloadBtn
+          <DownloadButton
             text="Download Industries"
             callback={() => console.log("download btn")}
           />
         </Col>
         <Col className="align-end" span={8}>
-          <AddBtn text="Add New Sector" callback={() => setIsVisible(true)} />
+          <AddButton
+            text="Add New Sector"
+            callback={() => setIsVisible(true)}
+          />
         </Col>
       </Row>
       <Row>

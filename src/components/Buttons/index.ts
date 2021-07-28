@@ -1,5 +1,5 @@
 import "./buttons.less";
 
-export { default as DownloadBtn } from "./DownloadBtn";
-export { default as UploadBtn } from "./UploadBtn";
-export { default as AddBtn } from "./AddBtn";
+export { default as DownloadButton } from "./DownloadButton";
+export { default as UploadButton } from "./UploadButton";
+export { default as AddButton } from "./AddButton";
