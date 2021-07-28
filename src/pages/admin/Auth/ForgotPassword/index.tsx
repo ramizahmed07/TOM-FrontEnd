@@ -5,6 +5,7 @@ import Countdown from "react-countdown";
 import { Link, useHistory } from "react-router-dom";
 
 import "../style.less";
+import "../forgotPassword.less";
 import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 import RoutePaths from "@/routes/RoutePaths";
 
