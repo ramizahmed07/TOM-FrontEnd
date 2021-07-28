@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
-import AuthLandingImg from "@/components/AuthLandingImg";
+import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 
 const Login = () => {
   const history = useHistory();
