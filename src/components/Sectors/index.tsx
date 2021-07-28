@@ -1,56 +1,37 @@
 import { FC } from "react";
-import {
-  Button,
-  Col,
-  Dropdown,
-  Menu,
-  Row,
-  TableColumnsType,
-  Typography,
-} from "antd";
-import { Link } from "react-router-dom";
+import { Col, Dropdown, Menu, Row, TableColumnsType, Typography } from "antd";
+import { useHistory } from "react-router-dom";
 
-import "./sectors.less";
-import { ReactComponent as UploadIcon } from "@assets/images/upload.svg";
-import { ReactComponent as DownloadIcon } from "@assets/images/download.svg";
-import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-import { modal_interface } from "@/interfaces";
+import { ModalInterface } from "@/types";
 import Table from "@components/Table";
-import AddSector from "./AddSector";
-import { AddBtn, DownloadBtn, UploadBtn } from "../Buttons";
+import AddSector from "@components/Sectors/AddSector";
+import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
 
 const columns: TableColumnsType<TableRow> = [
   {
     title: "Id",
     dataIndex: "id",
     key: "id",
-    width: 50,
+    width: "10%",
   },
   {
     title: "Sector",
     dataIndex: "sector",
     key: "sector",
-    width: 100,
-    render: (sector, { id }) => {
-      return (
-        <Link className="table__sector__text" to={`/settings/sectors/${id}`}>
-          {sector}
-        </Link>
-      );
-    },
+    width: "20%",
   },
   {
     title: "Industry",
     dataIndex: "industry",
     key: "industry",
-    width: 280,
+    width: "55%",
   },
   {
-    title: <span className="table__action__col">Actions</span>,
+    title: <span className="settings__table__action__col">Actions</span>,
     key: "action",
     fixed: "right",
-    width: 80,
+    width: "15%",
     render: () => {
       const menu = (
         <Menu>
@@ -99,9 +80,15 @@ const data: TableRow[] = [
   },
 ];
 
-interface SectorsProps extends modal_interface {}
+interface SectorsProps extends ModalInterface {}
 
 const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
+  const history = useHistory();
+
+  const onRowClick = (data: any) => {
+    history.push(`/settings/sectors/${data?.id}`);
+  };
+
   return (
     <>
       <AddSector isVisible={isVisible} setIsVisible={setIsVisible} />
@@ -129,7 +116,7 @@ const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
         </Col>
       </Row>
       <Row className="settings__table">
-        <Table data={data} columns={columns} />
+        <Table onRowClick={onRowClick} data={data} columns={columns} />
       </Row>
     </>
   );

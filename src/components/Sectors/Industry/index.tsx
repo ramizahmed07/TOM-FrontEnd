@@ -1,44 +1,43 @@
 import { FC } from "react";
 import { Button, Col, Row, TableColumnsType, Typography } from "antd";
 
-import "../sectors.less";
 import Table from "@/components/Table";
-import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import AddIndustry from "@/components/Sectors/Industry/AddIndustry";
-import { modal_interface } from "@/interfaces";
+import { ModalInterface } from "@/types";
+import { AddBtn } from "@/components/Buttons";
 
 const columns: TableColumnsType<TableRow> = [
   {
     title: "Id",
     dataIndex: "id",
     key: "id",
-    width: 50,
+    width: "7%",
   },
 
   {
     title: "Industry",
     dataIndex: "industry",
     key: "industry",
-    width: 200,
+    width: "23%",
   },
   {
     title: "Sub-Industry",
     dataIndex: "subIndustry",
     key: "subIndustry",
-    width: 300,
+    width: "55%",
   },
   {
-    title: <span className="table__action__col">Actions</span>,
+    title: <span className="settings__table__action__col">Actions</span>,
     key: "action",
     fixed: "right",
-    width: 80,
+    width: "15%",
     render: () => {
       return (
         <div>
-          <Button className="table__action__btn" type="link">
+          <Button className="settings__table__action__col__btn" type="link">
             View
           </Button>
-          <Button className="table__action__btn" type="link">
+          <Button className="settings__table__action__col__btn" type="link">
             Edit
           </Button>
         </div>
@@ -71,7 +70,7 @@ const data: TableRow[] = [
   },
 ];
 
-interface IndustryProps extends modal_interface {}
+interface IndustryProps extends ModalInterface {}
 
 const Industry: FC<IndustryProps> = ({ isVisible, setIsVisible }) => {
   return (
@@ -79,24 +78,16 @@ const Industry: FC<IndustryProps> = ({ isVisible, setIsVisible }) => {
       <AddIndustry isVisible={isVisible} setIsVisible={setIsVisible} />
       <Row>
         <Col span={16}>
-          <Typography.Paragraph className="sectors__title industry__title">
+          <Typography.Paragraph className="settings__title">
             Sectors, Industry & Sub-Industry
           </Typography.Paragraph>
         </Col>
-        <Col className="sectors__col--last" span={8}>
-          <Button
-            className="sectors__btn sectors__btn--addIndustry"
-            type="primary"
-            icon={<PlusIcon />}
-            size="large"
-            onClick={() => setIsVisible(true)}
-          >
-            <span>Add Industry</span>
-          </Button>
+        <Col className="settings__parent__col--last" span={8}>
+          <AddBtn text="Add Industry" callback={() => setIsVisible(true)} />
         </Col>
       </Row>
 
-      <Row className="sectors__table">
+      <Row>
         <Table data={data} columns={columns} />
       </Row>
     </>

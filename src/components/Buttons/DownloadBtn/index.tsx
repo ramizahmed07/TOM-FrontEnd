@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import { ReactComponent as DownloadIcon } from "@assets/images/download.svg";
-import { btn_inferface } from "@/interfaces";
+import { BtnInterface } from "@/types";
 
-const DownloadBtn: React.FC<btn_inferface> = ({ text, callback }) => {
+const DownloadBtn: React.FC<BtnInterface> = ({ text, callback }) => {
   return (
     <Button
       onClick={callback}

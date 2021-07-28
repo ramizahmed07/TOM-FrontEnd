@@ -4,11 +4,11 @@ import { Button, Col, Row, Select } from "antd";
 import Modal from "@/components/Modal";
 import { INDUSTRIES, Sector, SECTORS } from "./config";
 import { showSuccessPopup } from "@/utils";
-import { modal_interface } from "@/interfaces";
+import { ModalInterface } from "@/types";
 
 const { Option } = Select;
 
-interface AddSectorProps extends modal_interface {}
+interface AddSectorProps extends ModalInterface {}
 
 const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
   const [sector, setSector] = useState<undefined | string>(undefined);
@@ -21,7 +21,6 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
 
   function handleChange(value: string) {
     if (value[value.length - 1] === "button") return;
-    console.log({ value });
     setIndustries(value);
   }
 

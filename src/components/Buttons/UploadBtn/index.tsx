@@ -1,9 +1,9 @@
 import { Button } from "antd";
 
 import { ReactComponent as UploadIcon } from "@assets/images/upload.svg";
-import { btn_inferface } from "@/interfaces";
+import { BtnInterface } from "@/types";
 
-const UploadBtn: React.FC<btn_inferface> = ({ text, callback }) => {
+const UploadBtn: React.FC<BtnInterface> = ({ text, callback }) => {
   return (
     <Button
       className="btn btn--upload"

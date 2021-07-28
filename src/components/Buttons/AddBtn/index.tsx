@@ -2,9 +2,9 @@ import { Button } from "antd";
 import { FC } from "react";
 
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
-import { btn_inferface } from "@/interfaces";
+import { BtnInterface } from "@/types";
 
-const AddBtn: FC<btn_inferface> = ({ text, callback }) => {
+const AddBtn: FC<BtnInterface> = ({ text, callback }) => {
   return (
     <Button
       onClick={callback}
