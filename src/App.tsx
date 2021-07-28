@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./styles/index.less";
 import Layout from "@components/Layout";
 import Login from "@/modules/admin/pages/Auth/Login";
-import Settings from "@/modules/admin/pages/Settings";
 import Sectors from "@/modules/admin/pages/Sectors";
 import Industry from "./modules/admin/pages/Sectors/Industry";
-import JobFunction from "./components/JobFunction";
+import JobFunction from "./modules/admin/pages/JobFunction";
 
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
             <Industry />
           </Route>
           <Route exact path="/job-function">
-            {/* <JobFunction /> */}
+            <JobFunction />
           </Route>
         </Layout>
       </Switch>

@@ -1,10 +1,8 @@
 import { FC, useState } from "react";
-import { Col, Dropdown, Menu, Row, TableColumnsType, Typography } from "antd";
+import { Col, Dropdown, Menu, Row, TableColumnsType } from "antd";
 import { useHistory } from "react-router-dom";
 
-import "./sectors.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-// import { ModalInterface } from "@/types";
 import Table from "@components/Table";
 import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
 import AddSector from "./AddSector";
@@ -29,7 +27,7 @@ const columns: TableColumnsType<TableRow> = [
     width: "55%",
   },
   {
-    title: <span className="center">Actions</span>,
+    title: <span className="align-center">Actions</span>,
     key: "action",
     fixed: "right",
     width: "15%",
@@ -75,8 +73,6 @@ const data: TableRow[] = [
   },
 ];
 
-// interface SectorsProps extends ModalInterface {}
-
 const Sectors = () => {
   const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
@@ -94,7 +90,7 @@ const Sectors = () => {
         </Col>
       </Row>
       <Row className="mt-16 mb-20">
-        <Col className="sectors__btns__col" span={16}>
+        <Col className="align-start" span={16}>
           <UploadBtn
             text="Upload Industries"
             callback={() => console.log("upload btn")}
@@ -104,7 +100,7 @@ const Sectors = () => {
             callback={() => console.log("download btn")}
           />
         </Col>
-        <Col className="sectors__btns__col--last" span={8}>
+        <Col className="align-end" span={8}>
           <AddBtn text="Add New Sector" callback={() => setIsVisible(true)} />
         </Col>
       </Row>

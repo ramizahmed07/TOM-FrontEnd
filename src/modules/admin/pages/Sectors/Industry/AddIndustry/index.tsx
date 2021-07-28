@@ -32,19 +32,14 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
           Cancel
         </Button>,
       ]}
-      title="Create a Sector"
+      title="Create an Industry"
       isVisible={isVisible}
     >
       <>
-        <Row justify="space-between" className="create__row">
+        <Row justify="space-between" className="modal__row">
           <Col span={11}>
             <label>Sector</label>
-            <Input
-              className="create__input"
-              size="large"
-              value="Energy"
-              disabled
-            />
+            <Input size="large" value="Energy" disabled />
           </Col>
           <Col span={11}>
             <label>Industry</label>
@@ -52,24 +47,19 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
               value={industries}
               size="large"
               showArrow
-              className="create__dropdown"
               mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
               onChange={handleChange}
             >
               {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option
-                  key={id}
-                  className="create__dropdown__option"
-                  value={value}
-                >
+                <Option key={id} value={value}>
                   {title}
                 </Option>
               ))}
               <Option value="button">
                 <div
-                  className="create__dropdown__option create__dropdown__option--btn"
+                  className="link"
                   onMouseDown={() => console.log("Add new industry")}
                 >
                   Add new industry
@@ -78,32 +68,27 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
             </Select>
           </Col>
         </Row>
-        <div className="create__title">Add Sub-Industries</div>
-        <Row className="create__row">
+        <div className="sub-heading">Add Sub-Industries</div>
+        <Row className="modal__row">
           <Col span={11}>
             <label>Select and search sub-industries</label>
             <Select
               value={industries}
               size="large"
               showArrow
-              className="create__dropdown"
               mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
               onChange={handleChange}
             >
               {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option
-                  key={id}
-                  className="create__dropdown__option"
-                  value={value}
-                >
+                <Option key={id} value={value}>
                   {title}
                 </Option>
               ))}
               <Option value="button">
                 <div
-                  className="create__dropdown__option create__dropdown__option--btn"
+                  className="link"
                   onMouseDown={() => console.log("Add new industry")}
                 >
                   Add new industry
