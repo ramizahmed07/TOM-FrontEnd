@@ -75,7 +75,7 @@ const Industry = () => {
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton text="Add Industry" callback={() => setIsVisible(true)} />
+          <AddButton onClick={() => setIsVisible(true)}>Add Industry</AddButton>
         </Col>
       </Row>
 

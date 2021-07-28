@@ -1,16 +1,19 @@
 import { Button } from "antd";
-import { ReactComponent as DownloadIcon } from "@assets/images/download.svg";
-import { BtnInterface } from "@/types";
 
-const DownloadBtn: React.FC<BtnInterface> = ({ text, callback }) => {
+import { ReactComponent as DownloadIcon } from "@assets/images/download.svg";
+
+const DownloadBtn: React.FC<React.HTMLProps<HTMLButtonElement>> = ({
+  children,
+  onClick,
+}) => {
   return (
     <Button
-      onClick={callback}
+      onClick={onClick}
       className="btn btn--download"
       icon={<DownloadIcon />}
       size="large"
     >
-      <span>{text}</span>
+      <span>{children}</span>
     </Button>
   );
 };

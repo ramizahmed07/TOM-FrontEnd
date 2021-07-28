@@ -107,17 +107,15 @@ const GradeMapTable = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadButton
-            text="Upload Grade Map"
-            callback={() => console.log("upload job function")}
-          />
-          <DownloadButton
-            text="Download Grade Map"
-            callback={() => console.log("Download Job Functions")}
-          />
+          <UploadButton onClick={() => console.log("upload job function")}>
+            Upload Grade Map
+          </UploadButton>
+          <DownloadButton onClick={() => console.log("Download Job Functions")}>
+            Download Grade Map
+          </DownloadButton>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton text="Add new company" callback={handleAddBtn} />
+          <AddButton onClick={handleAddBtn}>Add new company</AddButton>
         </Col>
       </Row>
       <Row>

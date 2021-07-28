@@ -91,20 +91,17 @@ const Sectors = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadButton
-            text="Upload Industries"
-            callback={() => console.log("upload btn")}
-          />
-          <DownloadButton
-            text="Download Industries"
-            callback={() => console.log("download btn")}
-          />
+          <UploadButton onClick={() => console.log("upload job function")}>
+            Upload Industries
+          </UploadButton>
+          <DownloadButton onClick={() => console.log("Download Job Functions")}>
+            Download Industries
+          </DownloadButton>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton
-            text="Add New Sector"
-            callback={() => setIsVisible(true)}
-          />
+          <AddButton onClick={() => setIsVisible(true)}>
+            Add New Sector
+          </AddButton>
         </Col>
       </Row>
       <Row>

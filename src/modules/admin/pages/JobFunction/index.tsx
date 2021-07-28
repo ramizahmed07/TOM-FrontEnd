@@ -71,17 +71,15 @@ const JobFunction = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadButton
-            text="Upload Job Functions"
-            callback={() => console.log("upload job function")}
-          />
-          <DownloadButton
-            text="Download Job Functions"
-            callback={() => console.log("Download Job Functions")}
-          />
+          <UploadButton onClick={() => console.log("upload job function")}>
+            Upload Job Functions
+          </UploadButton>
+          <DownloadButton onClick={() => console.log("Download Job Functions")}>
+            Download Job Functions
+          </DownloadButton>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton text="Add New Job" callback={() => setIsVisible(true)} />
+          <AddButton onClick={() => setIsVisible(true)}>Add New Job</AddButton>
         </Col>
       </Row>
       <Row>

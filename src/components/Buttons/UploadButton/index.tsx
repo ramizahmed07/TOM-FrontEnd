@@ -1,18 +1,20 @@
 import { Button } from "antd";
 
 import { ReactComponent as UploadIcon } from "@assets/images/upload.svg";
-import { BtnInterface } from "@/types";
 
-const UploadBtn: React.FC<BtnInterface> = ({ text, callback }) => {
+const UploadBtn: React.FC<React.HTMLProps<HTMLButtonElement>> = ({
+  onClick,
+  children,
+}) => {
   return (
     <Button
       className="btn btn--upload"
       type="primary"
-      onClick={callback}
+      onClick={onClick}
       icon={<UploadIcon />}
       size="large"
     >
-      <span>{text}</span>
+      <span>{children}</span>
     </Button>
   );
 };
