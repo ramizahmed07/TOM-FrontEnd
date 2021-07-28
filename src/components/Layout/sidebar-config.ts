@@ -38,17 +38,17 @@ const config = [
       {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
-        path: "/settings/sectors",
+        path: "/sectors",
       },
       {
         title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
-        path: "/settings/job-function",
+        path: "/job-function",
       },
       {
         title: "Grade map table",
         icon: ListIcon,
-        path: "/settings/grade-map-table",
+        path: "/grade-map-table",
       },
     ],
   },

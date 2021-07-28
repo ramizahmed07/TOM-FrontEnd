@@ -1,12 +1,13 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Col, Dropdown, Menu, Row, TableColumnsType, Typography } from "antd";
 import { useHistory } from "react-router-dom";
 
+import "./sectors.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-import { ModalInterface } from "@/types";
+// import { ModalInterface } from "@/types";
 import Table from "@components/Table";
-import AddSector from "@components/Sectors/AddSector";
 import { AddBtn, DownloadBtn, UploadBtn } from "@components/Buttons";
+import AddSector from "./AddSector";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -28,26 +29,20 @@ const columns: TableColumnsType<TableRow> = [
     width: "55%",
   },
   {
-    title: <span className="settings__table__action__col">Actions</span>,
+    title: <span className="center">Actions</span>,
     key: "action",
     fixed: "right",
     width: "15%",
     render: () => {
       const menu = (
         <Menu>
-          <Menu.Item className="table__action__item">Edit</Menu.Item>
-          <Menu.Item danger className="table__action__item">
-            Delete
-          </Menu.Item>
+          <Menu.Item>Edit</Menu.Item>
+          <Menu.Item danger>Delete</Menu.Item>
         </Menu>
       );
       return (
         <div className="table__action__menu">
-          <Dropdown
-            overlay={menu}
-            trigger={["click"]}
-            className="table__action__dropdown"
-          >
+          <Dropdown overlay={menu} trigger={["click"]}>
             <MenuIcon />
           </Dropdown>
         </div>
@@ -80,13 +75,13 @@ const data: TableRow[] = [
   },
 ];
 
-interface SectorsProps extends ModalInterface {}
+// interface SectorsProps extends ModalInterface {}
 
-const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
+const Sectors = () => {
   const history = useHistory();
-
+  const [isVisible, setIsVisible] = useState(false);
   const onRowClick = (data: any) => {
-    history.push(`/settings/sectors/${data?.id}`);
+    history.push(`/sectors/${data?.id}`);
   };
 
   return (
@@ -95,13 +90,11 @@ const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
 
       <Row>
         <Col span={24}>
-          <Typography.Paragraph className="settings__title">
-            Sectors, Industry & Sub-Industry
-          </Typography.Paragraph>
+          <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
       </Row>
-      <Row>
-        <Col className="settings__parent__col" span={16}>
+      <Row className="mt-16 mb-20">
+        <Col className="sectors__btns__col" span={16}>
           <UploadBtn
             text="Upload Industries"
             callback={() => console.log("upload btn")}
@@ -111,11 +104,11 @@ const Sectors: FC<SectorsProps> = ({ isVisible, setIsVisible }) => {
             callback={() => console.log("download btn")}
           />
         </Col>
-        <Col className="settings__parent__col--last" span={8}>
+        <Col className="sectors__btns__col--last" span={8}>
           <AddBtn text="Add New Sector" callback={() => setIsVisible(true)} />
         </Col>
       </Row>
-      <Row className="settings__table">
+      <Row>
         <Table onRowClick={onRowClick} data={data} columns={columns} />
       </Row>
     </>

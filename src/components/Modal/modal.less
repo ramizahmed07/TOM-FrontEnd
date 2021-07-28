@@ -1,38 +1,43 @@
-.modal .ant-modal-content {
-  border-radius: 4px;
-  height: 662px;
-  position: relative;
-}
+.modal {
+  &__row {
+    margin: 0 -32px;
+    padding: 32px;
+    &:first-of-type {
+      padding-top: 0;
+    }
+    &:not(:last-of-type) {
+      border-bottom: @border;
+      margin-bottom: 24px;
+    }
+  }
 
-.modal .ant-modal-header {
-  border-radius: 4px 4px 0 0;
-}
-
-.modal .ant-modal-body {
-  padding: 32px 32px 0 32px;
-}
-
-.modal .ant-modal-footer {
-  border-top: 0;
-  position: absolute;
-  bottom: 0;
-  padding: 24px 32px;
-  width: 100%;
-  display: flex;
-}
-
-.modal .ant-modal-footer button {
-  height: 40px;
-  font-weight: 600;
-  padding: 0 40px;
-}
-
-.modal .ant-modal-footer button:last-of-type {
-  border-color: @primary-color;
-  color: @primary-color;
-  margin-left: 16px !important;
-}
-
-.modal__title {
-  font-weight: 600;
+  .ant-modal-content {
+    border-radius: 4px;
+    height: 662px;
+    position: relative;
+  }
+  .ant-modal-header {
+    border-radius: 4px 4px 0 0;
+  }
+  .ant-modal-body {
+    padding: 32px 32px 0 32px;
+  }
+  .ant-modal-footer {
+    border-top: 0;
+    position: absolute;
+    bottom: 0;
+    padding: 24px 32px;
+    width: 100%;
+    display: flex;
+  }
+  .ant-modal-footer button {
+    height: 40px;
+    font-weight: 600;
+    padding: 0 40px;
+    &:last-of-type {
+      border-color: @primary-color;
+      color: @primary-color;
+      margin-left: 16px !important;
+    }
+  }
 }

@@ -4,7 +4,7 @@ import AntModal from "antd/lib/modal/Modal";
 import "./modal.less";
 
 const ModalTitle: FC<{ title: string }> = ({ title }) => {
-  return <div className="modal__title">{title}</div>;
+  return <div className="sub-heading">{title}</div>;
 };
 
 interface ModalProps {
@@ -22,7 +22,7 @@ const Modal: FC<ModalProps> = ({
   footer,
   width = 1092,
   children,
-  className = "modal",
+  className,
 }) => {
   return (
     <AntModal
@@ -30,7 +30,7 @@ const Modal: FC<ModalProps> = ({
       centered={true}
       visible={isVisible}
       closable={false}
-      className={className}
+      className={`modal ${className}`}
       maskClosable={false}
       destroyOnClose={true}
       footer={footer}

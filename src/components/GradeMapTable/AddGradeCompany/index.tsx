@@ -16,6 +16,7 @@ const AddGradeCompany = () => {
         <Row className="addGradeCompany__header">
           <div className="create__title">Basic information</div>
         </Row>
+        <Row></Row>
       </div>
     </>
   );

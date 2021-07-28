@@ -4,6 +4,9 @@ import "./styles/index.less";
 import Layout from "@components/Layout";
 import Login from "@/modules/admin/pages/Auth/Login";
 import Settings from "@/modules/admin/pages/Settings";
+import Sectors from "@/modules/admin/pages/Sectors";
+import Industry from "./modules/admin/pages/Sectors/Industry";
+import JobFunction from "./components/JobFunction";
 
 function App() {
   return (
@@ -14,8 +17,14 @@ function App() {
           <Route exact path="/">
             <div>Home</div>
           </Route>
-          <Route path="/settings">
-            <Settings />
+          <Route exact path="/sectors">
+            <Sectors />
+          </Route>
+          <Route exact path="/sectors/:id">
+            <Industry />
+          </Route>
+          <Route exact path="/job-function">
+            {/* <JobFunction /> */}
           </Route>
         </Layout>
       </Switch>

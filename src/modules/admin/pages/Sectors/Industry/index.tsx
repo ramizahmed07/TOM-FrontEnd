@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Col, Row, TableColumnsType, Typography } from "antd";
 
 import Table from "@/components/Table";
-import AddIndustry from "@/components/Sectors/Industry/AddIndustry";
 import { ModalInterface } from "@/types";
 import { AddBtn } from "@/components/Buttons";
+import AddIndustry from "./AddIndustry";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -27,19 +27,15 @@ const columns: TableColumnsType<TableRow> = [
     width: "55%",
   },
   {
-    title: <span className="settings__table__action__col">Actions</span>,
+    title: "Actions",
     key: "action",
     fixed: "right",
     width: "15%",
     render: () => {
       return (
         <div>
-          <Button className="settings__table__action__col__btn" type="link">
-            View
-          </Button>
-          <Button className="settings__table__action__col__btn" type="link">
-            Edit
-          </Button>
+          <span className="table__action__btn">View</span>
+          <span className="table__action__btn">Edit</span>
         </div>
       );
     },
@@ -70,24 +66,21 @@ const data: TableRow[] = [
   },
 ];
 
-interface IndustryProps extends ModalInterface {}
-
-const Industry: FC<IndustryProps> = ({ isVisible, setIsVisible }) => {
+const Industry = () => {
+  const [isVisible, setIsVisible] = useState(false);
   return (
     <>
       <AddIndustry isVisible={isVisible} setIsVisible={setIsVisible} />
       <Row>
         <Col span={16}>
-          <Typography.Paragraph className="settings__title">
-            Sectors, Industry & Sub-Industry
-          </Typography.Paragraph>
+          <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
-        <Col className="settings__parent__col--last" span={8}>
+        <Col className="sectors__btns__col--last" span={8}>
           <AddBtn text="Add Industry" callback={() => setIsVisible(true)} />
         </Col>
       </Row>
 
-      <Row>
+      <Row className="mt-20">
         <Table data={data} columns={columns} />
       </Row>
     </>

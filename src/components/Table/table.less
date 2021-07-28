@@ -11,6 +11,14 @@
     padding-bottom: 0 !important;
     height: 49px !important;
   }
+  .table__action__menu {
+    display: flex;
+    justify-content: center;
+  }
+
+  .table__filter__icon {
+    fill: @secondary-text;
+  }
   .ant-table-thead {
     .ant-table-cell {
       color: @secondary-text;
@@ -30,6 +38,19 @@
           margin-right: 2.2rem;
         }
       }
+    }
+  }
+  .table__action__btn {
+    color: #566eeb;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    &:first-of-type {
+      margin-right: 32px;
+    }
+    &--delete {
+      color: #d83939;
     }
   }
 }

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Route, Switch, useHistory, useLocation } from "react-router";
 
 import "./settings.less";
-import Sectors from "@/components/Sectors";
-import Industry from "@/components/Sectors/Industry";
-import JobFunction from "@/components/JobFunction";
-import GradeMapTable from "@/components/GradeMapTable";
-import AddGradeCompany from "@/components/GradeMapTable/AddGradeCompany";
+// import Sectors from "@/modules/admin/pages/Sectors";
+// import Industry from "@/modules/admin/pages/Sectors/Industry";
+// import JobFunction from "@/components/JobFunction";
+// import GradeMapTable from "@/components/GradeMapTable";
+// import AddGradeCompany from "@/components/GradeMapTable/AddGradeCompany";
 
 const Settings = () => {
   const location = useLocation();
@@ -22,7 +22,8 @@ const Settings = () => {
 
   return (
     <div>
-      <Switch>
+      Hello
+      {/* <Switch>
         <Route exact path="/settings/sectors">
           <Sectors isVisible={isSectorModal} setIsVisible={setIsSectorModal} />
         </Route>
@@ -41,7 +42,7 @@ const Settings = () => {
         <Route exact path="/settings/grade-map-table/add-grade-company">
           <AddGradeCompany />
         </Route>
-      </Switch>
+      </Switch> */}
     </div>
   );
 };

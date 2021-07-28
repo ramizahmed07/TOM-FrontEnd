@@ -51,28 +51,23 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
       isVisible={isVisible}
     >
       <>
-        <Row className="create__row">
+        <Row className="modal__row">
           <Col span={11}>
             <label>Select a sector</label>
             <Select
               value={sector}
               size="large"
-              className="create__dropdown"
               placeholder="Select sector from here..."
               onChange={onChange}
             >
               {SECTORS.map(({ title, id, value }: Sector) => (
-                <Option
-                  key={id}
-                  className="create__dropdown__option"
-                  value={value}
-                >
+                <Option key={id} value={value}>
                   {title}
                 </Option>
               ))}
               <Option value="button">
                 <div
-                  className="create__dropdown__option create__dropdown__option--btn"
+                  className="link"
                   onMouseDown={() => console.log("Add new industry")}
                 >
                   Add new industry
@@ -81,32 +76,27 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
             </Select>
           </Col>
         </Row>
-        <div className="create__title">Choose Industry</div>
-        <Row className="create__row">
+        <div className="sub-heading">Choose Industry</div>
+        <Row className="modal__row">
           <Col span={11}>
             <label>Select industry</label>
             <Select
               value={industries}
               size="large"
               showArrow
-              className="create__dropdown"
               mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
               onChange={handleChange}
             >
               {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option
-                  key={id}
-                  className="create__dropdown__option"
-                  value={value}
-                >
+                <Option key={id} value={value}>
                   {title}
                 </Option>
               ))}
               <Option value="button">
                 <div
-                  className="create__dropdown__option create__dropdown__option--btn"
+                  className="link"
                   onMouseDown={() => console.log("Add new industry")}
                 >
                   Add new industry

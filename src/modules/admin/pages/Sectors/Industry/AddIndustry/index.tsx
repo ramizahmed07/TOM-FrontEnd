@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Select } from "antd";
 
 import Modal from "@/components/Modal";
 import { ModalInterface } from "@/types";
-import { INDUSTRIES, Sector } from "@components/Sectors/AddSector/config";
+import { INDUSTRIES, Sector } from "../../AddSector/config";
 
 const { Option } = Select;
 
