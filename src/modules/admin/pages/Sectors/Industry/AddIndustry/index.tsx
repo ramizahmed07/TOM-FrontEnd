@@ -2,12 +2,12 @@ import { FC, useState } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
 import Modal from "@/components/Modal";
-import { ModalInterface } from "@/types";
+import { IModal } from "@/types";
 import { INDUSTRIES, Sector } from "../../AddSector/config";
 
 const { Option } = Select;
 
-interface AddIndustryProps extends ModalInterface {}
+interface AddIndustryProps extends IModal {}
 
 const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
   const [industries, setIndustries] = useState<any>(undefined);

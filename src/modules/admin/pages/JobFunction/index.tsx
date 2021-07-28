@@ -33,7 +33,9 @@ const columns: TableColumnsType<TableRow> = [
       return (
         <div>
           <span className="table__action__btn">Edit</span>
-          <span className="table__action__btn--delete">Delete</span>
+          <span className="table__action__btn table__action__btn--delete">
+            Delete
+          </span>
         </div>
       );
     },

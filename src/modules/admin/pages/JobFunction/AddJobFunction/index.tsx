@@ -1,13 +1,13 @@
 import { Button, Col, Input, Row, Select } from "antd";
 import { FC, useState } from "react";
 
-import { ModalInterface } from "@/types";
+import { IModal } from "@/types";
 import Modal from "@/components/Modal";
 import { SUB_JOB_FUNCTIONS, SubJobFunction } from "./config";
 
 const { Option } = Select;
 
-const AddJobFunction: FC<ModalInterface> = ({ isVisible, setIsVisible }) => {
+const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [subJobFunctions, setSubJobFunctions] = useState<string[]>([]);
   const [jobFunction, setJobFunction] = useState("");
 
