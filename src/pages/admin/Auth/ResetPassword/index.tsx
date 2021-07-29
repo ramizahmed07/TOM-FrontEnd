@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ import RoutePaths from "@/routes/RoutePaths";
 
 const ResetPassword = () => {
   const history = useHistory();
+
   return (
     <Row className="auth__container">
       <AuthLandingImg />
@@ -16,11 +16,10 @@ const ResetPassword = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Reset your{" "}
-            <span className="auth__company__name">Password?</span>
+            Reset your <span className="auth__company__name">Password?</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
-          Enter your new password below
+            Enter your new password below
           </Typography.Paragraph>
 
           {/* FORM */}
@@ -51,7 +50,6 @@ const ResetPassword = () => {
               />
             </Form.Item>
 
-            
             <Form.Item
               className="form__item"
               label={
@@ -61,7 +59,10 @@ const ResetPassword = () => {
               }
               name="retype-password"
               rules={[
-                { required: true, message: "Please re-enter your new password!" },
+                {
+                  required: true,
+                  message: "Please re-enter your new password!",
+                },
               ]}
             >
               <Input.Password
@@ -69,8 +70,6 @@ const ResetPassword = () => {
                 placeholder="Re-Enter your new password here..."
               />
             </Form.Item>
-
-
 
             <Form.Item wrapperCol={{ span: 24 }}>
               <Button
@@ -88,7 +87,13 @@ const ResetPassword = () => {
           </Form>
 
           <Typography.Paragraph className="auth__form__prompt">
-            Back to <Link className="auth__form__prompt backToLogin" to={RoutePaths.Auth.login}>Login?</Link>
+            Back to{" "}
+            <Link
+              className="auth__form__prompt backToLogin"
+              to={RoutePaths.Auth.login}
+            >
+              Login?
+            </Link>
           </Typography.Paragraph>
         </div>
       </Col>

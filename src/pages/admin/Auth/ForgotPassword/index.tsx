@@ -22,6 +22,7 @@ const Timer = ({ minutes, seconds }: { minutes: number; seconds: number }) => {
 
 const SendLinkView = () => {
   const history = useHistory();
+
   return (
     <>
       <Typography.Paragraph className="auth__form_title">
@@ -74,6 +75,7 @@ const SendLinkView = () => {
 
 const ResendLinkView = () => {
   const history = useHistory();
+
   return (
     <div className="resend-link-container">
       <Typography.Paragraph className="auth__form_title">
