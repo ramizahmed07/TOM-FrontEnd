@@ -75,8 +75,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             );
           })}
         </Sider>
-        <AntdLayout style={{ padding: "0" }}>
-          <Header className="layout__header">
+        <AntdLayout className='content__container'>
+          <Header  className="layout__header">
             <div className="header__notif__icon__container">
               <Bell className="header__notif__icon" />
             </div>
