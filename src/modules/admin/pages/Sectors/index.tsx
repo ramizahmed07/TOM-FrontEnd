@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { Col, Dropdown, Menu, Row, TableColumnsType } from "antd";
 import { useHistory } from "react-router-dom";
 

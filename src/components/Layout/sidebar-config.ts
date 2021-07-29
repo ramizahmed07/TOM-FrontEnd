@@ -16,7 +16,7 @@ const config = [
   {
     title: "Users",
     icon: UsersIcon,
-    path: "/users",
+    path: ["/companies", "/sub-admins"],
     sub: [
       {
         title: "Companies",
@@ -33,7 +33,7 @@ const config = [
   {
     title: "Settings",
     icon: SettingsIcon,
-    path: "/sectors",
+    path: ["/sectors", "/job-function", "/grade-map-table"],
     sub: [
       {
         title: "Sectors, Industry & Sub-Industry",

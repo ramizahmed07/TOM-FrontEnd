@@ -7,13 +7,13 @@ import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
-
+  const { pathname } = useLocation();
   const menu = (
     <Menu>
       <Menu.Item key="1">Clicking me will not close the menu.</Menu.Item>
@@ -29,12 +29,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="sider__logo__container">
             <Logo />
           </div>
-          {config.map((config, idx) => {
+          {config.map((config: any, idx) => {
             return (
               <div className="sider__links__container" key={idx}>
                 <NavLink
                   key={idx}
-                  to={config.path || ""}
+                  to={
+                    Array.isArray(config.path) && config.path.includes(pathname)
+                      ? pathname
+                      : config.path
+                  }
                   className="sider__link"
                   activeClassName="sider__sub__link--active"
                 >
@@ -43,7 +47,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </div>
                   {config.title}
                 </NavLink>
-                {config.sub?.map((subLink, i) => (
+                {config.sub?.map((subLink: any, i: number) => (
                   <NavLink
                     key={i}
                     to={subLink.path || ""}
