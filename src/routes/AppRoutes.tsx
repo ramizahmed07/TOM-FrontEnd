@@ -19,12 +19,19 @@ const CompanyList = React.lazy(
 const CompanyCreate = React.lazy(
   () => import("@/pages/admin/User/Companies/company-create/company-create")
 );
+const CompanyList = React.lazy(
+  () => import("@/modules/admin/pages/User/Companies/company-list/company-list")
+);
+const CompanyCreate = React.lazy(
+  () => import("@/modules/admin/pages/User/Companies/company-create/company-create")
+);
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={"Loading..."}>
       <Router>
         <Switch>
+<<<<<<< HEAD
           <Route path={RoutePaths.Auth.login}>
             <Login />
           </Route>
@@ -40,11 +47,25 @@ const AppRoutes = () => {
           <Route path={RoutePaths.User.companyCreate}>
             <CompanyCreate />
           </Route>
+=======
+          <Route path={RoutePaths.Auth.login} component={Login} />
+          <Route
+            path={RoutePaths.Auth.forgotPassword}
+            component={ForgotPassword}
+          />
+          <Route
+            path={RoutePaths.Auth.resetPassword}
+            component={ResetPassword}
+          />
+          <Route path={RoutePaths.User.companyListing} component={CompanyList} />
+          <Route path={RoutePaths.User.companyCreate} component={CompanyCreate} />
+>>>>>>> cc74055a6e79a72c82a39df771dab76b30be446a
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
               <TableTest />
             </Layout>
           </Route>
+
         </Switch>
       </Router>
     </Suspense>
