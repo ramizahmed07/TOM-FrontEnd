@@ -7,6 +7,7 @@ import { ReactComponent as Logo } from "@assets/images/logo.svg";
 
 const Login = () => {
   const history = useHistory();
+
   return (
     <Row className="login__container">
       <Col span={14} className="login__left">
@@ -90,7 +91,7 @@ const Login = () => {
                 className="login__btn"
                 size="large"
                 onClick={() => {
-                  history.push("/");
+                  history.push("/settings");
                 }}
               >
                 Sign In

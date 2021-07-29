@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Layout as AntdLayout,
-  Menu,
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Avatar,
-} from "antd";
+import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
 
 import "./layout.less";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
@@ -14,12 +7,13 @@ import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
+import { NavLink, useLocation } from "react-router-dom";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
-
+  const { pathname } = useLocation();
   const menu = (
     <Menu>
       <Menu.Item key="1">Clicking me will not close the menu.</Menu.Item>
@@ -35,33 +29,36 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="sider__logo__container">
             <Logo />
           </div>
-          {config.map((config, idx) => {
+          {config.map((config: any, idx) => {
             return (
               <div className="sider__links__container" key={idx}>
-                <Button
-                  type="link"
-                  className="sider__link"
-                  icon={
-                    <div className="sider__icon__container">
-                      <config.icon className="sider__link__icon" />
-                    </div>
+                <NavLink
+                  key={idx}
+                  to={
+                    Array.isArray(config.path) && config.path.includes(pathname)
+                      ? pathname
+                      : config.path
                   }
+                  className="sider__link"
+                  activeClassName="sider__sub__link--active"
                 >
+                  <div className="sider__icon__container">
+                    <config.icon className="sider__link__icon" />
+                  </div>
                   {config.title}
-                </Button>
-                {config.sub?.map((subLink, i) => (
-                  <Button
+                </NavLink>
+                {config.sub?.map((subLink: any, i: number) => (
+                  <NavLink
                     key={i}
-                    type="link"
+                    to={subLink.path || ""}
                     className="sider__sub__link"
-                    icon={
-                      <div className="sider__icon__container">
-                        <subLink.icon className="sider__link__icon" />
-                      </div>
-                    }
+                    activeClassName="sider__sub__link--active"
                   >
+                    <div className="sider__icon__container">
+                      <subLink.icon className="sider__link__icon" />
+                    </div>
                     {subLink.title}
-                  </Button>
+                  </NavLink>
                 ))}
               </div>
             );

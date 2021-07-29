@@ -11,36 +11,44 @@ const config = [
   {
     title: "Dashboard",
     icon: DashboardIcon,
+    path: "/dashboard",
   },
   {
     title: "Users",
     icon: UsersIcon,
+    path: ["/companies", "/sub-admins"],
     sub: [
       {
         title: "Companies",
         icon: CompaniesIcon,
+        path: "/companies",
       },
       {
         title: "Sub-Admins",
         icon: SubAdminIcon,
+        path: "/sub-admins",
       },
     ],
   },
   {
     title: "Settings",
     icon: SettingsIcon,
+    path: ["/sectors", "/job-function", "/grade-map-table"],
     sub: [
       {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
+        path: "/sectors",
       },
       {
-        title: "Job Function & sub-function",
+        title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
+        path: "/job-function",
       },
       {
         title: "Grade map table",
         icon: ListIcon,
+        path: "/grade-map-table",
       },
     ],
   },

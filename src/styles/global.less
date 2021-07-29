@@ -1,31 +1,42 @@
-// TABLE STYLES
-.ant-table-thead {
-  .ant-table-cell {
-    color: @secondary-text;
-    font-size: @text-sm;
-    font-weight: 600;
-    text-transform: uppercase;
-
-    &::before {
-      display: none;
-    }
-
-    .ant-table-filter-column {
-      width: min-content;
-      white-space: nowrap;
-
-      .ant-table-column-title {
-        margin-right: 2.2rem;
-      }
-    }
-  }
+// Popup Styles
+.success__popup {
+  width: 661px !important;
 }
 
-.table__action__menu {
-  display: flex;
-  justify-content: center;
+.success__popup .ant-modal-content {
+  width: 661px;
+  height: 301px;
 }
 
-.table__filter__icon {
-  fill: @secondary-text;
+.success__popup img {
+  margin-bottom: 24px;
+}
+
+.success__popup button {
+  height: 40px;
+  padding: 0 40px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.success__popup__title {
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.success__popup__desc {
+  margin-bottom: 12px;
+  color: #435465;
+}
+
+// Select styles
+.ant-select,
+.ant-input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+}
+.ant-select-item-option {
+  font-weight: 500;
 }
