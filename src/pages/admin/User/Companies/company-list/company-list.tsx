@@ -19,7 +19,6 @@ import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
 import "./style.less";
 import { useHistory } from "react-router-dom";
-import AppRoutes from "@/routes";
 import RoutePaths from "@/routes/RoutePaths";
 
 const CompanyList = () => {

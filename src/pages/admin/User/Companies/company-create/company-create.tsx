@@ -3,12 +3,6 @@ import Layout from "@/components/Layout";
 import {
   Col,
   Row,
-  Table,
-  Dropdown,
-  Menu,
-  TableColumnsType,
-  Switch,
-  Tag,
   Button,
   Input,
   Form,
@@ -17,7 +11,6 @@ import {
   Upload,
 } from "antd";
 import { Option } from "antd/lib/mentions";
-import { UploadOutlined } from "@ant-design/icons";
 import { GoLocation } from "react-icons/go";
 import "./style.less";
 
