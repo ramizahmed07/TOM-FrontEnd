@@ -1,7 +1,6 @@
-import React from "react";
 import { Col, Typography } from "antd";
 
-import './style.less';
+import "./style.less";
 import loginPhoto from "@assets/images/login.png";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 

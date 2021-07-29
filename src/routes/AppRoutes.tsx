@@ -16,18 +16,18 @@ const ResetPassword = React.lazy(
 
 const AppRoutes = () => {
   return (
-    <Suspense fallback={"Loading ..."}>
+    <Suspense fallback={"Loading..."}>
       <Router>
         <Switch>
-          <Route path={RoutePaths.Auth.login} component={Login} />
-          <Route
-            path={RoutePaths.Auth.forgotPassword}
-            component={ForgotPassword}
-          />
-          <Route
-            path={RoutePaths.Auth.resetPassword}
-            component={ResetPassword}
-          />
+          <Route path={RoutePaths.Auth.login}>
+            <Login />
+          </Route>
+          <Route path={RoutePaths.Auth.forgotPassword}>
+            <ForgotPassword />
+          </Route>
+          <Route path={RoutePaths.Auth.resetPassword}>
+            <ResetPassword />
+          </Route>
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
               <TableTest />
