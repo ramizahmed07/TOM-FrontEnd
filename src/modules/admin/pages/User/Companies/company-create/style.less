@@ -1,8 +1,12 @@
 @form-padding: 20px;
 
 .container {
-  // height: 100vh;
-  // border: 1px solid green !important;
+  padding-bottom: @form-padding;
+}
+
+.form_heading {
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .create__company__container {
@@ -14,21 +18,22 @@
   font-size: 16px;
   color: #0b2540;
   border-top: 0.75px solid #d9d9d9;
+}
 
+.basic_information_section_heading {
+  border-bottom: 0.75px solid #d9d9d9;
+  border-top: none;
 }
 
 .form__section {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-//   border-top: 0.75px solid #435465;
 }
 
 .form__section_container {
   flex: 1;
   padding: @form-padding;
-
-  //   border: 1px solid green;
 }
 
 .form__section_upload {
@@ -38,8 +43,6 @@
   justify-content: flex-end;
   align-items: center;
   padding: @form-padding;
-
-  //   border: 1px solid blue;
 }
 
 .financial_year_container,
@@ -58,14 +61,53 @@
   width: 47%;
 }
 
-.img_description_text{
-    font-size: 12px;
-    text-align: center;
-    margin-bottom: 0px;
-    margin-top: 10px;
+.img_description_text {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 0px;
+  margin-top: 10px;
 }
-.img_description_size{
-    font-size: 14px;
-    text-align: center;
-    margin: 0px;
+.img_description_size {
+  font-size: 14px;
+  text-align: center;
+  margin: 0px;
+}
+
+.contact__person__sub_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.contact__person_item {
+  flex: 1;
+  margin-right: 50px;
+}
+
+.form__submit__section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 320px;
+  padding: @form-padding;
+}
+
+.img_description_text {
+  color: @primary-color;
+  font-size: 12px;
+}
+
+.img_description_size {
+  color: @secondary-text;
+  font-size: 12px;
+}
+
+.stock_tracking_id__container {
+  display: flex;
+}
+
+.stock_tracking_id__container > input {
+  margin-right: 25px;
 }
