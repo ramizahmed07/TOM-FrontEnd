@@ -76,6 +76,7 @@ const data: TableRow[] = [
 const Sectors = () => {
   const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
+
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);
   };

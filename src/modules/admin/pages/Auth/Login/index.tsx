@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
@@ -8,6 +7,7 @@ import { ReactComponent as Logo } from "@assets/images/logo.svg";
 
 const Login = () => {
   const history = useHistory();
+
   return (
     <Row className="login__container">
       <Col span={14} className="login__left">

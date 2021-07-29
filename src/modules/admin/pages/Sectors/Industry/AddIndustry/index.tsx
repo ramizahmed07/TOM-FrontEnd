@@ -14,7 +14,6 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
 
   function handleChange(value: string) {
     if (value[value.length - 1] === "button") return;
-    console.log({ value });
     setIndustries(value);
   }
 
