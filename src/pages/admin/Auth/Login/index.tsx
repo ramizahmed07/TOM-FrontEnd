@@ -6,17 +6,6 @@ import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 
 const Login = () => {
   const history = useHistory();
-<<<<<<< HEAD:src/pages/admin/Auth/Login/index.tsx
-=======
-  return (
-    <Row className="login__container">
-      <Col span={14} className="login__left">
-        <img alt="login" src={loginPhoto} className="login__photo" />
-        <div className="login__photo__overlay"></div>
-        <div className="login__logo__container">
-          <Logo />
-        </div>
->>>>>>> Testing precommit prettier:src/pages/Login/index.tsx
 
   return (
     <Row className="auth__container">

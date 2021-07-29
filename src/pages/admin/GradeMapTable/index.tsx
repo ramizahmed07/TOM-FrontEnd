@@ -91,7 +91,6 @@ const data: TableRow[] = [
 ];
 
 const GradeMapTable = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const history = useHistory();
 
   const handleAddBtn = () => {
