@@ -1,4 +1,4 @@
-import { TableColumnsType } from "antd";
+import { Input, TableColumnsType } from "antd";
 
 export interface ICompany {
   id: string;
@@ -39,31 +39,48 @@ export const columns = [
     title: "tc rank",
     dataIndex: "tcRank",
     key: "tcRank",
-    width: "13%",
+    width: "10%",
   },
   {
     title: "hrbs",
     dataIndex: "hrbs",
     key: "hrbs",
-    width: "13%",
+    width: "10%",
   },
   {
     title: "mercer pc",
     dataIndex: "mercerPc",
     key: "mercerPc",
-    width: "13%",
+    width: "10%",
   },
   {
     title: "mercer cl",
     dataIndex: "mercerCl",
     key: "mercerCl",
-    width: "13%",
+    width: "10%",
   },
   {
     title: "tw grade",
     dataIndex: "twGrade",
     key: "twGrade",
-    // width: ,
+    width: "10%",
+  },
+  {
+    title: "Name here...",
+    dataIndex: "name",
+    key: "name",
+    width: 50,
+
+    render: (index: any, record: any) => {
+      console.log({ index, record });
+      return (
+        <Input
+          className="table__input"
+          size="middle"
+          placeholder="Enter grade here..."
+        />
+      );
+    },
   },
 ];
 
@@ -92,29 +109,5 @@ export const data = [
     mercerPc: "-",
     mercerCl: "27",
     twGrade: "17",
-  },
-  {
-    id: "03",
-    tcRank: "03",
-    hrbs: "38",
-    mercerPc: "27",
-    mercerCl: "38",
-    twGrade: "31",
-  },
-  {
-    id: "04",
-    tcRank: "04",
-    hrbs: "40",
-    mercerPc: "27",
-    mercerCl: "12",
-    twGrade: "35",
-  },
-  {
-    id: "05",
-    tcRank: "05",
-    hrbs: "20",
-    mercerPc: "37",
-    mercerCl: "42",
-    twGrade: "15",
   },
 ];

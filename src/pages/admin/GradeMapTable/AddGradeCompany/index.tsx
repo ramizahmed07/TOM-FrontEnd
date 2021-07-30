@@ -3,6 +3,7 @@ import { Col, Input, Row, Select, TableColumnsType } from "antd";
 import { useMemo, useState } from "react";
 
 import "./addGradeCompany.less";
+import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import { columns, COMPANIES, data, ICompany } from "./config";
 
 const { Option } = Select;
@@ -10,34 +11,51 @@ const { Option } = Select;
 const AddGradeCompany = () => {
   const [companies, setCompanies] = useState<string[]>(["hrbs", "mercerCl"]);
   const [companyName, setCompanyName] = useState("");
-
+  const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
+  const [tableData, setTableData] = useState(data);
   const cols = useMemo(() => {
     return columns
-      .filter(column => companies.includes(column.dataIndex))
+      .filter(
+        column =>
+          companies.includes(column.dataIndex) || column.dataIndex === "name"
+      )
       .sort(function (a, b) {
+        if (a.dataIndex === "name") return 1;
         return companies.indexOf(a.dataIndex) - companies.indexOf(b.dataIndex);
-      })
-      .map((col, i) => ({
-        ...col,
-        width: i !== companies.length - 1 ? "13%" : "",
-      }));
+      });
   }, [companies]);
-
-  const tableData = useMemo(() => {
-    return data.map(x => {
-      const obj: any = { ...x };
-      Object.keys(x).forEach(key => companies.includes(key) || delete obj[key]);
-      return obj;
-    });
-  }, [companies]);
+  console.log(data, "data");
+  // const tableData = useMemo(() => {
+  //   return data.map(x => {
+  //     const obj: any = { ...x };
+  //     Object.keys(x).forEach(key => companies.includes(key) || delete obj[key]);
+  //     return obj;
+  //   });
+  // }, [companies, companyCol]);
 
   const handleDropdown = (value: string[]) => {
     setCompanies(value);
+
+    setTableData(
+      data.map((item: any) => {
+        const obj: any = {};
+        value.forEach((x: any) => (obj[x] = item[x]));
+        return obj;
+      })
+    );
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value);
   };
+
+  const addGrade = () => {
+    setTableData((prev: any) => [
+      ...prev,
+      { id: Math.floor(Math.random() * 100) },
+    ]);
+  };
+
   return (
     <>
       <Row>
@@ -85,7 +103,7 @@ const AddGradeCompany = () => {
           <Col span={3} />
         </Row>
         <Row>
-          <div className="sub-heading addGradeCompany__table__title">
+          <div className="sub-heading addGradeCompany__title">
             Create Grade Table
           </div>
 
@@ -94,6 +112,15 @@ const AddGradeCompany = () => {
             columns={cols || columns}
             data={tableData}
           />
+          <div className="addGradeCompany__lastRow">
+            <div
+              onClick={addGrade}
+              className="addGradeCompany__lastRow__button"
+            >
+              <PlusIcon fill="#2f49d1" />
+              Add Grade
+            </div>
+          </div>
         </Row>
       </div>
     </>
