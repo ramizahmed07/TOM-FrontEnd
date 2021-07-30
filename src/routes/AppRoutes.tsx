@@ -19,6 +19,10 @@ const CompanyList = React.lazy(
 const CompanyCreate = React.lazy(
   () => import("@/pages/admin/User/Companies/company-create/company-create")
 );
+const CompanyProfile = React.lazy(
+  () => import("@/pages/admin/User/Companies/company-profile/company-profile")
+);
+
 const AppRoutes = () => {
   return (
     <Suspense fallback={"Loading..."}>
@@ -39,12 +43,14 @@ const AppRoutes = () => {
           <Route path={RoutePaths.User.companyCreate}>
             <CompanyCreate />
           </Route>
+          <Route path={RoutePaths.User.companyProfile}>
+            <CompanyProfile />
+          </Route>
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
               <TableTest />
             </Layout>
           </Route>
-
         </Switch>
       </Router>
     </Suspense>
