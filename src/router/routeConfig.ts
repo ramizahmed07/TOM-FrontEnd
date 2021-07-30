@@ -1,0 +1,54 @@
+import ForgotPassword from "@/pages/admin/Auth/ForgotPassword";
+import Login from "@/pages/admin/Auth/Login";
+import ResetPassword from "@/pages/admin/Auth/ResetPassword";
+import GradeMapTable from "@/pages/admin/GradeMapTable";
+import AddGradeCompany from "@/pages/admin/GradeMapTable/AddGradeCompany";
+import JobFunction from "@/pages/admin/JobFunction";
+import Sectors from "@/pages/admin/Sectors";
+import Industry from "@/pages/admin/Sectors/Industry";
+import { Paths, IRoute } from "@/router";
+
+export const routeConfig: IRoute[] = [
+  {
+    path: Paths.Auth.login,
+    component: Login,
+    key: "Login",
+  },
+  {
+    path: Paths.Auth.forgot_password,
+    component: ForgotPassword,
+    key: "Forgot Password",
+  },
+  {
+    path: Paths.Auth.reset_password,
+    component: ResetPassword,
+    key: "Reset Password",
+  },
+  {
+    path: Paths.Settings.sectors.listing,
+    component: Sectors,
+    key: "Sectors",
+    exact: true,
+  },
+  {
+    path: Paths.Settings.sectors.listing,
+    component: Industry,
+    key: "Industry",
+  },
+  {
+    path: Paths.Settings.job_function,
+    component: JobFunction,
+    key: "Job Function",
+  },
+  {
+    path: Paths.Settings.grade_map_table.listing,
+    component: GradeMapTable,
+    key: "Grade Map Table",
+    exact: true,
+  },
+  {
+    path: Paths.Settings.grade_map_table.create_grade_company,
+    component: AddGradeCompany,
+    key: "Add new Company",
+  },
+];

@@ -3,6 +3,7 @@ import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
+import { Paths } from "@/router";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
@@ -37,6 +38,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Menu.Item key="3">Clicking me will close the menu.</Menu.Item>
     </Menu>
   );
+
+  if (
+    Object.values(Paths.Auth).some(path =>
+      window.location.pathname.includes(path)
+    )
+  )
+    return <div>{children}</div>;
 
   return (
     <AntdLayout className="layout__container">

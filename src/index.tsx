@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
+import App from "./App";
 import { store } from "@store/index";
 import reportWebVitals from "./reportWebVitals";
-import AppRoutes from "./routes";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AppRoutes />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

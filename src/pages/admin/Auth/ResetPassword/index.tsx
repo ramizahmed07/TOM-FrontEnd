@@ -3,8 +3,8 @@ import { Col, Row, Typography, Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 
 import "../style.less";
-import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
-import RoutePaths from "@routes/RoutePaths";
+import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
+import { Paths } from "@/router";
 
 const ResetPassword = () => {
   const history = useHistory();
@@ -78,7 +78,7 @@ const ResetPassword = () => {
                 className="login__btn"
                 size="large"
                 onClick={() => {
-                  history.push(RoutePaths.Auth.login);
+                  history.push(Paths.Auth.login);
                 }}
               >
                 Reset Password
@@ -90,7 +90,7 @@ const ResetPassword = () => {
             Back to{" "}
             <Link
               className="auth__form__prompt backToLogin"
-              to={RoutePaths.Auth.login}
+              to={Paths.Auth.login}
             >
               Login?
             </Link>
