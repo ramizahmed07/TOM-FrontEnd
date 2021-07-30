@@ -2370,6 +2370,11 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
+antd-country-phone-input@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/antd-country-phone-input/-/antd-country-phone-input-4.1.0.tgz#5eb6bb6c7baf3bf27ebd8e20071beca5044a36a4"
+  integrity sha512-fvv/ssEujPEy+AS4qTKphJVF+KxgeTa2dwUTHjzGs9yH7uV+ts3VWEwcyk/UDBEGbJ31w1gXxeEJcPEDgvkt5w==
+
 antd@^4.16.6:
   version "4.16.7"
   resolved "https://registry.yarnpkg.com/antd/-/antd-4.16.7.tgz#c51fb143288adb8b008a786efe8d5df13320ac4c"
@@ -12229,6 +12234,11 @@ worker-rpc@^0.1.0:
   integrity sha512-P1WjMrUB3qgJNI9jfmpZ/htmBEjFh//6l/5y8SD9hg1Ef5zTTVVoRjTrTEzPrNBQvmhMxkoTsjOXN10GWU7aCg==
   dependencies:
     microevent.ts "~0.1.1"
+
+world_countries_lists@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/world_countries_lists/-/world_countries_lists-2.2.0.tgz#d9b57b5949e53c6f8e5cf3b582f2ce52bb27275e"
+  integrity sha512-qRT0tHsqjS0DJy6iurjccOcfCjfArOVK2KC3+SGvXAqlWop3GHabQlycrw96U5iZUe8iN4AYPEk2Rbg5YhOCMQ==
 
 wrap-ansi@^5.1.0:
   version "5.1.0"

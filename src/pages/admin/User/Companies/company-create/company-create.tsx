@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "@/components/Layout";
 import {
   Col,
   Row,
@@ -12,9 +11,12 @@ import {
 } from "antd";
 import { Option } from "antd/lib/mentions";
 import { GoLocation } from "react-icons/go";
-import "./style.less";
+import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
+import en from "world_countries_lists/data/en/world.json";
 
+import "./style.less";
 import ImgUpload from "@assets/images/img-upload.png";
+import Layout from "@/components/Layout";
 
 const CompanyCreate = () => {
   return (
@@ -343,11 +345,13 @@ const CompanyCreate = () => {
                           },
                         ]}
                       >
-                        <Input
-                          className="form__input"
-                          type="text"
-                          placeholder="Enter name of contact number..."
-                        />
+                        <ConfigProvider locale={en}>
+                          <CountryPhoneInput
+                            value={{
+                              short: "us",
+                            }}
+                          />
+                        </ConfigProvider>
                       </Form.Item>
 
                       <Form.Item
