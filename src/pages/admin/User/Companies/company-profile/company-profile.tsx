@@ -1,8 +1,9 @@
 import React from "react";
 import { Col, Row, Tabs } from "antd";
 
-import './style.less';
+import "./style.less";
 import Layout from "@/components/Layout";
+import CompanyDetails from "./company-details/company-details";
 
 const CompanyProfile = () => {
   const { TabPane } = Tabs;
@@ -14,7 +15,7 @@ const CompanyProfile = () => {
             <h1 className="page__heading">Companies Profile</h1>
             <Tabs defaultActiveKey="1" type="card">
               <TabPane tab="Company details" key="1">
-                Content of Tab Pane 1
+                <CompanyDetails />
               </TabPane>
               <TabPane tab="Business units" key="2">
                 Content of Tab Pane 2
