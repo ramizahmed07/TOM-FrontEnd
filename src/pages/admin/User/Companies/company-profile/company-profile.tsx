@@ -12,19 +12,19 @@ const CompanyProfile = () => {
       <Layout>
         <Row>
           <Col span={24}>
-            <h1 className="page__heading">Companies Profile</h1>
+            <h1 className="page__heading">Company details</h1>
             <Tabs defaultActiveKey="1" type="card">
               <TabPane tab="Company details" key="1">
                 <CompanyDetails />
               </TabPane>
               <TabPane tab="Business units" key="2">
-                Content of Tab Pane 2
+                Business units
               </TabPane>
               <TabPane tab="Regions" key="3">
-                Content of Tab Pane 3
+                Regions
               </TabPane>
               <TabPane tab="Legal entities" key="4">
-                Content of Legal entities
+                Legal entities
               </TabPane>
             </Tabs>
           </Col>
