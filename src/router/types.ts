@@ -6,4 +6,5 @@ export interface IRoute {
   key: string;
   routes?: INestedRoute[];
   exact?: boolean;
+  breadcrumb?: string;
 }

@@ -3,12 +3,13 @@ import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
-import { Paths } from "@/router";
+import { Paths, routeConfig } from "@/router";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
+import { useBreadcrumbs } from "@/hooks";
 
 const { Header, Content, Sider } = AntdLayout;
 
@@ -30,6 +31,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       return "";
     }
   };
+  const breadcrumbs = useBreadcrumbs(routeConfig, {
+    disableDefaults: true,
+  });
+  const breadcrumbs_list = breadcrumbs.map(({ breadcrumb }) => breadcrumb);
+  const breadcrumb = breadcrumbs_list
+    ?.map((x: any) => x?.props?.children)
+    [breadcrumbs_list.length - 1]?.split(" /");
 
   const menu = (
     <Menu>
@@ -111,10 +119,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </Dropdown>
           </Header>
+
           <Breadcrumb className="layout__breadcrumbs">
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            {breadcrumb?.map((breadcrumb: string) => (
+              <Breadcrumb.Item key={breadcrumb}>{breadcrumb}</Breadcrumb.Item>
+            ))}
           </Breadcrumb>
           <Content
             className="site-layout-content"

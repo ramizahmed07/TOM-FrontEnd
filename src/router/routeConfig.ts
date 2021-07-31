@@ -29,26 +29,31 @@ export const routeConfig: IRoute[] = [
     component: Sectors,
     key: "Sectors",
     exact: true,
+    breadcrumb: "Settings / Sectors, Industry & Sub-Industry",
   },
   {
     path: Paths.Settings.sectors.listing,
     component: Industry,
     key: "Industry",
+    breadcrumb: "Settings / Sectors, Industry & Sub-Industry",
   },
   {
     path: Paths.Settings.job_function,
     component: JobFunction,
     key: "Job Function",
+    breadcrumb: "Settings / Job Function & Sub-Function",
   },
   {
     path: Paths.Settings.grade_map_table.listing,
     component: GradeMapTable,
     key: "Grade Map Table",
     exact: true,
+    breadcrumb: "Settings / Grade map table",
   },
   {
     path: Paths.Settings.grade_map_table.create_grade_company,
     component: AddGradeCompany,
     key: "Add new Company",
+    breadcrumb: "Settings / Grade map table / Add new company",
   },
 ];
