@@ -1,0 +1,77 @@
+.companyProfile {
+  padding-bottom: 16px;
+  &__tab {
+    transition: @transition-3ms;
+    background-color: white;
+    border: 0.5px solid rgba(67, 84, 101, 0.1);
+    color: @secondary-text !important;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 13px 16px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    &:not(:last-of-type) {
+      margin-right: 4px;
+    }
+    &--active,
+    &:hover {
+      background-color: @primary-color;
+      color: white !important;
+    }
+  }
+  &__content {
+    background-color: white;
+    border-radius: 2px;
+    &__header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px;
+      border-bottom: @border;
+      &__leftCol {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &__info {
+          margin-left: 40px;
+          div {
+            &:last-of-type {
+              font-size: @text-sm;
+              color: @primary-color;
+              margin: 8px 0;
+            }
+          }
+          p {
+            color: @secondary-text;
+            font-size: @text-sm;
+            font-weight: 500;
+          }
+        }
+      }
+      button {
+        height: 40px;
+        padding: 0 40px;
+      }
+    }
+    &__row {
+      padding: 32px 24px;
+      border-bottom: @border;
+      &__field {
+        margin-top: 34px;
+        display: flex;
+        &__key {
+          width: 336px;
+          max-width: 336px;
+          color: @secondary-text;
+          font-size: @text-sm;
+          font-weight: 400;
+        }
+        &__value {
+          font-size: @text-md;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
