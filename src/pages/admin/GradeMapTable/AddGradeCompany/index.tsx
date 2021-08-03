@@ -1,8 +1,8 @@
-import Table from "@/components/Table";
-import { Col, Input, Row, Select, TableColumnsType } from "antd";
+import { Col, Input, Row, Select } from "antd";
 import { useMemo, useState } from "react";
 
 import "./addGradeCompany.less";
+import Table from "@/components/Table";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import { columns, COMPANIES, data, ICompany } from "./config";
 
@@ -11,8 +11,9 @@ const { Option } = Select;
 const AddGradeCompany = () => {
   const [companies, setCompanies] = useState<string[]>(["hrbs", "mercerCl"]);
   const [companyName, setCompanyName] = useState("");
-  const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
+  // const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
   const [tableData, setTableData] = useState(data);
+
   const cols = useMemo(() => {
     return columns
       .filter(
@@ -24,14 +25,6 @@ const AddGradeCompany = () => {
         return companies.indexOf(a.dataIndex) - companies.indexOf(b.dataIndex);
       });
   }, [companies]);
-  console.log(data, "data");
-  // const tableData = useMemo(() => {
-  //   return data.map(x => {
-  //     const obj: any = { ...x };
-  //     Object.keys(x).forEach(key => companies.includes(key) || delete obj[key]);
-  //     return obj;
-  //   });
-  // }, [companies, companyCol]);
 
   const handleDropdown = (value: string[]) => {
     setCompanies(value);

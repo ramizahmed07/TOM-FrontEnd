@@ -1,4 +1,4 @@
-import { Input, TableColumnsType } from "antd";
+import { Input } from "antd";
 
 export interface ICompany {
   id: string;
@@ -71,8 +71,7 @@ export const columns = [
     key: "name",
     width: 50,
 
-    render: (index: any, record: any) => {
-      console.log({ index, record });
+    render: () => {
       return (
         <Input
           className="table__input"
@@ -83,15 +82,6 @@ export const columns = [
     },
   },
 ];
-
-// export type TableRow = {
-//   id: string;
-//   tcRank: string;
-//   hrbs: string;
-//   mercerPc: string;
-//   mercerCl: string;
-//   twGrade: string;
-// };
 
 export const data = [
   {

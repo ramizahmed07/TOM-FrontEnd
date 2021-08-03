@@ -3,17 +3,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "../styles/index.less";
 import Layout from "@components/Layout";
-import TableTest from "@/pages/admin/TableTest";
 import RoutePaths from "./RoutePaths";
-import GradeMapTable from "@/pages/admin/GradeMapTable";
-import AddGradeCompany from "@/pages/admin/GradeMapTable/AddGradeCompany";
+import GradeMapTable from "@pages/admin/GradeMapTable";
+import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
 
-const Login = React.lazy(() => import("@/pages/admin/Auth/Login"));
+const Login = React.lazy(() => import("@pages/admin/Auth/Login"));
 const ForgotPassword = React.lazy(
-  () => import("@/pages/admin/Auth/ForgotPassword")
+  () => import("@pages/admin/Auth/ForgotPassword")
 );
 const ResetPassword = React.lazy(
-  () => import("@/pages/admin/Auth/ResetPassword")
+  () => import("@pages/admin/Auth/ResetPassword")
 );
 
 const AppRoutes = () => {
