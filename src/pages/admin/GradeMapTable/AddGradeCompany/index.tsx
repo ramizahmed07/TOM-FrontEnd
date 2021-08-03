@@ -23,6 +23,12 @@ const AddGradeCompany = () => {
   const [companyName, setCompanyName] = useState<string>("");
   // const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
   const [tableData, setTableData] = useState<Partial<IData>[]>(data);
+
+  /**
+   * The purpose below is to show/hide and sort the columns
+   * it relies on companies dropdown
+   */
+
   const cols = useMemo(() => {
     return columns
       .filter(
