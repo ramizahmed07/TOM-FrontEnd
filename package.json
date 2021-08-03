@@ -15,7 +15,6 @@
     "@types/react-redux": "^7.1.18",
     "antd": "^4.16.6",
     "craco-less": "^1.18.0",
-    "husky": "^7.0.1",
     "less": "^4.1.1",
     "lint-staged": "^11.0.0",
     "react": "^17.0.2",
@@ -31,7 +30,10 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "precommit-msg": "echo 'Starting precommit hooks...' && exit 0",
+    "postinstall": "husky install",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -53,7 +55,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "precommit-msg && lint-staged"
     }
   },
   "lint-staged": {
@@ -63,6 +65,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.8",
-    "craco-alias": "^3.0.1"
+    "craco-alias": "^3.0.1",
+    "pretty-quick": "^3.1.1"
   }
 }
