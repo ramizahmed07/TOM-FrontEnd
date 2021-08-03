@@ -4,35 +4,48 @@ import { useMemo, useState } from "react";
 import "./addGradeCompany.less";
 import Table from "@/components/Table";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
-import { columns, COMPANIES, data, ICompany } from "./config";
+import {
+  columns,
+  COMPANIES,
+  data,
+  ICompany,
+  CompanyName,
+  IData,
+} from "./config";
 
 const { Option } = Select;
 
 const AddGradeCompany = () => {
-  const [companies, setCompanies] = useState<string[]>(["hrbs", "mercerCl"]);
-  const [companyName, setCompanyName] = useState("");
+  const [companies, setCompanies] = useState<CompanyName[]>([
+    "hrbs",
+    "mercerCl",
+  ]);
+  const [companyName, setCompanyName] = useState<string>("");
   // const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
-  const [tableData, setTableData] = useState(data);
-
+  const [tableData, setTableData] = useState<Partial<IData>[]>(data);
   const cols = useMemo(() => {
     return columns
       .filter(
         column =>
-          companies.includes(column.dataIndex) || column.dataIndex === "name"
+          companies.includes(column.dataIndex as CompanyName) ||
+          column.dataIndex === "name"
       )
       .sort(function (a, b) {
         if (a.dataIndex === "name") return 1;
-        return companies.indexOf(a.dataIndex) - companies.indexOf(b.dataIndex);
+        return (
+          companies.indexOf(a.dataIndex) -
+          companies.indexOf(b.dataIndex as CompanyName)
+        );
       });
   }, [companies]);
 
-  const handleDropdown = (value: string[]) => {
+  const handleDropdown = (value: CompanyName[]) => {
     setCompanies(value);
 
     setTableData(
-      data.map((item: any) => {
-        const obj: any = {};
-        value.forEach((x: any) => (obj[x] = item[x]));
+      data.map(item => {
+        const obj: Partial<Record<CompanyName, string>> = {};
+        value.forEach((x: CompanyName) => (obj[x] = item[x]));
         return obj;
       })
     );
@@ -43,9 +56,9 @@ const AddGradeCompany = () => {
   };
 
   const addGrade = () => {
-    setTableData((prev: any) => [
+    setTableData(prev => [
       ...prev,
-      { id: Math.floor(Math.random() * 100) },
+      { id: Math.floor(Math.random() * 100).toString() },
     ]);
   };
 
@@ -64,7 +77,7 @@ const AddGradeCompany = () => {
           <Col span={9}>
             <label>Company name</label>
             <Input
-              value={companyName}
+              value={companyName as string}
               onChange={handleInput}
               placeholder="Enter company name here..."
               size="large"

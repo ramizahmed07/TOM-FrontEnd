@@ -1,9 +1,27 @@
 import { Input } from "antd";
 
+export type CompanyName = keyof IData;
 export interface ICompany {
   id: string;
   value: string;
   title: string;
+}
+
+export interface IData {
+  id: string;
+  tcRank: string;
+  hrbs: string;
+  mercerPc: string;
+  mercerCl: string;
+  twGrade: string;
+}
+
+export interface IColumn {
+  title: string;
+  dataIndex: CompanyName | "name";
+  key: CompanyName | "name";
+  width: string | number;
+  render?: (index: any, record: any) => React.ReactElement;
 }
 
 export const COMPANIES: ICompany[] = [
@@ -34,7 +52,7 @@ export const COMPANIES: ICompany[] = [
   },
 ];
 
-export const columns = [
+export const columns: IColumn[] = [
   {
     title: "tc rank",
     dataIndex: "tcRank",
