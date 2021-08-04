@@ -2,7 +2,7 @@ import { Col, Input, Row, Select } from "antd";
 import { useMemo, useState } from "react";
 
 import "./addGradeCompany.less";
-import Table from "@/components/Table";
+import Table from "@components/Table";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import {
   columns,

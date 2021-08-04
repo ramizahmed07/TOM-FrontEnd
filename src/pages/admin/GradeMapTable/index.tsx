@@ -1,8 +1,8 @@
 import { Col, Row, TableColumnsType } from "antd";
+import { useHistory } from "react-router";
 
 import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
-import { useHistory } from "react-router";
 
 const columns: TableColumnsType<TableRow> = [
   {

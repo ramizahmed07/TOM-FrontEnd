@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import "../style.less";
 import "./forgotPassword.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
-import RoutePaths from "@/routes/RoutePaths";
+import RoutePaths from "@routes/RoutePaths";
 
 const Timer = ({ minutes, seconds }: { minutes: number; seconds: number }) => {
   const min = minutes !== 1 ? "00" : "01";

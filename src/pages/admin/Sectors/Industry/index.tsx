@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
 
-import Table from "@/components/Table";
-import { AddButton } from "@/components/Buttons";
+import Table from "@components/Table";
+import { AddButton } from "@components/Buttons";
 import AddIndustry from "./AddIndustry";
 
 const columns: TableColumnsType<TableRow> = [

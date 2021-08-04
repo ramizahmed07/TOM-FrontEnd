@@ -1,8 +1,8 @@
 import { Button, Col, Input, Row, Select } from "antd";
 import { FC, useState } from "react";
 
+import Modal from "@components/Modal";
 import { IModal } from "@/types";
-import Modal from "@/components/Modal";
 import { SUB_JOB_FUNCTIONS, SubJobFunction } from "./config";
 
 const { Option } = Select;

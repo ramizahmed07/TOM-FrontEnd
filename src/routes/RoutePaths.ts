@@ -5,9 +5,16 @@ const Auth = {
 };
 
 const Home = {
-  dashboard: '/'
+  dashboard: '/',
+  settings: '/settings'
 }
 
-const RoutePaths = { Auth, Home };
+const User = {
+  companyListing: '/users/company-list',
+  createCompany: '/users/create-company',
+}
+
+
+const RoutePaths = { Auth, Home, User };
 
 export default RoutePaths;

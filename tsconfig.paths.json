@@ -7,7 +7,9 @@
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
       "@store/*": ["./store/*"],
-      // "@redux/*": ["./redux/*"]
+      "@routes/*": ["./routes/*"],
+      "@types/*": ["./types/*"],
+      "@utils/*": ["./utils/*"],
     }
   }
 }

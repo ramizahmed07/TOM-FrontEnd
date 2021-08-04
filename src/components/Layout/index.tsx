@@ -1,19 +1,35 @@
 import React from "react";
 import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
-import config from "./sidebar-config";
+import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
-import { NavLink, useLocation } from "react-router-dom";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
   const { pathname } = useLocation();
+  const history = useHistory();
+
+  const getRoute = (path: string | Array<string>): string => {
+    if (typeof path == "string") {
+      return path;
+    } else if (
+      Array.isArray(path) &&
+      path.includes(pathname) &&
+      typeof pathname == "string"
+    ) {
+      return pathname;
+    } else {
+      return "";
+    }
+  };
+
   const menu = (
     <Menu>
       <Menu.Item key="1">Clicking me will not close the menu.</Menu.Item>
@@ -29,16 +45,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="sider__logo__container">
             <Logo />
           </div>
-          {config.map((config: any, idx) => {
+          {config.map((config: Config, idx) => {
             return (
               <div className="sider__links__container" key={idx}>
                 <NavLink
                   key={idx}
-                  to={
-                    Array.isArray(config.path) && config.path.includes(pathname)
-                      ? pathname
-                      : config.path
-                  }
+                  to={getRoute(config.path)}
                   className="sider__link"
                   activeClassName="sider__sub__link--active"
                 >
@@ -53,6 +65,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     to={subLink.path || ""}
                     className="sider__sub__link"
                     activeClassName="sider__sub__link--active"
+                    onClick={() =>
+                      subLink.routingPath && history.push(subLink.routingPath)
+                    }
                   >
                     <div className="sider__icon__container">
                       <subLink.icon className="sider__link__icon" />

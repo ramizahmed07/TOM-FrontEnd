@@ -6,12 +6,21 @@ import { ReactComponent as IndustryIcon } from "@assets/images/industry.svg";
 import { ReactComponent as JobFunctionIcon } from "@assets/images/job-function.svg";
 import { ReactComponent as ListIcon } from "@assets/images/list.svg";
 import { ReactComponent as DashboardIcon } from "@assets/images/dashboard.svg";
+import RoutePaths from "@routes/RoutePaths";
 
-const config = [
+export type Config = {
+  title: string;
+  icon: any;
+  path: string | Array<string>;
+  routingPath?: string;
+  sub?: Array<Config>;
+};
+
+const config: Array<Config> = [
   {
     title: "Dashboard",
     icon: DashboardIcon,
-    path: "/dashboard",
+    path: RoutePaths.Home.dashboard,
   },
   {
     title: "Users",
@@ -21,7 +30,8 @@ const config = [
       {
         title: "Companies",
         icon: CompaniesIcon,
-        path: "/companies",
+        path: RoutePaths.User.companyListing,
+        routingPath: RoutePaths.User.companyListing,
       },
       {
         title: "Sub-Admins",
