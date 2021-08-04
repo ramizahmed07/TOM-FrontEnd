@@ -8,7 +8,8 @@
       "@components/*": ["./components/*"],
       "@store/*": ["./store/*"],
       "@routes/*": ["./routes/*"],
-      // "@redux/*": ["./redux/*"]
+      "@types/*": ["./types/*"],
+      "@utils/*": ["./utils/*"],
     }
   }
 }
