@@ -12,7 +12,6 @@ const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [jobFunction, setJobFunction] = useState("");
 
   const addIndustry = () => {
-    console.log("added!");
     setIsVisible(false);
   };
 

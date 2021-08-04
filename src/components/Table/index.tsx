@@ -1,15 +1,20 @@
 import { FC } from "react";
-import { Col, Table as AntTable } from "antd";
+import { Col, Table as AntTable, TableProps } from "antd";
 
 import "./table.less";
 
-interface TableProps {
+interface ITable {
   data: any[];
   columns: any[];
   onRowClick?: (record: any) => any | void;
 }
 
-const Table: FC<TableProps> = ({ columns, data, onRowClick }) => {
+const Table: FC<ITable & TableProps<any>> = ({
+  columns,
+  data,
+  onRowClick,
+  pagination,
+}) => {
   return (
     <Col span={24}>
       <AntTable
@@ -20,6 +25,7 @@ const Table: FC<TableProps> = ({ columns, data, onRowClick }) => {
         scroll={{ x: 1300 }}
         columns={columns}
         dataSource={data}
+        pagination={pagination}
         rowKey="id"
       />
     </Col>

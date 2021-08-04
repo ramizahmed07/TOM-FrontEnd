@@ -12,7 +12,7 @@ const AddBtn: FC<React.HTMLProps<HTMLButtonElement>> = ({
       onClick={onClick}
       className="btn btn--add"
       type="primary"
-      icon={<PlusIcon />}
+      icon={<PlusIcon fill="white" />}
       size="large"
     >
       <span>{children}</span>
