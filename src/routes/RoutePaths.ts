@@ -9,7 +9,7 @@ const Home = {
 };
 
 const Companies = {
-  company_profile: "/company-profile",
+  company_profile: "/profile",
 };
 
 const RoutePaths = { Auth, Home, Companies };

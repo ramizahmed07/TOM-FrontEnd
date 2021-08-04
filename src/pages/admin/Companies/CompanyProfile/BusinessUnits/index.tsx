@@ -6,6 +6,8 @@ import BuildingImg from "@assets/images/building.png";
 import Table from "@/components/Table";
 import EmptyMessage from "@pages/admin/Companies/CompanyProfile/EmptyMessage";
 import AddBtn from "@/components/Buttons/AddButton";
+import AddBusinessUnit from "./AddBusinessUnit";
+import { useState } from "react";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -89,8 +91,11 @@ type TableRow = {
 const data: TableRow[] = [];
 
 const BusinessUnits = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <div>
+      <AddBusinessUnit isVisible={isVisible} setIsVisible={setIsVisible} />
       <Table
         data={data}
         columns={columns}
@@ -103,7 +108,7 @@ const BusinessUnits = () => {
               message="You didn’t added any business unit for this
             company yet!"
             >
-              <AddBtn onClick={() => console.log("create")}>
+              <AddBtn onClick={() => setIsVisible(true)}>
                 Create business unit
               </AddBtn>
             </EmptyMessage>

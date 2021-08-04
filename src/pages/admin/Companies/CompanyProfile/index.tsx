@@ -3,8 +3,9 @@ import { Col, Row } from "antd";
 import "./companyProfile.less";
 import Tabs from "./Tabs";
 
-import CompanyDetails from "./CompanyDetails";
 import BusinessUnits from "./BusinessUnits";
+import CompanyDetails from "./CompanyDetails";
+import { Route, Switch } from "react-router-dom";
 
 const CompanyProfile = () => {
   return (
@@ -16,8 +17,18 @@ const CompanyProfile = () => {
       </Row>
       <Tabs />
       <div className="companyProfile__content">
-        {/* <CompanyDetails /> */}
-        <BusinessUnits />
+        {/**
+         * @TODO Add proper routes, Ramiz
+         */}
+
+        <Switch>
+          <Route exact path="/profile/details">
+            <CompanyDetails />
+          </Route>
+          <Route exact path="/profile/business-units">
+            <BusinessUnits />
+          </Route>
+        </Switch>
       </div>
     </div>
   );

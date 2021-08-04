@@ -2,21 +2,21 @@ export const TABS = [
   {
     id: 1,
     title: "Company details",
-    path: "/company/:company_id/details",
+    path: "/profile/details",
   },
   {
     id: 2,
     title: "Business units",
-    path: "/company/:company_id/business-units",
+    path: "/profile/business-units",
   },
   {
     id: 3,
     title: "Regions",
-    path: "/company/:company_id/regions",
+    path: "/profile/regions",
   },
   {
     id: 4,
     title: "Legal entities",
-    path: "/company/:company_id/legal-entities",
+    path: "/profile/legal-entities",
   },
 ];

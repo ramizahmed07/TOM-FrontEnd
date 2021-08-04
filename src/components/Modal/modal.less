@@ -1,4 +1,6 @@
 .modal {
+  height: 80%;
+  padding: 0;
   &__row {
     margin: 0 -32px;
     padding: 32px;
@@ -13,7 +15,8 @@
 
   .ant-modal-content {
     border-radius: 4px;
-    height: 662px;
+    height: 100%;
+    // overflow-y: auto;
     position: relative;
   }
   .ant-modal-header {
@@ -21,11 +24,13 @@
   }
   .ant-modal-body {
     padding: 32px 32px 0 32px;
+    height: calc(100% - 144px);
+    overflow-y: auto;
   }
   .ant-modal-footer {
     border-top: 0;
-    position: absolute;
-    bottom: 0;
+    // position: absolute;
+    // bottom: 0;
     padding: 24px 32px;
     width: 100%;
     display: flex;
