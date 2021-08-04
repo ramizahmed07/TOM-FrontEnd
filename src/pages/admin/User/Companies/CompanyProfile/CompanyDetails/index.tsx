@@ -1,5 +1,5 @@
 import React from "react";
-import "./company-details.less";
+import "./companyDetails.less";
 import UnileverLogo from "@assets/images/unilever-logo.png";
 import { Button } from "antd";
 import { useHistory } from "react-router-dom";

@@ -3,7 +3,7 @@ import { Col, Row, Tabs } from "antd";
 
 import "./style.less";
 import Layout from "@/components/Layout";
-import CompanyDetails from "./company-details/company-details";
+import CompanyDetails from "./CompanyDetails";
 
 const CompanyProfile = () => {
   const { TabPane } = Tabs;
