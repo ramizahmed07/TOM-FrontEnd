@@ -15,6 +15,12 @@ const ResetPassword = React.lazy(
   () => import("@pages/admin/Auth/ResetPassword")
 );
 
+const SubAdminsCreate = React.lazy(
+  () => import("@pages/admin/User/SubAdmins/SubAdminsCreate")
+);
+const SubAdminsList = React.lazy(
+  () => import("@pages/admin/User/SubAdmins/SubAdminsList")
+);
 const AppRoutes = () => {
   return (
     <Suspense fallback={"Loading..."}>
@@ -29,6 +35,13 @@ const AppRoutes = () => {
           <Route path={RoutePaths.Auth.resetPassword}>
             <ResetPassword />
           </Route>
+          <Route path={RoutePaths.User.subAdminsCreate}>
+            <SubAdminsCreate />
+          </Route>
+          <Route path={RoutePaths.User.subAdminsList}>
+            <SubAdminsList />
+          </Route>
+
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
               {/* <TableTest /> */}

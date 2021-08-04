@@ -5,9 +5,14 @@ const Auth = {
 };
 
 const Home = {
-  dashboard: '/'
-}
+  dashboard: "/",
+};
 
-const RoutePaths = { Auth, Home };
+const User = {
+  subAdminsList: "/user/sub-admin-list",
+  subAdminsCreate: "/user/sub-admin-create",
+};
+
+const RoutePaths = { Auth, Home, User };
 
 export default RoutePaths;
