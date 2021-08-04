@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
 
-import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
 import AddJobFunction from "./AddJobFunction";
+import Button from "@components/Button";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -73,15 +73,23 @@ const JobFunction = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadButton onClick={() => console.log("upload job function")}>
+          <Button
+            variant="upload"
+            onClick={() => console.log("upload job function")}
+          >
             Upload Job Functions
-          </UploadButton>
-          <DownloadButton onClick={() => console.log("Download Job Functions")}>
+          </Button>
+          <Button
+            variant="download"
+            onClick={() => console.log("Download Job Functions")}
+          >
             Download Job Functions
-          </DownloadButton>
+          </Button>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton onClick={() => setIsVisible(true)}>Add New Job</AddButton>
+          <Button variant="add" onClick={() => setIsVisible(true)}>
+            Add New Job
+          </Button>
         </Col>
       </Row>
       <Row>

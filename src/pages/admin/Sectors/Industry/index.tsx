@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
 
 import Table from "@components/Table";
-import { AddButton } from "@components/Buttons";
 import AddIndustry from "./AddIndustry";
+import Button from "@components/Button";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -75,7 +75,9 @@ const Industry = () => {
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton onClick={() => setIsVisible(true)}>Add Industry</AddButton>
+          <Button variant="add" onClick={() => setIsVisible(true)}>
+            Add Industry
+          </Button>
         </Col>
       </Row>
 
