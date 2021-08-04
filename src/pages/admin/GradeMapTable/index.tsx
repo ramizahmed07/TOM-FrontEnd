@@ -1,5 +1,4 @@
 import { Col, Row, TableColumnsType } from "antd";
-import { useState } from "react";
 
 import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
@@ -91,7 +90,6 @@ const data: TableRow[] = [
 ];
 
 const GradeMapTable = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const history = useHistory();
 
   const handleAddBtn = () => {
