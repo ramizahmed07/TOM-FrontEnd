@@ -22,7 +22,7 @@ const config = [
       {
         title: "Companies",
         icon: CompaniesIcon,
-        path: "/companies",
+        path: RoutePaths.User.companyListing,
         routingPath: RoutePaths.User.companyListing,
       },
       {

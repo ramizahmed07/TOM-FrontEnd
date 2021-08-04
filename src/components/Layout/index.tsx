@@ -55,6 +55,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     to={subLink.path || ""}
                     className="sider__sub__link"
                     activeClassName="sider__sub__link--active"
+                    // @ts-ignore
                     icon={
                       <div className="sider__icon__container">
                         <subLink.icon className="sider__link__icon" />
