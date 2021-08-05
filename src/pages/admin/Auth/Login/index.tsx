@@ -7,7 +7,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
-import { useLoginMutation } from "@services";
+import { useLoginMutation, useLogoutMutation, loadRefreshToken } from "@services";
 
 interface ILoginForm {
   email: string;
@@ -19,6 +19,7 @@ const Login = () => {
   const history = useHistory();
   const [errorFields, setErrorFields] = useState([]);
   const [login, { isLoading }] = useLoginMutation();
+  const [logout, { isLoading: loggingout }] = useLogoutMutation();
   const [form] = Form.useForm();
 
   const onFinishedFailed = (errorInfo: any) => {
@@ -44,9 +45,23 @@ const Login = () => {
       ]);
     }
   };
+  console.log({ errorFields });
 
   const checkError = (name: string) =>
     errorFields?.some((x: any) => x.name.includes(name));
+
+  const logoutUser = async () => {
+    try {
+      const token = loadRefreshToken();
+      console.log({ token });
+      const res = await logout({
+        refresh: token,
+      });
+      console.log("res", { res });
+    } catch (error) {
+      console.log("err", error);
+    }
+  };
 
   return (
     <Row className="auth__container">
@@ -60,6 +75,7 @@ const Login = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
+          <button onClick={logoutUser}>Log out</button>
           {/* FORM */}
           <Form
             name="login"
@@ -77,9 +93,8 @@ const Login = () => {
               validateTrigger="onSubmit"
               label={
                 <label
-                  className={`${
-                    checkError("email") ? "error__label" : "input__label"
-                  }`}
+                  className={`${checkError("email") ? "error__label" : "input__label"
+                    }`}
                 >
                   Email Address
                 </label>
@@ -153,7 +168,7 @@ const Login = () => {
           </Form>
         </div>
       </Col>
-    </Row>
+    </Row >
   );
 };
 
