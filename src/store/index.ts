@@ -8,11 +8,22 @@ import {
 import authReducer from "./auth/authSlice";
 // import { sectorsReducer } from "@store/slices";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   // sectors: sectorsReducer
   [authApi.reducerPath]: authApi.reducer,
   auth: authReducer,
 });
+
+const rootReducer = (state: any, action: any) => {
+  if (
+    action?.meta?.arg?.endpointName === "logout" &&
+    action?.type === "authApi /executeMutation/fulfilled"
+  ) {
+    console.log("found it");
+    state = {} as RootState;
+  }
+  return appReducer(state, action);
+};
 
 export const store = configureStore({
   reducer: rootReducer,
