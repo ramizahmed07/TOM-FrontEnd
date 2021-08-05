@@ -115,7 +115,7 @@ const ForgotPassword = () => {
 
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
-          {true ? <SendLinkView /> : <ResendLinkView />}
+          {false ? <SendLinkView /> : <ResendLinkView />}
 
           <Typography.Paragraph className="auth__form__prompt">
             Back to{" "}
