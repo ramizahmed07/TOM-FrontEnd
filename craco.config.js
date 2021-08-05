@@ -8,6 +8,11 @@ module.exports = {
       "@pages": path.resolve(__dirname, "src/pages/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
       "@components": path.resolve(__dirname, "src/components/"),
+      "@store": path.resolve(__dirname, "src/store/"),
+      "@routes": path.resolve(__dirname, "src/routes/"),
+      "@types": path.resolve(__dirname, "src/types/"),
+      "@utils": path.resolve(__dirname, "src/utils/"),
+      // "@redux": path.resolve(__dirname, "src/redux/"),
     },
   },
   plugins: [

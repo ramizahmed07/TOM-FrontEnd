@@ -5,6 +5,8 @@ import "../styles/index.less";
 import Layout from "@components/Layout";
 import TableTest from "@pages/admin/TableTest";
 import RoutePaths from "./RoutePaths";
+import GradeMapTable from "@pages/admin/GradeMapTable";
+import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
 
 const Login = React.lazy(() => import("@pages/admin/Auth/Login"));
 const ForgotPassword = React.lazy(
@@ -41,7 +43,13 @@ const AppRoutes = () => {
           </Route>
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
-              <TableTest />
+              {/* <TableTest /> */}
+              <Route exact path="/grade-map-table">
+                <GradeMapTable />
+              </Route>
+              <Route exact path="/grade-map-table/create-grade-company">
+                <AddGradeCompany />
+              </Route>
             </Layout>
           </Route>
 

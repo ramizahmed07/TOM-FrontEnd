@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
-import Modal from "@/components/Modal";
+import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import { INDUSTRIES, Sector } from "../../AddSector/config";
 

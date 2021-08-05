@@ -5,7 +5,8 @@ const Auth = {
 };
 
 const Home = {
-  dashboard: '/'
+  dashboard: '/',
+  settings: '/settings'
 }
 
 const User = {
@@ -14,5 +15,4 @@ const User = {
 }
 
 const RoutePaths = { Auth, Home, User };
-
 export default RoutePaths;

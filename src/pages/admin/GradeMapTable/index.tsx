@@ -1,9 +1,8 @@
 import { Col, Row, TableColumnsType } from "antd";
-import { useState } from "react";
+import { useHistory } from "react-router";
 
 import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
-import { useHistory } from "react-router";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -91,7 +90,6 @@ const data: TableRow[] = [
 ];
 
 const GradeMapTable = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const history = useHistory();
 
   const handleAddBtn = () => {

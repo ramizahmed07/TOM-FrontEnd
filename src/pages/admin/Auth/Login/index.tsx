@@ -2,7 +2,8 @@ import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
-import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
+import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
+import RoutePaths from "@/routes/RoutePaths";
 
 const Login = () => {
   const history = useHistory();
@@ -84,7 +85,7 @@ const Login = () => {
                 className="login__btn"
                 size="large"
                 onClick={() => {
-                  history.push("/settings");
+                  history.push(RoutePaths.Home.settings);
                 }}
               >
                 Sign In
