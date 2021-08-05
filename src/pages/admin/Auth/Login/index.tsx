@@ -1,25 +1,65 @@
+import { useState } from "react";
 import { useHistory } from "react-router";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
-import { useLoginMutation } from "@/services/auth";
+import { useLoginMutation, useLogoutMutation } from "@/services/auth";
+import { loadRefreshToken } from "@/services/storage";
+
+interface ILoginForm {
+  email: string;
+  password: string;
+  remember: boolean;
+}
 
 const Login = () => {
   const history = useHistory();
-  const [login, { isLoading, error }] = useLoginMutation();
-  console.log({ isLoading, error });
+  const [errorFields, setErrorFields] = useState([]);
+  const [login, { isLoading }] = useLoginMutation();
+  const [logout, { isLoading: loggingout }] = useLogoutMutation();
+  const [form] = Form.useForm();
 
-  const signIn = async () => {
+  const onFinishedFailed = (errorInfo: any) => {
+    setErrorFields(errorInfo.errorFields);
+  };
+
+  const signIn = async (values: ILoginForm) => {
+    setErrorFields([]);
+    const { email, password } = values;
     try {
-      const res = await login({
-        email: "tom@gmail.com",
-        password: "admin123",
-      });
-      console.log({ res });
+      await login({
+        email,
+        password,
+      }).unwrap();
+      history.push(Paths.Dashboard.dashboard);
     } catch (error) {
-      console.log({ error });
+      setErrorFields([{ errors: [error?.message], name: ["password"] }] as any);
+      form.setFields([
+        {
+          name: "password",
+          errors: [error?.message],
+        },
+      ]);
+    }
+  };
+  console.log({ errorFields });
+
+  const checkError = (name: string) =>
+    errorFields?.some((x: any) => x.name.includes(name));
+
+  const logoutUser = async () => {
+    try {
+      const token = loadRefreshToken();
+      console.log({ token });
+      const res = await logout({
+        refresh: token,
+      });
+      console.log("res", { res });
+    } catch (error) {
+      console.log("err", error);
     }
   };
 
@@ -35,22 +75,36 @@ const Login = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
-
+          <button onClick={logoutUser}>Log out</button>
           {/* FORM */}
           <Form
             name="login"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
-            onFinish={() => {}}
+            onFinish={signIn}
+            onFinishFailed={onFinishedFailed}
             layout="vertical"
+            form={form}
             className="auth__form"
           >
             <Form.Item
               className="form__item"
-              label={<label className="input__label">Email Address</label>}
+              validateTrigger="onSubmit"
+              label={
+                <label
+                  className={`${
+                    checkError("email") ? "error__label" : "input__label"
+                  }`}
+                >
+                  Email Address
+                </label>
+              }
               name="email"
-              rules={[{ required: true, message: "Please enter your email!" }]}
+              rules={[
+                { required: true, message: "Please enter your email!" },
+                {},
+              ]}
             >
               <Input
                 className="form__input"
@@ -61,9 +115,14 @@ const Login = () => {
 
             <Form.Item
               className="form__item"
+              validateTrigger="onSubmit"
               label={
                 <div className="auth__password__label">
-                  <label className={false ? "input__label" : "error__label"}>
+                  <label
+                    className={
+                      checkError("password") ? "error__label" : "input__label"
+                    }
+                  >
                     Password
                   </label>
                   <Button type="link" className="auth__forgot__password">
@@ -82,10 +141,6 @@ const Login = () => {
               />
             </Form.Item>
 
-            <Typography.Paragraph className="auth__error__msg">
-              You have entered incorrect password
-            </Typography.Paragraph>
-
             <Form.Item
               name="remember"
               valuePropName="checked"
@@ -100,9 +155,12 @@ const Login = () => {
                 htmlType="submit"
                 className="login__btn"
                 size="large"
-                onClick={signIn}
               >
-                Sign In
+                {isLoading ? (
+                  <LoadingOutlined className="spinner" />
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </Form.Item>
           </Form>
