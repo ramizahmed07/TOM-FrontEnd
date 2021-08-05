@@ -7,12 +7,22 @@ export const authApi = createApi({
   reducerPath: "authApi ",
   baseQuery: fetchBaseQuery({ baseUrl: `${baseUrl}/auth` }),
   endpoints: builder => ({
-    getPokemonByName: builder.query({
-      query: query => query,
+    login: builder.mutation({
+      query: data => {
+        console.log({ data });
+        return {
+          url: "/login/",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: data,
+        };
+      },
     }),
   }),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPokemonByNameQuery } = authApi;
+export const { useLoginMutation } = authApi;

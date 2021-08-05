@@ -4,9 +4,25 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
+import { useLoginMutation } from "@/services/auth";
 
 const Login = () => {
   const history = useHistory();
+  const [login, { isLoading, error }] = useLoginMutation();
+  console.log({ isLoading, error });
+
+  const signIn = async () => {
+    try {
+      const res = await login({
+        email: "tom@gmail.com",
+        password: "admin123",
+      });
+      console.log({ res });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   return (
     <Row className="auth__container">
       <AuthLandingImg />
@@ -84,9 +100,7 @@ const Login = () => {
                 htmlType="submit"
                 className="login__btn"
                 size="large"
-                onClick={() => {
-                  history.push(Paths.Dashboard.dashboard);
-                }}
+                onClick={signIn}
               >
                 Sign In
               </Button>

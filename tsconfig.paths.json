@@ -6,7 +6,7 @@
       "@pages/*": ["./pages/*"],
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
-      "@store/*": ["./store/*"],
+      "@store": ["./store"],
       "@types/*": ["./types/*"],
       "@utils/*": ["./utils/*"],
       "@router": ["./router"],
