@@ -1,13 +1,23 @@
-import { Action, combineReducers, configureStore, ThunkAction } from "@reduxjs/toolkit";
-
-import { sectorsReducer } from "@store/slices";
+import { authApi } from "@/services/auth";
+import {
+  Action,
+  combineReducers,
+  configureStore,
+  ThunkAction,
+} from "@reduxjs/toolkit";
+import authReducer from "./auth/authSlice";
+// import { sectorsReducer } from "@store/slices";
 
 const rootReducer = combineReducers({
-  sectors: sectorsReducer
-})
+  // sectors: sectorsReducer
+  [authApi.reducerPath]: authApi.reducer,
+  auth: authReducer,
+});
 
 export const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(authApi.middleware),
   // middleware: [],
 });
 
