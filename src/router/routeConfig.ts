@@ -6,6 +6,7 @@ import AddGradeCompany from "@/pages/admin/GradeMapTable/AddGradeCompany";
 import JobFunction from "@/pages/admin/JobFunction";
 import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
+import CompanyList from "@/pages/admin/User/Companies/company-list";
 import { Paths, IRoute } from "@/router";
 
 export const routeConfig: IRoute[] = [
@@ -23,6 +24,13 @@ export const routeConfig: IRoute[] = [
     path: Paths.Auth.reset_password,
     component: ResetPassword,
     key: "Reset Password",
+  },
+  {
+    path: Paths.Users.companies.listing,
+    component: CompanyList,
+    key: "Sectors",
+    exact: true,
+    breadcrumb: "Users / Companies list",
   },
   {
     path: Paths.Settings.sectors.listing,

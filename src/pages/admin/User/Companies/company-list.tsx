@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "@components/Layout";
 import {
   Col,
   Row,
@@ -106,29 +105,27 @@ const CompanyList = () => {
 
   return (
     <>
-      <Layout>
-        <Row>
-          <Col span={24}>
-            <h1 className="page__heading">Companies list</h1>
-            <div className="header__container">
-              <Input
-                className="form__input"
-                type="email"
-                placeholder="Search by name or ID..."
-                prefix={<SearchOutlined style={{ color: "#435465" }} />}
-              />
-              <Button type="primary">
-                <PlusOutlined /> Create new company
-              </Button>
-            </div>
-            <Table
-              scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
-              columns={columns}
-              dataSource={data}
+      <Row>
+        <Col span={24}>
+          <h1 className="page__heading">Companies list</h1>
+          <div className="header__container">
+            <Input
+              className="form__input"
+              type="email"
+              placeholder="Search by name or ID..."
+              prefix={<SearchOutlined style={{ color: "#435465" }} />}
             />
-          </Col>
-        </Row>
-      </Layout>
+            <Button type="primary">
+              <PlusOutlined /> Create new company
+            </Button>
+          </div>
+          <Table
+            scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
+            columns={columns}
+            dataSource={data}
+          />
+        </Col>
+      </Row>
     </>
   );
 };

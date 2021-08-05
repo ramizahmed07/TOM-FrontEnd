@@ -3,7 +3,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
-import RoutePaths from "@routes/RoutePaths";
+import { Paths } from "@/router";
 
 const Login = () => {
   const history = useHistory();
@@ -85,7 +85,7 @@ const Login = () => {
                 className="login__btn"
                 size="large"
                 onClick={() => {
-                  history.push(RoutePaths.Home.settings);
+                  history.push(Paths.Dashboard.dashboard);
                 }}
               >
                 Sign In

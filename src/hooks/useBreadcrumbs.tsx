@@ -55,8 +55,6 @@ const render = ({
     key: match.url,
     ...(props || {}),
   };
-  console.log("component props =>", componentProps);
-  console.log("props =>", props);
   return {
     ...componentProps,
     breadcrumb:
