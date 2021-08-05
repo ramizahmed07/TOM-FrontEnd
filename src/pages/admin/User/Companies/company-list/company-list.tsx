@@ -13,13 +13,13 @@ import {
   Input,
 } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
 import "./style.less";
-import { useHistory } from "react-router-dom";
-import RoutePaths from "@/routes/RoutePaths";
+import RoutePaths from "@routes/RoutePaths";
 
 const CompanyList = () => {
   const history = useHistory();

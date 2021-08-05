@@ -6,7 +6,7 @@ import { ReactComponent as IndustryIcon } from "@assets/images/industry.svg";
 import { ReactComponent as JobFunctionIcon } from "@assets/images/job-function.svg";
 import { ReactComponent as ListIcon } from "@assets/images/list.svg";
 import { ReactComponent as DashboardIcon } from "@assets/images/dashboard.svg";
-import RoutePaths from "@/routes/RoutePaths";
+import RoutePaths from "@routes/RoutePaths";
 
 const config = [
   {
@@ -22,8 +22,7 @@ const config = [
       {
         title: "Companies",
         icon: CompaniesIcon,
-        path: "/companies",
-        routingPath: RoutePaths.User.companyListing,
+        path: RoutePaths.User.companyListing,
       },
       {
         title: "Sub-Admins",

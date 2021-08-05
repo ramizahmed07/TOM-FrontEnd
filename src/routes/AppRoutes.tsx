@@ -3,21 +3,21 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "../styles/index.less";
 import Layout from "@components/Layout";
-import TableTest from "@/pages/admin/TableTest";
+import TableTest from "@pages/admin/TableTest";
 import RoutePaths from "./RoutePaths";
 
-const Login = React.lazy(() => import("@/pages/admin/Auth/Login"));
+const Login = React.lazy(() => import("@pages/admin/Auth/Login"));
 const ForgotPassword = React.lazy(
-  () => import("@/pages/admin/Auth/ForgotPassword")
+  () => import("@pages/admin/Auth/ForgotPassword")
 );
 const ResetPassword = React.lazy(
-  () => import("@/pages/admin/Auth/ResetPassword")
+  () => import("@pages/admin/Auth/ResetPassword")
 );
 const CompanyList = React.lazy(
-  () => import("@/pages/admin/User/Companies/company-list/company-list")
+  () => import("@pages/admin/User/Companies/company-list/company-list")
 );
 const CompanyCreate = React.lazy(
-  () => import("@/pages/admin/User/Companies/company-create/company-create")
+  () => import("@pages/admin/User/Companies/company-create/company-create")
 );
 const AppRoutes = () => {
   return (

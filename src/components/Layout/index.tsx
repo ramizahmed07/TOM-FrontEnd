@@ -1,14 +1,13 @@
 import React from "react";
 import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
-import config from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
-import { NavLink, useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import config from "./sidebar-config";
 
 const { Header, Content, Sider } = AntdLayout;
 
@@ -56,14 +55,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     to={subLink.path || ""}
                     className="sider__sub__link"
                     activeClassName="sider__sub__link--active"
-                    // @ts-ignore
-                    icon={
-                      <div className="sider__icon__container">
-                        <subLink.icon className="sider__link__icon" />
-                      </div>
-                    }
                     onClick={() =>
-                      subLink.routingPath && history.push(subLink.routingPath)
+                      subLink.path && history.push(subLink.path)
                     }
                   >
                     <div className="sider__icon__container">
