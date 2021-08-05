@@ -35,7 +35,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const breadcrumbs_list = breadcrumbs.map(({ breadcrumb }) => breadcrumb);
   const breadcrumb = breadcrumbs_list
     ?.map((x: any) => x?.props?.children)
-    [breadcrumbs_list.length - 1]?.split(" /");
+  [breadcrumbs_list.length - 1]?.split(" /");
 
   const menu = (
     <Menu>
