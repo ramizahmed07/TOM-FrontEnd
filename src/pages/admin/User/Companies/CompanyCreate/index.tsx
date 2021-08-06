@@ -16,7 +16,7 @@ import en from "world_countries_lists/data/en/world.json";
 
 import "./style.less";
 import ImgUpload from "@assets/images/img-upload.png";
-import Layout from "@/components/Layout";
+import Layout from "@components/Layout";
 
 const CompanyCreate = () => {
   return (

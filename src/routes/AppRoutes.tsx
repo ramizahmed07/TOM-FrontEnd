@@ -16,13 +16,13 @@ const ResetPassword = React.lazy(
   () => import("@pages/admin/Auth/ResetPassword")
 );
 const CompanyList = React.lazy(
-  () => import("@/pages/admin/User/Companies/CompanyList")
+  () => import("@pages/admin/User/Companies/CompanyList")
 );
 const CompanyCreate = React.lazy(
-  () => import("@/pages/admin/User/Companies/CompanyCreate")
+  () => import("@pages/admin/User/Companies/CompanyCreate")
 );
 const CompanyProfile = React.lazy(
-  () => import("@/pages/admin/User/Companies/CompanyProfile")
+  () => import("@pages/admin/User/Companies/CompanyProfile")
 );
 
 const AppRoutes = () => {

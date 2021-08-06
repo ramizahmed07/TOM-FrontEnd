@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row, Tabs } from "antd";
 
 import "./style.less";
-import Layout from "@/components/Layout";
+import Layout from "@components/Layout";
 import CompanyDetails from "./CompanyDetails";
 
 const CompanyProfile = () => {

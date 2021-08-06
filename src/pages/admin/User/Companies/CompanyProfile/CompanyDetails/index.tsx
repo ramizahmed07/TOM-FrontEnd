@@ -1,9 +1,10 @@
 import React from "react";
-import "./companyDetails.less";
-import UnileverLogo from "@assets/images/unilever-logo.png";
 import { Button } from "antd";
 import { useHistory } from "react-router-dom";
-import RoutePaths from "@/routes/RoutePaths";
+
+import "./companyDetails.less";
+import UnileverLogo from "@assets/images/unilever-logo.png";
+import RoutePaths from "@routes/RoutePaths";
 
 const CompanyDetails = () => {
   const history = useHistory();
