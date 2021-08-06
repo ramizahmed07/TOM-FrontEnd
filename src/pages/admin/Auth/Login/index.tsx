@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
-import { useLoginMutation, useLogoutMutation } from "@/services/auth";
-import { loadRefreshToken } from "@/services/storage";
+import { useLoginMutation } from "@services";
 
 interface ILoginForm {
   email: string;
@@ -19,7 +19,6 @@ const Login = () => {
   const history = useHistory();
   const [errorFields, setErrorFields] = useState([]);
   const [login, { isLoading }] = useLoginMutation();
-  const [logout, { isLoading: loggingout }] = useLogoutMutation();
   const [form] = Form.useForm();
 
   const onFinishedFailed = (errorInfo: any) => {
@@ -50,19 +49,6 @@ const Login = () => {
   const checkError = (name: string) =>
     errorFields?.some((x: any) => x.name.includes(name));
 
-  const logoutUser = async () => {
-    try {
-      const token = loadRefreshToken();
-      console.log({ token });
-      const res = await logout({
-        refresh: token,
-      });
-      console.log("res", { res });
-    } catch (error) {
-      console.log("err", error);
-    }
-  };
-
   return (
     <Row className="auth__container">
       <AuthLandingImg />
@@ -75,7 +61,6 @@ const Login = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
-          <button onClick={logoutUser}>Log out</button>
           {/* FORM */}
           <Form
             name="login"
@@ -125,9 +110,12 @@ const Login = () => {
                   >
                     Password
                   </label>
-                  <Button type="link" className="auth__forgot__password">
+                  <Link
+                    to={Paths.Auth.forgot_password}
+                    className="auth__forgot__password"
+                  >
                     Forgot password?
-                  </Button>
+                  </Link>
                 </div>
               }
               name="password"

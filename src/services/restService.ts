@@ -18,7 +18,7 @@ interface IReqBody {
 const black_list = ["/login/"];
 export const tomService =
   ({ baseUrl } = { baseUrl: "" }) =>
-  async ({ url, third_party, method, body }: any) => {
+  async ({ url, third_party, method, body }: ITomService) => {
     const headers = {};
 
     let path = third_party ? url : `${baseUrl}${url}`;

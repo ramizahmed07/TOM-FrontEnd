@@ -3,8 +3,8 @@ import { Button, Col, Row, Select } from "antd";
 
 import Modal from "@components/Modal";
 import { INDUSTRIES, Sector, SECTORS } from "./config";
+import { showSuccessPopup } from "@utils";
 import { IModal } from "@/types";
-import { showSuccessPopup } from "@/utils";
 
 const { Option } = Select;
 
