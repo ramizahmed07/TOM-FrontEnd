@@ -1,7 +1,7 @@
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./styles/index.less";
-import { routeConfig, Routes } from "@/router";
+import { routeConfig, Routes } from "@router";
 import Layout from "@components/Layout";
 
 const App = () => {

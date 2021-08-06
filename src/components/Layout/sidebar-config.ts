@@ -6,7 +6,7 @@ import { ReactComponent as IndustryIcon } from "@assets/images/industry.svg";
 import { ReactComponent as JobFunctionIcon } from "@assets/images/job-function.svg";
 import { ReactComponent as ListIcon } from "@assets/images/list.svg";
 import { ReactComponent as DashboardIcon } from "@assets/images/dashboard.svg";
-import { Paths } from "@/router";
+import { Paths } from "@router";
 
 const { Users, Settings } = Paths;
 

@@ -7,7 +7,7 @@ import JobFunction from "@/pages/admin/JobFunction";
 import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
 import CompanyList from "@/pages/admin/User/Companies/company-list";
-import { Paths, IRoute } from "@/router";
+import { Paths, IRoute } from "@router";
 
 export const routeConfig: IRoute[] = [
   {

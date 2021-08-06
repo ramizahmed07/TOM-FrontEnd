@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "../style.less";
 import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
-import { Paths } from "@/router";
+import { Paths } from "@router";
 
 const ResetPassword = () => {
   const history = useHistory();

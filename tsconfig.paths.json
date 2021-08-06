@@ -9,7 +9,7 @@
       "@store/*": ["./store/*"],
       "@types/*": ["./types/*"],
       "@utils/*": ["./utils/*"],
-      "@router/*": ["./router/*"]
+      "@router": ["./router"]
     }
   }
 }

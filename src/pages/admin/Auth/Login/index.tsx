@@ -3,7 +3,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
-import { Paths } from "@/router";
+import { Paths } from "@router";
 
 const Login = () => {
   const history = useHistory();

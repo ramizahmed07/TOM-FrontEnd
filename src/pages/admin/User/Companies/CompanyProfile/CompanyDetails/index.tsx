@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import "./companyDetails.less";
 import UnileverLogo from "@assets/images/unilever-logo.png";
-import { Paths } from "@/router";
+import { Paths } from "@router";
 
 const CompanyDetails = () => {
   const history = useHistory();

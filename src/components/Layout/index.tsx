@@ -3,7 +3,7 @@ import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
-import { Paths, routeConfig } from "@/router";
+import { Paths, routeConfig } from "@router";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
@@ -81,9 +81,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     to={subLink.path || ""}
                     className="sider__sub__link"
                     activeClassName="sider__sub__link--active"
-                    onClick={() =>
-                      subLink.path && history.push(subLink.path)
-                    }
+                    onClick={() => subLink.path && history.push(subLink.path)}
                   >
                     <div className="sider__icon__container">
                       <subLink.icon className="sider__link__icon" />
@@ -95,8 +93,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             );
           })}
         </Sider>
-        <AntdLayout className='content__container'>
-          <Header  className="layout__header">
+        <AntdLayout className="content__container">
+          <Header className="layout__header">
             <div className="header__notif__icon__container">
               <Bell className="header__notif__icon" />
             </div>

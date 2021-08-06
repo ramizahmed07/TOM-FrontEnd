@@ -19,7 +19,7 @@ import "./style.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
-import { Paths } from "@/router";
+import { Paths } from "@router";
 
 const CompanyList = () => {
   const history = useHistory();
