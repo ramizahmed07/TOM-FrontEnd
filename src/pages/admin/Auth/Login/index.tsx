@@ -44,7 +44,6 @@ const Login = () => {
       ]);
     }
   };
-  console.log({ errorFields });
 
   const checkError = (name: string) =>
     errorFields?.some((x: any) => x.name.includes(name));

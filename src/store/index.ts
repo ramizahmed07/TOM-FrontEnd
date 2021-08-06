@@ -19,7 +19,6 @@ const rootReducer = (state: any, action: any) => {
     action?.meta?.arg?.endpointName === "logout" &&
     action?.type === "authApi /executeMutation/fulfilled"
   ) {
-    console.log("found it");
     state = {} as RootState;
   }
   return appReducer(state, action);
