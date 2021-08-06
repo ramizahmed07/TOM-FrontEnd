@@ -12,6 +12,7 @@ module.exports = {
       "@types": path.resolve(__dirname, "src/types/"),
       "@utils": path.resolve(__dirname, "src/utils/"),
       "@router": path.resolve(__dirname, "src/router/"),
+      "@hooks": path.resolve(__dirname, "src/hooks/"),
     },
   },
   plugins: [

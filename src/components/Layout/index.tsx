@@ -9,7 +9,7 @@ import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
-import { useBreadcrumbs } from "@/hooks";
+import { useBreadcrumbs } from "@hooks";
 
 const { Header, Content, Sider } = AntdLayout;
 
