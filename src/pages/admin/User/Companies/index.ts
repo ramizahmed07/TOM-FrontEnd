@@ -1,2 +1,3 @@
-export * from './company-list/company-list';
-export * from './company-create/company-create';
+export * from './CompanyList';
+export * from './CompanyCreate';
+export * from './CompanyProfile';

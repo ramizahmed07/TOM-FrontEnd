@@ -12,6 +12,7 @@ const Home = {
 const User = {
   companyListing: '/users/company-list',
   companyCreate: '/users/create-company',
+  companyProfile: '/users/company-profile',
 }
 
 const RoutePaths = { Auth, Home, User };
