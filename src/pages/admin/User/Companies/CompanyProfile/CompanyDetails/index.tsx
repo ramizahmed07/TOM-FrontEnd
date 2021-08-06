@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import "./companyDetails.less";
 import UnileverLogo from "@assets/images/unilever-logo.png";
-import RoutePaths from "@routes/RoutePaths";
+import { Paths } from "@/router";
 
 const CompanyDetails = () => {
   const history = useHistory();
@@ -21,7 +21,12 @@ const CompanyDetails = () => {
           </div>
         </div>
 
-        <Button type="primary" onClick={() => history.push(RoutePaths.User.companyCreate)}>Edit Company Details</Button>
+        <Button
+          type="primary"
+          onClick={() => history.push(Paths.Users.companies.create_company)}
+        >
+          Edit Company Details
+        </Button>
       </div>
 
       <div className="company__details__section_container">
@@ -75,7 +80,7 @@ const CompanyDetails = () => {
       </div>
 
       <div className="contact__details__section_container">
-        <div className='contact__details__heading_container'>
+        <div className="contact__details__heading_container">
           <h1>Contact Person</h1>
           <Button type="primary">Edit Details</Button>
         </div>
