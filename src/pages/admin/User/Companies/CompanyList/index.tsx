@@ -15,11 +15,11 @@ import {
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
+import "./style.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
-import { data, TableRow } from "./dumpData";
-import "./style.less";
 import RoutePaths from "@routes/RoutePaths";
+import { data, TableRow } from "./dumpData";
 
 const CompanyList = () => {
   const history = useHistory();
