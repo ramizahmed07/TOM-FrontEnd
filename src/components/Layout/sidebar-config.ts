@@ -31,7 +31,6 @@ const config: Array<Config> = [
         title: "Companies",
         icon: CompaniesIcon,
         path: RoutePaths.User.companyListing,
-        routingPath: RoutePaths.User.companyListing,
       },
       {
         title: "Sub-Admins",

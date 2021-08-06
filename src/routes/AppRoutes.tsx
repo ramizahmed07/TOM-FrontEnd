@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "../styles/index.less";
 import Layout from "@components/Layout";
+import TableTest from "@pages/admin/TableTest";
 import RoutePaths from "./RoutePaths";
 import GradeMapTable from "@pages/admin/GradeMapTable";
 import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
@@ -15,9 +16,11 @@ const ResetPassword = React.lazy(
   () => import("@pages/admin/Auth/ResetPassword")
 );
 const CompanyList = React.lazy(
-  () => import("@pages/admin/User/Companies/company-list")
+  () => import("@pages/admin/User/Companies/company-list/company-list")
 );
-
+const CompanyCreate = React.lazy(
+  () => import("@pages/admin/User/Companies/company-create/company-create")
+);
 const AppRoutes = () => {
   return (
     <Suspense fallback={"Loading..."}>
@@ -35,6 +38,9 @@ const AppRoutes = () => {
           <Route path={RoutePaths.User.companyListing}>
             <CompanyList />
           </Route>
+          <Route path={RoutePaths.User.companyCreate}>
+            <CompanyCreate />
+          </Route>
           <Route path={RoutePaths.Home.dashboard}>
             <Layout>
               {/* <TableTest /> */}
@@ -46,6 +52,7 @@ const AppRoutes = () => {
               </Route>
             </Layout>
           </Route>
+
         </Switch>
       </Router>
     </Suspense>
