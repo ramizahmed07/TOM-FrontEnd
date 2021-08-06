@@ -47,7 +47,6 @@ export const tomService =
     try {
       const res = await fetch(path, reqBody);
       const json = await res.json();
-      console.log("JSON<>", json);
       if (!json.success) throw json;
 
       if (includes(black_list, url)) {
