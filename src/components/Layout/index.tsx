@@ -19,18 +19,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const history = useHistory();
 
   const getRoute = (path: string | Array<string>): string => {
-    if (typeof path == "string") {
-      return path;
-    } else if (
+    if (typeof path == "string") return path;
+    else if (
       Array.isArray(path) &&
       path.includes(pathname) &&
       typeof pathname == "string"
-    ) {
+    )
       return pathname;
-    } else {
-      return "";
-    }
+    else return "undefined";
   };
+
   const breadcrumbs = useBreadcrumbs(routeConfig, {
     disableDefaults: true,
   });
@@ -65,6 +63,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             return (
               <div className="sider__links__container" key={idx}>
                 <NavLink
+                  exact={true}
                   key={idx}
                   to={getRoute(config.path)}
                   className="sider__link"

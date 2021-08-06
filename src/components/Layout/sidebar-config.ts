@@ -8,7 +8,10 @@ import { ReactComponent as ListIcon } from "@assets/images/list.svg";
 import { ReactComponent as DashboardIcon } from "@assets/images/dashboard.svg";
 import { Paths } from "@router";
 
-const { Users, Settings } = Paths;
+const {
+  Users: { companies, sub_admins },
+  Settings: { sectors, job_function, grade_map_table },
+} = Paths;
 
 export type Config = {
   title: string;
@@ -27,17 +30,17 @@ const config: Array<Config> = [
   {
     title: "Users",
     icon: UsersIcon,
-    path: [Users.companies.listing, Users.sub_admins],
+    path: [companies.listing, companies.create_company, sub_admins],
     sub: [
       {
         title: "Companies",
         icon: CompaniesIcon,
-        path: Users.companies.listing,
+        path: companies.listing,
       },
       {
         title: "Sub-Admins",
         icon: SubAdminIcon,
-        path: Users.sub_admins,
+        path: sub_admins,
       },
     ],
   },
@@ -45,27 +48,27 @@ const config: Array<Config> = [
     title: "Settings",
     icon: SettingsIcon,
     path: [
-      Settings.sectors.listing,
-      Settings.sectors.industry,
-      Settings.job_function,
-      Settings.grade_map_table.listing,
-      Settings.grade_map_table.create_grade_company,
+      sectors.listing,
+      sectors.industry,
+      job_function,
+      grade_map_table.listing,
+      grade_map_table.create_grade_company,
     ],
     sub: [
       {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
-        path: Settings.sectors.listing,
+        path: sectors.listing,
       },
       {
         title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
-        path: Settings.job_function,
+        path: job_function,
       },
       {
         title: "Grade map table",
         icon: ListIcon,
-        path: Settings.grade_map_table.listing,
+        path: grade_map_table.listing,
       },
     ],
   },

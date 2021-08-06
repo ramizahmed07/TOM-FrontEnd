@@ -17,8 +17,15 @@ import "./style.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
+import { useHistory } from "react-router-dom";
+import { Paths } from "@/router";
 
 const CompanyList = () => {
+  const history = useHistory();
+
+  const createNewCompany = () =>
+    history.push(Paths.Users.companies.create_company);
+
   const columns: TableColumnsType<TableRow> = [
     {
       title: "Company ID",
@@ -115,7 +122,7 @@ const CompanyList = () => {
               placeholder="Search by name or ID..."
               prefix={<SearchOutlined style={{ color: "#435465" }} />}
             />
-            <Button type="primary">
+            <Button onClick={createNewCompany} type="primary">
               <PlusOutlined /> Create new company
             </Button>
           </div>

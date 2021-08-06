@@ -7,6 +7,7 @@ import JobFunction from "@/pages/admin/JobFunction";
 import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
 import CompanyList from "@/pages/admin/User/Companies/company-list";
+import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
 import { Paths, IRoute } from "@router";
 
 export const routeConfig: IRoute[] = [
@@ -31,6 +32,13 @@ export const routeConfig: IRoute[] = [
     key: "Sectors",
     exact: true,
     breadcrumb: "Users / Companies list",
+  },
+  {
+    path: Paths.Users.companies.create_company,
+    component: CompanyCreate,
+    key: "Company New Company",
+    exact: true,
+    breadcrumb: "Users / Companies list / Create new company",
   },
   {
     path: Paths.Settings.sectors.listing,
