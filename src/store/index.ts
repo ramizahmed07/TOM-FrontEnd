@@ -1,12 +1,12 @@
-import { authApi } from "@/services/auth";
 import {
   Action,
   combineReducers,
   configureStore,
   ThunkAction,
 } from "@reduxjs/toolkit";
+
+import { authApi } from "@services";
 import authReducer from "./auth/authSlice";
-// import { sectorsReducer } from "@store/slices";
 
 const appReducer = combineReducers({
   // sectors: sectorsReducer

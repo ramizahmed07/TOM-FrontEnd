@@ -6,11 +6,12 @@
       "@pages/*": ["./pages/*"],
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
-      "@store": ["./store"],
       "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"],
       "@router": ["./router"],
-      "@hooks": ["./hooks"]
+      "@hooks": ["./hooks"],
+      "@services": ["./services"],
+      "@store": ["./store"],
+      "@utils": ["./utils"]
     }
   }
 }
