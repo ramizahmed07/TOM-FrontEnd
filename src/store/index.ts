@@ -4,15 +4,35 @@ import {
   configureStore,
   ThunkAction,
 } from "@reduxjs/toolkit";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import { authApi } from "@services";
 import authReducer from "./auth/authSlice";
 
 const appReducer = combineReducers({
-  // sectors: sectorsReducer
   [authApi.reducerPath]: authApi.reducer,
   auth: authReducer,
+  yolo: () => ({
+    userr: null,
+  }),
 });
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ["auth"],
+};
 
 const rootReducer = (state: any, action: any) => {
   if (
@@ -24,12 +44,21 @@ const rootReducer = (state: any, action: any) => {
   return appReducer(state, action);
 };
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
-  reducer: rootReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(authApi.middleware),
-  // middleware: [],
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+    authApi.middleware,
+  ],
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
