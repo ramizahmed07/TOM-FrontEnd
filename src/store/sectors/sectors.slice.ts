@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// import { authApi } from "@services";
-// import { IAuthState } from "./auth.types";
-
-interface ISectorsState {
-  sectors: any;
-}
+import { ISectorsState } from "./sectors.types";
 
 const initialState: ISectorsState = {
   sectors: [],
