@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { authApi } from "@services";
+import { IAuthState } from "./auth.types";
 
-const initialState = {
+const initialState: IAuthState = {
   user: null,
   token: {
     access: null,
@@ -19,7 +20,7 @@ const slice = createSlice({
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        console.log("HELLO");
+        console.log("Sucks!!");
         state.user = payload.user;
         state.token = payload.token;
         state.permissions = payload.permissions;
