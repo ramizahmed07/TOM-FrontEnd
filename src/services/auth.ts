@@ -18,24 +18,24 @@ export const authApi = createApi({
       }),
     }),
     resetPassword: builder.mutation({
-      query: data => ({
+      query: body => ({
         url: "/forgot-password/",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
     changePassword: builder.mutation({
-      query: data => ({
+      query: body => ({
         url: "/change-password/",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
     logout: builder.mutation({
-      query: data => ({
+      query: body => ({
         url: "/logout/",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
   }),

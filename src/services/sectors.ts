@@ -6,7 +6,7 @@ import { tomService } from "./restService";
 export const sectorsApi = createApi({
   reducerPath: "sectorsApi ",
   baseQuery: tomService({
-    baseUrl: `${baseUrl}/sectors`,
+    baseUrl: `${baseUrl}/sector`,
   }),
 
   endpoints: builder => ({
@@ -16,7 +16,14 @@ export const sectorsApi = createApi({
         method: "GET",
       }),
     }),
+    createSector: builder.mutation({
+      query: body => ({
+        url: "/",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useFetchSectorsQuery } = sectorsApi;
+export const { useFetchSectorsQuery, useCreateSectorMutation } = sectorsApi;

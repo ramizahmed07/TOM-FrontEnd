@@ -12,12 +12,19 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addMatcher(
-      sectorsApi.endpoints.fetchSectors.matchFulfilled,
-      (state, { payload }) => {
-        state.sectors = payload;
-      }
-    );
+    builder
+      .addMatcher(
+        sectorsApi.endpoints.fetchSectors.matchFulfilled,
+        (state, { payload }) => {
+          state.sectors = payload;
+        }
+      )
+      .addMatcher(
+        sectorsApi.endpoints.createSector.matchFulfilled,
+        (state, { payload }) => {
+          state.sectors = [...state.sectors, payload];
+        }
+      );
   },
 });
 
