@@ -40,6 +40,14 @@ export const sectorsApi = createApi({
       }),
       invalidatesTags: ["Industries"],
     }),
+    createSubIndustry: builder.mutation({
+      query: body => ({
+        url: "/sub-industry/",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Industries"],
+    }),
   }),
 });
 
@@ -48,4 +56,5 @@ export const {
   useCreateSectorMutation,
   useFetchIndustriesQuery,
   useCreateIndustryMutation,
+  useCreateSubIndustryMutation,
 } = sectorsApi;

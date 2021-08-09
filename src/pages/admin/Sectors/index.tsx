@@ -59,7 +59,6 @@ const columns: TableColumnsType<ISector> = [
 const Sectors = () => {
   const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
-  // const { sectors } = useTypedSelector(state => state.sectors);
   const { data, isLoading } = useFetchSectorsQuery(null);
 
   const onRowClick = (data: any) => {

@@ -23,7 +23,7 @@ const Settings = {
   sectors: {
     listing: "/sectors",
     industry: "/sectors/:sector_id",
-    sub_industry: "/sectors/:sector_id/:sub_industry_id",
+    sub_industry: "/sectors/:sector_id/:industry_id",
   },
   job_function: "/job-function",
   grade_map_table: {

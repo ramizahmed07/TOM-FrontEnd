@@ -5,6 +5,7 @@ import Button from "@components/Button";
 import Table from "@components/Table";
 import { ISubIndustry } from "@store/sectors";
 import { useLocation } from "react-router-dom";
+import AddSubIndustry from "./AddSubIndustry";
 
 const columns: TableColumnsType<ISubIndustry> = [
   {
@@ -48,22 +49,22 @@ const SubIndustry = () => {
     state: { data },
   } = useLocation<{ data: ISubIndustry[] }>();
 
-  console.log("data", { data });
   return (
     <>
+      <AddSubIndustry isVisible={isVisible} setIsVisible={setIsVisible} />
       <Row>
         <Col span={16}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
         <Col className="align-end" span={8}>
           <Button variant="add" onClick={() => setIsVisible(true)}>
-            Add Industry
+            Add Sub-Industry
           </Button>
         </Col>
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} isLoading={true} />
+        <Table data={data} columns={columns} />
       </Row>
     </>
   );

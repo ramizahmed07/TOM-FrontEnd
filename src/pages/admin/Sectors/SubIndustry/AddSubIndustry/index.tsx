@@ -1,36 +1,45 @@
-import { useParams } from "react-router-dom";
 import { FC, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Col, Input, message, Row } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
 import { showSuccessPopup } from "@utils";
-import { useCreateIndustryMutation } from "@services";
+import { IModal } from "@/types";
+import {
+  useCreateSectorMutation,
+  useCreateSubIndustryMutation,
+} from "@services";
+import { useParams } from "react-router-dom";
 
-interface AddIndustryProps extends IModal {}
+interface AddSubIndustryProps extends IModal {}
 
-const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
-  const [industry, setIndustry] = useState({
+const AddSubIndustry: FC<AddSubIndustryProps> = ({
+  isVisible,
+  setIsVisible,
+}) => {
+  const [subIndustry, setSubIndustry] = useState({
     name: "",
     description: null,
   });
-  const { sector_id } = useParams<{ sector_id: string }>();
-  const [createIndustry, { isLoading }] = useCreateIndustryMutation();
+  const [createSubIndustry, { isLoading }] = useCreateSubIndustryMutation();
+  const { industry_id } = useParams<{ industry_id: string }>();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setIndustry(prev => ({
+    setSubIndustry(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
 
-  const addIndustry = async () => {
+  const addSubIndustry = async () => {
     try {
-      await createIndustry({ ...industry, sector_id: +sector_id }).unwrap();
+      await createSubIndustry({
+        ...subIndustry,
+        industry_id: +industry_id,
+      }).unwrap();
       setIsVisible(false);
       showSuccessPopup({
-        title: "New Industry Created",
-        desc: "You have successfully created new industry.",
+        title: "New Sub-Industry Created",
+        desc: "You have successfully created new sub-industry.",
       });
     } catch (error) {
       message.error(error?.message);
@@ -41,14 +50,23 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
   return (
     <Modal
       footer={[
-        <Button onClick={addIndustry} key="1" type="primary">
-          {isLoading ? <LoadingOutlined className="spinner" /> : "Done"}
+        <Button
+          onClick={addSubIndustry}
+          disabled={!subIndustry.name.length}
+          key="1"
+          type="primary"
+        >
+          {isLoading ? (
+            <LoadingOutlined className="spinner" />
+          ) : (
+            "Add Sub-Industry"
+          )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
         </Button>,
       ]}
-      title="Create an Industry"
+      title="Create a Sub-Industry"
       isVisible={isVisible}
     >
       <>
@@ -58,9 +76,9 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
             <Input
               size="large"
               name="name"
-              value={industry.name}
+              value={subIndustry.name}
               onChange={handleInputChange}
-              placeholder="Enter industry name here..."
+              placeholder="Enter sub-industry name here..."
             />
           </Col>
         </Row>
@@ -70,7 +88,7 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
             <Input
               size="large"
               name="description"
-              value={industry.description || ""}
+              value={subIndustry.description || ""}
               onChange={handleInputChange}
               placeholder="Enter description here..."
             />
@@ -81,4 +99,4 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
   );
 };
 
-export default AddIndustry;
+export default AddSubIndustry;
