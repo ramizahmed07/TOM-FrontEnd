@@ -22,7 +22,6 @@ export const tomService =
     const headers = {};
 
     let path = third_party ? url : `${baseUrl}${url}`;
-
     set(headers, "Accept", "application/json");
     set(headers, "Content-Type", "application/json");
 
@@ -40,7 +39,7 @@ export const tomService =
       headers,
     };
 
-    if (!isEmpty(body)) {
+    if (body && !isEmpty(body)) {
       reqBody.body = JSON.stringify(body);
     }
 

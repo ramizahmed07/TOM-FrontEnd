@@ -16,15 +16,15 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi } from "@services";
+import { authApi, sectorsApi } from "@services";
 import { authReducer } from "./auth";
+import { sectorsReducer } from "./sectors";
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
+  [sectorsApi.reducerPath]: sectorsApi.reducer,
   auth: authReducer,
-  yolo: () => ({
-    userr: null,
-  }),
+  sectors: sectorsReducer,
 });
 
 const persistConfig = {
@@ -55,6 +55,7 @@ export const store = configureStore({
       },
     }),
     authApi.middleware,
+    sectorsApi.middleware,
   ],
 });
 

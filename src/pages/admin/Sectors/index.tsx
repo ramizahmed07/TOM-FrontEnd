@@ -6,9 +6,10 @@ import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import Table from "@components/Table";
 import AddSector from "./AddSector";
 import Button from "@components/Button";
-import { useEffect } from "react";
+import { useFetchSectorsQuery } from "@services";
+import { IIndustry, ISector } from "@store/sectors";
 
-const columns: TableColumnsType<TableRow> = [
+const columns: TableColumnsType<ISector> = [
   {
     title: "Id",
     dataIndex: "id",
@@ -17,15 +18,19 @@ const columns: TableColumnsType<TableRow> = [
   },
   {
     title: "Sector",
-    dataIndex: "sector",
+    dataIndex: "name",
     key: "sector",
     width: "20%",
   },
   {
     title: "Industry",
-    dataIndex: "industry",
+    dataIndex: "industries",
     key: "industry",
     width: "55%",
+    render: industries => {
+      const names = industries?.map((industry: IIndustry) => industry.name);
+      return <span>{names.join(", ")}</span>;
+    },
   },
   {
     title: <span className="align-center">Actions</span>,
@@ -50,41 +55,14 @@ const columns: TableColumnsType<TableRow> = [
   },
 ];
 
-type TableRow = {
-  id: string;
-  sector: string;
-  industry: string;
-};
-
-const data: TableRow[] = [
-  {
-    id: "01",
-    sector: "Energy",
-    industry: "Energy Equipment & Services",
-  },
-  {
-    id: "02",
-    sector: "Energy",
-    industry: "Energy Equipment & Services",
-  },
-  {
-    id: "03",
-    sector: "Energy",
-    industry: "Energy Equipment & Services",
-  },
-];
-
 const Sectors = () => {
   const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
+  const { isLoading, data } = useFetchSectorsQuery(null);
 
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);
   };
-
-  useEffect(() => {
-    console.log("fetching sectors");
-  }, []);
 
   return (
     <>
@@ -117,7 +95,12 @@ const Sectors = () => {
         </Col>
       </Row>
       <Row>
-        <Table onRowClick={onRowClick} data={data} columns={columns} />
+        <Table
+          onRowClick={onRowClick}
+          data={data}
+          columns={columns}
+          isLoading={isLoading}
+        />
       </Row>
     </>
   );

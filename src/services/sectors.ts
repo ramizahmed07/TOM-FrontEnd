@@ -4,15 +4,15 @@ import { baseUrl } from "./constants";
 import { tomService } from "./restService";
 
 export const sectorsApi = createApi({
-  reducerPath: "authApi ",
+  reducerPath: "sectorsApi ",
   baseQuery: tomService({
-    baseUrl: `${baseUrl}/sector`,
+    baseUrl: `${baseUrl}/sectors`,
   }),
 
   endpoints: builder => ({
     fetchSectors: builder.query({
       query: () => ({
-        url: "/sectors/",
+        url: "/",
         method: "GET",
       }),
     }),
