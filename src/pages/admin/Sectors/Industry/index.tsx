@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
+import { useParams } from "react-router-dom";
 
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
 import Button from "@components/Button";
+import { IIndustry, ISubIndustry } from "@store/sectors";
+import { useFetchIndustriesQuery } from "@services";
 
-const columns: TableColumnsType<TableRow> = [
+const columns: TableColumnsType<IIndustry> = [
   {
     title: "Id",
     dataIndex: "id",
@@ -15,15 +18,21 @@ const columns: TableColumnsType<TableRow> = [
 
   {
     title: "Industry",
-    dataIndex: "industry",
+    dataIndex: "name",
     key: "industry",
     width: "23%",
   },
   {
     title: "Sub-Industry",
-    dataIndex: "subIndustry",
+    dataIndex: "sub_industries",
     key: "subIndustry",
     width: "55%",
+    render: sub_industries => {
+      const names = sub_industries?.map(
+        (sub_industry: ISubIndustry) => sub_industry.name
+      );
+      return <span>{names.join(", ")}</span>;
+    },
   },
   {
     title: "Actions",
@@ -41,32 +50,11 @@ const columns: TableColumnsType<TableRow> = [
   },
 ];
 
-type TableRow = {
-  id: string;
-  suBIndustry: string;
-  industry: string;
-};
-
-const data: TableRow[] = [
-  {
-    id: "01",
-    industry: "Energy Equipment & Services",
-    suBIndustry: "",
-  },
-  {
-    id: "02",
-    industry: "Energy Equipment & Services",
-    suBIndustry: "",
-  },
-  {
-    id: "03",
-    industry: "Energy Equipment & Services",
-    suBIndustry: "",
-  },
-];
-
 const Industry = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { sector_id: id } = useParams<{ sector_id: string }>();
+  const { data, isLoading } = useFetchIndustriesQuery({ id });
+
   return (
     <>
       <AddIndustry isVisible={isVisible} setIsVisible={setIsVisible} />
@@ -82,7 +70,7 @@ const Industry = () => {
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} />
+        <Table data={data} columns={columns} isLoading={isLoading} />
       </Row>
     </>
   );

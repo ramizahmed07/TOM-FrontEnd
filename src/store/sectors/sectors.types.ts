@@ -13,4 +13,11 @@ export interface IIndustry {
   id: number;
   name: number;
   description: null | string;
+  sub_industries?: ISubIndustry[];
+}
+
+export interface ISubIndustry {
+  id: number;
+  description: null | string;
+  name: string;
 }

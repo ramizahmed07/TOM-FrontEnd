@@ -34,7 +34,7 @@ export const routeConfig: IRoute[] = [
   {
     path: Paths.Users.companies.listing,
     component: CompanyList,
-    key: "Sectors",
+    key: "Companies",
     exact: true,
     breadcrumb: "Users / Companies list",
     isPrivate: true,
@@ -56,7 +56,7 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Settings.sectors.listing,
+    path: Paths.Settings.sectors.industry,
     component: Industry,
     key: "Industry",
     breadcrumb: "Settings / Sectors, Industry & Sub-Industry",

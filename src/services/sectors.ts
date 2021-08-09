@@ -6,19 +6,25 @@ import { tomService } from "./restService";
 export const sectorsApi = createApi({
   reducerPath: "sectorsApi ",
   baseQuery: tomService({
-    baseUrl: `${baseUrl}/sector`,
+    baseUrl: `${baseUrl}`,
   }),
 
   endpoints: builder => ({
     fetchSectors: builder.query({
       query: () => ({
-        url: "/",
+        url: "/sectors/",
+        method: "GET",
+      }),
+    }),
+    fetchIndustries: builder.query({
+      query: ({ id }) => ({
+        url: `/sector/${id}/industries/`,
         method: "GET",
       }),
     }),
     createSector: builder.mutation({
       query: body => ({
-        url: "/",
+        url: "/sector/",
         method: "POST",
         body,
       }),
@@ -26,4 +32,8 @@ export const sectorsApi = createApi({
   }),
 });
 
-export const { useFetchSectorsQuery, useCreateSectorMutation } = sectorsApi;
+export const {
+  useFetchSectorsQuery,
+  useCreateSectorMutation,
+  useFetchIndustriesQuery,
+} = sectorsApi;

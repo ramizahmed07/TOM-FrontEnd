@@ -67,7 +67,6 @@ const Sectors = () => {
   return (
     <>
       <AddSector isVisible={isVisible} setIsVisible={setIsVisible} />
-
       <Row>
         <Col span={24}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
