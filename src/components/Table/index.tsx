@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Col, Empty, Skeleton, Table as AntTable, TableProps } from "antd";
+import { Col, Empty, Skeleton, Table as AntTable } from "antd";
 
 import "./table.less";
 

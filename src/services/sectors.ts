@@ -12,7 +12,7 @@ export const sectorsApi = createApi({
   endpoints: builder => ({
     fetchSectors: builder.query({
       query: () => ({
-        url: "/sectors/",
+        url: "/",
         method: "GET",
       }),
       providesTags: ["Sectors"],

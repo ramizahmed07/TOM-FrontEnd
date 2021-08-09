@@ -25,14 +25,10 @@ const Sectors = () => {
   const [deleteSector] = useDeleteSectorMutation();
   const [uploadSectors, { isLoading: isUploading }] =
     useUploadSectorsMutation();
-  const {
-    data: sectors_csv,
-    isLoading: isDownloading,
-    error,
-  } = useDownloadSectorsQuery(null, { skip: !download });
+  const { isLoading: isDownloading } = useDownloadSectorsQuery(null, {
+    skip: !download,
+  });
   const inputRef = useRef<any>(null);
-
-  console.log({ sectors_csv, isDownloading, error });
 
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);
