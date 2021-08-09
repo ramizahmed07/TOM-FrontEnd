@@ -1,31 +1,49 @@
+import { useParams } from "react-router-dom";
 import { FC, useState } from "react";
-import { Button, Col, Input, Row, Select } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Button, Col, Input, message, Row } from "antd";
 
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
-import { INDUSTRIES, Sector } from "../../AddSector/config";
-
-const { Option } = Select;
+import { showSuccessPopup } from "@utils";
+import { useCreateIndustryMutation } from "@services";
 
 interface AddIndustryProps extends IModal {}
 
 const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
-  const [industries, setIndustries] = useState<any>(undefined);
+  const [industry, setIndustry] = useState({
+    name: "",
+    description: null,
+  });
+  const { sector_id } = useParams<{ sector_id: string }>();
+  const [createIndustry, { isLoading }] = useCreateIndustryMutation();
 
-  function handleChange(value: string) {
-    if (value[value.length - 1] === "button") return;
-    setIndustries(value);
-  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setIndustry(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
 
-  const addIndustry = () => {
-    console.log("add industry");
+  const addIndustry = async () => {
+    console.log("add industry", industry);
+    try {
+      await createIndustry({ ...industry, sector_id }).unwrap();
+      setIsVisible(false);
+      showSuccessPopup({
+        title: "New Industry Created",
+        desc: "You have successfully created new industry.",
+      });
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
   };
 
   return (
     <Modal
       footer={[
         <Button onClick={addIndustry} key="1" type="primary">
-          Done
+          {isLoading ? <LoadingOutlined className="spinner" /> : "Done"}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
@@ -35,64 +53,28 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
       isVisible={isVisible}
     >
       <>
-        <Row justify="space-between" className="modal__row">
-          <Col span={11}>
-            <label>Sector</label>
-            <Input size="large" value="Energy" disabled />
-          </Col>
-          <Col span={11}>
-            <label>Industry</label>
-            <Select
-              value={industries}
-              size="large"
-              showArrow
-              mode="multiple"
-              placeholder="Select industry from here..."
-              showSearch={false}
-              onChange={handleChange}
-            >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
-                </Option>
-              ))}
-              <Option value="button">
-                <div
-                  className="link"
-                  onMouseDown={() => console.log("Add new industry")}
-                >
-                  Add new industry
-                </div>
-              </Option>
-            </Select>
-          </Col>
-        </Row>
-        <div className="sub-heading">Add Sub-Industries</div>
         <Row className="modal__row">
           <Col span={11}>
-            <label>Select sub-industries</label>
-            <Select
-              value={industries}
+            <label>Name</label>
+            <Input
               size="large"
-              showArrow
-              placeholder="Select industry from here..."
-              showSearch={false}
-              onChange={handleChange}
-            >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
-                </Option>
-              ))}
-              <Option value="button">
-                <div
-                  className="link"
-                  onMouseDown={() => console.log("Add new industry")}
-                >
-                  Add new industry
-                </div>
-              </Option>
-            </Select>
+              name="name"
+              value={industry.name}
+              onChange={handleInputChange}
+              placeholder="Enter industry name here..."
+            />
+          </Col>
+        </Row>
+        <Row className="modal__row">
+          <Col span={11}>
+            <label>Description</label>
+            <Input
+              size="large"
+              name="description"
+              value={industry.description || ""}
+              onChange={handleInputChange}
+              placeholder="Enter description here..."
+            />
           </Col>
         </Row>
       </>

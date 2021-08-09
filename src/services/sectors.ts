@@ -8,19 +8,21 @@ export const sectorsApi = createApi({
   baseQuery: tomService({
     baseUrl: `${baseUrl}`,
   }),
-
+  tagTypes: ["Sectors", "Industries"],
   endpoints: builder => ({
     fetchSectors: builder.query({
       query: () => ({
         url: "/sectors/",
         method: "GET",
       }),
+      providesTags: ["Sectors"],
     }),
     fetchIndustries: builder.query({
       query: ({ id }) => ({
         url: `/sector/${id}/industries/`,
         method: "GET",
       }),
+      providesTags: ["Industries"],
     }),
     createSector: builder.mutation({
       query: body => ({
@@ -28,6 +30,15 @@ export const sectorsApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Sectors"],
+    }),
+    createIndustry: builder.mutation({
+      query: body => ({
+        url: "/industry/",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Industries"],
     }),
   }),
 });
@@ -36,4 +47,5 @@ export const {
   useFetchSectorsQuery,
   useCreateSectorMutation,
   useFetchIndustriesQuery,
+  useCreateIndustryMutation,
 } = sectorsApi;

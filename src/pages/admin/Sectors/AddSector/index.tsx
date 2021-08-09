@@ -14,8 +14,8 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
     name: "",
     description: null,
   });
-
   const [createSector, { isLoading }] = useCreateSectorMutation();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSector(prev => ({
       ...prev,
