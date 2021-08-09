@@ -13,6 +13,7 @@ import {
   useUploadSectorsMutation,
 } from "@services";
 import { IIndustry, ISector } from "@store/sectors";
+import { useTypedSelector } from "@/hooks";
 
 const Sectors = () => {
   const history = useHistory();
