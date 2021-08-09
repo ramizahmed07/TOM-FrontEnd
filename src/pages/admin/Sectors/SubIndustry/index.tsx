@@ -114,7 +114,7 @@ const SubIndustry = () => {
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} />
+        <Table data={data} columns={columns} isLoading={true} />
       </Row>
     </>
   );
