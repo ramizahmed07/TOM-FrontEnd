@@ -5,7 +5,7 @@ import { loadToken, saveTokens } from "./storage";
 interface ITomService {
   url: string;
   method: string;
-  body: any;
+  body?: any;
   third_party?: boolean;
 }
 

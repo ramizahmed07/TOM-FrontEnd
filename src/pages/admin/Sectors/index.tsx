@@ -6,6 +6,7 @@ import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import Table from "@components/Table";
 import AddSector from "./AddSector";
 import Button from "@components/Button";
+import { useEffect } from "react";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -80,6 +81,10 @@ const Sectors = () => {
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);
   };
+
+  useEffect(() => {
+    console.log("fetching sectors");
+  }, []);
 
   return (
     <>

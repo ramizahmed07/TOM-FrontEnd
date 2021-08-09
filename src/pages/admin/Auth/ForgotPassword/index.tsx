@@ -126,7 +126,6 @@ const SendLinkView = ({
 };
 
 const ResendLinkView = ({ sendLink, email }: IProps) => {
-  const history = useHistory();
   const [key, setKey] = useState(1);
   const [disabled, setDisabled] = useState(true);
 
@@ -190,6 +189,7 @@ const ForgotPassword = () => {
       email,
     }).unwrap();
   };
+
   return (
     <Row className="auth__container">
       <AuthLandingImg />
