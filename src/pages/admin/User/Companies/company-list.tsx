@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "@components/Layout";
 import {
   Col,
   Row,
@@ -18,8 +17,15 @@ import "./style.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
+import { useHistory } from "react-router-dom";
+import { Paths } from "@/router";
 
 const CompanyList = () => {
+  const history = useHistory();
+
+  const createNewCompany = () =>
+    history.push(Paths.Users.companies.create_company);
+
   const columns: TableColumnsType<TableRow> = [
     {
       title: "Company ID",
@@ -106,29 +112,27 @@ const CompanyList = () => {
 
   return (
     <>
-      <Layout>
-        <Row>
-          <Col span={24}>
-            <h1 className="page__heading">Companies list</h1>
-            <div className="header__container">
-              <Input
-                className="form__input"
-                type="email"
-                placeholder="Search by name or ID..."
-                prefix={<SearchOutlined style={{ color: "#435465" }} />}
-              />
-              <Button type="primary">
-                <PlusOutlined /> Create new company
-              </Button>
-            </div>
-            <Table
-              scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
-              columns={columns}
-              dataSource={data}
+      <Row>
+        <Col span={24}>
+          <h1 className="page__heading">Companies list</h1>
+          <div className="header__container">
+            <Input
+              className="form__input"
+              type="email"
+              placeholder="Search by name or ID..."
+              prefix={<SearchOutlined style={{ color: "#435465" }} />}
             />
-          </Col>
-        </Row>
-      </Layout>
+            <Button onClick={createNewCompany} type="primary">
+              <PlusOutlined /> Create new company
+            </Button>
+          </div>
+          <Table
+            scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
+            columns={columns}
+            dataSource={data}
+          />
+        </Col>
+      </Row>
     </>
   );
 };

@@ -3,11 +3,13 @@ import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
+import { Paths, routeConfig } from "@router";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
+import { useBreadcrumbs } from "@hooks";
 
 const { Header, Content, Sider } = AntdLayout;
 
@@ -17,18 +19,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const history = useHistory();
 
   const getRoute = (path: string | Array<string>): string => {
-    if (typeof path == "string") {
-      return path;
-    } else if (
+    if (typeof path == "string") return path;
+    else if (
       Array.isArray(path) &&
       path.includes(pathname) &&
       typeof pathname == "string"
-    ) {
+    )
       return pathname;
-    } else {
-      return "";
-    }
+    else return "undefined";
   };
+
+  const breadcrumbs = useBreadcrumbs(routeConfig, {
+    disableDefaults: true,
+  });
+  const breadcrumbs_list = breadcrumbs.map(({ breadcrumb }) => breadcrumb);
+  const breadcrumb = breadcrumbs_list
+    ?.map((x: any) => x?.props?.children)
+    [breadcrumbs_list.length - 1]?.split(" /");
 
   const menu = (
     <Menu>
@@ -37,6 +44,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Menu.Item key="3">Clicking me will close the menu.</Menu.Item>
     </Menu>
   );
+
+  if (
+    Object.values(Paths.Auth).some(path =>
+      window.location.pathname.includes(path)
+    )
+  )
+    return <div>{children}</div>;
 
   return (
     <AntdLayout className="layout__container">
@@ -49,6 +63,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             return (
               <div className="sider__links__container" key={idx}>
                 <NavLink
+                  exact={true}
                   key={idx}
                   to={getRoute(config.path)}
                   className="sider__link"
@@ -65,9 +80,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     to={subLink.path || ""}
                     className="sider__sub__link"
                     activeClassName="sider__sub__link--active"
-                    onClick={() =>
-                      subLink.path && history.push(subLink.path)
-                    }
+                    onClick={() => subLink.path && history.push(subLink.path)}
                   >
                     <div className="sider__icon__container">
                       <subLink.icon className="sider__link__icon" />
@@ -79,8 +92,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             );
           })}
         </Sider>
-        <AntdLayout className='content__container'>
-          <Header  className="layout__header">
+        <AntdLayout className="content__container">
+          <Header className="layout__header">
             <div className="header__notif__icon__container">
               <Bell className="header__notif__icon" />
             </div>
@@ -103,10 +116,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </Dropdown>
           </Header>
+
           <Breadcrumb className="layout__breadcrumbs">
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            {breadcrumb?.map((breadcrumb: string) => (
+              <Breadcrumb.Item key={breadcrumb}>{breadcrumb}</Breadcrumb.Item>
+            ))}
           </Breadcrumb>
           <Content
             className="site-layout-content"

@@ -1,8 +1,8 @@
 import { Col, Row, TableColumnsType } from "antd";
 import { useHistory } from "react-router";
 
-import { AddButton, DownloadButton, UploadButton } from "@components/Buttons";
 import Table from "@components/Table";
+import Button from "@components/Button";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -105,15 +105,23 @@ const GradeMapTable = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <UploadButton onClick={() => console.log("upload job function")}>
+          <Button
+            variant="upload"
+            onClick={() => console.log("upload job function")}
+          >
             Upload Grade Map
-          </UploadButton>
-          <DownloadButton onClick={() => console.log("Download Job Functions")}>
+          </Button>
+          <Button
+            variant="download"
+            onClick={() => console.log("Download Job Functions")}
+          >
             Download Grade Map
-          </DownloadButton>
+          </Button>
         </Col>
         <Col className="align-end" span={8}>
-          <AddButton onClick={handleAddBtn}>Add new company</AddButton>
+          <Button variant="add" onClick={handleAddBtn}>
+            Add new company
+          </Button>
         </Col>
       </Row>
       <Row>

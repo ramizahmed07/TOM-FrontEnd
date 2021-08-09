@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import "../style.less";
 import "./forgotPassword.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
-import RoutePaths from "@routes/RoutePaths";
+import { Paths } from "@router";
 
 const Timer = ({ minutes, seconds }: { minutes: number; seconds: number }) => {
   const min = minutes !== 1 ? "00" : "01";
@@ -62,7 +62,7 @@ const SendLinkView = () => {
             className="login__btn"
             size="large"
             onClick={() => {
-              history.push(RoutePaths.Auth.login);
+              history.push(Paths.Auth.login);
             }}
           >
             Send link <ArrowRightOutlined />
@@ -99,7 +99,7 @@ const ResendLinkView = () => {
         className="login__btn"
         size="large"
         onClick={() => {
-          history.push(RoutePaths.Auth.login);
+          history.push(Paths.Auth.login);
         }}
       >
         Resend link <ArrowRightOutlined />
@@ -121,7 +121,7 @@ const ForgotPassword = () => {
             Back to{" "}
             <Link
               className="auth__form__prompt backToLogin"
-              to={RoutePaths.Auth.login}
+              to={Paths.Auth.login}
             >
               Login
             </Link>

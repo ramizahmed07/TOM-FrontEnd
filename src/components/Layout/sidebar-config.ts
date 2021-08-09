@@ -6,7 +6,12 @@ import { ReactComponent as IndustryIcon } from "@assets/images/industry.svg";
 import { ReactComponent as JobFunctionIcon } from "@assets/images/job-function.svg";
 import { ReactComponent as ListIcon } from "@assets/images/list.svg";
 import { ReactComponent as DashboardIcon } from "@assets/images/dashboard.svg";
-import RoutePaths from "@routes/RoutePaths";
+import { Paths } from "@router";
+
+const {
+  Users: { companies, sub_admins },
+  Settings: { sectors, job_function, grade_map_table },
+} = Paths;
 
 export type Config = {
   title: string;
@@ -20,44 +25,50 @@ const config: Array<Config> = [
   {
     title: "Dashboard",
     icon: DashboardIcon,
-    path: RoutePaths.Home.dashboard,
+    path: Paths.Dashboard.dashboard,
   },
   {
     title: "Users",
     icon: UsersIcon,
-    path: ["/companies", "/sub-admins"],
+    path: [companies.listing, companies.create_company, sub_admins],
     sub: [
       {
         title: "Companies",
         icon: CompaniesIcon,
-        path: RoutePaths.User.companyListing,
+        path: companies.listing,
       },
       {
         title: "Sub-Admins",
         icon: SubAdminIcon,
-        path: "/sub-admins",
+        path: sub_admins,
       },
     ],
   },
   {
     title: "Settings",
     icon: SettingsIcon,
-    path: ["/sectors", "/job-function", "/grade-map-table"],
+    path: [
+      sectors.listing,
+      sectors.industry,
+      job_function,
+      grade_map_table.listing,
+      grade_map_table.create_grade_company,
+    ],
     sub: [
       {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
-        path: "/sectors",
+        path: sectors.listing,
       },
       {
         title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
-        path: "/job-function",
+        path: job_function,
       },
       {
         title: "Grade map table",
         icon: ListIcon,
-        path: "/grade-map-table",
+        path: grade_map_table.listing,
       },
     ],
   },

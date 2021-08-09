@@ -18,8 +18,8 @@ import { useHistory } from "react-router-dom";
 import "./style.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
-import RoutePaths from "@routes/RoutePaths";
 import { data, TableRow } from "./dumpData";
+import { Paths } from "@router";
 
 const CompanyList = () => {
   const history = useHistory();
@@ -122,7 +122,9 @@ const CompanyList = () => {
               />
               <Button
                 type="primary"
-                onClick={() => history.push(RoutePaths.User.companyCreate)}
+                onClick={() =>
+                  history.push(Paths.Users.companies.create_company)
+                }
               >
                 <PlusOutlined /> Create new company
               </Button>
