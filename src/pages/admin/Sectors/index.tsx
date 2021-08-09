@@ -8,6 +8,7 @@ import AddSector from "./AddSector";
 import Button from "@components/Button";
 import { useFetchSectorsQuery } from "@services";
 import { IIndustry, ISector } from "@store/sectors";
+import { useTypedSelector } from "@/hooks";
 
 const columns: TableColumnsType<ISector> = [
   {
@@ -58,7 +59,10 @@ const columns: TableColumnsType<ISector> = [
 const Sectors = () => {
   const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
-  const { isLoading, data } = useFetchSectorsQuery(null);
+  const { sectors } = useTypedSelector(state => state.sectors);
+  const { data, isLoading } = useFetchSectorsQuery(null, {
+    refetchOnMountOrArgChange: +sectors.length,
+  });
 
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);

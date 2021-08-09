@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
@@ -51,9 +51,14 @@ const columns: TableColumnsType<IIndustry> = [
 ];
 
 const Industry = () => {
+  const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
   const { sector_id: id } = useParams<{ sector_id: string }>();
   const { data, isLoading } = useFetchIndustriesQuery({ id });
+
+  const onRowClick = (data: any) => {
+    history.push(`/sectors/${id}/${data?.id}`, { data: data?.sub_industries });
+  };
 
   return (
     <>
@@ -70,7 +75,12 @@ const Industry = () => {
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} isLoading={isLoading} />
+        <Table
+          onRowClick={onRowClick}
+          data={data}
+          columns={columns}
+          isLoading={isLoading}
+        />
       </Row>
     </>
   );

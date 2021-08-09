@@ -6,6 +6,7 @@ import AddGradeCompany from "@/pages/admin/GradeMapTable/AddGradeCompany";
 import JobFunction from "@/pages/admin/JobFunction";
 import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
+import SubIndustry from "@/pages/admin/Sectors/SubIndustry";
 import CompanyList from "@/pages/admin/User/Companies/company-list";
 import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
 import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
@@ -52,14 +53,22 @@ export const routeConfig: IRoute[] = [
     component: Sectors,
     key: "Sectors",
     exact: true,
-    breadcrumb: "Settings / Sectors, Industry & Sub-Industry",
+    breadcrumb: "Settings / Sectors",
     isPrivate: true,
   },
   {
     path: Paths.Settings.sectors.industry,
     component: Industry,
     key: "Industry",
-    breadcrumb: "Settings / Sectors, Industry & Sub-Industry",
+    breadcrumb: "Settings / Sectors / Industries",
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: Paths.Settings.sectors.sub_industry,
+    component: SubIndustry,
+    key: "Sub-Industry",
+    breadcrumb: "Settings / Sectors / Industries / Sub Industries",
     isPrivate: true,
   },
   {
