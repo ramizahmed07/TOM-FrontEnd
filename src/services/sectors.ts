@@ -55,6 +55,14 @@ export const sectorsApi = createApi({
       }),
       invalidatesTags: ["Sectors"],
     }),
+    updateSector: builder.mutation({
+      query: body => ({
+        url: `/sector/${body?.id}/`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["Sectors"],
+    }),
   }),
 });
 
@@ -65,4 +73,5 @@ export const {
   useCreateIndustryMutation,
   useCreateSubIndustryMutation,
   useDeleteSectorMutation,
+  useUpdateSectorMutation,
 } = sectorsApi;

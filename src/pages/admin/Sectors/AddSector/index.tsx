@@ -1,48 +1,59 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Button, Col, Input, message, Row } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import { IModal } from "@/types";
-import { useCreateSectorMutation } from "@services";
+import { useCreateSectorMutation, useUpdateSectorMutation } from "@services";
 import { ISector } from "@store/sectors";
-import { useEffect } from "react";
 
 interface AddSectorProps extends IModal {
-  selectedSector: ISector | null;
+  selectedSector?: ISector | null;
+  setSelectedSector: React.Dispatch<React.SetStateAction<ISector | null>>;
 }
 
 const AddSector: FC<AddSectorProps> = ({
   isVisible,
   setIsVisible,
   selectedSector,
+  setSelectedSector,
 }) => {
-  const [sector, setSector] = useState({
+  const [sector, setSector] = useState<Partial<ISector>>({
     name: "",
     description: null,
   });
   const [createSector, { isLoading }] = useCreateSectorMutation();
+  const [updateSector, { isLoading: isUpdating }] = useUpdateSectorMutation();
 
-  // useEffect(() => {
-  //   if(selectedSector) {
-  //     setSector(selectedSector)
-  //   }
-  // }, [selectedSector])
+  useEffect(() => {
+    if (selectedSector) {
+      setSector(selectedSector as ISector);
+    }
+    return () => {
+      setSelectedSector(null);
+    };
+  }, [selectedSector, setSelectedSector]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSector(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-  console.log("BRO", selectedSector);
-  const addSector = async () => {
+
+  const handleSubmit = async () => {
     try {
-      await createSector(sector).unwrap();
+      if (selectedSector) {
+        await editSector();
+      } else {
+        await addSector();
+      }
       setIsVisible(false);
       showSuccessPopup({
-        title: "New Sector Created",
-        desc: "You have successfully created new sector.",
+        title: selectedSector ? "Sector Updated" : "New Sector Created",
+        desc: `You have successfully ${
+          selectedSector ? "updated the" : "created new"
+        } sector.`,
       });
     } catch (error) {
       message.error(error?.message);
@@ -50,16 +61,26 @@ const AddSector: FC<AddSectorProps> = ({
     }
   };
 
+  const addSector = async () => await createSector(sector).unwrap();
+
+  const editSector = async () => await updateSector(sector).unwrap();
+
   return (
     <Modal
       footer={[
         <Button
-          onClick={addSector}
+          onClick={handleSubmit}
           disabled={!sector?.name?.length}
           key="1"
           type="primary"
         >
-          {isLoading ? <LoadingOutlined className="spinner" /> : "Add Sector"}
+          {isLoading || isUpdating ? (
+            <LoadingOutlined className="spinner" />
+          ) : selectedSector ? (
+            "Update Sector"
+          ) : (
+            "Add Sector"
+          )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel

@@ -42,7 +42,6 @@ const Sectors = () => {
     item: ISector;
   }) => {
     domEvent.stopPropagation();
-    console.log(item);
     if (key === "2") {
       handleDelete(item?.id);
     } else {
@@ -110,11 +109,15 @@ const Sectors = () => {
 
   return (
     <>
-      <AddSector
-        selectedSector={selectedSector}
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-      />
+      {isVisible ? (
+        <AddSector
+          selectedSector={selectedSector}
+          setSelectedSector={setSelectedSector}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      ) : null}
+
       <Row>
         <Col span={24}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>

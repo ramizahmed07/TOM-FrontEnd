@@ -1,7 +1,7 @@
 export interface ISector {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   industries: IIndustry[];
 }
 
