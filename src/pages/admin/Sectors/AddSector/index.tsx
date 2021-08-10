@@ -6,22 +6,36 @@ import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import { IModal } from "@/types";
 import { useCreateSectorMutation } from "@services";
+import { ISector } from "@store/sectors";
+import { useEffect } from "react";
 
-interface AddSectorProps extends IModal {}
+interface AddSectorProps extends IModal {
+  selectedSector: ISector | null;
+}
 
-const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
+const AddSector: FC<AddSectorProps> = ({
+  isVisible,
+  setIsVisible,
+  selectedSector,
+}) => {
   const [sector, setSector] = useState({
     name: "",
     description: null,
   });
   const [createSector, { isLoading }] = useCreateSectorMutation();
 
+  // useEffect(() => {
+  //   if(selectedSector) {
+  //     setSector(selectedSector)
+  //   }
+  // }, [selectedSector])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSector(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-
+  console.log("BRO", selectedSector);
   const addSector = async () => {
     try {
       await createSector(sector).unwrap();
@@ -41,7 +55,7 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
       footer={[
         <Button
           onClick={addSector}
-          disabled={!sector.name.length}
+          disabled={!sector?.name?.length}
           key="1"
           type="primary"
         >

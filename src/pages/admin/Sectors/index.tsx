@@ -12,6 +12,7 @@ import { IIndustry, ISector } from "@store/sectors";
 const Sectors = () => {
   const history = useHistory();
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedSector, setSelectedSector] = useState<ISector | null>(null);
   const { data, isLoading } = useFetchSectorsQuery(null);
   const [deleteSector] = useDeleteSectorMutation();
 
@@ -44,6 +45,9 @@ const Sectors = () => {
     console.log(item);
     if (key === "2") {
       handleDelete(item?.id);
+    } else {
+      setSelectedSector(item);
+      setIsVisible(true);
     }
   };
 
@@ -106,7 +110,11 @@ const Sectors = () => {
 
   return (
     <>
-      <AddSector isVisible={isVisible} setIsVisible={setIsVisible} />
+      <AddSector
+        selectedSector={selectedSector}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+      />
       <Row>
         <Col span={24}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
