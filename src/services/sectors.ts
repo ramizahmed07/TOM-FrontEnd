@@ -48,6 +48,13 @@ export const sectorsApi = createApi({
       }),
       invalidatesTags: ["Industries"],
     }),
+    deleteSector: builder.mutation({
+      query: ({ id }) => ({
+        url: `/sector/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Sectors"],
+    }),
   }),
 });
 
@@ -57,4 +64,5 @@ export const {
   useFetchIndustriesQuery,
   useCreateIndustryMutation,
   useCreateSubIndustryMutation,
+  useDeleteSectorMutation,
 } = sectorsApi;
