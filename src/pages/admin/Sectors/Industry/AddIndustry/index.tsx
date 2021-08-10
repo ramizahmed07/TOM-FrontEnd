@@ -7,10 +7,19 @@ import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import { showSuccessPopup } from "@utils";
 import { useCreateIndustryMutation } from "@services";
+import { IIndustry } from "@store/sectors";
 
-interface AddIndustryProps extends IModal {}
+interface AddIndustryProps extends IModal {
+  selectedIndustry: IIndustry | null;
+  setSelectedIndustry: React.Dispatch<React.SetStateAction<IIndustry | null>>;
+}
 
-const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
+const AddIndustry: FC<AddIndustryProps> = ({
+  isVisible,
+  setIsVisible,
+  selectedIndustry,
+  setSelectedIndustry,
+}) => {
   const [industry, setIndustry] = useState({
     name: "",
     description: null,

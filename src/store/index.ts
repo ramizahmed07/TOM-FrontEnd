@@ -16,9 +16,22 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi, sectorsApi } from "@services";
+import {
+  authApi,
+  baseUrl,
+  loadRefreshToken,
+  loadToken,
+  sectorsApi,
+  tomService,
+} from "@services";
 import { authReducer } from "./auth";
 import { sectorsReducer } from "./sectors";
+
+declare global {
+  interface Window {
+    store: any;
+  }
+}
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
@@ -35,12 +48,45 @@ const persistConfig = {
 };
 
 const rootReducer = (state: any, action: any) => {
-  if (
-    action?.meta?.arg?.endpointName === "logout" &&
-    action?.type === "authApi /executeMutation/fulfilled"
-  ) {
-    state = {} as RootState;
+  // if (
+  //   action?.meta?.arg?.endpointName === "logout" &&
+  //   action?.type === "authApi /executeMutation/fulfilled"
+  // ) {
+  //   state = {} as RootState;
+  //   localStorage.clear();
+  // }
+
+  if (action.type === "auth/refresh_token") {
+    const refresh = loadRefreshToken();
+
+    tomService({
+      baseUrl: `${baseUrl}/auth`,
+    })({
+      url: "/refresh-token/",
+      method: "POST",
+      body: {
+        refresh,
+      },
+    });
   }
+
+  // if (action.type === "auth/logout") {
+  //   console.log("hello world");
+  //   const refresh = loadRefreshToken();
+  //   // state = {} as RootState;
+  //   // localStorage.clear();
+  //   if (refresh) {
+  //     tomService({
+  //       baseUrl: `${baseUrl}/logout/`,
+  //     })({
+  //       url: "/logout/",
+  //       method: "POST",
+  //       body: {
+  //         refresh,
+  //       },
+  //     });
+  //   }
+  // }
   return appReducer(state, action);
 };
 
@@ -58,6 +104,8 @@ export const store = configureStore({
     sectorsApi.middleware,
   ],
 });
+
+window.store = store;
 
 export const persistor = persistStore(store);
 

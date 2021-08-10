@@ -9,7 +9,7 @@ import { useCreateSectorMutation, useUpdateSectorMutation } from "@services";
 import { ISector } from "@store/sectors";
 
 interface AddSectorProps extends IModal {
-  selectedSector?: ISector | null;
+  selectedSector: ISector | null;
   setSelectedSector: React.Dispatch<React.SetStateAction<ISector | null>>;
 }
 
