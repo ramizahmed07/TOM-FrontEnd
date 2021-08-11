@@ -10,6 +10,12 @@ export const gradeApi = createApi({
   }),
 
   endpoints: builder => ({
+    fetchAllGradeCompanies: builder.query({
+      query: () => ({
+        url: "/company/all",
+        method: "GET",
+      }),
+    }),
     fetchTARanks: builder.query({
       query: () => ({
         url: "/ta-ranks/",
@@ -19,4 +25,5 @@ export const gradeApi = createApi({
   }),
 });
 
-export const { useFetchTARanksQuery } = gradeApi;
+export const { useFetchTARanksQuery, useFetchAllGradeCompaniesQuery } =
+  gradeApi;

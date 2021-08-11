@@ -3,82 +3,51 @@ import { useHistory } from "react-router";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { useFetchTARanksQuery } from "@services";
+import {
+  useFetchAllGradeCompaniesQuery,
+  useFetchTARanksQuery,
+} from "@services";
+import { IGradeCompany } from "@store/grade";
 
-type TableRow = {
-  id: string;
-  tcRank: string;
-  hrbs: string;
-  mercerPc: string;
-  mercerCl: string;
-  twGrade: string;
-};
-
-const data: TableRow[] = [
+const default_cols = [
   {
-    id: "01",
-    tcRank: "01",
-    hrbs: "12",
-    mercerPc: "-",
-    mercerCl: "14",
-    twGrade: "11",
-  },
-  {
-    id: "02",
-    tcRank: "02",
-    hrbs: "27",
-    mercerPc: "-",
-    mercerCl: "27",
-    twGrade: "17",
-  },
-  {
-    id: "03",
-    tcRank: "03",
-    hrbs: "38",
-    mercerPc: "27",
-    mercerCl: "38",
-    twGrade: "31",
-  },
-  {
-    id: "04",
-    tcRank: "04",
-    hrbs: "40",
-    mercerPc: "27",
-    mercerCl: "12",
-    twGrade: "35",
-  },
-  {
-    id: "05",
-    tcRank: "05",
-    hrbs: "20",
-    mercerPc: "37",
-    mercerCl: "42",
-    twGrade: "15",
+    title: "ta rank",
+    dataIndex: "rank",
+    key: "taRank",
+    width: "10%",
   },
 ];
-
 const GradeMapTable = () => {
   const history = useHistory();
-  const { data, isLoading, error } = useFetchTARanksQuery(null);
+  const { data: taRanks, isLoading, error } = useFetchTARanksQuery(null);
+  const {
+    data: companies,
+    isLoading: isLoadingCompanies,
+    error: companiesError,
+  } = useFetchAllGradeCompaniesQuery(null);
+
+  const additional_cols: any =
+    (!error &&
+      companies?.map((company: IGradeCompany) => ({
+        title: company.name,
+        dataIndex: "rank",
+        key: company.id,
+        width: "15%",
+      }))) ||
+    [];
+
+  const columns = [...default_cols, ...additional_cols];
 
   console.log("GRADE", {
-    data,
-    isLoading,
-    error,
+    taRanks,
+    companies,
+    isLoadingCompanies,
+    companiesError,
   });
 
   const handleAddBtn = () => {
     history.push(`/grade-map-table/create-grade-company`);
   };
-
-  const columns: TableColumnsType<TableRow> = [
-    {
-      title: "ta rank",
-      dataIndex: "rank",
-      key: "taRank",
-      width: "13%",
-    },
-  ];
 
   return (
     <>
@@ -110,10 +79,10 @@ const GradeMapTable = () => {
       </Row>
       <Row>
         <Table
-          data={error ? [] : data}
+          data={error ? [] : taRanks}
           columns={columns}
           pagination={false}
-          isLoading={isLoading}
+          isLoading={isLoadingCompanies}
         />
       </Row>
     </>
