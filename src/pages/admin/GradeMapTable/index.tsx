@@ -3,39 +3,7 @@ import { useHistory } from "react-router";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
-
-const columns: TableColumnsType<TableRow> = [
-  {
-    title: "tc rank",
-    dataIndex: "tcRank",
-    key: "tcRank",
-    width: "13%",
-  },
-  {
-    title: "hrbs",
-    dataIndex: "hrbs",
-    key: "hrbs",
-    width: "13%",
-  },
-  {
-    title: "mercer pc",
-    dataIndex: "mercerPc",
-    key: "mercerPc",
-    width: "13%",
-  },
-  {
-    title: "mercer cl",
-    dataIndex: "mercerCl",
-    key: "mercerCl",
-    width: "13%",
-  },
-  {
-    title: "tw grade",
-    dataIndex: "twGrade",
-    key: "twGrade",
-    // width: ,
-  },
-];
+import { useFetchTARanksQuery } from "@services";
 
 type TableRow = {
   id: string;
@@ -91,10 +59,26 @@ const data: TableRow[] = [
 
 const GradeMapTable = () => {
   const history = useHistory();
+  const { data, isLoading, error } = useFetchTARanksQuery(null);
+
+  console.log("GRADE", {
+    data,
+    isLoading,
+    error,
+  });
 
   const handleAddBtn = () => {
     history.push(`/grade-map-table/create-grade-company`);
   };
+
+  const columns: TableColumnsType<TableRow> = [
+    {
+      title: "ta rank",
+      dataIndex: "rank",
+      key: "taRank",
+      width: "13%",
+    },
+  ];
 
   return (
     <>
@@ -125,7 +109,12 @@ const GradeMapTable = () => {
         </Col>
       </Row>
       <Row>
-        <Table data={data} columns={columns} />
+        <Table
+          data={error ? [] : data}
+          columns={columns}
+          pagination={false}
+          isLoading={isLoading}
+        />
       </Row>
     </>
   );

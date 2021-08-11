@@ -16,7 +16,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi, sectorsApi } from "@services";
+import { authApi, gradeApi, sectorsApi } from "@services";
 import { authReducer } from "./auth";
 import { sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
@@ -24,6 +24,7 @@ import { gradeReducer } from "./grade";
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [sectorsApi.reducerPath]: sectorsApi.reducer,
+  [gradeApi.reducerPath]: gradeApi.reducer,
   auth: authReducer,
   sectors: sectorsReducer,
   grade: gradeReducer,
