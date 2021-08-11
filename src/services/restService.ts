@@ -82,7 +82,6 @@ export const tomService =
         return { data: [] };
       } else {
         const json = await res.json();
-
         let refreshed = false;
         if (json.code === 1002 && json.message === "Invalid Token") {
           await new Promise(async (res, rej) => {
