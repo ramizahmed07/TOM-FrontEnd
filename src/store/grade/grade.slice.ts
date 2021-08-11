@@ -27,7 +27,6 @@ const slice = createSlice({
       .addMatcher(
         gradeApi.endpoints.fetchAllGradeCompanies.matchFulfilled,
         (state, { payload }) => {
-          console.log("PAYY", { payload });
           state.allGradeCompanies = payload;
         }
       );

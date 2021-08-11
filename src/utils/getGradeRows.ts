@@ -1,10 +1,6 @@
 import { IGradeCompany, ITARank } from "@store/grade";
 
 export const getRows = (taRanks: ITARank[], companies: IGradeCompany[]) => {
-  console.log("GRADE", {
-    taRanks,
-    companies,
-  });
   const data = [];
   let companies_ranks: any = {};
   for (let i = 0; i < companies?.length; i++) {

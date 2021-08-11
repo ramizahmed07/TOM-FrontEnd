@@ -24,7 +24,6 @@ const SubIndustry = () => {
     sub_industry: ISubIndustry,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    console.log({ sub_industry });
     event.stopPropagation();
     setSelectedSubIndustry(sub_industry);
     setIsVisible(true);

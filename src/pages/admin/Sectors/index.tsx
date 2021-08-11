@@ -135,7 +135,6 @@ const Sectors = () => {
       },
     },
   ];
-  console.log({ inputRef });
   return (
     <>
       {isVisible ? (
