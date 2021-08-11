@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
@@ -11,6 +12,7 @@ import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
 import EditJobFunction from "./EditJobFunction";
+import { Paths } from "@/router";
 
 type JobSubFunction = {
   id: number;
@@ -24,6 +26,7 @@ type TableRow = {
 };
 
 const JobFunction = () => {
+  const history = useHistory();
   const [isAddJFVisible, setIsAddJFVisible] = useState(false);
   const [isEditJFVisible, setIsEditJFVisible] = useState(false);
   const [getJFList, { isLoading }] = useListMutation();
@@ -49,6 +52,9 @@ const JobFunction = () => {
       dataIndex: "jobFunction",
       key: "jobFunction",
       width: "20%",
+      render: ({ id, name, }) => {
+        return <span style={{ cursor: "pointer" }} onClick={() => onNavigateSJF(id, name)}>{name}</span>
+      }
     },
     {
       title: "Job Sub-Function",
@@ -91,6 +97,10 @@ const JobFunction = () => {
         },
       ]) as any),
   ];
+
+  const onNavigateSJF = (id: number, name: string) => {
+    history.push(`${Paths.Settings.sub_job_function}${id}`);
+  }
 
   const onEditJf = async (id: string) => {
     await getJF(id);

@@ -5,7 +5,6 @@ import { IJobFunctionReducer } from "./job.function.types";
 
 const initialState: IJobFunctionReducer = {
     list: [],
-    permissions: [],
     jobFunctionItem: {},
 };
 

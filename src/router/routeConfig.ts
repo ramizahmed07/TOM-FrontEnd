@@ -6,6 +6,7 @@ import ResetPassword from "@pages/admin/Auth/ResetPassword";
 import GradeMapTable from "@pages/admin/GradeMapTable";
 import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
 import JobFunction from "@pages/admin/JobFunction";
+import SubJobFunction from "@/pages/admin/JobFunction/SubJobFunction";
 import Sectors from "@pages/admin/Sectors";
 import Industry from "@pages/admin/Sectors/Industry";
 import SubIndustry from "@pages/admin/Sectors/SubIndustry";
@@ -78,7 +79,14 @@ export const routeConfig: IRoute[] = [
     path: Paths.Settings.job_function,
     component: JobFunction,
     key: "Job Function",
-    breadcrumb: "Settings / Job Function & Sub-Function",
+    breadcrumb: "Settings / Job Function",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Settings.sub_job_function,
+    component: SubJobFunction,
+    key: "Sub Job Function",
+    breadcrumb: "Settings / Job Function / Sub-Function",
     isPrivate: true,
     permission: permissions.VIEW_JOB_SUB_FUNCTION,
   },

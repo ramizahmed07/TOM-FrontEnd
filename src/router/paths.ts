@@ -26,6 +26,7 @@ const Settings = {
     sub_industry: "/sectors/:sector_id/:industry_id",
   },
   job_function: "/job-function",
+  sub_job_function: "/sub-job-function/:id",
   grade_map_table: {
     listing: "/grade-map-table",
     create_grade_company: "/grade-map-table/create-grade-company",
