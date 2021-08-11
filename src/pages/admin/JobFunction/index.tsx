@@ -1,33 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Row, TableColumnsType } from "antd";
+import { useSelector } from "react-redux";
 
 import Table from "@components/Table";
-import AddJobFunction from "./AddJobFunction";
 import Button from "@components/Button";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";
+import { useDeleteJFMutation, useGetJFMutation, useListMutation } from "@services";
+import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
+import { ICombineReducerProps } from "@store";
+import AddJobFunction from "./AddJobFunction";
+import EditJobFunction from "./EditJobFunction";
+
+type JobSubFunction = {
+  id: number;
+  name: string;
+}
 
 type TableRow = {
-  id: string;
-  jobFunction: string;
-  jobSubFunction: string;
+  id: number;
+  name: string;
+  job_sub_functions: Array<JobSubFunction>
 };
 
-const data: TableRow[] = [
-  {
-    id: "01",
-    jobFunction: "General Manager",
-    jobSubFunction: "Business Stategy & Planning, Risk Management",
-  },
-  {
-    id: "02",
-    jobFunction: "Finance",
-    jobSubFunction: "Finance Generalists, Financial Control, Accounting, Tax",
-  },
-];
-
 const JobFunction = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isAddJFVisible, setIsAddJFVisible] = useState(false);
+  const [isEditJFVisible, setIsEditJFVisible] = useState(false);
+  const [getJFList, { isLoading }] = useListMutation();
+  const [deleteJF] = useDeleteJFMutation();
+  const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
+  const [editJfId, setEditJFId] = useState<string>('');
+  const [getJF] = useGetJFMutation();
+
+  useEffect(() => {
+    getJFListFromApi();
+  }, []);
+
 
   const columns: TableColumnsType<TableRow> = [
     {
@@ -44,9 +52,16 @@ const JobFunction = () => {
     },
     {
       title: "Job Sub-Function",
-      dataIndex: "jobSubFunction",
-      key: "jobSubFunction",
+      key: "job_sub_functions",
       width: "55%",
+      render: ({ job_sub_functions }) => {
+        if (Array.isArray(job_sub_functions) && job_sub_functions.length) {
+          return job_sub_functions.map((val: JobSubFunction) => {
+            return val.name
+          }).join(', ');
+        }
+        return null;
+      }
     },
     ...((!checkPermission([
       permissions.UPDATE_JOB_SUB_FUNCTION,
@@ -54,32 +69,56 @@ const JobFunction = () => {
     ])
       ? []
       : [
-          {
-            title: "Actions",
-            key: "action",
-            fixed: "right",
-            width: "15%",
-            render: () => {
-              return (
-                <div>
-                  {checkPermission(permissions.UPDATE_JOB_SUB_FUNCTION) && (
-                    <span className="table__action__btn">Edit</span>
-                  )}
-                  {checkPermission(permissions.DELETE_JOB_SUB_FUNCTION) && (
-                    <span className="table__action__btn table__action__btn--delete">
-                      Delete
-                    </span>
-                  )}
-                </div>
-              );
-            },
+        {
+          title: "Actions",
+          key: "action",
+          fixed: "right",
+          width: "15%",
+          render: ({ id }: TableRow) => {
+            return (
+              <div>
+                {checkPermission(permissions.UPDATE_JOB_SUB_FUNCTION) && (
+                  <span className="table__action__btn" onClick={() => onEditJf(id.toString())}>Edit</span>
+                )}
+                {checkPermission(permissions.DELETE_JOB_SUB_FUNCTION) && (
+                  <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id.toString())}>
+                    Delete
+                  </span>
+                )}
+              </div>
+            );
           },
-        ]) as any),
+        },
+      ]) as any),
   ];
+
+  const onEditJf = async (id: string) => {
+    await getJF(id);
+    setEditJFId(id);
+    setIsEditJFVisible(true);
+  }
+
+  const getJFListFromApi = async () => {
+    try {
+      await getJFList('');
+    } catch (e) {
+      console.log('Err: ', e);
+    }
+  }
+
+  const deleteJFFromApi = async (id: string) => {
+    try {
+      await deleteJF(id);
+      getJFListFromApi();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <>
-      <AddJobFunction setIsVisible={setIsVisible} isVisible={isVisible} />
+      <AddJobFunction setIsVisible={setIsAddJFVisible} isVisible={isAddJFVisible} />
+      <EditJobFunction setIsVisible={setIsEditJFVisible} isVisible={isEditJFVisible} editJfId={editJfId} />
       <Row>
         <Col span={24}>
           <div className="main-heading">Job Function & Sub-Function</div>
@@ -102,14 +141,14 @@ const JobFunction = () => {
         </Col>
         <Col className="align-end" span={8}>
           {checkPermission(permissions.CREATE_JOB_SUB_FUNCTION) && (
-            <Button variant="add" onClick={() => setIsVisible(true)}>
+            <Button variant="add" onClick={() => setIsAddJFVisible(true)}>
               Add New Job
             </Button>
           )}
         </Col>
       </Row>
       <Row>
-        <Table data={data} columns={columns} />
+        <Table data={jfReducer.list} columns={columns} />
       </Row>
     </>
   );

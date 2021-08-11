@@ -20,6 +20,14 @@ import { authApi, gradeApi, sectorsApi } from "@services";
 import { authReducer } from "./auth";
 import { sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
+import { jobFunctionReducer } from "./job-function";
+import { IAuthState } from "./auth/auth.types";
+import { IJobFunctionReducer } from "./job-function/job.function.types";
+
+export interface ICombineReducerProps {
+  auth: IAuthState;
+  jobFunction: IJobFunctionReducer;
+}
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
@@ -28,6 +36,10 @@ const appReducer = combineReducers({
   auth: authReducer,
   sectors: sectorsReducer,
   grade: gradeReducer,
+  jobFunction: jobFunctionReducer,
+  yolo: () => ({
+    userr: null,
+  }),
 });
 
 const persistConfig = {
