@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Col, Dropdown, Menu, message, Row, TableColumnsType } from "antd";
 import { useHistory } from "react-router-dom";
 
@@ -6,15 +6,33 @@ import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import Table from "@components/Table";
 import AddSector from "./AddSector";
 import Button from "@components/Button";
-import { useDeleteSectorMutation, useFetchSectorsQuery } from "@services";
+import {
+  loadToken,
+  useDeleteSectorMutation,
+  useDownloadSectorsQuery,
+  useFetchSectorsQuery,
+  useUploadSectorsMutation,
+} from "@services";
 import { IIndustry, ISector } from "@store/sectors";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const Sectors = () => {
   const history = useHistory();
+  const [download, setDownload] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedSector, setSelectedSector] = useState<ISector | null>(null);
   const { data, isLoading } = useFetchSectorsQuery(null);
   const [deleteSector] = useDeleteSectorMutation();
+  const [uploadSectors, { isLoading: isUploading }] =
+    useUploadSectorsMutation();
+  const {
+    data: sectors_csv,
+    isLoading: isDownloading,
+    error,
+  } = useDownloadSectorsQuery(null, { skip: !download });
+  const inputRef = useRef<any>(null);
+
+  console.log({ sectors_csv, isDownloading, error });
 
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);
@@ -47,6 +65,21 @@ const Sectors = () => {
     } else {
       setSelectedSector(item);
       setIsVisible(true);
+    }
+  };
+
+  const uploadFile = async (event: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+    var file = event?.target?.files[0];
+    try {
+      const formData = new FormData();
+      formData.append("attachment", file, file.name);
+      await uploadSectors(formData).unwrap();
+      message.success("CSV Data Uploaded Successfully");
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
     }
   };
 
@@ -106,7 +139,7 @@ const Sectors = () => {
       },
     },
   ];
-
+  console.log({ inputRef });
   return (
     <>
       {isVisible ? (
@@ -125,17 +158,20 @@ const Sectors = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <Button
-            variant="upload"
-            onClick={() => console.log("upload job function")}
-          >
-            Upload Industries
+          <input
+            id="myInput"
+            type="file"
+            ref={inputRef}
+            // style={{ display: "none" }}
+            hidden={true}
+            onChange={uploadFile}
+          />
+          <Button variant="upload" onClick={() => inputRef?.current?.click()}>
+            Upload Sectors{" "}
+            {/* <LoadingOutlined color="white" className="spinner-md" /> */}
           </Button>
-          <Button
-            variant="download"
-            onClick={() => console.log("Download Job Functions")}
-          >
-            Download Industries
+          <Button variant="download" onClick={() => setDownload(true)}>
+            Download Sectors
           </Button>
         </Col>
         <Col className="align-end" span={8}>

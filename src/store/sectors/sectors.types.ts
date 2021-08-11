@@ -11,7 +11,7 @@ export interface ISectorsState {
 
 export interface IIndustry {
   id: number;
-  name: number;
+  name: string;
   description: null | string;
   sub_industries?: ISubIndustry[];
 }

@@ -6,8 +6,12 @@ import { Button, Col, Input, message, Row } from "antd";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import { showSuccessPopup } from "@utils";
-import { useCreateIndustryMutation } from "@services";
+import {
+  useCreateIndustryMutation,
+  useUpdateIndustryMutation,
+} from "@services";
 import { IIndustry } from "@store/sectors";
+import { useEffect } from "react";
 
 interface AddIndustryProps extends IModal {
   selectedIndustry: IIndustry | null;
@@ -20,12 +24,23 @@ const AddIndustry: FC<AddIndustryProps> = ({
   selectedIndustry,
   setSelectedIndustry,
 }) => {
-  const [industry, setIndustry] = useState({
+  const [industry, setIndustry] = useState<Partial<IIndustry>>({
     name: "",
     description: null,
   });
   const { sector_id } = useParams<{ sector_id: string }>();
   const [createIndustry, { isLoading }] = useCreateIndustryMutation();
+  const [updateIndustry, { isLoading: isUpdating }] =
+    useUpdateIndustryMutation();
+
+  useEffect(() => {
+    if (selectedIndustry) {
+      setIndustry(selectedIndustry);
+    }
+    return () => {
+      setSelectedIndustry(null);
+    };
+  }, [selectedIndustry, setSelectedIndustry]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setIndustry(prev => ({
@@ -33,13 +48,19 @@ const AddIndustry: FC<AddIndustryProps> = ({
       [e.target.name]: e.target.value,
     }));
 
-  const addIndustry = async () => {
+  const handleSubmit = async () => {
     try {
-      await createIndustry({ ...industry, sector_id: +sector_id }).unwrap();
+      if (selectedIndustry) {
+        await editIndustry();
+      } else {
+        await addIndustry();
+      }
       setIsVisible(false);
       showSuccessPopup({
-        title: "New Industry Created",
-        desc: "You have successfully created new industry.",
+        title: selectedIndustry ? "Industry Updated!" : "New Industry Created",
+        desc: `You have successfully ${
+          selectedIndustry ? "updated the" : "created new"
+        } industry.`,
       });
     } catch (error) {
       message.error(error?.message);
@@ -47,11 +68,23 @@ const AddIndustry: FC<AddIndustryProps> = ({
     }
   };
 
+  const addIndustry = async () =>
+    await createIndustry({ ...industry, sector_id: +sector_id }).unwrap();
+
+  const editIndustry = async () => {
+    console.log("indust", industry);
+    await updateIndustry({ ...industry, sector_id }).unwrap();
+  };
+
   return (
     <Modal
       footer={[
-        <Button onClick={addIndustry} key="1" type="primary">
-          {isLoading ? <LoadingOutlined className="spinner" /> : "Done"}
+        <Button onClick={handleSubmit} key="1" type="primary">
+          {isLoading || isUpdating ? (
+            <LoadingOutlined className="spinner" />
+          ) : (
+            "Done"
+          )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel

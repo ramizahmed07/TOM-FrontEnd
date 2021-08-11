@@ -8,9 +8,11 @@ import Button from "@components/Button";
 import { IIndustry, ISubIndustry } from "@store/sectors";
 import { useDeleteIndustryMutation, useFetchIndustriesQuery } from "@services";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useRef } from "react";
 
 const Industry = () => {
   const history = useHistory();
+  let industry_id = useRef<any>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<IIndustry | null>(
     null
@@ -38,6 +40,7 @@ const Industry = () => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.stopPropagation();
+    industry_id.current = id;
     try {
       await deleteIndustry({ id });
       message.success("Industry deleted successfully!");
@@ -91,7 +94,7 @@ const Industry = () => {
               onClick={event => handleDeleteIndustry(industry?.id, event)}
               className="table__action__btn table__action__btn--delete"
             >
-              {isDeleting ? (
+              {isDeleting && industry?.id === industry_id?.current ? (
                 <LoadingOutlined color="red" className="spinner" />
               ) : (
                 "Delete"

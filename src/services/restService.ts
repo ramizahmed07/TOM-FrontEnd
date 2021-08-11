@@ -7,6 +7,7 @@ interface ITomService {
   method: string;
   body?: any;
   third_party?: boolean;
+  formData?: boolean;
 }
 
 interface IReqBody {
@@ -38,15 +39,15 @@ const handleErrors = (
 
 export const tomService =
   ({ baseUrl } = { baseUrl: "" }) =>
-  async ({ url, third_party, method, body }: ITomService) => {
-    // const [logout, { isLoading }] = useLogoutMutation();
+  async ({ url, third_party, method, body, formData }: ITomService) => {
     const headers = {};
 
     let path = third_party ? url : `${baseUrl}${url}`;
-    set(headers, "Accept", "application/json");
-    set(headers, "Content-Type", "application/json");
+    if (!formData) {
+      set(headers, "Accept", "application/json");
+      set(headers, "Content-Type", "application/json");
+    }
 
-    // @TODO: Implement Expiration of token
     let accessToken = loadToken();
 
     if (!includes(black_list, url) && accessToken && !third_party) {
@@ -60,14 +61,18 @@ export const tomService =
       headers,
     };
 
-    if (body && !isEmpty(body)) {
+    if (formData) {
+      reqBody.body = body;
+    }
+    if (body && !isEmpty(body) && !formData) {
+      console.log("body");
       reqBody.body = JSON.stringify(body);
     }
 
     try {
       let res = await fetch(path, reqBody);
       const json = await res.json();
-
+      console.log("JSON", json);
       let refreshed = false;
       if (json.code === 1002 && json.message === "Invalid Token") {
         await new Promise(async (res, rej) => {

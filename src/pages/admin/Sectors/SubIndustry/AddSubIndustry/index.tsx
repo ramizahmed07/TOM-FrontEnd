@@ -6,23 +6,43 @@ import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import { IModal } from "@/types";
 import {
-  useCreateSectorMutation,
   useCreateSubIndustryMutation,
+  useUpdateSubIndustryMutation,
 } from "@services";
 import { useParams } from "react-router-dom";
+import { ISubIndustry } from "@/store/sectors";
+import { useEffect } from "react";
 
-interface AddSubIndustryProps extends IModal {}
+interface AddSubIndustryProps extends IModal {
+  selectedSubIndustry: ISubIndustry | null;
+  setSelectedSubIndustry: React.Dispatch<
+    React.SetStateAction<ISubIndustry | null>
+  >;
+}
 
 const AddSubIndustry: FC<AddSubIndustryProps> = ({
   isVisible,
   setIsVisible,
+  selectedSubIndustry,
+  setSelectedSubIndustry,
 }) => {
-  const [subIndustry, setSubIndustry] = useState({
+  const [subIndustry, setSubIndustry] = useState<Partial<ISubIndustry>>({
     name: "",
     description: null,
   });
   const [createSubIndustry, { isLoading }] = useCreateSubIndustryMutation();
+  const [updateSubIndustry, { isLoading: isUpdating }] =
+    useUpdateSubIndustryMutation();
   const { industry_id } = useParams<{ industry_id: string }>();
+
+  useEffect(() => {
+    if (selectedSubIndustry) {
+      setSubIndustry(selectedSubIndustry);
+    }
+    return () => {
+      setSelectedSubIndustry(null);
+    };
+  }, [selectedSubIndustry, setSelectedSubIndustry]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSubIndustry(prev => ({
@@ -30,16 +50,21 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
       [e.target.name]: e.target.value,
     }));
 
-  const addSubIndustry = async () => {
+  const handleSubmit = async () => {
     try {
-      await createSubIndustry({
-        ...subIndustry,
-        industry_id: +industry_id,
-      }).unwrap();
+      if (selectedSubIndustry) {
+        await editSubIndustry();
+      } else {
+        await addSubIndustry();
+      }
       setIsVisible(false);
       showSuccessPopup({
-        title: "New Sub-Industry Created",
-        desc: "You have successfully created new sub-industry.",
+        title: selectedSubIndustry
+          ? "Sub-Industry Updated!"
+          : "New Sub-Industry Created",
+        desc: `You have successfully ${
+          selectedSubIndustry ? "updated the" : "created new"
+        } sub-industry.`,
       });
     } catch (error) {
       message.error(error?.message);
@@ -47,17 +72,28 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
     }
   };
 
+  const addSubIndustry = async () =>
+    await createSubIndustry({
+      ...subIndustry,
+      industry_id: +industry_id,
+    }).unwrap();
+
+  const editSubIndustry = async () =>
+    await updateSubIndustry(subIndustry).unwrap();
+
   return (
     <Modal
       footer={[
         <Button
-          onClick={addSubIndustry}
-          disabled={!subIndustry.name.length}
+          onClick={handleSubmit}
+          disabled={!subIndustry?.name?.length}
           key="1"
           type="primary"
         >
-          {isLoading ? (
+          {isLoading || isUpdating ? (
             <LoadingOutlined className="spinner" />
+          ) : selectedSubIndustry ? (
+            "Update Sub-Industry"
           ) : (
             "Add Sub-Industry"
           )}

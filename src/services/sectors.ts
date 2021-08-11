@@ -46,7 +46,6 @@ export const sectorsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Industries"],
     }),
     deleteSector: builder.mutation({
       query: ({ id }) => ({
@@ -56,6 +55,13 @@ export const sectorsApi = createApi({
       invalidatesTags: ["Sectors"],
     }),
     deleteIndustry: builder.mutation({
+      query: ({ id }) => ({
+        url: `/industry/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Industries"],
+    }),
+    deleteSubIndustry: builder.mutation({
       query: ({ id }) => ({
         url: `/industry/${id}/`,
         method: "DELETE",
@@ -74,8 +80,31 @@ export const sectorsApi = createApi({
       query: body => ({
         url: `/industry/${body?.id}/`,
         method: "PUT",
+        body,
       }),
       invalidatesTags: ["Industries"],
+    }),
+    updateSubIndustry: builder.mutation({
+      query: body => ({
+        url: `/sub-industry/${body?.id}/`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["Industries"],
+    }),
+    uploadSectors: builder.mutation({
+      query: body => ({
+        url: "/sector/upload/",
+        method: "POST",
+        body,
+        formData: true,
+      }),
+    }),
+    downloadSectors: builder.query({
+      query: () => ({
+        url: "/sector/download/",
+        method: "GET",
+      }),
     }),
   }),
 });
@@ -88,6 +117,10 @@ export const {
   useCreateSubIndustryMutation,
   useDeleteSectorMutation,
   useDeleteIndustryMutation,
+  useDeleteSubIndustryMutation,
   useUpdateSectorMutation,
   useUpdateIndustryMutation,
+  useUpdateSubIndustryMutation,
+  useUploadSectorsMutation,
+  useDownloadSectorsQuery,
 } = sectorsApi;
