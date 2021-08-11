@@ -12,6 +12,7 @@ import {
   useUpdateIndustryMutation,
 } from "@services";
 import { IIndustry } from "@store/sectors";
+import { useEffect } from "react";
 
 interface AddIndustryProps extends IModal {
   selectedIndustry: IIndustry | null;

@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Col, message, Row, TableColumnsType } from "antd";
 import { useHistory, useParams } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useRef } from "react";
 
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
