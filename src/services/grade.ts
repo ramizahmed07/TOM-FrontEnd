@@ -22,8 +22,24 @@ export const gradeApi = createApi({
         method: "GET",
       }),
     }),
+    fetchGradeClientCompanies: builder.query({
+      query: () => ({
+        url: "/client-companies/",
+        method: "GET",
+      }),
+    }),
+    fetchGradeCompanies: builder.query({
+      query: () => ({
+        url: "/company/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useFetchTARanksQuery, useFetchAllGradeCompaniesQuery } =
-  gradeApi;
+export const {
+  useFetchTARanksQuery,
+  useFetchAllGradeCompaniesQuery,
+  useFetchGradeClientCompaniesQuery,
+  useFetchGradeCompaniesQuery,
+} = gradeApi;

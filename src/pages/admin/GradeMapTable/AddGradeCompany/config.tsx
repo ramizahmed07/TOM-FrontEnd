@@ -2,9 +2,10 @@ import { Input } from "antd";
 
 export type CompanyName = keyof IData;
 export interface ICompany {
-  id: string;
-  value: string;
-  title: string;
+  id: number;
+  name: string;
+  value?: string;
+  title?: string;
 }
 
 export interface IData {
@@ -26,28 +27,28 @@ export interface IColumn {
 
 export const COMPANIES: ICompany[] = [
   {
-    id: "1",
-    value: "tcRank",
+    id: 1,
+    name: "tcRank",
     title: "TC Rank",
   },
   {
-    id: "2",
-    value: "hrbs",
+    id: 2,
+    name: "hrbs",
     title: "HRBS",
   },
   {
-    id: "3",
-    value: "mercerPc",
+    id: 3,
+    name: "mercerPc",
     title: "Mercer PC",
   },
   {
-    id: "4",
-    value: "mercerCl",
+    id: 4,
+    name: "mercerCl",
     title: "Mercer CL",
   },
   {
-    id: "5",
-    value: "twGrade",
+    id: 5,
+    name: "twGrade",
     title: "TW Grade",
   },
 ];

@@ -1,17 +1,14 @@
-import { Col, Input, Row, Select } from "antd";
+import { Col, Row, Select } from "antd";
 import { useMemo, useState } from "react";
 
 import "./addGradeCompany.less";
 import Table from "@components/Table";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
+import { columns, data, ICompany, CompanyName, IData } from "./config";
 import {
-  columns,
-  COMPANIES,
-  data,
-  ICompany,
-  CompanyName,
-  IData,
-} from "./config";
+  useFetchGradeClientCompaniesQuery,
+  useFetchGradeCompaniesQuery,
+} from "@/services";
 
 const { Option } = Select;
 
@@ -20,6 +17,10 @@ const AddGradeCompany = () => {
     "hrbs",
     "mercerCl",
   ]);
+  const { data: gradeClientCompanies, isLoading: isLoadingClientCompanies } =
+    useFetchGradeClientCompaniesQuery(null);
+  const { data: gradeCompanies, isLoading: isLoadingGradeCompanies } =
+    useFetchGradeCompaniesQuery(null);
   const [companyName, setCompanyName] = useState<string>("");
   // const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
   const [tableData, setTableData] = useState<Partial<IData>[]>(data);
@@ -28,7 +29,6 @@ const AddGradeCompany = () => {
    * The purpose below is to show/hide and sort the columns
    * it relies on companies dropdown
    */
-
   const cols = useMemo(() => {
     return columns
       .filter(
@@ -57,10 +57,6 @@ const AddGradeCompany = () => {
     );
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCompanyName(e.target.value);
-  };
-
   const addGrade = () => {
     setTableData(prev => [
       ...prev,
@@ -82,12 +78,21 @@ const AddGradeCompany = () => {
         <Row justify="space-between" className="addGradeCompany__fields">
           <Col span={9}>
             <label>Company name</label>
-            <Input
-              value={companyName as string}
-              onChange={handleInput}
-              placeholder="Enter company name here..."
+            <Select
+              loading={isLoadingClientCompanies}
+              value={companyName.length ? companyName : undefined}
               size="large"
-            />
+              showArrow
+              placeholder="Select company name from here..."
+              showSearch={false}
+              onChange={(name: string) => setCompanyName(name)}
+            >
+              {gradeClientCompanies?.map(({ name, id }: ICompany) => (
+                <Option key={id} value={name}>
+                  {name}
+                </Option>
+              ))}
+            </Select>
           </Col>
           <Col span={9}>
             <label>
@@ -97,6 +102,7 @@ const AddGradeCompany = () => {
               </span>
             </label>
             <Select
+              loading={isLoadingGradeCompanies}
               value={companies}
               size="large"
               showArrow
@@ -105,9 +111,9 @@ const AddGradeCompany = () => {
               showSearch={false}
               onChange={handleDropdown}
             >
-              {COMPANIES.map(({ title, id, value }: ICompany) => (
-                <Option key={id} value={value}>
-                  {title}
+              {gradeCompanies?.map(({ name, id }: ICompany) => (
+                <Option key={id} value={name}>
+                  {name}
                 </Option>
               ))}
             </Select>
