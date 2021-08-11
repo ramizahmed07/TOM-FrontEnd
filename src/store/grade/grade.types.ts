@@ -10,3 +10,13 @@ export interface IGradeCompany {
   name: string;
   grade_company_ranks: IGradeCompanyRank[];
 }
+
+export interface ITARank {
+  id: number;
+  rank: string | null;
+}
+
+export interface IGradeClientCompany {
+  id: number;
+  name: string;
+}

@@ -1,7 +1,7 @@
 import { set, includes, isEmpty } from "lodash";
 
 import { loadRefreshToken, loadToken, saveTokens } from "./storage";
-
+import { baseUrl as apiEndpoint } from "./constants";
 interface ITomService {
   url: string;
   method: string;
@@ -78,7 +78,7 @@ export const tomService =
         await new Promise(async (res, rej) => {
           const refresh = loadRefreshToken();
           if (refresh) {
-            const res = await fetch(`${baseUrl}/auth/refresh-token/`, {
+            const res = await fetch(`${apiEndpoint}/auth/refresh-token/`, {
               method: "POST",
               headers,
               body: JSON.stringify({

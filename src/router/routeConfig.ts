@@ -94,6 +94,13 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
+    path: Paths.Settings.grade_map_table.edit_grade_company,
+    component: AddGradeCompany,
+    key: "Add new Company",
+    breadcrumb: "Settings / Grade map table / Edit new company",
+    isPrivate: true,
+  },
+  {
     path: Paths.Dashboard.dashboard,
     component: "Dashboard",
     key: "Dashboard",

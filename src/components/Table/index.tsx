@@ -23,7 +23,7 @@ const Table: FC<ITable> = ({
     <Col span={24}>
       <AntTable
         onRow={(record: any) => ({
-          onClick: () => onRowClick && onRowClick(record),
+          onClick: e => onRowClick && onRowClick(record),
         })}
         className="table"
         scroll={{ x: 1300 }}

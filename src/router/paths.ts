@@ -29,6 +29,7 @@ const Settings = {
   grade_map_table: {
     listing: "/grade-map-table",
     create_grade_company: "/grade-map-table/create-grade-company",
+    edit_grade_company: "/grade-map-table/edit-grade-company",
   },
 };
 

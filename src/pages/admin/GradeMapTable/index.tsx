@@ -1,4 +1,4 @@
-import { Col, Row, TableColumnsType } from "antd";
+import { Col, Row } from "antd";
 import { useHistory } from "react-router";
 
 import Table from "@components/Table";
@@ -8,33 +8,8 @@ import {
   useFetchTARanksQuery,
 } from "@services";
 import { IGradeCompany } from "@store/grade";
-
-const getRows = (taRanks: any, companies: IGradeCompany[]) => {
-  console.log("GRADE", {
-    taRanks,
-    companies,
-  });
-  const data = [];
-  let companies_ranks: any = {};
-  for (let i = 0; i < companies?.length; i++) {
-    const current = companies[i];
-    companies_ranks[current.name.replace(" ", "")] =
-      current.grade_company_ranks;
-  }
-
-  for (let i = 0; i < taRanks?.length; i++) {
-    const rank = taRanks[i];
-    let row: any = {
-      rank: rank.rank,
-    };
-    Object.keys(companies_ranks).forEach(key => {
-      const company_ranks = companies_ranks[key].slice().reverse();
-      row[key] = company_ranks[i].rank;
-    });
-    data.push(row);
-  }
-  return data;
-};
+import { getRows } from "@utils";
+import { Paths } from "@/router";
 
 const default_cols = [
   {
@@ -47,17 +22,37 @@ const default_cols = [
 
 const GradeMapTable = () => {
   const history = useHistory();
-  const { data: taRanks, isLoading, error } = useFetchTARanksQuery(null);
+  const { data: taRanks, error } = useFetchTARanksQuery(null);
   const {
     data: companies,
     isLoading: isLoadingCompanies,
     error: companiesError,
   } = useFetchAllGradeCompaniesQuery(null);
 
+  const handleTableCell = (e: any) => {
+    const id = e.currentTarget.dataset.id;
+    const grade_company = companies.find(
+      (company: IGradeCompany) => +company?.id === +id
+    );
+
+    history.push(Paths.Settings.grade_map_table.edit_grade_company, {
+      grade_company: {
+        ...grade_company,
+        grade_company_ranks: grade_company?.grade_company_ranks
+          .slice()
+          .reverse(),
+      },
+    });
+  };
+
   const additional_cols: any =
     (!error &&
       companies?.map((company: IGradeCompany) => ({
-        title: company.name,
+        title: (
+          <div data-id={company.id} onClick={handleTableCell}>
+            {company.name}
+          </div>
+        ),
         dataIndex: company.name.replace(" ", ""),
         key: company.id,
         width: "15%",
@@ -71,7 +66,7 @@ const GradeMapTable = () => {
       : [];
 
   const handleAddBtn = () => {
-    history.push(`/grade-map-table/create-grade-company`);
+    history.push(Paths.Settings.grade_map_table.create_grade_company);
   };
 
   return (
