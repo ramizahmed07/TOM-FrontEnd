@@ -24,6 +24,7 @@ const SubIndustry = () => {
     sub_industry: ISubIndustry,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    console.log({ sub_industry });
     event.stopPropagation();
     setSelectedSubIndustry(sub_industry);
     setIsVisible(true);
@@ -96,12 +97,15 @@ const SubIndustry = () => {
 
   return (
     <>
-      <AddSubIndustry
-        selectedSubIndustry={selectedSubIndustry}
-        setSelectedSubIndustry={setSelectedSubIndustry}
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-      />
+      {isVisible ? (
+        <AddSubIndustry
+          selectedSubIndustry={selectedSubIndustry}
+          setSelectedSubIndustry={setSelectedSubIndustry}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      ) : null}
+
       <Row>
         <Col span={16}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>

@@ -79,7 +79,10 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
     }).unwrap();
 
   const editSubIndustry = async () =>
-    await updateSubIndustry(subIndustry).unwrap();
+    await updateSubIndustry({
+      ...subIndustry,
+      industry_id: +industry_id,
+    }).unwrap();
 
   return (
     <Modal

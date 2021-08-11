@@ -9,6 +9,33 @@ import {
 } from "@services";
 import { IGradeCompany } from "@store/grade";
 
+const getRows = (taRanks: any, companies: IGradeCompany[]) => {
+  console.log("GRADE", {
+    taRanks,
+    companies,
+  });
+  const data = [];
+  let companies_ranks: any = {};
+  for (let i = 0; i < companies?.length; i++) {
+    const current = companies[i];
+    companies_ranks[current.name.replace(" ", "")] =
+      current.grade_company_ranks;
+  }
+
+  for (let i = 0; i < taRanks?.length; i++) {
+    const rank = taRanks[i];
+    let row: any = {
+      rank: rank.rank,
+    };
+    Object.keys(companies_ranks).forEach(key => {
+      const company_ranks = companies_ranks[key].slice().reverse();
+      row[key] = company_ranks[i].rank;
+    });
+    data.push(row);
+  }
+  return data;
+};
+
 const default_cols = [
   {
     title: "ta rank",
@@ -17,6 +44,7 @@ const default_cols = [
     width: "10%",
   },
 ];
+
 const GradeMapTable = () => {
   const history = useHistory();
   const { data: taRanks, isLoading, error } = useFetchTARanksQuery(null);
@@ -30,20 +58,17 @@ const GradeMapTable = () => {
     (!error &&
       companies?.map((company: IGradeCompany) => ({
         title: company.name,
-        dataIndex: "rank",
+        dataIndex: company.name.replace(" ", ""),
         key: company.id,
         width: "15%",
       }))) ||
     [];
-
   const columns = [...default_cols, ...additional_cols];
 
-  console.log("GRADE", {
-    taRanks,
-    companies,
-    isLoadingCompanies,
-    companiesError,
-  });
+  const rows =
+    !error && !companiesError && companies?.length && taRanks?.length
+      ? getRows(taRanks, companies)
+      : [];
 
   const handleAddBtn = () => {
     history.push(`/grade-map-table/create-grade-company`);
@@ -79,7 +104,7 @@ const GradeMapTable = () => {
       </Row>
       <Row>
         <Table
-          data={error ? [] : taRanks}
+          data={rows}
           columns={columns}
           pagination={false}
           isLoading={isLoadingCompanies}
