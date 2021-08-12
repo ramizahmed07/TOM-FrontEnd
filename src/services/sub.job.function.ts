@@ -18,9 +18,41 @@ export const subJobFunctionApi = createApi({
                 method: "GET",
             }),
         }),
+        addJSF: builder.mutation({
+            query: data => ({
+                url: "/",
+                method: "POST",
+                body: { ...data, },
+            }),
+        }),
+        getJSF: builder.mutation({
+            query: id => ({
+                url: `/${id}/`,
+                method: "GET",
+            }),
+        }),
+        editJSF: builder.mutation({
+            query: ({ id, name, job_function_id }) => ({
+                url: `/${id}/`,
+                method: "PUT",
+                body: { name, job_function_id, description },
+
+            }),
+        }),
+        deleteJSF: builder.mutation({
+            query: id => ({
+                url: `/${id}/`,
+                method: "DELETE",
+            }),
+        }),
+
     }),
 });
 
 export const {
     useSjfListMutation,
+    useAddJSFMutation,
+    useGetJSFMutation,
+    useEditJSFMutation,
+    useDeleteJSFMutation,
 } = subJobFunctionApi;

@@ -45,6 +45,20 @@ export const jobFunctionApi = createApi({
                 method: "DELETE",
             }),
         }),
+        uploadJobFunctions: builder.mutation({
+            query: body => ({
+                url: "/upload/",
+                method: "POST",
+                body,
+                formData: true,
+            }),
+        }),
+        downloadJobFunctions: builder.mutation({
+            query: () => ({
+                url: "/download/",
+                method: "GET",
+            }),
+        }),
     }),
 });
 
@@ -54,4 +68,6 @@ export const {
     useGetJFMutation,
     useEditJFMutation,
     useDeleteJFMutation,
+    useUploadJobFunctionsMutation,
+    useDownloadJobFunctionsMutation,
 } = jobFunctionApi;

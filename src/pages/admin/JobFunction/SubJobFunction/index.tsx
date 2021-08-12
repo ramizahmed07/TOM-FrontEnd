@@ -5,13 +5,13 @@ import { useHistory } from "react-router";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { useDeleteJFMutation, useGetJFMutation, useListMutation, useSjfListMutation } from "@services";
+import { useDeleteJFMutation, useDeleteJSFMutation, useGetJFMutation, useGetJSFMutation, useListMutation, useSjfListMutation } from "@services";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
-// import AddJobFunction from "./AddJobFunction";
-// import EditJobFunction from "./EditJobFunction";
 import { Paths } from "@/router";
 import { useParams } from "react-router-dom";
+import AddJobSubFunction from "./AddJobSubFunction";
+import EditJobSubFunction from "./EditJobSubFunction";
 
 type TableRow = {
     id: number;
@@ -20,13 +20,13 @@ type TableRow = {
 
 const SubJobFunction = () => {
     const history = useHistory();
-    const [isAddJFVisible, setIsAddJFVisible] = useState(false);
-    const [isEditJFVisible, setIsEditJFVisible] = useState(false);
+    const [isAddJSFVisible, setIsAddJSFVisible] = useState(false);
+    const [isEditJSFVisible, setIsEditJSFVisible] = useState(false);
     const [getSJFList, { isLoading }] = useSjfListMutation();
-    const [deleteJF] = useDeleteJFMutation();
+    const [deleteJSF] = useDeleteJSFMutation();
     const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
-    const [editJfId, setEditJFId] = useState<string>('');
-    const [getJF] = useGetJFMutation();
+    const [editJsfId, setEditJSFId] = useState<string>('');
+    const [getJSF] = useGetJSFMutation();
     const [listData, setListData] = useState<Array<TableRow>>([]);
     const params = useParams();
 
@@ -72,7 +72,7 @@ const SubJobFunction = () => {
             render: ({ id }) => {
                 return (
                     <div>
-                        <span className="table__action__btn" onClick={() => onEditJf(id)}>Edit</span>
+                        <span className="table__action__btn" onClick={() => onEditJSf(id)}>Edit</span>
                         <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id)}>
                             Delete
                         </span>
@@ -82,15 +82,10 @@ const SubJobFunction = () => {
         },
     ];
 
-    const onNavigateSJF = (id: number, name: string) => {
-        history.push(`${Paths.Settings.sub_job_function}/${id}`);
-
-    }
-
-    const onEditJf = async (id: string) => {
-        await getJF(id);
-        setEditJFId(id);
-        setIsEditJFVisible(true);
+    const onEditJSf = async (id: string) => {
+        await getJSF(id);
+        setEditJSFId(id);
+        setIsEditJSFVisible(true);
     }
 
     const getSJFListFromApi = async () => {
@@ -103,8 +98,9 @@ const SubJobFunction = () => {
 
     const deleteJFFromApi = async (id: string) => {
         try {
-            await deleteJF(id);
+            await deleteJSF(id);
             getSJFListFromApi();
+            updateListData();
         } catch (e) {
             console.log(e);
         }
@@ -112,8 +108,8 @@ const SubJobFunction = () => {
 
     return (
         <>
-            {/* <AddJobFunction setIsVisible={setIsAddJFVisible} isVisible={isAddJFVisible} />
-            <EditJobFunction setIsVisible={setIsEditJFVisible} isVisible={isEditJFVisible} editJfId={editJfId} /> */}
+            <AddJobSubFunction setIsVisible={setIsAddJSFVisible} isVisible={isAddJSFVisible} job_function_id={id} updateList={updateListData} />
+            <EditJobSubFunction setIsVisible={setIsEditJSFVisible} isVisible={isEditJSFVisible} editJsfId={editJsfId} job_function_id={id} />
             <Row>
                 <Col span={24}>
                     <div className="main-heading">Sub Job Function</div>
@@ -123,8 +119,8 @@ const SubJobFunction = () => {
                 <Col className="align-start" span={16}>
                 </Col>
                 <Col className="align-end" span={8}>
-                    <Button variant="add" onClick={() => setIsAddJFVisible(true)}>
-                        Add New Job
+                    <Button variant="add" onClick={() => setIsAddJSFVisible(true)}>
+                        Add New Sub Job
                     </Button>
                 </Col>
             </Row>

@@ -1,5 +1,6 @@
 export interface ISubJobFunctionReducer {
     list: Array<ISubJobFunctionItem>;
+    jsf: { [key: string]: any; }
 }
 
 

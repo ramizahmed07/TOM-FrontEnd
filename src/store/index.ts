@@ -16,7 +16,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi, gradeApi, sectorsApi } from "@services";
+import { authApi, gradeApi, sectorsApi, jobFunctionApi } from "@services";
 import { authReducer } from "./auth";
 import { sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
@@ -40,6 +40,7 @@ const appReducer = combineReducers({
   sectors: sectorsReducer,
   grade: gradeReducer,
   jobFunction: jobFunctionReducer,
+  [jobFunctionApi.reducerPath]: jobFunctionApi.reducer,
   subJobFunction: subJobFunctionReducer,
   yolo: () => ({
     userr: null,

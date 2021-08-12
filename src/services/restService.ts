@@ -47,7 +47,6 @@ export const tomService =
         set(headers, "Accept", "application/json");
         set(headers, "Content-Type", "application/json");
       }
-
       let accessToken = loadToken();
 
       if (!includes(black_list, url) && accessToken && !third_party) {
