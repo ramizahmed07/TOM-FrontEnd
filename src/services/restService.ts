@@ -7,6 +7,7 @@ interface ITomService {
   method: string;
   body?: any;
   third_party?: boolean;
+  formData?: boolean;
 }
 
 interface IReqBody {
@@ -18,13 +19,16 @@ interface IReqBody {
 const black_list = ["/login/"];
 export const tomService =
   ({ baseUrl } = { baseUrl: "" }) =>
-    async ({ url, third_party, method, body }: ITomService) => {
+    async ({ url, third_party, method, body, formData }: ITomService) => {
       const headers = {};
 
       let path = third_party ? url : `${baseUrl}${url}`;
-
-      set(headers, "Accept", "application/json");
-      set(headers, "Content-Type", "application/json");
+      if (!formData) {
+        set(headers, "Accept", "application/json");
+        set(headers, "Content-Type", "application/json");
+      }
+      // set(headers, "Accept", "application/json");
+      // set(headers, "Content-Type", "application/json");
 
       // @TODO: Implement Expiration of token
       let accessToken = loadToken();
@@ -40,12 +44,17 @@ export const tomService =
         headers,
       };
 
-      if (!isEmpty(body)) {
+      if (formData) {
+        reqBody.body = body;
+      }
+      if (body && !isEmpty(body) && !formData) {
+        console.log("body");
         reqBody.body = JSON.stringify(body);
       }
 
       try {
         const res = await fetch(path, reqBody);
+        console.log('Res: ', res);
         const json = await res.json();
         if (!json.success) throw json;
 

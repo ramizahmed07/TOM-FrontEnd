@@ -5,6 +5,7 @@ import { ISubJobFunctionReducer } from "./sub.job.function.types";
 
 const initialState: ISubJobFunctionReducer = {
     list: [],
+    jsf: {}
 };
 
 const slice = createSlice({
@@ -19,6 +20,12 @@ const slice = createSlice({
                     state.list = payload;
                 }
             )
+            .addMatcher(
+                subJobFunctionApi.endpoints.getJSF.matchFulfilled,
+                (state, { payload }) => {
+                    state.jsf = payload;
+                }
+            );
     },
 });
 

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Col, Row, TableColumnsType } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { Col, message, Row, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { useDeleteJFMutation, useGetJFMutation, useListMutation } from "@services";
+import { useDeleteJFMutation, useDownloadJobFunctionsMutation, useGetJFMutation, useListMutation, useUploadJobFunctionsMutation } from "@services";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
@@ -33,11 +33,18 @@ const JobFunction = () => {
   const [editJfId, setEditJFId] = useState<string>('');
   const [getJF] = useGetJFMutation();
 
+  const [uploadJobFunction, { isLoading: isUploading }] =
+    useUploadJobFunctionsMutation();
+
+  const [downloadJobFunction, { isLoading: isDownloading }] = useDownloadJobFunctionsMutation();
+
+  const inputRef = useRef<any>(null);
+
   useEffect(() => {
     getJFListFromApi();
   }, []);
 
-
+  console.log('isLoading: ', isLoading);
   const columns: TableColumnsType<TableRow> = [
     {
       title: "id",
@@ -85,7 +92,8 @@ const JobFunction = () => {
   ];
 
   const onNavigateSJF = (id: number, name: string) => {
-    history.push(`${Paths.Settings.sub_job_function}${id}`);
+    // history.push(`${Paths.Settings.sub_job_function}${id}`);
+    history.push(`/job-function/${id}`);
   }
 
   const onEditJf = async (id: string) => {
@@ -111,6 +119,33 @@ const JobFunction = () => {
     }
   }
 
+  const uploadFile = async (event: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+    var file = event?.target?.files[0];
+    try {
+      const formData = new FormData();
+      formData.append("attachment", file, file.name);
+      alert('Uploading start')
+      await uploadJobFunction(formData).unwrap();
+      message.success("CSV Data Uploaded Successfully");
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
+  }
+
+  const downloadFile = async (event: any) => {
+    try {
+      const response = await downloadJobFunction('');
+      // console.log(response);
+      message.success("CSV Data Downloaded Successfully");
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <AddJobFunction setIsVisible={setIsAddJFVisible} isVisible={isAddJFVisible} />
@@ -122,15 +157,22 @@ const JobFunction = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
+          <input
+            id="myInput"
+            type="file"
+            ref={inputRef}
+            hidden={true}
+            onChange={(e) => uploadFile(e)}
+          />
           <Button
             variant="upload"
-            onClick={() => console.log("upload job function")}
+            onClick={() => inputRef?.current?.click()}
           >
             Upload Job Functions
           </Button>
           <Button
             variant="download"
-            onClick={() => console.log("Download Job Functions")}
+            onClick={downloadFile}
           >
             Download Job Functions
           </Button>

@@ -16,7 +16,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi } from "@services";
+import { authApi, jobFunctionApi } from "@services";
 import { authReducer } from "./auth";
 import { jobFunctionReducer } from "./job-function";
 import { IAuthState } from "./auth/auth.types";
@@ -34,6 +34,7 @@ const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   auth: authReducer,
   jobFunction: jobFunctionReducer,
+  [jobFunctionApi.reducerPath]: jobFunctionApi.reducer,
   subJobFunction: subJobFunctionReducer,
   yolo: () => ({
     userr: null,
