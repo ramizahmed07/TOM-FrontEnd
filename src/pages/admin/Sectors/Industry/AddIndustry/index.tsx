@@ -70,12 +70,11 @@ const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
         <div className="sub-heading">Add Sub-Industries</div>
         <Row className="modal__row">
           <Col span={11}>
-            <label>Select and search sub-industries</label>
+            <label>Select sub-industries</label>
             <Select
               value={industries}
               size="large"
               showArrow
-              mode="multiple"
               placeholder="Select industry from here..."
               showSearch={false}
               onChange={handleChange}

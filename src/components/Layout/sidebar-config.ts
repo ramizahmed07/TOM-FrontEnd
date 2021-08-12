@@ -30,7 +30,12 @@ const config: Array<Config> = [
   {
     title: "Users",
     icon: UsersIcon,
-    path: [companies.listing, companies.create_company, sub_admins],
+    path: [
+      companies.listing,
+      companies.create_company,
+      sub_admins.create,
+      sub_admins.listing,
+    ],
     sub: [
       {
         title: "Companies",
@@ -40,7 +45,7 @@ const config: Array<Config> = [
       {
         title: "Sub-Admins",
         icon: SubAdminIcon,
-        path: sub_admins,
+        path: sub_admins.listing,
       },
     ],
   },

@@ -1,0 +1,19 @@
+.tab {
+  transition: @transition-3ms;
+  background-color: white;
+  border: 0.5px solid rgba(67, 84, 101, 0.1);
+  color: @secondary-text !important;
+  font-weight: 500;
+  font-size: 12px;
+  padding: 13px 16px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  &:not(:last-of-type) {
+    margin-right: 4px;
+  }
+  &--active,
+  &:hover {
+    background-color: @primary-color;
+    color: white !important;
+  }
+}

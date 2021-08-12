@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Col, Table as AntTable, TableProps } from "antd";
+import { Col, Table as AntTable } from "antd";
 
 import "./table.less";
 
@@ -7,13 +7,16 @@ interface ITable {
   data: any[];
   columns: any[];
   onRowClick?: (record: any) => any | void;
+  pagination?: any;
+  locale?: any;
 }
 
-const Table: FC<ITable & TableProps<any>> = ({
+const Table: FC<ITable> = ({
   columns,
   data,
   onRowClick,
-  pagination,
+  pagination = true,
+  locale,
 }) => {
   return (
     <Col span={24}>
@@ -27,6 +30,7 @@ const Table: FC<ITable & TableProps<any>> = ({
         dataSource={data}
         pagination={pagination}
         rowKey="id"
+        locale={locale}
       />
     </Col>
   );
