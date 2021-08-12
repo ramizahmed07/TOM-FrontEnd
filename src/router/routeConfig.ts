@@ -17,16 +17,19 @@ export const routeConfig: IRoute[] = [
     path: Paths.Auth.login,
     component: Login,
     key: "Login",
+    isPrivate: false,
   },
   {
     path: Paths.Auth.forgot_password,
     component: ForgotPassword,
     key: "Forgot Password",
+    isPrivate: false,
   },
   {
     path: Paths.Auth.reset_password,
     component: ResetPassword,
     key: "Reset Password",
+    isPrivate: false,
   },
   {
     path: Paths.Users.companies.listing,
@@ -34,6 +37,7 @@ export const routeConfig: IRoute[] = [
     key: "Sectors",
     exact: true,
     breadcrumb: "Users / Companies list",
+    isPrivate: true,
   },
   {
     path: Paths.Users.companies.create_company,
@@ -41,6 +45,7 @@ export const routeConfig: IRoute[] = [
     key: "Company New Company",
     exact: true,
     breadcrumb: "Users / Companies list / Create new company",
+    isPrivate: true,
   },
   {
     path: Paths.Settings.sectors.listing,
@@ -48,18 +53,21 @@ export const routeConfig: IRoute[] = [
     key: "Sectors",
     exact: true,
     breadcrumb: "Settings / Sectors, Industry & Sub-Industry",
+    isPrivate: true,
   },
   {
     path: Paths.Settings.sectors.listing,
     component: Industry,
     key: "Industry",
     breadcrumb: "Settings / Sectors, Industry & Sub-Industry",
+    isPrivate: true,
   },
   {
     path: Paths.Settings.job_function,
     component: JobFunction,
     key: "Job Function",
     breadcrumb: "Settings / Job Function & Sub-Function",
+    isPrivate: true,
   },
   {
     path: Paths.Settings.grade_map_table.listing,
@@ -67,12 +75,21 @@ export const routeConfig: IRoute[] = [
     key: "Grade Map Table",
     exact: true,
     breadcrumb: "Settings / Grade map table",
+    isPrivate: true,
   },
   {
     path: Paths.Settings.grade_map_table.create_grade_company,
     component: AddGradeCompany,
     key: "Add new Company",
     breadcrumb: "Settings / Grade map table / Add new company",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Dashboard.dashboard,
+    component: "Dashboard",
+    key: "Dashboard",
+    breadcrumb: "Dashboard",
+    isPrivate: true,
   },
   {
     path: Paths.Users.sub_admins.listing,

@@ -1,12 +1,53 @@
+import { useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
+import { useLoginMutation } from "@services";
+
+interface ILoginForm {
+  email: string;
+  password: string;
+  remember: boolean;
+}
 
 const Login = () => {
   const history = useHistory();
+  const [errorFields, setErrorFields] = useState([]);
+  const [login, { isLoading }] = useLoginMutation();
+  const [form] = Form.useForm();
+
+  const onFinishedFailed = (errorInfo: any) => {
+    setErrorFields(errorInfo.errorFields);
+  };
+
+  const signIn = async (values: ILoginForm) => {
+    setErrorFields([]);
+    const { email, password } = values;
+    try {
+      await login({
+        email,
+        password,
+      }).unwrap();
+      history.push(Paths.Dashboard.dashboard);
+    } catch (error) {
+      setErrorFields([{ errors: [error?.message], name: ["password"] }] as any);
+      form.setFields([
+        {
+          name: "password",
+          errors: [error?.message],
+        },
+      ]);
+    }
+  };
+
+  const checkError = (name: string) =>
+    errorFields?.some((x: any) => x.name.includes(name));
+
   return (
     <Row className="auth__container">
       <AuthLandingImg />
@@ -19,22 +60,35 @@ const Login = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
-
           {/* FORM */}
           <Form
             name="login"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
-            onFinish={() => {}}
+            onFinish={signIn}
+            onFinishFailed={onFinishedFailed}
             layout="vertical"
+            form={form}
             className="auth__form"
           >
             <Form.Item
               className="form__item"
-              label={<label className="input__label">Email Address</label>}
+              validateTrigger="onSubmit"
+              label={
+                <label
+                  className={`${
+                    checkError("email") ? "error__label" : "input__label"
+                  }`}
+                >
+                  Email Address
+                </label>
+              }
               name="email"
-              rules={[{ required: true, message: "Please enter your email!" }]}
+              rules={[
+                { required: true, message: "Please enter your email!" },
+                {},
+              ]}
             >
               <Input
                 className="form__input"
@@ -45,14 +99,22 @@ const Login = () => {
 
             <Form.Item
               className="form__item"
+              validateTrigger="onSubmit"
               label={
                 <div className="auth__password__label">
-                  <label className={false ? "input__label" : "error__label"}>
+                  <label
+                    className={
+                      checkError("password") ? "error__label" : "input__label"
+                    }
+                  >
                     Password
                   </label>
-                  <Button type="link" className="auth__forgot__password">
+                  <Link
+                    to={Paths.Auth.forgot_password}
+                    className="auth__forgot__password"
+                  >
                     Forgot password?
-                  </Button>
+                  </Link>
                 </div>
               }
               name="password"
@@ -65,10 +127,6 @@ const Login = () => {
                 placeholder="Enter your password here..."
               />
             </Form.Item>
-
-            <Typography.Paragraph className="auth__error__msg">
-              You have entered incorrect password
-            </Typography.Paragraph>
 
             <Form.Item
               name="remember"
@@ -84,11 +142,12 @@ const Login = () => {
                 htmlType="submit"
                 className="login__btn"
                 size="large"
-                onClick={() => {
-                  history.push(Paths.Dashboard.dashboard);
-                }}
               >
-                Sign In
+                {isLoading ? (
+                  <LoadingOutlined className="spinner" />
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </Form.Item>
           </Form>

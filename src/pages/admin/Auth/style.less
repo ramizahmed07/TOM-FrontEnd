@@ -39,6 +39,10 @@
   margin-top: 3rem;
 }
 
+.form__item {
+  margin-bottom: 33px;
+}
+
 .form__item .ant-form-item-label {
   padding-bottom: 6px;
 
@@ -69,6 +73,9 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  a {
+    font-size: @text-sm;
+  }
 }
 
 .form__input {
@@ -95,7 +102,14 @@
   font-family: @secondary-font;
 }
 
-.backToLogin{
+.backToLogin {
   color: @primary-color;
   font-weight: bold;
+}
+.auth__container {
+  .ant-form-item-explain.ant-form-item-explain-error {
+    font-weight: 500;
+    font-size: @text-sm;
+    margin-top: 6px;
+  }
 }
