@@ -9,6 +9,8 @@ import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
 import CompanyList from "@/pages/admin/User/Companies/company-list";
 import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
+import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
+import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute } from "@router";
 
 export const routeConfig: IRoute[] = [
@@ -46,6 +48,24 @@ export const routeConfig: IRoute[] = [
     breadcrumb: "Users / Companies list / Create new company",
     isPrivate: true,
   },
+
+  {
+    path: Paths.Users.sub_admins.listing,
+    component: SubAdminsList,
+    key: "SubAminList",
+    exact: true,
+    breadcrumb: "Users / Sub-Admins",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Users.sub_admins.create_sub_admin,
+    component: SubAdminsCreate,
+    key: "SubAdminsCreate",
+    exact: true,
+    breadcrumb: "Users / Sub-Admins/ Create Sub Admin",
+    isPrivate: true,
+  },
+
   {
     path: Paths.Settings.sectors.listing,
     component: Sectors,

@@ -13,7 +13,11 @@ const Users = {
     listing: "/companies",
     create_company: "/companies/create-company",
   },
-  sub_admins: "/sub-admins",
+  sub_admins: {
+    listing: "/sub-admins",
+    create_sub_admin: "/sub-admins/create-sub-admin",
+  },
+
 };
 
 const Settings = {
