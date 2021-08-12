@@ -25,11 +25,15 @@ import { IAuthState } from "./auth/auth.types";
 import { IJobFunctionReducer } from "./job-function/job.function.types";
 import { ISubJobFunctionReducer } from "./sub-job-function/sub.job.function.types";
 import { subJobFunctionReducer } from "./sub-job-function";
+import { ISubAdminReducer } from "./sub-admin/sub.admin.types";
+import { subAdminReducer } from "./sub-admin";
+import { subAdminApi } from "@/services/sub.admin";
 
 export interface ICombineReducerProps {
   auth: IAuthState;
   jobFunction: IJobFunctionReducer;
   subJobFunction: ISubJobFunctionReducer;
+  subAdmin: ISubAdminReducer
 }
 
 const appReducer = combineReducers({
@@ -42,6 +46,8 @@ const appReducer = combineReducers({
   jobFunction: jobFunctionReducer,
   [jobFunctionApi.reducerPath]: jobFunctionApi.reducer,
   subJobFunction: subJobFunctionReducer,
+  subAdmin: subAdminReducer,
+  [subAdminApi.reducerPath]: subAdminApi.reducer,
   yolo: () => ({
     userr: null,
   }),
