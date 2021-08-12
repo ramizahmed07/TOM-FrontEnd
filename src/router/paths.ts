@@ -16,8 +16,8 @@ const Users = {
   sub_admins: {
     listing: "/sub-admins",
     create_sub_admin: "/sub-admins/create",
+    edit_sub_admin: "/sub-admins/edit",
   },
-
 };
 
 const Settings = {

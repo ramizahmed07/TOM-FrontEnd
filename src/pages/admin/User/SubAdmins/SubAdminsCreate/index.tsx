@@ -15,9 +15,11 @@ import en from "world_countries_lists/data/en/world.json";
 import "./style.less";
 import Layout from "@/components/Layout";
 import { useAddSubAdminMutation } from "@/services/sub.admin";
+import { useHistory } from "react-router-dom";
 
 const SubAdminsCreate = () => {
   let subAdminForm = useRef<any>(null);
+  const history = useHistory();
   const [addSubAdmin, { isLoading }] = useAddSubAdminMutation();
 
   const onSubmit = async (values: any) => {
@@ -176,7 +178,7 @@ const SubAdminsCreate = () => {
               className="login__btn"
               size="large"
               onClick={() => {
-                history.back();
+                history.goBack();
               }}
             >
               Cancel

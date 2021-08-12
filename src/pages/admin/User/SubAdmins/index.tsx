@@ -1,48 +1,40 @@
-import React from "react";
-import Layout from "@/components/Layout";
+import { useEffect, useRef } from "react";
 import {
-    Col,
-    Row,
     Table,
-    Dropdown,
-    Menu,
     TableColumnsType,
     Switch,
     Button,
     Input,
+    message,
 } from "antd";
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import './style.less';
-// import { data, TableRow } from "./dumpData";
-import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { Paths } from "@/router";
-
-type TableRow = {
-    id: string;
-    name: string;
-    email: string;
-    phone_no: string;
-};
+import { useGetSubAdminMutation, useSubAdminListMutation, useToggleSubAdminMutation } from "@/services/sub.admin";
+import { ICombineReducerProps } from "@/store";
+import { ISubAdminItem, ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
+import { LoadingOutlined } from "@ant-design/icons";
+import './style.less';
 
 const SubAdminsList = () => {
+    let sub_admin_id = useRef<any>(null);
+    const subAdminReducer: ISubAdminReducer = useSelector((state: ICombineReducerProps) => state.subAdmin);
+
     const history = useHistory();
-    const listData: Array<TableRow> = [];
-    const columns: TableColumnsType<TableRow> = [
-        {
-            title: "ID",
-            dataIndex: "id",
-            key: "id",
-            width: 130,
-        },
+    const [getSubAdminList] = useSubAdminListMutation();
+    const [toggleSubAdmin] = useToggleSubAdminMutation();
+    const [getSubAdmin, { isLoading }] = useGetSubAdminMutation();
+
+    const columns: TableColumnsType<ISubAdminItem> = [
         {
             title: "NAME",
-            dataIndex: "name",
             key: "name",
             width: 130,
+            render: ({ first_name, last_name }) =>
+                (<span>{first_name} {last_name}</span>)
         },
-
         {
             title: "EMAIL",
             dataIndex: "email",
@@ -51,15 +43,19 @@ const SubAdminsList = () => {
         },
         {
             title: "PHONE NO",
-            dataIndex: "phone_no",
-            key: "phone_no",
+            dataIndex: "phone_number",
+            key: "phone_number",
             width: 130,
         },
         {
             title: "Active/Inactive",
             width: 130,
-            render: () => {
-                return <Switch defaultChecked onChange={() => alert("Toggle")} />;
+            render: ({ id, first_name, last_name, is_active }) => {
+                console.log('is_active: ', is_active);
+                return <Switch
+                    defaultChecked={is_active}
+                    onChange={(checked: boolean) => toggleSubAdminFromApi(id, `${first_name} ${last_name}`, checked)}
+                />;
             },
         },
         {
@@ -67,28 +63,54 @@ const SubAdminsList = () => {
             key: "action",
             fixed: "right",
             width: 80,
-            render: () => {
+            render: ({ id }) => {
                 return (
                     <div>
-                        <span className="table__action__btn">
-                            {/* {isGettingJF && id === jf_id?.current ? (
+                        <span className="table__action__btn" onClick={() => onEditSubAdmin(id)}>
+                            {isLoading && id === sub_admin_id?.current ? (
                                 <LoadingOutlined color="primary" className="spinner" />
-                            ) : ( */}
-                            Edit
-                            {/* )} */}
-                        </span>
-                        {/* <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id)}>
-                            {isDeleting && id === jf_id?.current ? (
-                                <LoadingOutlined color="red" className="spinner" />
                             ) : (
-                                "Delete"
+                                "Edit"
                             )}
-                        </span> */}
+                        </span>
                     </div>
                 );
             },
         },
     ];
+
+    useEffect(() => {
+        getAdminListFromApi();
+    }, []);
+
+    const getAdminListFromApi = async () => {
+        try {
+            await getSubAdminList('');
+        } catch (error) {
+            message.error(error?.message);
+        }
+    }
+
+    const toggleSubAdminFromApi = async (id: string, name: string, is_active: boolean) => {
+        const isUserActive = is_active ? 'active' : 'inactive';
+        try {
+            await toggleSubAdmin({ id, is_active });
+            getAdminListFromApi();
+            message.success(`${name} has been successfully ${isUserActive}`);
+        } catch (error) {
+            message.error(error?.message);
+        }
+    }
+
+    const onEditSubAdmin = async (id: string) => {
+        sub_admin_id.current = id;
+        try {
+            await getSubAdmin(id);
+            history.push(Paths.Users.sub_admins.edit_sub_admin);
+        } catch (error) {
+            message.error(error?.message);
+        }
+    }
 
     return (
         <>
@@ -105,7 +127,7 @@ const SubAdminsList = () => {
             <Table
                 scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
                 columns={columns}
-                dataSource={listData}
+                dataSource={subAdminReducer.list}
             />
         </>
     );

@@ -5,6 +5,7 @@ import { ISubAdminReducer } from "./sub.admin.types";
 
 const initialState: ISubAdminReducer = {
     list: [],
+    subAdmin: {}
 };
 
 const slice = createSlice({
@@ -13,12 +14,18 @@ const slice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder
-        // .addMatcher(
-        //     subAdminApi.endpoints.list.matchFulfilled,
-        //     (state, { payload }) => {
-        //         state.list = payload;
-        //     }
-        // )
+            .addMatcher(
+                subAdminApi.endpoints.subAdminList.matchFulfilled,
+                (state, { payload }) => {
+                    state.list = payload;
+                }
+            )
+            .addMatcher(
+                subAdminApi.endpoints.getSubAdmin.matchFulfilled,
+                (state, { payload }) => {
+                    state.subAdmin = payload;
+                }
+            );
 
     },
 });

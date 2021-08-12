@@ -1,5 +1,6 @@
 export interface ISubAdminReducer {
     list: Array<ISubAdminItem>;
+    subAdmin: { [key: string]: any; };
 }
 
 
@@ -9,4 +10,5 @@ export interface ISubAdminItem {
     phone_number: string;
     role: string;
     email: string;
+    is_active: boolean;
 }
