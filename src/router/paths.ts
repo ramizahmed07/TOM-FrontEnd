@@ -25,8 +25,10 @@ const Settings = {
     industry: "/sectors/:sector_id",
     sub_industry: "/sectors/:sector_id/:industry_id",
   },
-  job_function: "/job-function",
-  sub_job_function: "/job-function/:id",
+  job_function: {
+    listing: '/job-function',
+    sub_job_function: '/job-sub-function/:job_id',
+  },
   grade_map_table: {
     listing: "/grade-map-table",
     create_grade_company: "/grade-map-table/create-grade-company",
