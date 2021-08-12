@@ -16,7 +16,7 @@ const SubAdminsCreate = () => {
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
-            onFinish={() => {}}
+            onFinish={() => { }}
             layout="vertical"
             className="create__company__container"
           >
