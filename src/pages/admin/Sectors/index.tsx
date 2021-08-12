@@ -13,6 +13,8 @@ import {
   useUploadSectorsMutation,
 } from "@services";
 import { IIndustry, ISector } from "@store/sectors";
+import { checkPermission } from "@/utils";
+import { permissions } from "@router";
 
 const Sectors = () => {
   const history = useHistory();
@@ -31,6 +33,7 @@ const Sectors = () => {
   const inputRef = useRef<any>(null);
 
   const onRowClick = (data: any) => {
+    if (!checkPermission(permissions.VIEW_INDUSTRY)) return;
     history.push(`/sectors/${data?.id}`);
   };
 
@@ -97,44 +100,56 @@ const Sectors = () => {
       dataIndex: "industries",
       key: "industry",
       width: "55%",
-      render: industries => {
+      render: (industries: IIndustry[]) => {
         const names = industries?.map((industry: IIndustry) => industry.name);
         return <span>{names.join(", ")}</span>;
       },
     },
-    {
-      title: <span className="align-center">Actions</span>,
-      key: "action",
-      fixed: "right",
-      width: "15%",
-      render: item => {
-        const menu = (
-          <Menu
-            onClick={({ key, domEvent }) =>
-              handleActionDropdown({ item, key, domEvent })
-            }
-            tabIndex={1}
-          >
-            <Menu.Item key="1">Edit</Menu.Item>
-            <Menu.Item key="2" danger>
-              Delete
-            </Menu.Item>
-          </Menu>
-        );
-        return (
-          <div className="table__action__menu">
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <MenuIcon
-                onClick={e => {
-                  e.stopPropagation();
-                }}
-              />
-            </Dropdown>
-          </div>
-        );
-      },
-    },
+    ...((!checkPermission([
+      permissions.UPDATE_SECTOR,
+      permissions.DELETE_SECTOR,
+    ])
+      ? []
+      : [
+          {
+            title: <span className="align-center">Actions</span>,
+            key: "action",
+            fixed: "right",
+            width: "15%",
+            render: (item: ISector) => {
+              const menu = (
+                <Menu
+                  onClick={({ key, domEvent }) =>
+                    handleActionDropdown({ item, key, domEvent })
+                  }
+                  tabIndex={1}
+                >
+                  {checkPermission(permissions.UPDATE_SECTOR) && (
+                    <Menu.Item key="1">Edit</Menu.Item>
+                  )}
+                  {checkPermission(permissions.DELETE_SECTOR) && (
+                    <Menu.Item key="2" danger>
+                      Delete
+                    </Menu.Item>
+                  )}
+                </Menu>
+              );
+              return (
+                <div className="table__action__menu">
+                  <Dropdown overlay={menu} trigger={["click"]}>
+                    <MenuIcon
+                      onClick={e => {
+                        e.stopPropagation();
+                      }}
+                    />
+                  </Dropdown>
+                </div>
+              );
+            },
+          },
+        ]) as any),
   ];
+
   return (
     <>
       {isVisible ? (
@@ -176,9 +191,11 @@ const Sectors = () => {
           </Button>
         </Col>
         <Col className="align-end" span={8}>
-          <Button variant="add" onClick={() => setIsVisible(true)}>
-            Add New Sector
-          </Button>
+          {checkPermission(permissions.CREATE_SECTOR) && (
+            <Button variant="add" onClick={() => setIsVisible(true)}>
+              Add New Sector
+            </Button>
+          )}
         </Col>
       </Row>
       <Row>

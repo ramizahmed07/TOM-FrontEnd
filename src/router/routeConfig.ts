@@ -1,17 +1,17 @@
-import ForgotPassword from "@/pages/admin/Auth/ForgotPassword";
-import Login from "@/pages/admin/Auth/Login";
-import ResetPassword from "@/pages/admin/Auth/ResetPassword";
-import GradeMapTable from "@/pages/admin/GradeMapTable";
-import AddGradeCompany from "@/pages/admin/GradeMapTable/AddGradeCompany";
-import JobFunction from "@/pages/admin/JobFunction";
-import Sectors from "@/pages/admin/Sectors";
-import Industry from "@/pages/admin/Sectors/Industry";
-import SubIndustry from "@/pages/admin/Sectors/SubIndustry";
-import CompanyList from "@/pages/admin/User/Companies/company-list";
-import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
 import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
 import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
-import { Paths, IRoute } from "@router";
+import ForgotPassword from "@pages/admin/Auth/ForgotPassword";
+import Login from "@pages/admin/Auth/Login";
+import ResetPassword from "@pages/admin/Auth/ResetPassword";
+import GradeMapTable from "@pages/admin/GradeMapTable";
+import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
+import JobFunction from "@pages/admin/JobFunction";
+import Sectors from "@pages/admin/Sectors";
+import Industry from "@pages/admin/Sectors/Industry";
+import SubIndustry from "@pages/admin/Sectors/SubIndustry";
+import CompanyList from "@pages/admin/User/Companies/company-list";
+import CompanyCreate from "@pages/admin/User/Companies/CompanyCreate";
+import { Paths, IRoute, permissions } from "@router";
 
 export const routeConfig: IRoute[] = [
   {
@@ -55,6 +55,7 @@ export const routeConfig: IRoute[] = [
     exact: true,
     breadcrumb: "Settings / Sectors",
     isPrivate: true,
+    permission: permissions.VIEW_SECTOR,
   },
   {
     path: Paths.Settings.sectors.industry,
@@ -63,6 +64,7 @@ export const routeConfig: IRoute[] = [
     breadcrumb: "Settings / Sectors / Industries",
     isPrivate: true,
     exact: true,
+    permission: permissions.VIEW_INDUSTRY,
   },
   {
     path: Paths.Settings.sectors.sub_industry,
@@ -70,6 +72,7 @@ export const routeConfig: IRoute[] = [
     key: "Sub-Industry",
     breadcrumb: "Settings / Sectors / Industries / Sub Industries",
     isPrivate: true,
+    permission: permissions.VIEW_SUB_INDUSTRY,
   },
   {
     path: Paths.Settings.job_function,
@@ -77,6 +80,7 @@ export const routeConfig: IRoute[] = [
     key: "Job Function",
     breadcrumb: "Settings / Job Function & Sub-Function",
     isPrivate: true,
+    permission: permissions.VIEW_JOB_SUB_FUNCTION,
   },
   {
     path: Paths.Settings.grade_map_table.listing,

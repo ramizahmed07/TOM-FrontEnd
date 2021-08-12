@@ -8,6 +8,8 @@ import AddIndustry from "./AddIndustry";
 import Button from "@components/Button";
 import { IIndustry, ISubIndustry } from "@store/sectors";
 import { useDeleteIndustryMutation, useFetchIndustriesQuery } from "@services";
+import { checkPermission } from "@utils";
+import { permissions } from "@router";
 
 const Industry = () => {
   const history = useHistory();
@@ -77,34 +79,48 @@ const Industry = () => {
         return <span>{names.join(", ")}</span>;
       },
     },
-    {
-      title: "Actions",
-      key: "action",
-      fixed: "right",
-      width: "15%",
-      render: industry => {
-        return (
-          <>
-            <div
-              onClick={event => editIndustry(industry, event)}
-              className="table__action__btn"
-            >
-              Edit
-            </div>
-            <div
-              onClick={event => handleDeleteIndustry(industry?.id, event)}
-              className="table__action__btn table__action__btn--delete"
-            >
-              {isDeleting && industry?.id === industry_id?.current ? (
-                <LoadingOutlined color="red" className="spinner" />
-              ) : (
-                "Delete"
-              )}
-            </div>
-          </>
-        );
-      },
-    },
+    ...((!checkPermission([
+      permissions.UPDATE_INDUSTRY,
+      permissions.DELETE_INDUSTRY,
+    ])
+      ? []
+      : [
+          {
+            title: "Actions",
+            key: "action",
+            fixed: "right",
+            width: "15%",
+            render: (industry: IIndustry) => {
+              return (
+                <>
+                  {checkPermission(permissions.UPDATE_INDUSTRY) && (
+                    <div
+                      onClick={event => editIndustry(industry, event)}
+                      className="table__action__btn"
+                    >
+                      Edit
+                    </div>
+                  )}
+
+                  {checkPermission(permissions.DELETE_INDUSTRY) && (
+                    <div
+                      onClick={event =>
+                        handleDeleteIndustry(industry?.id, event)
+                      }
+                      className="table__action__btn table__action__btn--delete"
+                    >
+                      {isDeleting && industry?.id === industry_id?.current ? (
+                        <LoadingOutlined color="red" className="spinner" />
+                      ) : (
+                        "Delete"
+                      )}
+                    </div>
+                  )}
+                </>
+              );
+            },
+          },
+        ])! as any),
   ];
 
   return (
@@ -122,9 +138,11 @@ const Industry = () => {
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
         </Col>
         <Col className="align-end" span={8}>
-          <Button variant="add" onClick={() => setIsVisible(true)}>
-            Add Industry
-          </Button>
+          {checkPermission(permissions.CREATE_INDUSTRY) && (
+            <Button variant="add" onClick={() => setIsVisible(true)}>
+              Add Industry
+            </Button>
+          )}
         </Col>
       </Row>
 

@@ -8,4 +8,5 @@ export interface IRoute {
   routes?: INestedRoute[];
   exact?: boolean;
   breadcrumb?: string;
+  permission?: string;
 }
