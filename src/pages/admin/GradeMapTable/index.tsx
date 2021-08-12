@@ -1,15 +1,18 @@
-import { Col, Row } from "antd";
+import { Col, message, Row } from "antd";
 import { useHistory } from "react-router";
+import { useRef, useState } from "react";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
 import {
+  useDownloadGradeTableQuery,
   useFetchAllGradeCompaniesQuery,
   useFetchTARanksQuery,
+  useUploadGradeTableMutation,
 } from "@services";
 import { IGradeCompany } from "@store/grade";
 import { getRows } from "@utils";
-import { Paths } from "@/router";
+import { Paths } from "@router";
 
 const default_cols = [
   {
@@ -22,6 +25,13 @@ const default_cols = [
 
 const GradeMapTable = () => {
   const history = useHistory();
+  const inputRef = useRef<any>(null);
+  const [download, setDownload] = useState(false);
+  const [uploadGradeTable, { isLoading: isUploading }] =
+    useUploadGradeTableMutation();
+  const { isLoading: isDownloading } = useDownloadGradeTableQuery(null, {
+    skip: !download,
+  });
   const { data: taRanks, error } = useFetchTARanksQuery(null);
   const {
     data: companies,
@@ -69,6 +79,21 @@ const GradeMapTable = () => {
     history.push(Paths.Settings.grade_map_table.create_grade_company);
   };
 
+  const uploadFile = async (event: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+    var file = event?.target?.files[0];
+    try {
+      const formData = new FormData();
+      formData.append("attachment", file, file.name);
+      await uploadGradeTable(formData).unwrap();
+      message.success("CSV Data Uploaded Successfully");
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Row>
@@ -78,15 +103,24 @@ const GradeMapTable = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
+          <input
+            id="myInput"
+            type="file"
+            ref={inputRef}
+            hidden={true}
+            onChange={uploadFile}
+          />
           <Button
+            isLoading={isUploading}
             variant="upload"
-            onClick={() => console.log("upload job function")}
+            onClick={() => inputRef?.current?.click()}
           >
             Upload Grade Map
           </Button>
           <Button
             variant="download"
-            onClick={() => console.log("Download Job Functions")}
+            onClick={() => setDownload(true)}
+            isLoading={isDownloading}
           >
             Download Grade Map
           </Button>

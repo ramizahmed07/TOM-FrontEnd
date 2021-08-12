@@ -61,6 +61,21 @@ export const gradeApi = createApi({
       }),
       invalidatesTags: ["AllGradeCompanies"],
     }),
+    uploadGradeTable: builder.mutation({
+      query: body => ({
+        url: "-table/upload/",
+        method: "POST",
+        body,
+        formData: true,
+      }),
+      invalidatesTags: ["AllGradeCompanies"],
+    }),
+    downloadGradeTable: builder.query({
+      query: () => ({
+        url: "-table/download/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -72,4 +87,6 @@ export const {
   useCreateGradeCompanyMutation,
   useDeleteGradeCompanyMutation,
   useUpdateGradeCompanyMutation,
+  useUploadGradeTableMutation,
+  useDownloadGradeTableQuery,
 } = gradeApi;

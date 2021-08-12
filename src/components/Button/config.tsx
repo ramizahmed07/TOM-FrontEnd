@@ -12,6 +12,7 @@ interface IIcons {
 
 export interface IButton {
   variant: "download" | "add" | "upload";
+  isLoading?: boolean;
 }
 
 export const Icons: IIcons = {

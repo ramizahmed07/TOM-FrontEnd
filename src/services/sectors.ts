@@ -99,6 +99,7 @@ export const sectorsApi = createApi({
         body,
         formData: true,
       }),
+      invalidatesTags: ["Sectors"],
     }),
     downloadSectors: builder.query({
       query: () => ({

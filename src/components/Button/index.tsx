@@ -1,3 +1,4 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { Button as AntButton } from "antd";
 
 import "./button.less";
@@ -7,16 +8,25 @@ const Button: React.FC<IButton & React.HTMLProps<HTMLButtonElement>> = ({
   onClick,
   children,
   variant,
+  isLoading,
 }) => {
   return (
     <AntButton
       className={`btn btn--${variant}`}
       type="primary"
       onClick={onClick}
-      icon={Icons[variant as Variant]}
+      icon={
+        <div className="btn__icon">
+          {isLoading ? (
+            <LoadingOutlined className="spinner" />
+          ) : (
+            Icons[variant as Variant]
+          )}
+        </div>
+      }
       size="large"
     >
-      <span>{children}</span>
+      <span className="btn__children">{children}</span>
     </AntButton>
   );
 };

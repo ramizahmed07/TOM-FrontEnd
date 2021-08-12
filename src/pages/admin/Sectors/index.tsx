@@ -7,14 +7,12 @@ import Table from "@components/Table";
 import AddSector from "./AddSector";
 import Button from "@components/Button";
 import {
-  loadToken,
   useDeleteSectorMutation,
   useDownloadSectorsQuery,
   useFetchSectorsQuery,
   useUploadSectorsMutation,
 } from "@services";
 import { IIndustry, ISector } from "@store/sectors";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const Sectors = () => {
   const history = useHistory();
@@ -157,15 +155,21 @@ const Sectors = () => {
             id="myInput"
             type="file"
             ref={inputRef}
-            // style={{ display: "none" }}
             hidden={true}
             onChange={uploadFile}
           />
-          <Button variant="upload" onClick={() => inputRef?.current?.click()}>
-            Upload Sectors{" "}
-            {/* <LoadingOutlined color="white" className="spinner-md" /> */}
+          <Button
+            isLoading={isUploading}
+            variant="upload"
+            onClick={() => inputRef?.current?.click()}
+          >
+            Upload Sectors
           </Button>
-          <Button variant="download" onClick={() => setDownload(true)}>
+          <Button
+            isLoading={isDownloading}
+            variant="download"
+            onClick={() => setDownload(true)}
+          >
             Download Sectors
           </Button>
         </Col>
