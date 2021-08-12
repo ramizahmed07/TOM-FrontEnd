@@ -14,7 +14,6 @@ import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
 import "./style.less";
-import { data, TableRow } from "./dumpData";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { Paths } from "@/router";
 
