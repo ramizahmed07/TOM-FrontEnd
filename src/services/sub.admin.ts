@@ -12,6 +12,12 @@ export const subAdminApi = createApi({
     }),
 
     endpoints: builder => ({
+        subAdminList: builder.mutation({
+            query: () => ({
+                url: "s/",
+                method: "GET",
+            }),
+        }),
         addSubAdmin: builder.mutation({
             query: data => ({
                 url: "/",
@@ -19,29 +25,32 @@ export const subAdminApi = createApi({
                 body: { ...data, },
             }),
         }),
-        // getJSF: builder.mutation({
-        //     query: id => ({
-        //         url: `/${id}/`,
-        //         method: "GET",
-        //     }),
-        // }),
-        // editJSF: builder.mutation({
-        //     query: ({ id, name, job_function_id }) => ({
-        //         url: `/${id}/`,
-        //         method: "PUT",
-        //         body: { name, job_function_id, description },
-
-        //     }),
-        // }),
-        // deleteJSF: builder.mutation({
-        //     query: id => ({
-        //         url: `/${id}/`,
-        //         method: "DELETE",
-        //     }),
-        // }),
+        toggleSubAdmin: builder.mutation({
+            query: ({ id, is_active }) => ({
+                url: `/${id}/?active=${is_active}`,
+                method: "PATCH",
+            }),
+        }),
+        getSubAdmin: builder.mutation({
+            query: id => ({
+                url: `/${id}/`,
+                method: "GET",
+            }),
+        }),
+        editSubAdmin: builder.mutation({
+            query: ({ id, payload }) => ({
+                url: `/${id}/`,
+                method: "PUT",
+                body: payload
+            }),
+        }),
     }),
 });
 
 export const {
+    useSubAdminListMutation,
     useAddSubAdminMutation,
+    useToggleSubAdminMutation,
+    useGetSubAdminMutation,
+    useEditSubAdminMutation,
 } = subAdminApi;

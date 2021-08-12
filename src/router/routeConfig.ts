@@ -13,6 +13,7 @@ import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
 import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
 import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute, permissions } from "@router";
+import SubAdminsEdit from "@/pages/admin/User/SubAdmins/SubAdminEdit";
 
 export const routeConfig: IRoute[] = [
   {
@@ -62,6 +63,14 @@ export const routeConfig: IRoute[] = [
     path: Paths.Users.sub_admins.create,
     component: SubAdminsCreate,
     key: "SubAdminsCreate",
+    exact: true,
+    breadcrumb: "Users / Sub-Admins/ Create Sub Admin",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Users.sub_admins.edit,
+    component: SubAdminsEdit,
+    key: "SubAdminsEdit",
     exact: true,
     breadcrumb: "Users / Sub-Admins/ Create Sub Admin",
     isPrivate: true,

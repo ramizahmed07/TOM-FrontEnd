@@ -14,8 +14,9 @@ const Users = {
     create_company: "/companies/create-company",
   },
   sub_admins: {
-    listing: "/sub_admins",
-    create: "/sub_admins/create",
+    listing: "/sub-admins",
+    create: "/sub-admins/create",
+    edit: "/sub-admins/edit",
   },
 };
 
