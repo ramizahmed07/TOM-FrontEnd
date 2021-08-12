@@ -16,7 +16,7 @@ const Users = {
   sub_admins: {
     listing: "/sub-admins",
     create: "/sub-admins/create",
-    edit: "/sub-admins/edit",
+    edit: "/sub-admins/edit/:sub_admin_id",
   },
 };
 

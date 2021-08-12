@@ -14,12 +14,12 @@ import en from "world_countries_lists/data/en/world.json";
 
 // import "./style.less";
 import Layout from "@/components/Layout";
-import { useAddSubAdminMutation, useEditSubAdminMutation } from "@/services/sub.admin";
+import { useAddSubAdminMutation, useEditSubAdminMutation, useGetSubAdminMutation } from "@/services/sub.admin";
 import { useEffect } from "react";
 import { ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
 import { useSelector } from "react-redux";
 import { ICombineReducerProps } from "@/store";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const SubAdminsEdit = () => {
     let subAdminForm = useRef<any>(null);
@@ -27,6 +27,8 @@ const SubAdminsEdit = () => {
     const subAdminReducer: ISubAdminReducer = useSelector((state: ICombineReducerProps) => state.subAdmin);
     const { first_name, last_name, phone_number, role, email } = subAdminReducer.subAdmin;
     const [editSubAdmin, { isLoading }] = useEditSubAdminMutation();
+    const [getSubAdmin] = useGetSubAdminMutation();
+    const params: { sub_admin_id: string } = useParams();
 
     const id = '4';
 
@@ -36,6 +38,18 @@ const SubAdminsEdit = () => {
             subAdminForm.current.resetFields();
             message.success('Sub Admin has been successfully updated.')
             history.goBack();
+        } catch (error) {
+            message.error(error?.message);
+        }
+    }
+
+    useEffect(() => {
+        onEditSubAdmin();
+    }, []);
+
+    const onEditSubAdmin = async () => {
+        try {
+            await getSubAdmin(params.sub_admin_id);
         } catch (error) {
             message.error(error?.message);
         }

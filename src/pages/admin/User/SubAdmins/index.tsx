@@ -1,2 +1,3 @@
-export * from './SubAdminsCreate';
+export * from './SubAdminEdit';
+export * from './SubAdminsList';
 export * from './SubAdminsList';
