@@ -1,0 +1,52 @@
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import "../styles/index.less";
+import Layout from "@components/Layout";
+import RoutePaths from "./RoutePaths";
+import GradeMapTable from "@pages/admin/GradeMapTable";
+import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
+import CompanyProfile from "@pages/admin/Companies/CompanyProfile";
+
+const Login = React.lazy(() => import("@pages/admin/Auth/Login"));
+const ForgotPassword = React.lazy(
+  () => import("@pages/admin/Auth/ForgotPassword")
+);
+const ResetPassword = React.lazy(
+  () => import("@pages/admin/Auth/ResetPassword")
+);
+
+const AppRoutes = () => {
+  return (
+    <Suspense fallback={"Loading..."}>
+      <Router>
+        <Switch>
+          <Route path={RoutePaths.Auth.login}>
+            <Login />
+          </Route>
+          <Route path={RoutePaths.Auth.forgotPassword}>
+            <ForgotPassword />
+          </Route>
+          <Route path={RoutePaths.Auth.resetPassword}>
+            <ResetPassword />
+          </Route>
+          <Route path={RoutePaths.Home.dashboard}>
+            <Layout>
+              <Route exact path="/grade-map-table">
+                <GradeMapTable />
+              </Route>
+              <Route exact path="/grade-map-table/create-grade-company">
+                <AddGradeCompany />
+              </Route>
+              <Route path={RoutePaths.Companies.company_profile}>
+                <CompanyProfile />
+              </Route>
+            </Layout>
+          </Route>
+        </Switch>
+      </Router>
+    </Suspense>
+  );
+};
+
+export default AppRoutes;
