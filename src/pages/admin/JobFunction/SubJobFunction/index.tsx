@@ -19,7 +19,6 @@ type TableRow = {
 };
 
 const SubJobFunction = () => {
-    const history = useHistory();
     const [isAddJSFVisible, setIsAddJSFVisible] = useState(false);
     const [isEditJSFVisible, setIsEditJSFVisible] = useState(false);
     const [getSJFList, { isLoading }] = useSjfListMutation();
@@ -28,7 +27,6 @@ const SubJobFunction = () => {
     const [editJsfId, setEditJSFId] = useState<string>('');
     const [getJSF] = useGetJSFMutation();
     const [listData, setListData] = useState<Array<TableRow>>([]);
-    const location = useLocation();
     const params: { job_id: string } = useParams();
 
     const id = Number(params?.job_id);

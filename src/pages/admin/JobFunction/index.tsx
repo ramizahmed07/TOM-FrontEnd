@@ -11,6 +11,7 @@ import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
 import EditJobFunction from "./EditJobFunction";
 import { Paths } from "@/router";
+import { LoadingOutlined } from "@ant-design/icons";
 
 type JobSubFunction = {
   id: number;
@@ -25,13 +26,14 @@ type TableRow = {
 
 const JobFunction = () => {
   const history = useHistory();
+  let jf_id = useRef<any>(null);
+  const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
   const [isAddJFVisible, setIsAddJFVisible] = useState(false);
   const [isEditJFVisible, setIsEditJFVisible] = useState(false);
   const [getJFList, { isLoading }] = useListMutation();
-  const [deleteJF] = useDeleteJFMutation();
-  const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
+  const [deleteJF, { isLoading: isDeleting }] = useDeleteJFMutation();
   const [editJfId, setEditJFId] = useState<string>('');
-  const [getJF] = useGetJFMutation();
+  const [getJF, { isLoading: isGettingJF }] = useGetJFMutation();
 
   const [uploadJobFunction, { isLoading: isUploading }] =
     useUploadJobFunctionsMutation();
@@ -44,7 +46,7 @@ const JobFunction = () => {
     getJFListFromApi();
   }, []);
 
-  console.log('isLoading: ', isLoading);
+  console.log('isDeleting: ', isDeleting);
   const columns: TableColumnsType<TableRow> = [
     {
       title: "id",
@@ -81,9 +83,19 @@ const JobFunction = () => {
       render: ({ id }) => {
         return (
           <div>
-            <span className="table__action__btn" onClick={() => onEditJf(id)}>Edit</span>
+            <span className="table__action__btn" onClick={() => onEditJf(id)}>
+              {isGettingJF && id === jf_id?.current ? (
+                <LoadingOutlined color="primary" className="spinner" />
+              ) : (
+                "Edit"
+              )}
+            </span>
             <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id)}>
-              Delete
+              {isDeleting && id === jf_id?.current ? (
+                <LoadingOutlined color="red" className="spinner" />
+              ) : (
+                "Delete"
+              )}
             </span>
           </div>
         );
@@ -96,6 +108,7 @@ const JobFunction = () => {
   }
 
   const onEditJf = async (id: string) => {
+    jf_id.current = id;
     await getJF(id);
     setEditJFId(id);
     setIsEditJFVisible(true);
@@ -110,6 +123,7 @@ const JobFunction = () => {
   }
 
   const deleteJFFromApi = async (id: string) => {
+    jf_id.current = id;
     try {
       await deleteJF(id);
       getJFListFromApi();
@@ -125,7 +139,6 @@ const JobFunction = () => {
     try {
       const formData = new FormData();
       formData.append("attachment", file, file.name);
-      alert('Uploading start')
       await uploadJobFunction(formData).unwrap();
       message.success("CSV Data Uploaded Successfully");
     } catch (error) {
@@ -167,7 +180,10 @@ const JobFunction = () => {
             variant="upload"
             onClick={() => inputRef?.current?.click()}
           >
-            Upload Job Functions
+            {isUploading ?
+              <LoadingOutlined
+                color="white" className="spinner" />
+              : 'Upload Job Functions'}
           </Button>
           <Button
             variant="download"

@@ -31,6 +31,7 @@ const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, 
             await editJSF({ id: jfsReducer.jsf.id, job_function_id: id, name: jobFunction }).unwrap();
             await getJFList('');
             closeModal();
+            message.success('Job Sub Function successfully updated')
         } catch (error) {
             // console.log(e);
             message.error(error?.message);
