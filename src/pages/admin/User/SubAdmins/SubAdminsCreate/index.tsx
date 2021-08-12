@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Col,
   Row,
@@ -6,6 +6,7 @@ import {
   Input,
   Form,
   Select,
+  message,
 } from "antd";
 import { Option } from "antd/lib/mentions";
 import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
@@ -13,17 +14,32 @@ import en from "world_countries_lists/data/en/world.json";
 
 import "./style.less";
 import Layout from "@/components/Layout";
+import { useAddSubAdminMutation } from "@/services/sub.admin";
 
 const SubAdminsCreate = () => {
+  let subAdminForm = useRef<any>(null);
+  const [addSubAdmin, { isLoading }] = useAddSubAdminMutation();
+
+  const onSubmit = async (values: any) => {
+    try {
+      await addSubAdmin({ ...values, "phone_number": "+92336070015", });
+      subAdminForm.current.resetFields();
+      message.success('Sub Admin has been successfully created.')
+    } catch (error) {
+      message.error(error?.message);
+    }
+  }
+
   return (
     <>
       <h1 className="form_heading">Create sub admin</h1>
       <Form
         name="sub_admin"
+        ref={subAdminForm}
         labelCol={{ span: 24 }}
         wrapperCol={{ span: 24 }}
         initialValues={{ remember: true }}
-        onFinish={() => { }}
+        onFinish={onSubmit}
         layout="vertical"
         className="create__company__container"
       >
@@ -74,7 +90,7 @@ const SubAdminsCreate = () => {
               </div>
 
               <div className="contact__person__sub_container">
-                <Form.Item
+                {/* <Form.Item
                   className="form__item contact__person_item "
                   label={
                     <label className="input__label">Contact number</label>
@@ -94,14 +110,14 @@ const SubAdminsCreate = () => {
                       }}
                     />
                   </ConfigProvider>
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item
                   className="form__item contact__person_item"
                   label={
                     <label className="input__label">Email address</label>
                   }
-                  name="email_address"
+                  name="email"
                   rules={[
                     {
                       required: true,
@@ -130,9 +146,9 @@ const SubAdminsCreate = () => {
                   ]}
                 >
                   <Select placeholder="Select role from here...">
-                    <Option value="admin">Admin</Option>
-                    <Option value="client">Client</Option>
-                    <Option value="user">User</Option>
+                    <Option value="TOM_SUPER_USER">Super User</Option>
+                    <Option value="TOM_ADMIN">Admin</Option>
+                    <Option value="TOM_SALES">Sales</Option>
                   </Select>
                 </Form.Item>
 
@@ -149,11 +165,9 @@ const SubAdminsCreate = () => {
               htmlType="submit"
               disabled={false}
               size="large"
-              onClick={() => {
-                console.log("Create Company");
-              }}
+              loading={isLoading}
             >
-              Create Company
+              Create Sub Admin
             </Button>
           </Form.Item>
 
