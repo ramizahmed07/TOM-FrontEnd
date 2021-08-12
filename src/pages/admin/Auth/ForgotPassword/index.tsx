@@ -111,9 +111,6 @@ const SendLinkView = ({
             htmlType="submit"
             className="login__btn"
             size="large"
-            // onClick={() => {
-            //   history.push(RoutePaths.Auth.login);
-            // }}
           >
             Send link{" "}
             {isLoading ? (
