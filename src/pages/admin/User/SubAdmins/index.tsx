@@ -106,7 +106,7 @@ const SubAdminsList = () => {
         sub_admin_id.current = id;
         try {
             await getSubAdmin(id);
-            history.push(Paths.Users.sub_admins.edit_sub_admin);
+            history.push(`/sub-admins/edit/${id}`);
         } catch (error) {
             message.error(error?.message);
         }
