@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Form, Input, message, Row, Typography } from "antd";
 import { ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
 import Countdown from "react-countdown";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "../style.less";
 import "./forgotPassword.less";

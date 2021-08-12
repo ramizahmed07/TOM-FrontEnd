@@ -26,7 +26,7 @@ const handleErrors = (
   if (!json.success) throw json;
 
   if (includes(black_list, url)) {
-    const tokens = json?.json?.token;
+    const tokens = json?.data?.token;
     saveTokens(tokens);
   }
   if (third_party) {
@@ -82,6 +82,7 @@ export const tomService =
         return { data: [] };
       } else {
         const json = await res.json();
+
         let refreshed = false;
         if (json.code === 1002 && json.message === "Invalid Token") {
           await new Promise(async (res, rej) => {
