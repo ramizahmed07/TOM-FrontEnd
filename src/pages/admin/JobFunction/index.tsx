@@ -92,8 +92,7 @@ const JobFunction = () => {
   ];
 
   const onNavigateSJF = (id: number, name: string) => {
-    // history.push(`${Paths.Settings.sub_job_function}${id}`);
-    history.push(`/job-function/${id}`);
+    history.push(`/job-sub-function/${id}`, { id });
   }
 
   const onEditJf = async (id: string) => {

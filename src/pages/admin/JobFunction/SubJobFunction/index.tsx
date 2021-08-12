@@ -9,7 +9,7 @@ import { useDeleteJFMutation, useDeleteJSFMutation, useGetJFMutation, useGetJSFM
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import { Paths } from "@/router";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import AddJobSubFunction from "./AddJobSubFunction";
 import EditJobSubFunction from "./EditJobSubFunction";
 
@@ -28,10 +28,10 @@ const SubJobFunction = () => {
     const [editJsfId, setEditJSFId] = useState<string>('');
     const [getJSF] = useGetJSFMutation();
     const [listData, setListData] = useState<Array<TableRow>>([]);
-    const params = useParams();
+    const location = useLocation();
+    const params: { job_id: string } = useParams();
 
-    console.log(params);
-    const id = 21;
+    const id = Number(params?.job_id);
 
     useEffect(() => {
         updateListData();

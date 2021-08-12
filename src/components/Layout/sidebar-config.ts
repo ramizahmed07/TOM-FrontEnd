@@ -50,7 +50,7 @@ const config: Array<Config> = [
     path: [
       sectors.listing,
       sectors.industry,
-      job_function,
+      job_function.listing,
       grade_map_table.listing,
       grade_map_table.create_grade_company,
     ],
@@ -63,7 +63,7 @@ const config: Array<Config> = [
       {
         title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
-        path: job_function,
+        path: job_function.listing,
       },
       {
         title: "Grade map table",

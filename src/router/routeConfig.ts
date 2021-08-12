@@ -62,14 +62,14 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Settings.job_function,
+    path: Paths.Settings.job_function.listing,
     component: JobFunction,
     key: "Job Function",
     breadcrumb: "Settings / Job Function",
     isPrivate: true,
   },
   {
-    path: Paths.Settings.sub_job_function,
+    path: Paths.Settings.job_function.sub_job_function,
     component: SubJobFunction,
     key: "Sub Job Function",
     breadcrumb: "Settings / Job Function / Sub-Function",
