@@ -8,6 +8,8 @@ import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
 import CompanyList from "@/pages/admin/User/Companies/company-list";
 import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
+import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
+import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute } from "@router";
 
 export const routeConfig: IRoute[] = [
@@ -71,5 +73,18 @@ export const routeConfig: IRoute[] = [
     component: AddGradeCompany,
     key: "Add new Company",
     breadcrumb: "Settings / Grade map table / Add new company",
+  },
+  {
+    path: Paths.Users.sub_admins.listing,
+    component: SubAdminsList,
+    key: "List sub admins",
+    breadcrumb: "Users / Sub admins",
+    exact: true,
+  },
+  {
+    path: Paths.Users.sub_admins.create,
+    component: SubAdminsCreate,
+    key: "Add new sub admin",
+    breadcrumb: "Users / Sub admins / Add new sub admin",
   },
 ];

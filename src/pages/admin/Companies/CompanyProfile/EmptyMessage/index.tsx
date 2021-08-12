@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React from "react";
 
 import "./emptyMessage.less";
 
@@ -8,7 +8,12 @@ interface IEmptyMessage {
   message?: string;
 }
 
-const EmptyMessage: FC<IEmptyMessage> = ({ children, img, title, message }) => {
+const EmptyMessage: React.FC<IEmptyMessage> = ({
+  children,
+  img,
+  title,
+  message,
+}) => {
   return (
     <div className="empty">
       <img src={img} alt="message-img" />

@@ -13,7 +13,10 @@ const Users = {
     listing: "/companies",
     create_company: "/companies/create-company",
   },
-  sub_admins: "/sub-admins",
+  sub_admins: {
+    listing: "/sub_admins",
+    create: "/sub_admins/create",
+  },
 };
 
 const Settings = {
@@ -28,4 +31,8 @@ const Settings = {
   },
 };
 
-export { Auth, Settings, Users, Dashboard };
+const Companies = {
+  company_profile: "/profile",
+};
+
+export { Auth, Settings, Users, Dashboard, Companies };

@@ -1,13 +1,13 @@
+import React from "react";
 import { Dropdown, Menu, TableColumnsType } from "antd";
 
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import BuildingImg from "@assets/images/building.png";
-import Table from "@/components/Table";
+import Table from "@components/Table";
+import Button from "@components/Button";
 import EmptyMessage from "@pages/admin/Companies/CompanyProfile/EmptyMessage";
-import AddBtn from "@/components/Buttons/AddButton";
 import AddBusinessUnit from "./AddBusinessUnit";
-import { useState } from "react";
 
 const columns: TableColumnsType<TableRow> = [
   {
@@ -91,7 +91,7 @@ type TableRow = {
 const data: TableRow[] = [];
 
 const BusinessUnits = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
 
   return (
     <div>
@@ -108,9 +108,9 @@ const BusinessUnits = () => {
               message="You didn’t added any business unit for this
             company yet!"
             >
-              <AddBtn onClick={() => setIsVisible(true)}>
+              <Button variant="add" onClick={() => setIsVisible(true)}>
                 Create business unit
-              </AddBtn>
+              </Button>
             </EmptyMessage>
           ),
         }}

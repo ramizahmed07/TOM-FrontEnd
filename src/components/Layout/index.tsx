@@ -26,7 +26,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       typeof pathname == "string"
     )
       return pathname;
-    else return "undefined";
+    else return "";
   };
 
   const breadcrumbs = useBreadcrumbs(routeConfig, {

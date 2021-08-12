@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
 import "./addBusinessUnit.less";
@@ -8,11 +8,11 @@ import { Sector, SECTORS, INDUSTRIES, dropdown } from "./config";
 
 const { Option } = Select;
 
-const AddBusinessUnit: FC<IModal> = ({ isVisible, setIsVisible }) => {
-  const [sector, setSector] = useState<dropdown>(undefined);
-  const [industry, setIndustry] = useState<dropdown>(undefined);
-  const [subIndustry, setSubIndustry] = useState<dropdown>(undefined);
-  const [unitName, setUnitName] = useState("");
+const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
+  const [sector, setSector] = React.useState<dropdown>(undefined);
+  const [industry, setIndustry] = React.useState<dropdown>(undefined);
+  const [subIndustry, setSubIndustry] = React.useState<dropdown>(undefined);
+  const [unitName, setUnitName] = React.useState("");
 
   return (
     <Modal
