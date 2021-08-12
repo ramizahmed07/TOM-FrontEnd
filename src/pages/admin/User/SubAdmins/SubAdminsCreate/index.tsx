@@ -176,7 +176,7 @@ const SubAdminsCreate = () => {
               className="login__btn"
               size="large"
               onClick={() => {
-                console.log("Create Company");
+                history.back();
               }}
             >
               Cancel

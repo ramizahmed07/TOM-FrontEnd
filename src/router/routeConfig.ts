@@ -10,7 +10,7 @@ import Industry from "@/pages/admin/Sectors/Industry";
 import CompanyList from "@/pages/admin/User/Companies/company-list";
 import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
 import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
-import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
+import SubAdminsList from "@/pages/admin/User/SubAdmins";
 import { Paths, IRoute } from "@router";
 
 export const routeConfig: IRoute[] = [
