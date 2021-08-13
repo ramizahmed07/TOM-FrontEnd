@@ -13,9 +13,6 @@ const AddJobSubFunction: FC<IAddJobSubFunction> = ({ isVisible, setIsVisible, jo
     const [getJFList] = useListMutation();
     const [jobFunction, setJobFunction] = useState("");
     const [addJSF, { isLoading, isSuccess }] = useAddJSFMutation();
-
-    // console.log('isLoading: ', isLoading);
-
     const onSubmit = async () => {
         try {
             await addJSF({ name: jobFunction, job_function_id }).unwrap();

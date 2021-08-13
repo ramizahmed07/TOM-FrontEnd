@@ -4,23 +4,28 @@ import { useSelector } from "react-redux";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { useEditJFMutation, useEditJSFMutation, useListMutation } from "@services";
+import { useEditJSFMutation, useGetJFMutation } from "@services";
 import { ICombineReducerProps } from "@store";
-import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ISubJobFunctionReducer } from "@/store/sub-job-function/sub.job.function.types";
+import { useParams } from "react-router-dom";
 
 export interface IEditJobSubFunction extends IModal {
     editJsfId?: string;
     job_function_id: string | number;
+    updateList: () => void;
+
 }
 
-const id = 21
 
-const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, editJsfId }) => {
+const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, editJsfId, updateList }) => {
     const jfsReducer: ISubJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.subJobFunction);
-    const [getJFList] = useListMutation();
     const [jobFunction, setJobFunction] = useState('');
     const [editJSF, { isLoading }] = useEditJSFMutation();
+    const params: { job_id: string } = useParams();
+    const [getJF] = useGetJFMutation();
+
+    const id = Number(params?.job_id);
+
 
     useEffect(() => {
         setJobFunction(jfsReducer.jsf.name);
@@ -29,11 +34,10 @@ const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, 
     const onSubmit = async () => {
         try {
             await editJSF({ id: jfsReducer.jsf.id, job_function_id: id, name: jobFunction }).unwrap();
-            await getJFList('');
+            updateList();
             closeModal();
             message.success('Job Sub Function successfully updated')
         } catch (error) {
-            // console.log(e);
             message.error(error?.message);
         }
     };
