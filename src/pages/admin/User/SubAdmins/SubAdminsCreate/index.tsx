@@ -21,7 +21,9 @@ const SubAdminsCreate = () => {
 
   const onSubmit = async (payload: any) => {
     try {
-      payload.phone_number = `+${payload.contact_number.code}${payload.contact_number.phone}`
+      // payload.phone_number = `+${payload.contact_number.code}${payload.contact_number.phone}`
+      payload.phone_code = payload.contact_number.code;
+      payload.phone_number = payload.contact_number.phone;
       delete payload.contact_number;
       await addSubAdmin(payload);
       subAdminForm.current.resetFields();

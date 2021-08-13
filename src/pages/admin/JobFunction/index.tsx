@@ -117,8 +117,9 @@ const JobFunction = () => {
   const getJFListFromApi = async () => {
     try {
       await getJFList('');
-    } catch (e) {
-      console.log('Err: ', e);
+      message.success("List has been successfully fetched");
+    } catch (error) {
+      message.error(error?.message);
     }
   }
 
@@ -140,6 +141,7 @@ const JobFunction = () => {
       const formData = new FormData();
       formData.append("attachment", file, file.name);
       await uploadJobFunction(formData).unwrap();
+      getJFListFromApi();
       message.success("CSV Data Uploaded Successfully");
     } catch (error) {
       message.error(error?.message);

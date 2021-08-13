@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Col, Row, TableColumnsType } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { Col, message, Row, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -12,6 +12,7 @@ import { Paths } from "@/router";
 import { useLocation, useParams } from "react-router-dom";
 import AddJobSubFunction from "./AddJobSubFunction";
 import EditJobSubFunction from "./EditJobSubFunction";
+import { LoadingOutlined } from "@ant-design/icons";
 
 type TableRow = {
     id: number;
@@ -19,15 +20,17 @@ type TableRow = {
 };
 
 const SubJobFunction = () => {
+    let jsf_id = useRef<any>(null);
+    const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
     const [isAddJSFVisible, setIsAddJSFVisible] = useState(false);
     const [isEditJSFVisible, setIsEditJSFVisible] = useState(false);
-    const [getSJFList, { isLoading }] = useSjfListMutation();
-    const [deleteJSF] = useDeleteJSFMutation();
-    const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
+    const [getSJFList] = useSjfListMutation();
+    const [deleteJSF, { isLoading: isDeleting }] = useDeleteJSFMutation();
     const [editJsfId, setEditJSFId] = useState<string>('');
-    const [getJSF] = useGetJSFMutation();
-    const [listData, setListData] = useState<Array<TableRow>>([]);
+    const [getJSF, { isLoading: isGettingJSF }] = useGetJSFMutation();
     const params: { job_id: string } = useParams();
+    const [getJF] = useGetJFMutation();
+
 
     const id = Number(params?.job_id);
 
@@ -35,18 +38,13 @@ const SubJobFunction = () => {
         updateListData();
     }, []);
 
-    const updateListData = () => {
-        let listData: Array<TableRow> = [];
-        for (let index = 0; index <= jfReducer.list.length; index++) {
-            const item = jfReducer.list[index];
-            if (item.id == id) {
-                listData = item.job_sub_functions.map(t => {
-                    return { id: t.id, name: t.name };
-                });
-                break;
-            }
+    const updateListData = async () => {
+        try {
+            await getJF(id);
+            message.success("List has been successfully fetched");
+        } catch (error) {
+            message.error(error?.message);
         }
-        setListData(listData);
     }
 
     const columns: TableColumnsType<TableRow> = [
@@ -70,9 +68,29 @@ const SubJobFunction = () => {
             render: ({ id }) => {
                 return (
                     <div>
-                        <span className="table__action__btn" onClick={() => onEditJSf(id)}>Edit</span>
-                        <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id)}>
+                        {/* <span className="table__action__btn" onClick={() => onEditJSf(id)}>Edit</span> */}
+
+
+                        <span className="table__action__btn" onClick={() => onEditJSf(id)}>
+                            {isGettingJSF && id === jsf_id?.current ? (
+                                <LoadingOutlined color="primary" className="spinner" />
+                            ) : (
+                                "Edit"
+                            )}
+                        </span>
+
+
+                        {/* <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id)}>
                             Delete
+                        </span> */}
+
+
+                        <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJSFromApi(id)}>
+                            {isDeleting && id === jsf_id?.current ? (
+                                <LoadingOutlined color="red" className="spinner" />
+                            ) : (
+                                "Delete"
+                            )}
                         </span>
                     </div>
                 );
@@ -81,6 +99,7 @@ const SubJobFunction = () => {
     ];
 
     const onEditJSf = async (id: string) => {
+        jsf_id.current = id;
         await getJSF(id);
         setEditJSFId(id);
         setIsEditJSFVisible(true);
@@ -94,8 +113,9 @@ const SubJobFunction = () => {
         }
     }
 
-    const deleteJFFromApi = async (id: string) => {
+    const deleteJSFromApi = async (id: string) => {
         try {
+            jsf_id.current = id;
             await deleteJSF(id);
             getSJFListFromApi();
             updateListData();
@@ -107,7 +127,7 @@ const SubJobFunction = () => {
     return (
         <>
             <AddJobSubFunction setIsVisible={setIsAddJSFVisible} isVisible={isAddJSFVisible} job_function_id={id} updateList={updateListData} />
-            <EditJobSubFunction setIsVisible={setIsEditJSFVisible} isVisible={isEditJSFVisible} editJsfId={editJsfId} job_function_id={id} />
+            <EditJobSubFunction setIsVisible={setIsEditJSFVisible} isVisible={isEditJSFVisible} editJsfId={editJsfId} job_function_id={id} updateList={updateListData} />
             <Row>
                 <Col span={24}>
                     <div className="main-heading">Sub Job Function</div>
@@ -123,7 +143,7 @@ const SubJobFunction = () => {
                 </Col>
             </Row>
             <Row>
-                <Table data={listData} columns={columns} />
+                <Table data={jfReducer.jobFunctionItem.job_sub_functions} columns={columns} />
             </Row>
         </>
     );

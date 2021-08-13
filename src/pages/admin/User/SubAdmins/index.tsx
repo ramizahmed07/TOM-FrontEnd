@@ -43,9 +43,9 @@ const SubAdminsList = () => {
         },
         {
             title: "PHONE NO",
-            dataIndex: "phone_number",
             key: "phone_number",
             width: 130,
+            render: ({ phone_number, phone_code }) => (<span>+{phone_code}{phone_number}</span>)
         },
         {
             title: "Active/Inactive",

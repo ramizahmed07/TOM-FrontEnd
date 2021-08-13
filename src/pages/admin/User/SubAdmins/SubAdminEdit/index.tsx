@@ -25,16 +25,18 @@ const SubAdminsEdit = () => {
     let subAdminForm = useRef<any>(null);
     const history = useHistory();
     const subAdminReducer: ISubAdminReducer = useSelector((state: ICombineReducerProps) => state.subAdmin);
-    const { first_name, last_name, phone_number, role, email } = subAdminReducer.subAdmin;
+    const { first_name, last_name, phone_number, phone_code, role, email } = subAdminReducer.subAdmin;
     const [editSubAdmin, { isLoading }] = useEditSubAdminMutation();
     const [getSubAdmin] = useGetSubAdminMutation();
     const params: { sub_admin_id: string } = useParams();
 
-    const id = '4';
+    const id = params.sub_admin_id;
 
     const onSubmit = async (payload: any) => {
         try {
-            payload.phone_number = `+${payload.contact_number.code}${payload.contact_number.phone}`
+            // payload.phone_number = `+${payload.contact_number.code}${payload.contact_number.phone}`
+            payload.phone_code = payload.contact_number.code;
+            payload.phone_number = payload.contact_number.phone;
             delete payload.contact_number;
             await editSubAdmin({ id, payload });
             subAdminForm.current.resetFields();
@@ -66,9 +68,7 @@ const SubAdminsEdit = () => {
                     initialValues={{
                         first_name, last_name, phone_number, role, email,
                         contact_number: {
-                            short: 'us',
-                            code: '1',
-                            // code: phone_number.code,
+                            code: phone_code,
                             phone: phone_number,
                         },
 
@@ -143,9 +143,9 @@ const SubAdminsEdit = () => {
                                         ]}
                                     >
                                         <CountryPhoneInput
-                                            value={{
-                                                short: "us",
-                                            }}
+                                        // value={{
+                                        //     short: "us",
+                                        // }}
                                         />
                                     </Form.Item>
 
