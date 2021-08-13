@@ -10,7 +10,7 @@ import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
 import { useBreadcrumbs } from "@hooks";
-import { loadRefreshToken, useLogoutMutation } from "@services";
+import { ErrorServices, loadRefreshToken, useLogoutMutation } from "@services";
 import { checkPermission } from "@utils";
 
 const { Header, Content, Sider } = AntdLayout;
@@ -42,10 +42,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   const onLogoutFromServer = async () => {
     try {
-      await onLogout({ refresh: loadRefreshToken() });
+      await onLogout({ refresh: loadRefreshToken() }).unwrap();
       message.success(`User has been successfully logout`);
     } catch (error) {
-      message.error(error?.message);
+      ErrorServices(error);
     }
   }
 

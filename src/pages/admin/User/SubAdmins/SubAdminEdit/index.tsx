@@ -20,6 +20,7 @@ import { ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
 import { useSelector } from "react-redux";
 import { ICombineReducerProps } from "@/store";
 import { useHistory, useParams } from "react-router-dom";
+import { ErrorServices } from "@/services";
 
 const SubAdminsEdit = () => {
     let subAdminForm = useRef<any>(null);
@@ -38,12 +39,12 @@ const SubAdminsEdit = () => {
             payload.phone_code = payload.contact_number.code;
             payload.phone_number = payload.contact_number.phone;
             delete payload.contact_number;
-            await editSubAdmin({ id, payload });
+            await editSubAdmin({ id, payload }).unwrap();
             subAdminForm.current.resetFields();
             message.success('Sub Admin has been successfully updated.')
             history.goBack();
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     }
 
@@ -53,9 +54,9 @@ const SubAdminsEdit = () => {
 
     const onEditSubAdmin = async () => {
         try {
-            await getSubAdmin(params.sub_admin_id);
+            await getSubAdmin(params.sub_admin_id).unwrap();
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     }
 

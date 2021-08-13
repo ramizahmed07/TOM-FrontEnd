@@ -7,7 +7,7 @@ import Table from "@components/Table";
 import Button from "@components/Button";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";
-import { useDeleteJFMutation, useDownloadJobFunctionsMutation, useGetJFMutation, useListMutation, useUploadJobFunctionsMutation } from "@services";
+import { ErrorServices, useDeleteJFMutation, useDownloadJobFunctionsMutation, useGetJFMutation, useListMutation, useUploadJobFunctionsMutation } from "@services";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
@@ -121,27 +121,31 @@ const JobFunction = () => {
 
   const onEditJf = async (id: string) => {
     jf_id.current = id;
-    await getJF(id);
-    setEditJFId(id);
-    setIsEditJFVisible(true);
+    try {
+      await getJF(id).unwrap();
+      setEditJFId(id);
+      setIsEditJFVisible(true);
+    } catch (error) {
+      ErrorServices(error);
+    }
   }
 
   const getJFListFromApi = async () => {
     try {
-      await getJFList('');
+      await getJFList('').unwrap();
       message.success("List has been successfully fetched");
     } catch (error) {
-      message.error(error?.message);
+      ErrorServices(error);
     }
   }
 
   const deleteJFFromApi = async (id: string) => {
     jf_id.current = id;
     try {
-      await deleteJF(id);
+      await deleteJF(id).unwrap();
       getJFListFromApi();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      ErrorServices(error);
     }
   }
 
@@ -156,19 +160,16 @@ const JobFunction = () => {
       getJFListFromApi();
       message.success("CSV Data Uploaded Successfully");
     } catch (error) {
-      message.error(error?.message);
-      console.log(error);
+      ErrorServices(error);
     }
   }
 
   const downloadFile = async (event: any) => {
     try {
-      const response = await downloadJobFunction('');
-      // console.log(response);
+      await downloadJobFunction('').unwrap();
       message.success("CSV Data Downloaded Successfully");
     } catch (error) {
-      message.error(error?.message);
-      console.log(error);
+      ErrorServices(error);
     }
   }
 

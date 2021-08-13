@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { useEditJFMutation, useListMutation } from "@services";
+import { ErrorServices, useEditJFMutation, useListMutation } from "@services";
 import { ICombineReducerProps } from "@store";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 
@@ -25,10 +25,10 @@ const EditJobFunction: FC<IEditJobFunction> = ({ isVisible, setIsVisible, editJf
     const onSubmit = async () => {
         try {
             await editJF({ id: editJfId, name: jobFunction }).unwrap();
-            await getJFList('');
+            await getJFList('').unwrap();
             closeModal();
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            ErrorServices(error);
         }
     };
 

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { useEditJSFMutation, useGetJFMutation } from "@services";
+import { ErrorServices, useEditJSFMutation, useGetJFMutation } from "@services";
 import { ICombineReducerProps } from "@store";
 import { ISubJobFunctionReducer } from "@/store/sub-job-function/sub.job.function.types";
 import { useParams } from "react-router-dom";
@@ -38,7 +38,7 @@ const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, 
             closeModal();
             message.success('Job Sub Function successfully updated')
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     };
 

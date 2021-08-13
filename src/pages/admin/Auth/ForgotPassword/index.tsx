@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import "../style.less";
 import "./forgotPassword.less";
-import { useResetPasswordMutation } from "@services";
+import { ErrorServices, useResetPasswordMutation } from "@services";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
 
@@ -57,6 +57,7 @@ const SendLinkView = ({
       message.success("Reset password link sent on your email");
       setIsEmailSent(true);
     } catch (error) {
+      ErrorServices(error);
       setHasError(true);
       form.setFields([
         {
@@ -135,10 +136,11 @@ const ResendLinkView = ({ sendLink, email }: IProps) => {
       message.success("Reset password link sent on your email");
       setKey(prev => prev + 1);
       setDisabled(true);
-    } catch (error) {
-      message.error("Could not send reset password link");
     }
-  };
+    catch (error) {
+      ErrorServices(error);
+    }
+  }
 
   return (
     <div className="resend-link-container">

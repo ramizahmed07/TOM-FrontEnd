@@ -1,6 +1,7 @@
 export * from "./sectors";
 export * from "./auth";
 export * from "./constants";
+export * from "./error";
 export * from "./storage";
 export * from "./restService";
 export * from "./grade";

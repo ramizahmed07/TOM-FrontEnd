@@ -119,6 +119,7 @@ export const tomService =
             error: err?.error,
             code: err?.code,
             data: err?.data,
+            is_validation_error: err?.is_validation_error,
           },
         };
       }
