@@ -34,7 +34,6 @@ const handleErrors = (
       data: json,
     };
   }
-  console.log("json", json);
   return { data: { data: json?.data, pagination: json?.pagination } };
 };
 

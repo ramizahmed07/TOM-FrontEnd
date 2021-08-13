@@ -1,6 +1,7 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Col, message, Row, TableColumnsType } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
@@ -10,12 +11,10 @@ import {
   useDeleteSubIndustryMutation,
   useFetchSubIndustriesQuery,
 } from "@services";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const SubIndustry = () => {
   let sub_industry_id = useRef<any>(null);
   const [page, setPage] = useState(1);
-  const params = useParams();
   const { industry_id: id } = useParams<{ industry_id: string }>();
   const { data, isLoading } = useFetchSubIndustriesQuery({ id, page });
   const [selectedSubIndustry, setSelectedSubIndustry] =
@@ -24,8 +23,6 @@ const SubIndustry = () => {
   const [deleteSubIndustry, { isLoading: isDeleting }] =
     useDeleteSubIndustryMutation();
   const { data: sub_industries, pagination } = data || {};
-
-  console.log("params", params);
 
   const editSubIndustry = (
     sub_industry: ISubIndustry,

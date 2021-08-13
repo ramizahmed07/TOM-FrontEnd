@@ -1,13 +1,5 @@
 import { useRef, useState } from "react";
-import {
-  Col,
-  Dropdown,
-  Menu,
-  message,
-  Pagination,
-  Row,
-  TableColumnsType,
-} from "antd";
+import { Col, Dropdown, Menu, message, Row, TableColumnsType } from "antd";
 import { useHistory } from "react-router-dom";
 
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";

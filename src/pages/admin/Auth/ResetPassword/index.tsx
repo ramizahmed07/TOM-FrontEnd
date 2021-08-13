@@ -1,11 +1,12 @@
 import { useHistory } from "react-router";
 import { Col, Row, Typography, Form, Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import "../style.less";
 import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
-import { useChangePasswordMutation } from "@/services";
+import { useChangePasswordMutation } from "@services";
 
 const ResetPassword = () => {
   const history = useHistory();
@@ -102,7 +103,11 @@ const ResetPassword = () => {
                 className="login__btn"
                 size="large"
               >
-                Reset Password
+                {isLoading ? (
+                  <LoadingOutlined className="spinner" />
+                ) : (
+                  "Reset Password"
+                )}
               </Button>
             </Form.Item>
           </Form>
