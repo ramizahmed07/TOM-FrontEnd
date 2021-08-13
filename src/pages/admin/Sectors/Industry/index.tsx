@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Col, message, Row, TableColumnsType } from "antd";
 import { useHistory, useParams } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useRef } from "react";
 
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
 import Button from "@components/Button";
 import { IIndustry, ISubIndustry } from "@store/sectors";
 import { useDeleteIndustryMutation, useFetchIndustriesQuery } from "@services";
-import { LoadingOutlined } from "@ant-design/icons";
-import { useRef } from "react";
 
 const Industry = () => {
   const history = useHistory();

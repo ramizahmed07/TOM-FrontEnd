@@ -1,12 +1,12 @@
+import { useLocation } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Col, message, Row, TableColumnsType } from "antd";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
 import { ISubIndustry } from "@store/sectors";
-import { useLocation } from "react-router-dom";
 import AddSubIndustry from "./AddSubIndustry";
-import { useDeleteSubIndustryMutation } from "@/services";
+import { useDeleteSubIndustryMutation } from "@services";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const SubIndustry = () => {
@@ -117,7 +117,7 @@ const SubIndustry = () => {
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} isLoading={true} />
+        <Table data={data} columns={columns} />
       </Row>
     </>
   );
