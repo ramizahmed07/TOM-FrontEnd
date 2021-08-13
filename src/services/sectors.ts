@@ -63,7 +63,7 @@ export const sectorsApi = createApi({
     }),
     deleteSubIndustry: builder.mutation({
       query: ({ id }) => ({
-        url: `/industry/${id}/`,
+        url: `/sub-industry/${id}/`,
         method: "DELETE",
       }),
       invalidatesTags: ["Industries"],

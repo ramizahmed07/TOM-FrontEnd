@@ -6,7 +6,7 @@ import Table from "@components/Table";
 import { ISubIndustry } from "@store/sectors";
 import { useLocation } from "react-router-dom";
 import AddSubIndustry from "./AddSubIndustry";
-import { useDeleteSectorMutation } from "@/services";
+import { useDeleteSubIndustryMutation } from "@/services";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const SubIndustry = () => {
@@ -18,7 +18,7 @@ const SubIndustry = () => {
     state: { data },
   } = useLocation<{ data: ISubIndustry[] }>();
   const [deleteSubIndustry, { isLoading: isDeleting }] =
-    useDeleteSectorMutation();
+    useDeleteSubIndustryMutation();
 
   const editSubIndustry = (
     sub_industry: ISubIndustry,
