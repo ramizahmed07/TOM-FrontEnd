@@ -23,7 +23,6 @@ const slice = createSlice({
             .addMatcher(
                 jobFunctionApi.endpoints.getJF.matchFulfilled,
                 (state, { payload }) => {
-                    console.log('Payload: ', payload);
                     state.jobFunctionItem = payload;
                 }
             );

@@ -48,13 +48,11 @@ export const tomService =
         reqBody.body = body;
       }
       if (body && !isEmpty(body) && !formData) {
-        console.log("body");
         reqBody.body = JSON.stringify(body);
       }
 
       try {
         const res = await fetch(path, reqBody);
-        console.log('Res: ', res);
         const json = await res.json();
         if (!json.success) throw json;
 
@@ -70,7 +68,6 @@ export const tomService =
         return { data: json?.data };
       } catch (error) {
         let err = error;
-        console.log("restService => TomService : error=", err);
         return {
           error: {
             success: err?.success,

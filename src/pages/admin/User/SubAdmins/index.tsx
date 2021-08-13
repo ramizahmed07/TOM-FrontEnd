@@ -51,7 +51,6 @@ const SubAdminsList = () => {
             title: "Active/Inactive",
             width: 130,
             render: ({ id, first_name, last_name, is_active }) => {
-                console.log('is_active: ', is_active);
                 return <Switch
                     defaultChecked={is_active}
                     onChange={(checked: boolean) => toggleSubAdminFromApi(id, `${first_name} ${last_name}`, checked)}

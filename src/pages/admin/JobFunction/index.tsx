@@ -46,7 +46,6 @@ const JobFunction = () => {
     getJFListFromApi();
   }, []);
 
-  console.log('isDeleting: ', isDeleting);
   const columns: TableColumnsType<TableRow> = [
     {
       title: "id",

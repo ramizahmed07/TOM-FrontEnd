@@ -20,7 +20,6 @@ const slice = createSlice({
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        console.log("Sucks!!");
         state.user = payload.user;
         state.token = payload.token;
         state.permissions = payload.permissions;

@@ -7,7 +7,7 @@ import { INDUSTRIES, Sector } from "../../AddSector/config";
 
 const { Option } = Select;
 
-interface AddIndustryProps extends IModal {}
+interface AddIndustryProps extends IModal { }
 
 const AddIndustry: FC<AddIndustryProps> = ({ isVisible, setIsVisible }) => {
   const [industries, setIndustries] = useState<any>(undefined);
