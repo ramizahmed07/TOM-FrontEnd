@@ -112,7 +112,6 @@ export const tomService =
         }
       } catch (error) {
         let err = error;
-        console.log("restService => TomService : error=", err);
         return {
           error: {
             success: err?.success,
