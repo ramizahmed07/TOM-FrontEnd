@@ -102,18 +102,6 @@ const AddSector: FC<AddSectorProps> = ({
             />
           </Col>
         </Row>
-        <Row className="modal__row">
-          <Col span={11}>
-            <label>Description</label>
-            <Input
-              size="large"
-              name="description"
-              value={sector.description || ""}
-              onChange={handleInputChange}
-              placeholder="Enter description here..."
-            />
-          </Col>
-        </Row>
       </>
     </Modal>
   );

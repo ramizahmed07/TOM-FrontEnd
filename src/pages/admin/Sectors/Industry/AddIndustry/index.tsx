@@ -106,18 +106,6 @@ const AddIndustry: FC<AddIndustryProps> = ({
             />
           </Col>
         </Row>
-        <Row className="modal__row">
-          <Col span={11}>
-            <label>Description</label>
-            <Input
-              size="large"
-              name="description"
-              value={industry.description || ""}
-              onChange={handleInputChange}
-              placeholder="Enter description here..."
-            />
-          </Col>
-        </Row>
       </>
     </Modal>
   );
