@@ -1,5 +1,6 @@
-import { gradeApi } from "@/services";
 import { createSlice } from "@reduxjs/toolkit";
+
+import { gradeApi } from "@services";
 import { IGradeCompany, ITARank } from "./grade.types";
 
 interface IGradeState {

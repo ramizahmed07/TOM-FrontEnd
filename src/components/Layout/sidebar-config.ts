@@ -37,11 +37,6 @@ const config: Array<Config> = [
       sub_admins.listing,
     ],
     sub: [
-      // {
-      //   title: "Companies",
-      //   icon: CompaniesIcon,
-      //   path: companies.listing,
-      // },
       {
         title: "Sub-Admins",
         icon: SubAdminIcon,

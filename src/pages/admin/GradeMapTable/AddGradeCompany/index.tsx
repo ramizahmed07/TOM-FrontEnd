@@ -79,22 +79,9 @@ const AddGradeCompany = () => {
 
   const rows = getRows(taRanks, allGradeCompanies) || [];
 
-  // @TODO == DELETE GRADE COMPANY
-  // const handleDeleteGradeCompany = async (
-  //   id: number,
-  //   event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  // ) => {
-  //   event.stopPropagation();
-  //   grade_company_id.current = id;
-  //   try {
-  //     await deleteGradeCompany({ id });
-  //     message.success("Industry deleted successfully!");
-  //   } catch (error) {
-  //     message.error("Could not delete industry.");
-  //     console.log(error);
-  //   }
-  // };
-
+  /**
+   * @TODO = DELETE GRADE COMPANY
+   */
   /**
    * The purpose below is to show/hide and sort the columns
    * it relies on companies dropdown
