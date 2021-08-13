@@ -45,6 +45,8 @@
   }
   .table__action__btn {
     color: #566eeb;
+    text-align: center;
+    display: inline-block;
     font-size: @text-mds;
     cursor: pointer;
     font-weight: 600;
@@ -54,6 +56,16 @@
     }
     &--delete {
       color: @error-color-light;
+    }
+  }
+  .ant-skeleton,
+  .ant-skeleton-input {
+    width: 100% !important;
+  }
+  .ant-skeleton {
+    margin-top: 16px;
+    &:last-of-type {
+      margin-bottom: 16px;
     }
   }
 }

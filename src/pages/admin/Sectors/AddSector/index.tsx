@@ -1,47 +1,86 @@
-import { FC, useState } from "react";
-import { Button, Col, Row, Select } from "antd";
+import { FC, useState, useEffect } from "react";
+import { Button, Col, Input, message, Row } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
-import { INDUSTRIES, Sector, SECTORS } from "./config";
 import { showSuccessPopup } from "@utils";
 import { IModal } from "@/types";
+import { useCreateSectorMutation, useUpdateSectorMutation } from "@services";
+import { ISector } from "@store/sectors";
 
-const { Option } = Select;
+interface AddSectorProps extends IModal {
+  selectedSector: ISector | null;
+  setSelectedSector: React.Dispatch<React.SetStateAction<ISector | null>>;
+}
 
-interface AddSectorProps extends IModal {}
+const AddSector: FC<AddSectorProps> = ({
+  isVisible,
+  setIsVisible,
+  selectedSector,
+  setSelectedSector,
+}) => {
+  const [sector, setSector] = useState<Partial<ISector>>({
+    name: "",
+    description: null,
+  });
+  const [createSector, { isLoading }] = useCreateSectorMutation();
+  const [updateSector, { isLoading: isUpdating }] = useUpdateSectorMutation();
 
-const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
-  const [sector, setSector] = useState<undefined | string>(undefined);
-  const [industries, setIndustries] = useState<any>(undefined);
+  useEffect(() => {
+    if (selectedSector) {
+      setSector(selectedSector as ISector);
+    }
+    return () => {
+      setSelectedSector(null);
+    };
+  }, [selectedSector, setSelectedSector]);
 
-  function onChange(value: string) {
-    if (value === "button") return;
-    setSector(value);
-  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSector(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
 
-  function handleChange(value: string) {
-    if (value[value.length - 1] === "button") return;
-    setIndustries(value);
-  }
-
-  const addSector = () => {
-    setIsVisible(false);
-    showSuccessPopup({
-      title: "New Sector Created",
-      desc: "You have successfully created new sector.",
-    });
+  const handleSubmit = async () => {
+    try {
+      if (selectedSector) {
+        await editSector();
+      } else {
+        await addSector();
+      }
+      setIsVisible(false);
+      showSuccessPopup({
+        title: selectedSector ? "Sector Updated" : "New Sector Created",
+        desc: `You have successfully ${
+          selectedSector ? "updated the" : "created new"
+        } sector.`,
+      });
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
   };
+
+  const addSector = async () => await createSector(sector).unwrap();
+
+  const editSector = async () => await updateSector(sector).unwrap();
 
   return (
     <Modal
       footer={[
         <Button
-          onClick={addSector}
-          disabled={!sector || !industries?.length}
+          onClick={handleSubmit}
+          disabled={!sector?.name?.length}
           key="1"
           type="primary"
         >
-          Add Sector
+          {isLoading || isUpdating ? (
+            <LoadingOutlined className="spinner" />
+          ) : selectedSector ? (
+            "Update Sector"
+          ) : (
+            "Add Sector"
+          )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
@@ -53,56 +92,26 @@ const AddSector: FC<AddSectorProps> = ({ isVisible, setIsVisible }) => {
       <>
         <Row className="modal__row">
           <Col span={11}>
-            <label>Select a sector</label>
-            <Select
-              value={sector}
+            <label>Name</label>
+            <Input
               size="large"
-              placeholder="Select sector from here..."
-              onChange={onChange}
-            >
-              {SECTORS.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
-                </Option>
-              ))}
-              <Option value="button">
-                <div
-                  className="link"
-                  onMouseDown={() => console.log("Add new industry")}
-                >
-                  Add new industry
-                </div>
-              </Option>
-            </Select>
+              name="name"
+              value={sector.name}
+              onChange={handleInputChange}
+              placeholder="Enter sector name here..."
+            />
           </Col>
         </Row>
-        <div className="sub-heading">Choose Industry</div>
         <Row className="modal__row">
           <Col span={11}>
-            <label>Select industry</label>
-            <Select
-              value={industries}
+            <label>Description</label>
+            <Input
               size="large"
-              showArrow
-              mode="multiple"
-              placeholder="Select industry from here..."
-              showSearch={false}
-              onChange={handleChange}
-            >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
-                </Option>
-              ))}
-              <Option value="button">
-                <div
-                  className="link"
-                  onMouseDown={() => console.log("Add new industry")}
-                >
-                  Add new industry
-                </div>
-              </Option>
-            </Select>
+              name="description"
+              value={sector.description || ""}
+              onChange={handleInputChange}
+              placeholder="Enter description here..."
+            />
           </Col>
         </Row>
       </>

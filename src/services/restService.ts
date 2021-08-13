@@ -1,12 +1,13 @@
 import { set, includes, isEmpty } from "lodash";
 
-import { loadToken, saveTokens } from "./storage";
+import { loadRefreshToken, loadToken, saveTokens } from "./storage";
 
 interface ITomService {
   url: string;
   method: string;
-  body: any;
+  body?: any;
   third_party?: boolean;
+  formData?: boolean;
 }
 
 interface IReqBody {
@@ -16,17 +17,37 @@ interface IReqBody {
 }
 
 const black_list = ["/login/"];
+
+const handleErrors = (
+  json: any,
+  url: string,
+  third_party: boolean | undefined
+) => {
+  if (!json.success) throw json;
+
+  if (includes(black_list, url)) {
+    const tokens = json?.json?.token;
+    saveTokens(tokens);
+  }
+  if (third_party) {
+    return {
+      data: json,
+    };
+  }
+  return { data: json?.data };
+};
+
 export const tomService =
   ({ baseUrl } = { baseUrl: "" }) =>
-  async ({ url, third_party, method, body }: ITomService) => {
+  async ({ url, third_party, method, body, formData }: ITomService) => {
     const headers = {};
 
     let path = third_party ? url : `${baseUrl}${url}`;
+    if (!formData) {
+      set(headers, "Accept", "application/json");
+      set(headers, "Content-Type", "application/json");
+    }
 
-    set(headers, "Accept", "application/json");
-    set(headers, "Content-Type", "application/json");
-
-    // @TODO: Implement Expiration of token
     let accessToken = loadToken();
 
     if (!includes(black_list, url) && accessToken && !third_party) {
@@ -40,25 +61,45 @@ export const tomService =
       headers,
     };
 
-    if (!isEmpty(body)) {
+    if (formData) {
+      reqBody.body = body;
+    }
+    if (body && !isEmpty(body) && !formData) {
+      console.log("body");
       reqBody.body = JSON.stringify(body);
     }
 
     try {
-      const res = await fetch(path, reqBody);
+      let res = await fetch(path, reqBody);
       const json = await res.json();
-      if (!json.success) throw json;
-
-      if (includes(black_list, url)) {
-        const tokens = json?.data?.token;
-        saveTokens(tokens);
+      console.log("JSON", json);
+      let refreshed = false;
+      if (json.code === 1002 && json.message === "Invalid Token") {
+        await new Promise(async (res, rej) => {
+          const refresh = loadRefreshToken();
+          if (refresh) {
+            const res = await fetch(`${baseUrl}/auth/refresh-token/`, {
+              method: "POST",
+              headers,
+              body: JSON.stringify({
+                refresh,
+              }),
+            });
+            const json = await res.json();
+            saveTokens({ access: json.data.access, refresh });
+            set(headers, "Authorization", `Bearer ${json.data.access}`);
+            refreshed = true;
+          }
+          res(true);
+        });
+        if (refreshed) {
+          let res = await fetch(path, reqBody);
+          let json = await res.json();
+          refreshed = false;
+          return handleErrors(json, url, third_party);
+        }
       }
-      if (third_party) {
-        return {
-          data: json,
-        };
-      }
-      return { data: json?.data };
+      return handleErrors(json, url, third_party);
     } catch (error) {
       let err = error;
       console.log("restService => TomService : error=", err);

@@ -11,33 +11,31 @@ export const authApi = createApi({
 
   endpoints: builder => ({
     login: builder.mutation({
-      query: data => {
-        return {
-          url: "/login/",
-          method: "POST",
-          body: data,
-        };
-      },
-    }),
-    resetPassword: builder.mutation({
       query: data => ({
-        url: "/forgot-password/",
+        url: "/login/",
         method: "POST",
         body: data,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: body => ({
+        url: "/forgot-password/",
+        method: "POST",
+        body,
       }),
     }),
     changePassword: builder.mutation({
-      query: data => ({
+      query: body => ({
         url: "/change-password/",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
     logout: builder.mutation({
-      query: data => ({
+      query: body => ({
         url: "/logout/",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
   }),

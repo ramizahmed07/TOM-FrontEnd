@@ -1,75 +1,121 @@
 import { useState } from "react";
-import { Col, Row, TableColumnsType } from "antd";
+import { Col, message, Row, TableColumnsType } from "antd";
+import { useHistory, useParams } from "react-router-dom";
 
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
 import Button from "@components/Button";
-
-const columns: TableColumnsType<TableRow> = [
-  {
-    title: "Id",
-    dataIndex: "id",
-    key: "id",
-    width: "7%",
-  },
-
-  {
-    title: "Industry",
-    dataIndex: "industry",
-    key: "industry",
-    width: "23%",
-  },
-  {
-    title: "Sub-Industry",
-    dataIndex: "subIndustry",
-    key: "subIndustry",
-    width: "55%",
-  },
-  {
-    title: "Actions",
-    key: "action",
-    fixed: "right",
-    width: "15%",
-    render: () => {
-      return (
-        <div>
-          <span className="table__action__btn">View</span>
-          <span className="table__action__btn">Edit</span>
-        </div>
-      );
-    },
-  },
-];
-
-type TableRow = {
-  id: string;
-  suBIndustry: string;
-  industry: string;
-};
-
-const data: TableRow[] = [
-  {
-    id: "01",
-    industry: "Energy Equipment & Services",
-    suBIndustry: "",
-  },
-  {
-    id: "02",
-    industry: "Energy Equipment & Services",
-    suBIndustry: "",
-  },
-  {
-    id: "03",
-    industry: "Energy Equipment & Services",
-    suBIndustry: "",
-  },
-];
+import { IIndustry, ISubIndustry } from "@store/sectors";
+import { useDeleteIndustryMutation, useFetchIndustriesQuery } from "@services";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useRef } from "react";
 
 const Industry = () => {
+  const history = useHistory();
+  let industry_id = useRef<any>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedIndustry, setSelectedIndustry] = useState<IIndustry | null>(
+    null
+  );
+  const { sector_id: id } = useParams<{ sector_id: string }>();
+  const { data, isLoading } = useFetchIndustriesQuery({ id });
+  const [deleteIndustry, { isLoading: isDeleting }] =
+    useDeleteIndustryMutation();
+
+  const onRowClick = (data: any) => {
+    history.push(`/sectors/${id}/${data?.id}`, { data: data?.sub_industries });
+  };
+
+  const editIndustry = (
+    industry: IIndustry,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    setSelectedIndustry(industry);
+    setIsVisible(true);
+  };
+
+  const handleDeleteIndustry = async (
+    id: number,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    industry_id.current = id;
+    try {
+      await deleteIndustry({ id });
+      message.success("Industry deleted successfully!");
+    } catch (error) {
+      message.error("Could not delete industry.");
+      console.log(error);
+    }
+  };
+
+  const columns: TableColumnsType<IIndustry> = [
+    {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+      width: "7%",
+    },
+
+    {
+      title: "Industry",
+      dataIndex: "name",
+      key: "industry",
+      width: "23%",
+    },
+    {
+      title: "Sub-Industry",
+      dataIndex: "sub_industries",
+      key: "subIndustry",
+      width: "55%",
+      render: sub_industries => {
+        const names = sub_industries?.map(
+          (sub_industry: ISubIndustry) => sub_industry.name
+        );
+        return <span>{names.join(", ")}</span>;
+      },
+    },
+    {
+      title: "Actions",
+      key: "action",
+      fixed: "right",
+      width: "15%",
+      render: industry => {
+        return (
+          <>
+            <div
+              onClick={event => editIndustry(industry, event)}
+              className="table__action__btn"
+            >
+              Edit
+            </div>
+            <div
+              onClick={event => handleDeleteIndustry(industry?.id, event)}
+              className="table__action__btn table__action__btn--delete"
+            >
+              {isDeleting && industry?.id === industry_id?.current ? (
+                <LoadingOutlined color="red" className="spinner" />
+              ) : (
+                "Delete"
+              )}
+            </div>
+          </>
+        );
+      },
+    },
+  ];
+
   return (
     <>
-      <AddIndustry isVisible={isVisible} setIsVisible={setIsVisible} />
+      {isVisible ? (
+        <AddIndustry
+          selectedIndustry={selectedIndustry}
+          setSelectedIndustry={setSelectedIndustry}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      ) : null}
       <Row>
         <Col span={16}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>
@@ -82,7 +128,12 @@ const Industry = () => {
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} />
+        <Table
+          onRowClick={onRowClick}
+          data={data}
+          columns={columns}
+          isLoading={isLoading}
+        />
       </Row>
     </>
   );
