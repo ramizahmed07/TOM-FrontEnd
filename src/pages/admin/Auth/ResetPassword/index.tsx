@@ -1,13 +1,38 @@
 import { useHistory } from "react-router";
-import { Col, Row, Typography, Form, Input, Button } from "antd";
+import { Col, Row, Typography, Form, Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import "../style.less";
 import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
+import { useChangePasswordMutation } from "@services";
 
 const ResetPassword = () => {
   const history = useHistory();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const changeUserPassword = async (values: {
+    password: string;
+    retypePassword: string;
+  }) => {
+    const { password, retypePassword } = values;
+    if (password !== retypePassword)
+      return message.error("Passwords should be same");
+    if (password.length < 8)
+      return message.error(
+        "This password is too short. It must contain at least 8 characters."
+      );
+
+    try {
+      await changePassword({
+        password,
+        token: window.location.href.split("?token=")[1],
+      }).unwrap();
+      history.push(Paths.Auth.login);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Row className="auth__container">
@@ -28,7 +53,7 @@ const ResetPassword = () => {
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
-            onFinish={() => {}}
+            onFinish={changeUserPassword}
             layout="vertical"
             className="auth__form"
           >
@@ -57,7 +82,7 @@ const ResetPassword = () => {
                   <label className="input__label">Re-type new password</label>
                 </div>
               }
-              name="retype-password"
+              name="retypePassword"
               rules={[
                 {
                   required: true,
@@ -77,11 +102,12 @@ const ResetPassword = () => {
                 htmlType="submit"
                 className="login__btn"
                 size="large"
-                onClick={() => {
-                  history.push(Paths.Auth.login);
-                }}
               >
-                Reset Password
+                {isLoading ? (
+                  <LoadingOutlined className="spinner" />
+                ) : (
+                  "Reset Password"
+                )}
               </Button>
             </Form.Item>
           </Form>

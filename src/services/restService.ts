@@ -34,7 +34,7 @@ const handleErrors = (
       data: json,
     };
   }
-  return { data: json?.data };
+  return { data: { data: json?.data, pagination: json?.pagination } };
 };
 
 export const tomService =

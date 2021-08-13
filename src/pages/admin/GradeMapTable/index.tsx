@@ -33,12 +33,14 @@ const GradeMapTable = () => {
   const { isLoading: isDownloading } = useDownloadGradeTableQuery(null, {
     skip: !download,
   });
-  const { data: taRanks, error } = useFetchTARanksQuery(null);
+  const { data: taRanksData, error } = useFetchTARanksQuery(null);
+  const { data: taRanks } = taRanksData || {};
   const {
-    data: companies,
+    data: companiesData,
     isLoading: isLoadingCompanies,
     error: companiesError,
   } = useFetchAllGradeCompaniesQuery(null);
+  const { data: companies } = companiesData || {};
 
   const handleTableCell = (e: any) => {
     const id = e.currentTarget.dataset.id;

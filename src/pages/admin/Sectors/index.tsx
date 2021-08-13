@@ -18,14 +18,16 @@ const Sectors = () => {
   const history = useHistory();
   const [download, setDownload] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [page, setPage] = useState(1);
   const [selectedSector, setSelectedSector] = useState<ISector | null>(null);
-  const { data, isLoading } = useFetchSectorsQuery(null);
+  const { data, isLoading } = useFetchSectorsQuery(page);
   const [deleteSector] = useDeleteSectorMutation();
   const [uploadSectors, { isLoading: isUploading }] =
     useUploadSectorsMutation();
   const { isLoading: isDownloading } = useDownloadSectorsQuery(null, {
     skip: !download,
   });
+  const { data: sectors, pagination } = data || {};
   const inputRef = useRef<any>(null);
 
   const onRowClick = (data: any) => {
@@ -182,9 +184,13 @@ const Sectors = () => {
       <Row>
         <Table
           onRowClick={onRowClick}
-          data={data}
+          data={sectors}
           columns={columns}
           isLoading={isLoading}
+          pagination={true}
+          count={pagination?.count}
+          onChangePage={setPage}
+          page={page}
         />
       </Row>
     </>

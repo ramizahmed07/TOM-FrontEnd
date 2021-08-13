@@ -42,10 +42,15 @@ const AddGradeCompany = () => {
     pathname.includes("edit") && state?.grade_company?.grade_company_ranks;
   const { allGradeCompanies, taRanks } = useTypedSelector(state => state.grade);
   const [companies, setCompanies] = useState<string[]>([]);
-  const { data: gradeClientCompanies, isLoading: isLoadingClientCompanies } =
-    useFetchGradeClientCompaniesQuery(null);
-  const { data: gradeCompanies, isLoading: isLoadingGradeCompanies } =
+  const {
+    data: gradeClientCompaniesData,
+    isLoading: isLoadingClientCompanies,
+  } = useFetchGradeClientCompaniesQuery(null);
+  const { data: gradeCompaniesData, isLoading: isLoadingGradeCompanies } =
     useFetchGradeCompaniesQuery(null);
+  const { data: gradeClientCompanies } = gradeClientCompaniesData || {};
+  const { data: gradeCompanies } = gradeCompaniesData || {};
+
   const [createGradeCompany, { isLoading: isCreating }] =
     useCreateGradeCompanyMutation();
   const [updateGradeCompany, { isLoading: isUpdating }] =

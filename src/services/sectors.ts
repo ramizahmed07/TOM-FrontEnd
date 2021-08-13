@@ -8,22 +8,32 @@ export const sectorsApi = createApi({
   baseQuery: tomService({
     baseUrl: `${baseUrl}`,
   }),
-  tagTypes: ["Sectors", "Industries"],
+  tagTypes: ["Sectors", "Industries", "Sub-Industries"],
   endpoints: builder => ({
     fetchSectors: builder.query({
-      query: () => ({
-        url: "/sectors/",
-        method: "GET",
-      }),
+      query: (page = 1) => {
+        return {
+          url: `/sectors/?page=${page}`,
+          method: "GET",
+        };
+      },
       providesTags: ["Sectors"],
     }),
     fetchIndustries: builder.query({
-      query: ({ id }) => ({
-        url: `/sector/${id}/industries/`,
+      query: ({ id, page = 1 }) => ({
+        url: `/sector/${id}/industries/?page=${page}`,
         method: "GET",
       }),
       providesTags: ["Industries"],
     }),
+    fetchSubIndustries: builder.query({
+      query: ({ id, page = 1 }) => ({
+        url: `/industry/${id}/sub-industries/?page=${page}`,
+        method: "GET",
+      }),
+      providesTags: ["Sub-Industries"],
+    }),
+
     createSector: builder.mutation({
       query: body => ({
         url: "/sector/",
@@ -66,7 +76,7 @@ export const sectorsApi = createApi({
         url: `/sub-industry/${id}/`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Industries"],
+      invalidatesTags: ["Sub-Industries"],
     }),
     updateSector: builder.mutation({
       query: body => ({
@@ -90,7 +100,7 @@ export const sectorsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["Industries"],
+      invalidatesTags: ["Sub-Industries"],
     }),
     uploadSectors: builder.mutation({
       query: body => ({
@@ -114,6 +124,7 @@ export const {
   useFetchSectorsQuery,
   useCreateSectorMutation,
   useFetchIndustriesQuery,
+  useFetchSubIndustriesQuery,
   useCreateIndustryMutation,
   useCreateSubIndustryMutation,
   useDeleteSectorMutation,

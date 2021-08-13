@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Col, Empty, Skeleton, Table as AntTable } from "antd";
+import { Col, Empty, Pagination, Skeleton, Table as AntTable } from "antd";
 
 import "./table.less";
 
@@ -7,17 +7,23 @@ interface ITable {
   data: any[];
   columns: any[];
   onRowClick?: (record: any) => any | void;
-  pagination?: any;
   locale?: any;
   isLoading?: boolean;
+  page?: number;
+  pagination?: boolean;
+  onChangePage?: React.Dispatch<React.SetStateAction<number>>;
+  count?: number;
 }
 
 const Table: FC<ITable> = ({
   columns,
   data,
   onRowClick,
-  pagination,
+  pagination = false,
   isLoading,
+  page = 1,
+  count = 10,
+  onChangePage,
 }) => {
   return (
     <Col span={24}>
@@ -29,7 +35,7 @@ const Table: FC<ITable> = ({
         scroll={{ x: 1300 }}
         columns={columns}
         dataSource={isLoading ? [] : data}
-        pagination={pagination}
+        pagination={false}
         rowKey="id"
         locale={{
           emptyText: isLoading ? (
@@ -43,6 +49,16 @@ const Table: FC<ITable> = ({
           ),
         }}
       />
+      {data?.length && pagination ? (
+        <div className="table__pagination">
+          <Pagination
+            onChange={onChangePage}
+            current={page}
+            defaultCurrent={1}
+            total={count}
+          />
+        </div>
+      ) : null}
     </Col>
   );
 };
