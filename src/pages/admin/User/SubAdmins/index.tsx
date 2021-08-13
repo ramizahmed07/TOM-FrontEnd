@@ -1,22 +1,22 @@
 import { useEffect, useRef } from "react";
 import {
-    Table,
     TableColumnsType,
     Switch,
-    Button,
     Input,
     message,
+    Row,
+    Col,
 } from "antd";
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { Paths } from "@/router";
+import Button from "@components/Button";
+import Table from "@components/Table";
 import { useGetSubAdminMutation, useSubAdminListMutation, useToggleSubAdminMutation } from "@/services/sub.admin";
 import { ICombineReducerProps } from "@/store";
 import { ISubAdminItem, ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
-import { LoadingOutlined } from "@ant-design/icons";
-import './style.less';
 
 const SubAdminsList = () => {
     let sub_admin_id = useRef<any>(null);
@@ -114,21 +114,27 @@ const SubAdminsList = () => {
 
     return (
         <>
-            <h1 className='page__heading'>Sub-Admins</h1>
+            <Row>
+                <Col span={24}>
+                    <div className="main-heading">Sub-Admins</div>
+                </Col>
+            </Row>
             <div className='header__container'>
-                <Input
+                <div />
+                {/* <Input
                     className="form__input"
                     type="email"
                     placeholder='Search by name or ID...'
                     prefix={<SearchOutlined style={{ color: '#435465' }} />}
-                />
-                <Button type="primary" onClick={() => history.push(Paths.Users.sub_admins.create_sub_admin)}><PlusOutlined /> Create sub admin</Button>
+                /> */}
+                <Col className="align-end" span={8}>
+                    <Button variant="add" onClick={() => history.push(Paths.Users.sub_admins.create_sub_admin)}>
+                        Create sub admin
+                    </Button>
+                </Col>
             </div>
-            <Table
-                scroll={{ x: 1300, y: "calc(100vh - 27.5em)" }}
-                columns={columns}
-                dataSource={subAdminReducer.list}
-            />
+
+            <Table data={subAdminReducer.list} columns={columns} />
         </>
     );
 };
