@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Input, message, Row, Select } from "antd";
 import { useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import "./addGradeCompany.less";
 import Table from "@components/Table";
@@ -36,7 +36,7 @@ const AddGradeCompany = () => {
   const { pathname, state } = useLocation<{
     grade_company: IGradeCompany;
   }>();
-
+  const history = useHistory();
   const isEdit =
     pathname.includes("edit") && state?.grade_company?.grade_company_ranks;
   const { allGradeCompanies, taRanks } = useTypedSelector(state => state.grade);
@@ -56,12 +56,14 @@ const AddGradeCompany = () => {
   const [newCompany, setNewCompany] = useState(() =>
     isEdit
       ? state?.grade_company?.grade_company_ranks?.map(
-          ({ rank, ta_rank_id }: IGradeCompanyRank) =>
-            !rank?.length ? null : { rank, ta_rank_id }
+          ({ rank, ta_rank_id }: IGradeCompanyRank) => ({
+            rank: !rank?.length ? null : rank,
+            ta_rank_id,
+          })
         )
-      : Array(taRanks?.length).fill(null)
+      : taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null }))
   );
-
+  console.log("newCompany", newCompany);
   const additional_cols: any = useMemo(() => {
     return (
       allGradeCompanies?.map((company: IGradeCompany) => ({
@@ -121,14 +123,11 @@ const AddGradeCompany = () => {
             <Input
               className="table__input"
               size="middle"
-              value={newCompany[item?.rank - 1]?.rank}
+              value={newCompany[item?.rank - 1]?.rank || ""}
               onChange={e =>
-                setNewCompany(prev => {
+                setNewCompany((prev: any) => {
                   const arr = [...prev];
-                  arr[item?.rank - 1] = {
-                    ta_rank_id: item?.rank,
-                    rank: e.target.value,
-                  };
+                  arr[item?.rank - 1].rank = e.target.value;
                   return arr;
                 })
               }
@@ -146,6 +145,11 @@ const AddGradeCompany = () => {
   };
 
   const addGrade = () => {};
+
+  const onCancel = () => {
+    setInitialState();
+    history.goBack();
+  };
 
   const handleSubmit = async () => {
     try {
@@ -174,8 +178,7 @@ const AddGradeCompany = () => {
       company_id,
       grades: newCompany,
     });
-    setNewCompany(Array(taRanks?.length).fill(null));
-    setCompanyName("");
+    setInitialState();
   };
 
   const editGradeCompany = async () =>
@@ -184,6 +187,11 @@ const AddGradeCompany = () => {
       grades: newCompany,
     });
 
+  const setInitialState = () => {
+    setNewCompany(taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null })));
+    setCompanyName("");
+  };
+  console.log("newCompany", newCompany);
   return (
     <>
       <Row>
@@ -269,10 +277,7 @@ const AddGradeCompany = () => {
       </div>
       <div className="addGradeCompany__buttons">
         <Button
-          disabled={
-            (!isEdit && newCompany.some(x => !x || !x?.rank?.length)) ||
-            (!isEdit && !companyName.length)
-          }
+          disabled={!isEdit && !companyName.length}
           onClick={handleSubmit}
           type="primary"
         >
@@ -282,7 +287,7 @@ const AddGradeCompany = () => {
             `${isEdit ? "Update" : "Add"} Grade Company`
           )}
         </Button>
-        <Button>Cancel</Button>
+        <Button onClick={onCancel}>Cancel</Button>
       </div>
     </>
   );

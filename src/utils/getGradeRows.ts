@@ -8,14 +8,13 @@ export const getRows = (taRanks: ITARank[], companies: IGradeCompany[]) => {
     companies_ranks[current.name.replace(" ", "")] =
       current.grade_company_ranks;
   }
-
   for (let i = 0; i < taRanks?.length; i++) {
     const rank = taRanks[i];
     let row: any = {
       rank: rank.rank,
     };
     Object.keys(companies_ranks).forEach(key => {
-      const company_ranks = companies_ranks[key].slice().reverse();
+      const company_ranks = companies_ranks[key];
       row[key] = company_ranks[i].rank;
     });
     data.push(row);

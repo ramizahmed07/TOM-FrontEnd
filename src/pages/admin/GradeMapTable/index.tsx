@@ -2,6 +2,7 @@ import { Col, message, Row } from "antd";
 import { useHistory } from "react-router";
 import { useRef, useState } from "react";
 
+import "./gradeMapTable.less";
 import Table from "@components/Table";
 import Button from "@components/Button";
 import {
@@ -48,9 +49,7 @@ const GradeMapTable = () => {
     history.push(Paths.Settings.grade_map_table.edit_grade_company, {
       grade_company: {
         ...grade_company,
-        grade_company_ranks: grade_company?.grade_company_ranks
-          .slice()
-          .reverse(),
+        grade_company_ranks: grade_company?.grade_company_ranks,
       },
     });
   };
@@ -59,13 +58,17 @@ const GradeMapTable = () => {
     (!error &&
       companies?.map((company: IGradeCompany) => ({
         title: (
-          <div data-id={company.id} onClick={handleTableCell}>
+          <div
+            className="grade__header__row__btn"
+            data-id={company.id}
+            onClick={handleTableCell}
+          >
             {company.name}
           </div>
         ),
         dataIndex: company.name.replace(" ", ""),
         key: company.id,
-        width: "15%",
+        width: 300,
       }))) ||
     [];
   const columns = [...default_cols, ...additional_cols];
@@ -131,7 +134,7 @@ const GradeMapTable = () => {
           </Button>
         </Col>
       </Row>
-      <Row>
+      <Row className="pb-16">
         <Table
           data={rows}
           columns={columns}
