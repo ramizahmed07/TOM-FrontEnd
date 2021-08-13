@@ -11,10 +11,12 @@ export const sectorsApi = createApi({
   tagTypes: ["Sectors", "Industries"],
   endpoints: builder => ({
     fetchSectors: builder.query({
-      query: () => ({
-        url: "/sectors/",
-        method: "GET",
-      }),
+      query: (page = 1) => {
+        return {
+          url: `/sectors/?page=${page}`,
+          method: "GET",
+        };
+      },
       providesTags: ["Sectors"],
     }),
     fetchIndustries: builder.query({
