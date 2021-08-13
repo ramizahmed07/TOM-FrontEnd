@@ -113,11 +113,13 @@ export const routeConfig: IRoute[] = [
     key: "List sub admins",
     breadcrumb: "Users / Sub admins",
     exact: true,
+    isPrivate: true,
   },
   {
     path: Paths.Users.sub_admins.create,
     component: SubAdminsCreate,
     key: "Add new sub admin",
     breadcrumb: "Users / Sub admins / Add new sub admin",
+    isPrivate: true,
   },
 ];
