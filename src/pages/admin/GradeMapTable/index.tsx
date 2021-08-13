@@ -17,10 +17,10 @@ import { Paths } from "@router";
 
 const default_cols = [
   {
-    title: "ta rank",
+    title: <div className="grade__header__taRank">ta rank</div>,
     dataIndex: "rank",
     key: "taRank",
-    width: "10%",
+    width: 300,
   },
 ];
 
@@ -59,7 +59,7 @@ const GradeMapTable = () => {
       companies?.map((company: IGradeCompany) => ({
         title: (
           <div
-            className="grade__header__row__btn"
+            className="grade__header__row__btn grade__header__taRank"
             data-id={company.id}
             onClick={handleTableCell}
           >
