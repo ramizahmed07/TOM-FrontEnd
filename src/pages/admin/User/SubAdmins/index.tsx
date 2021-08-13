@@ -17,6 +17,7 @@ import Table from "@components/Table";
 import { useGetSubAdminMutation, useSubAdminListMutation, useToggleSubAdminMutation } from "@/services/sub.admin";
 import { ICombineReducerProps } from "@/store";
 import { ISubAdminItem, ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
+import { ErrorServices } from "@/services";
 
 const SubAdminsList = () => {
     let sub_admin_id = useRef<any>(null);
@@ -84,30 +85,30 @@ const SubAdminsList = () => {
 
     const getAdminListFromApi = async () => {
         try {
-            await getSubAdminList('');
+            await getSubAdminList('').unwrap();
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     }
 
     const toggleSubAdminFromApi = async (id: string, name: string, is_active: boolean) => {
         const isUserActive = is_active ? 'active' : 'inactive';
         try {
-            await toggleSubAdmin({ id, is_active });
+            await toggleSubAdmin({ id, is_active }).unwrap();
             getAdminListFromApi();
             message.success(`${name} has been successfully ${isUserActive}`);
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     }
 
     const onEditSubAdmin = async (id: string) => {
         sub_admin_id.current = id;
         try {
-            await getSubAdmin(id);
+            await getSubAdmin(id).unwrap();
             history.push(`/sub-admins/edit/${id}`);
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     }
 

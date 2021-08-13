@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import "../style.less";
 import "./forgotPassword.less";
-import { useResetPasswordMutation } from "@services";
+import { ErrorServices, useResetPasswordMutation } from "@services";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
 
@@ -57,6 +57,7 @@ const SendLinkView = ({
       message.success("Reset password link sent on your email");
       setIsEmailSent(true);
     } catch (error) {
+      ErrorServices(error);
       setHasError(true);
       form.setFields([
         {
@@ -111,9 +112,9 @@ const SendLinkView = ({
             htmlType="submit"
             className="login__btn"
             size="large"
-            // onClick={() => {
-            //   history.push(RoutePaths.Auth.login);
-            // }}
+          // onClick={() => {
+          //   history.push(RoutePaths.Auth.login);
+          // }}
           >
             Send link{" "}
             {isLoading ? (
@@ -139,47 +140,49 @@ const ResendLinkView = ({ sendLink, email }: IProps) => {
       message.success("Reset password link sent on your email");
       setKey(prev => prev + 1);
       setDisabled(true);
-    } catch (error) {
-      message.error("Could not send reset password link");
     }
-  };
+    catch (error) {
+      ErrorServices(error);
+    }
+  }
+};
 
-  return (
-    <div className="resend-link-container">
-      <Typography.Paragraph className="auth__form_title">
-        Check your <span className="auth__company__name">Email?</span>
-      </Typography.Paragraph>
+return (
+  <div className="resend-link-container">
+    <Typography.Paragraph className="auth__form_title">
+      Check your <span className="auth__company__name">Email?</span>
+    </Typography.Paragraph>
+    <Typography.Paragraph className="auth__form__prompt">
+      Kindly check your email! We have sent you a link to reset your password.
+    </Typography.Paragraph>
+
+    <div className="timer-container">
+      <Countdown
+        key={key}
+        onComplete={() => {
+          setDisabled(false);
+        }}
+        date={Date.now() + 60_000}
+        renderer={Timer}
+      />
+
       <Typography.Paragraph className="auth__form__prompt">
-        Kindly check your email! We have sent you a link to reset your password.
+        Didn’t receive email yet?
       </Typography.Paragraph>
-
-      <div className="timer-container">
-        <Countdown
-          key={key}
-          onComplete={() => {
-            setDisabled(false);
-          }}
-          date={Date.now() + 60_000}
-          renderer={Timer}
-        />
-
-        <Typography.Paragraph className="auth__form__prompt">
-          Didn’t receive email yet?
-        </Typography.Paragraph>
-      </div>
-
-      <Button
-        type="primary"
-        htmlType="submit"
-        className="login__btn"
-        size="large"
-        disabled={disabled}
-        onClick={resendLink}
-      >
-        Resend link <ArrowRightOutlined />
-      </Button>
     </div>
-  );
+
+    <Button
+      type="primary"
+      htmlType="submit"
+      className="login__btn"
+      size="large"
+      disabled={disabled}
+      onClick={resendLink}
+    >
+      Resend link <ArrowRightOutlined />
+    </Button>
+  </div>
+);
 };
 
 const ForgotPassword = () => {

@@ -3,7 +3,7 @@ import { Button, Col, Input, Row } from "antd";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { useAddJFMutation, useListMutation } from "@/services";
+import { ErrorServices, useAddJFMutation, useListMutation } from "@/services";
 
 const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [getJFList] = useListMutation();
@@ -13,10 +13,10 @@ const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const onSubmit = async () => {
     try {
       await addJF({ name: jobFunction }).unwrap();
-      await getJFList('');
+      await getJFList('').unwrap();
       closeModal();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      ErrorServices(error);
     }
   };
 

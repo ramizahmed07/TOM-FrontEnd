@@ -13,6 +13,7 @@ import en from "world_countries_lists/data/en/world.json";
 import "./style.less";
 import { useAddSubAdminMutation } from "@/services/sub.admin";
 import { useHistory } from "react-router-dom";
+import { ErrorServices } from "@/services";
 
 const SubAdminsCreate = () => {
   let subAdminForm = useRef<any>(null);
@@ -21,16 +22,15 @@ const SubAdminsCreate = () => {
 
   const onSubmit = async (payload: any) => {
     try {
-      // payload.phone_number = `+${payload.contact_number.code}${payload.contact_number.phone}`
       payload.phone_code = payload.contact_number.code;
       payload.phone_number = payload.contact_number.phone;
       delete payload.contact_number;
-      await addSubAdmin(payload);
+      await addSubAdmin(payload).unwrap();
       subAdminForm.current.resetFields();
       message.success('Sub Admin has been successfully created.');
       history.goBack();
     } catch (error) {
-      message.error(error?.message);
+      ErrorServices(error);
     }
   }
 

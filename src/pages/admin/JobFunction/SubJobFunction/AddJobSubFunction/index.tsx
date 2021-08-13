@@ -3,7 +3,7 @@ import { Button, Col, Input, Row } from "antd";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { useAddJFMutation, useAddJSFMutation, useListMutation } from "@/services";
+import { ErrorServices, useAddJFMutation, useAddJSFMutation, useListMutation } from "@/services";
 export interface IAddJobSubFunction extends IModal {
     job_function_id: string | number;
     updateList: () => void;
@@ -16,11 +16,11 @@ const AddJobSubFunction: FC<IAddJobSubFunction> = ({ isVisible, setIsVisible, jo
     const onSubmit = async () => {
         try {
             await addJSF({ name: jobFunction, job_function_id }).unwrap();
-            await getJFList('');
+            await getJFList('').unwrap();
             updateList();
             closeModal();
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            ErrorServices(error);
         }
     };
 

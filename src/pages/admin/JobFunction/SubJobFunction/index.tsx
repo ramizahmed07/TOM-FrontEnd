@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { useDeleteJFMutation, useDeleteJSFMutation, useGetJFMutation, useGetJSFMutation, useListMutation, useSjfListMutation } from "@services";
+import { ErrorServices, useDeleteJFMutation, useDeleteJSFMutation, useGetJFMutation, useGetJSFMutation, useListMutation, useSjfListMutation } from "@services";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import { Paths } from "@/router";
@@ -40,10 +40,10 @@ const SubJobFunction = () => {
 
     const updateListData = async () => {
         try {
-            await getJF(id);
+            await getJF(id).unwrap();
             message.success("List has been successfully fetched");
         } catch (error) {
-            message.error(error?.message);
+            ErrorServices(error);
         }
     }
 
@@ -100,27 +100,31 @@ const SubJobFunction = () => {
 
     const onEditJSf = async (id: string) => {
         jsf_id.current = id;
-        await getJSF(id);
-        setEditJSFId(id);
-        setIsEditJSFVisible(true);
+        try {
+            await getJSF(id).unwrap;
+            setEditJSFId(id);
+            setIsEditJSFVisible(true);
+        } catch (error) {
+            ErrorServices(error);
+        }
     }
 
     const getSJFListFromApi = async () => {
         try {
-            await getSJFList('');
-        } catch (e) {
-            console.log('Err: ', e);
+            await getSJFList('').unwrap();
+        } catch (error) {
+            ErrorServices(error);
         }
     }
 
     const deleteJSFromApi = async (id: string) => {
         try {
             jsf_id.current = id;
-            await deleteJSF(id);
+            await deleteJSF(id).unwrap();
             getSJFListFromApi();
             updateListData();
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            ErrorServices(error);
         }
     }
 
