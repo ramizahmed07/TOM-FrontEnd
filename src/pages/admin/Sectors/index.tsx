@@ -7,14 +7,12 @@ import Table from "@components/Table";
 import AddSector from "./AddSector";
 import Button from "@components/Button";
 import {
-  loadToken,
   useDeleteSectorMutation,
   useDownloadSectorsQuery,
   useFetchSectorsQuery,
   useUploadSectorsMutation,
 } from "@services";
 import { IIndustry, ISector } from "@store/sectors";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const Sectors = () => {
   const history = useHistory();
@@ -25,14 +23,10 @@ const Sectors = () => {
   const [deleteSector] = useDeleteSectorMutation();
   const [uploadSectors, { isLoading: isUploading }] =
     useUploadSectorsMutation();
-  const {
-    data: sectors_csv,
-    isLoading: isDownloading,
-    error,
-  } = useDownloadSectorsQuery(null, { skip: !download });
+  const { isLoading: isDownloading } = useDownloadSectorsQuery(null, {
+    skip: !download,
+  });
   const inputRef = useRef<any>(null);
-
-  console.log({ sectors_csv, isDownloading, error });
 
   const onRowClick = (data: any) => {
     history.push(`/sectors/${data?.id}`);
@@ -139,7 +133,6 @@ const Sectors = () => {
       },
     },
   ];
-  console.log({ inputRef });
   return (
     <>
       {isVisible ? (
@@ -162,15 +155,21 @@ const Sectors = () => {
             id="myInput"
             type="file"
             ref={inputRef}
-            // style={{ display: "none" }}
             hidden={true}
             onChange={uploadFile}
           />
-          <Button variant="upload" onClick={() => inputRef?.current?.click()}>
-            Upload Sectors{" "}
-            {/* <LoadingOutlined color="white" className="spinner-md" /> */}
+          <Button
+            isLoading={isUploading}
+            variant="upload"
+            onClick={() => inputRef?.current?.click()}
+          >
+            Upload Sectors
           </Button>
-          <Button variant="download" onClick={() => setDownload(true)}>
+          <Button
+            isLoading={isDownloading}
+            variant="download"
+            onClick={() => setDownload(true)}
+          >
             Download Sectors
           </Button>
         </Col>

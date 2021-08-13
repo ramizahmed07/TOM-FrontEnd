@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Col, Empty, Skeleton, Table as AntTable, TableProps } from "antd";
+import { Col, Empty, Skeleton, Table as AntTable } from "antd";
 
 import "./table.less";
 
@@ -23,12 +23,12 @@ const Table: FC<ITable> = ({
     <Col span={24}>
       <AntTable
         onRow={(record: any) => ({
-          onClick: () => onRowClick && onRowClick(record),
+          onClick: e => onRowClick && onRowClick(record),
         })}
         className="table"
         scroll={{ x: 1300 }}
         columns={columns}
-        dataSource={data}
+        dataSource={isLoading ? [] : data}
         pagination={pagination}
         rowKey="id"
         locale={{

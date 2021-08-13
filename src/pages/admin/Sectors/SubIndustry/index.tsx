@@ -1,12 +1,12 @@
+import { useLocation } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Col, message, Row, TableColumnsType } from "antd";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
 import { ISubIndustry } from "@store/sectors";
-import { useLocation } from "react-router-dom";
 import AddSubIndustry from "./AddSubIndustry";
-import { useDeleteSectorMutation } from "@/services";
+import { useDeleteSubIndustryMutation } from "@services";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const SubIndustry = () => {
@@ -18,7 +18,7 @@ const SubIndustry = () => {
     state: { data },
   } = useLocation<{ data: ISubIndustry[] }>();
   const [deleteSubIndustry, { isLoading: isDeleting }] =
-    useDeleteSectorMutation();
+    useDeleteSubIndustryMutation();
 
   const editSubIndustry = (
     sub_industry: ISubIndustry,
@@ -96,12 +96,15 @@ const SubIndustry = () => {
 
   return (
     <>
-      <AddSubIndustry
-        selectedSubIndustry={selectedSubIndustry}
-        setSelectedSubIndustry={setSelectedSubIndustry}
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-      />
+      {isVisible ? (
+        <AddSubIndustry
+          selectedSubIndustry={selectedSubIndustry}
+          setSelectedSubIndustry={setSelectedSubIndustry}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      ) : null}
+
       <Row>
         <Col span={16}>
           <div className="main-heading">Sectors, Industry & Sub-Industry</div>

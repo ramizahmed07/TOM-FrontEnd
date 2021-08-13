@@ -1,99 +1,100 @@
-import { Col, Row, TableColumnsType } from "antd";
+import { Col, message, Row } from "antd";
 import { useHistory } from "react-router";
+import { useRef, useState } from "react";
 
+import "./gradeMapTable.less";
 import Table from "@components/Table";
 import Button from "@components/Button";
+import {
+  useDownloadGradeTableQuery,
+  useFetchAllGradeCompaniesQuery,
+  useFetchTARanksQuery,
+  useUploadGradeTableMutation,
+} from "@services";
+import { IGradeCompany } from "@store/grade";
+import { getRows } from "@utils";
+import { Paths } from "@router";
 
-const columns: TableColumnsType<TableRow> = [
+const default_cols = [
   {
-    title: "tc rank",
-    dataIndex: "tcRank",
-    key: "tcRank",
-    width: "13%",
-  },
-  {
-    title: "hrbs",
-    dataIndex: "hrbs",
-    key: "hrbs",
-    width: "13%",
-  },
-  {
-    title: "mercer pc",
-    dataIndex: "mercerPc",
-    key: "mercerPc",
-    width: "13%",
-  },
-  {
-    title: "mercer cl",
-    dataIndex: "mercerCl",
-    key: "mercerCl",
-    width: "13%",
-  },
-  {
-    title: "tw grade",
-    dataIndex: "twGrade",
-    key: "twGrade",
-    // width: ,
-  },
-];
-
-type TableRow = {
-  id: string;
-  tcRank: string;
-  hrbs: string;
-  mercerPc: string;
-  mercerCl: string;
-  twGrade: string;
-};
-
-const data: TableRow[] = [
-  {
-    id: "01",
-    tcRank: "01",
-    hrbs: "12",
-    mercerPc: "-",
-    mercerCl: "14",
-    twGrade: "11",
-  },
-  {
-    id: "02",
-    tcRank: "02",
-    hrbs: "27",
-    mercerPc: "-",
-    mercerCl: "27",
-    twGrade: "17",
-  },
-  {
-    id: "03",
-    tcRank: "03",
-    hrbs: "38",
-    mercerPc: "27",
-    mercerCl: "38",
-    twGrade: "31",
-  },
-  {
-    id: "04",
-    tcRank: "04",
-    hrbs: "40",
-    mercerPc: "27",
-    mercerCl: "12",
-    twGrade: "35",
-  },
-  {
-    id: "05",
-    tcRank: "05",
-    hrbs: "20",
-    mercerPc: "37",
-    mercerCl: "42",
-    twGrade: "15",
+    title: <div className="grade__header__taRank">ta rank</div>,
+    dataIndex: "rank",
+    key: "taRank",
+    width: 300,
   },
 ];
 
 const GradeMapTable = () => {
   const history = useHistory();
+  const inputRef = useRef<any>(null);
+  const [download, setDownload] = useState(false);
+  const [uploadGradeTable, { isLoading: isUploading }] =
+    useUploadGradeTableMutation();
+  const { isLoading: isDownloading } = useDownloadGradeTableQuery(null, {
+    skip: !download,
+  });
+  const { data: taRanks, error } = useFetchTARanksQuery(null);
+  const {
+    data: companies,
+    isLoading: isLoadingCompanies,
+    error: companiesError,
+  } = useFetchAllGradeCompaniesQuery(null);
+
+  const handleTableCell = (e: any) => {
+    const id = e.currentTarget.dataset.id;
+    const grade_company = companies.find(
+      (company: IGradeCompany) => +company?.id === +id
+    );
+
+    history.push(Paths.Settings.grade_map_table.edit_grade_company, {
+      grade_company: {
+        ...grade_company,
+        grade_company_ranks: grade_company?.grade_company_ranks,
+      },
+    });
+  };
+
+  const additional_cols: any =
+    (!error &&
+      companies?.map((company: IGradeCompany) => ({
+        title: (
+          <div
+            className="grade__header__row__btn grade__header__taRank"
+            data-id={company.id}
+            onClick={handleTableCell}
+          >
+            {company.name}
+          </div>
+        ),
+        dataIndex: company.name.replace(" ", ""),
+        key: company.id,
+        width: 300,
+      }))) ||
+    [];
+  const columns = [...default_cols, ...additional_cols];
+
+  const rows =
+    !error && !companiesError && companies?.length && taRanks?.length
+      ? getRows(taRanks, companies)
+      : [];
 
   const handleAddBtn = () => {
-    history.push(`/grade-map-table/create-grade-company`);
+    history.push(Paths.Settings.grade_map_table.create_grade_company);
+  };
+
+  const uploadFile = async (event: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+    var file = event?.target?.files[0];
+    try {
+      const formData = new FormData();
+      formData.append("attachment", file, file.name);
+      await uploadGradeTable(formData).unwrap();
+      message.success("CSV Data Uploaded Successfully");
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
   };
 
   return (
@@ -105,15 +106,24 @@ const GradeMapTable = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
+          <input
+            id="myInput"
+            type="file"
+            ref={inputRef}
+            hidden={true}
+            onChange={uploadFile}
+          />
           <Button
+            isLoading={isUploading}
             variant="upload"
-            onClick={() => console.log("upload job function")}
+            onClick={() => inputRef?.current?.click()}
           >
             Upload Grade Map
           </Button>
           <Button
             variant="download"
-            onClick={() => console.log("Download Job Functions")}
+            onClick={() => setDownload(true)}
+            isLoading={isDownloading}
           >
             Download Grade Map
           </Button>
@@ -124,8 +134,13 @@ const GradeMapTable = () => {
           </Button>
         </Col>
       </Row>
-      <Row>
-        <Table data={data} columns={columns} />
+      <Row className="pb-16">
+        <Table
+          data={rows}
+          columns={columns}
+          pagination={false}
+          isLoading={isLoadingCompanies}
+        />
       </Row>
     </>
   );

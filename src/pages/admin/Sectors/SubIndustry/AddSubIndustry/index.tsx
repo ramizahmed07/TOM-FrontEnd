@@ -79,7 +79,10 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
     }).unwrap();
 
   const editSubIndustry = async () =>
-    await updateSubIndustry(subIndustry).unwrap();
+    await updateSubIndustry({
+      ...subIndustry,
+      industry_id: +industry_id,
+    }).unwrap();
 
   return (
     <Modal
@@ -115,18 +118,6 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
               value={subIndustry.name}
               onChange={handleInputChange}
               placeholder="Enter sub-industry name here..."
-            />
-          </Col>
-        </Row>
-        <Row className="modal__row">
-          <Col span={11}>
-            <label>Description</label>
-            <Input
-              size="large"
-              name="description"
-              value={subIndustry.description || ""}
-              onChange={handleInputChange}
-              placeholder="Enter description here..."
             />
           </Col>
         </Row>

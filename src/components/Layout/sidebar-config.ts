@@ -38,11 +38,6 @@ const config: Array<Config> = [
     ],
     sub: [
       {
-        title: "Companies",
-        icon: CompaniesIcon,
-        path: companies.listing,
-      },
-      {
         title: "Sub-Admins",
         icon: SubAdminIcon,
         path: sub_admins.listing,

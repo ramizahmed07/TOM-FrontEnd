@@ -94,6 +94,13 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
+    path: Paths.Settings.grade_map_table.edit_grade_company,
+    component: AddGradeCompany,
+    key: "Add new Company",
+    breadcrumb: "Settings / Grade map table / Edit new company",
+    isPrivate: true,
+  },
+  {
     path: Paths.Dashboard.dashboard,
     component: "Dashboard",
     key: "Dashboard",
@@ -106,11 +113,13 @@ export const routeConfig: IRoute[] = [
     key: "List sub admins",
     breadcrumb: "Users / Sub admins",
     exact: true,
+    isPrivate: true,
   },
   {
     path: Paths.Users.sub_admins.create,
     component: SubAdminsCreate,
     key: "Add new sub admin",
     breadcrumb: "Users / Sub admins / Add new sub admin",
+    isPrivate: true,
   },
 ];

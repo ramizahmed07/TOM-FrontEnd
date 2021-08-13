@@ -1,78 +1,193 @@
-import { Col, Input, Row, Select } from "antd";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Button, Col, Input, message, Row, Select } from "antd";
 import { useMemo, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import "./addGradeCompany.less";
 import Table from "@components/Table";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import {
-  columns,
-  COMPANIES,
-  data,
-  ICompany,
-  CompanyName,
-  IData,
-} from "./config";
+  useCreateGradeCompanyMutation,
+  useFetchGradeClientCompaniesQuery,
+  useFetchGradeCompaniesQuery,
+  useUpdateGradeCompanyMutation,
+} from "@services";
+import { useTypedSelector } from "@hooks";
+import {
+  IGradeClientCompany,
+  IGradeCompany,
+  IGradeCompanyRank,
+} from "@store/grade";
+import { getRows, showSuccessPopup } from "@utils";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Paths } from "@/router";
 
 const { Option } = Select;
 
-const AddGradeCompany = () => {
-  const [companies, setCompanies] = useState<CompanyName[]>([
-    "hrbs",
-    "mercerCl",
-  ]);
-  const [companyName, setCompanyName] = useState<string>("");
-  // const [companyCol, setCompanyCol] = useState(Array(data.length).fill(""));
-  const [tableData, setTableData] = useState<Partial<IData>[]>(data);
+const default_cols = [
+  {
+    title: "ta rank",
+    dataIndex: "rank",
+    key: "taRank",
+    width: "10%",
+  },
+];
 
+const AddGradeCompany = () => {
+  const { pathname, state } = useLocation<{
+    grade_company: IGradeCompany;
+  }>();
+  const history = useHistory();
+  const isEdit =
+    pathname.includes("edit") && state?.grade_company?.grade_company_ranks;
+  const { allGradeCompanies, taRanks } = useTypedSelector(state => state.grade);
+  const [companies, setCompanies] = useState<string[]>([]);
+  const { data: gradeClientCompanies, isLoading: isLoadingClientCompanies } =
+    useFetchGradeClientCompaniesQuery(null);
+  const { data: gradeCompanies, isLoading: isLoadingGradeCompanies } =
+    useFetchGradeCompaniesQuery(null);
+  const [createGradeCompany, { isLoading: isCreating }] =
+    useCreateGradeCompanyMutation();
+  const [updateGradeCompany, { isLoading: isUpdating }] =
+    useUpdateGradeCompanyMutation();
+
+  const [companyName, setCompanyName] = useState<string>(
+    isEdit ? state?.grade_company?.name : ""
+  );
+  const [newCompany, setNewCompany] = useState(() =>
+    isEdit
+      ? state?.grade_company?.grade_company_ranks?.map(
+          ({ rank, ta_rank_id }: IGradeCompanyRank) => ({
+            rank: !rank?.length ? null : rank,
+            ta_rank_id,
+          })
+        )
+      : taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null }))
+  );
+
+  const additional_cols: any = useMemo(() => {
+    return (
+      allGradeCompanies?.map((company: IGradeCompany) => ({
+        title: company.name,
+        dataIndex: company.name.replace(" ", ""),
+        key: company.id,
+        width: "10%",
+      })) || []
+    );
+  }, [allGradeCompanies]);
+  const columns = [...default_cols, ...additional_cols];
+
+  const rows = getRows(taRanks, allGradeCompanies) || [];
+
+  /**
+   * @TODO = DELETE GRADE COMPANY
+   */
   /**
    * The purpose below is to show/hide and sort the columns
    * it relies on companies dropdown
    */
-
   const cols = useMemo(() => {
-    return columns
-      .filter(
-        column =>
-          companies.includes(column.dataIndex as CompanyName) ||
-          column.dataIndex === "name"
-      )
-      .sort(function (a, b) {
-        if (a.dataIndex === "name") return 1;
-        return (
-          companies.indexOf(a.dataIndex) -
-          companies.indexOf(b.dataIndex as CompanyName)
-        );
-      });
-  }, [companies]);
+    const cols = [
+      ...columns
+        .filter(
+          column =>
+            companies.includes(column.title) || column.dataIndex === "rank"
+        )
+        .slice()
+        .sort(function (a, b) {
+          if (a.dataIndex === "name") return 1;
+          return (
+            companies.indexOf(a.dataIndex) - companies.indexOf(b.dataIndex)
+          );
+        }),
+      {
+        title: companyName || "Name here...",
+        dataIndex: "name",
+        key: "name",
+        width: 50,
 
-  const handleDropdown = (value: CompanyName[]) => {
+        render: (_: any, item: any) => {
+          return (
+            <Input
+              className="table__input"
+              size="middle"
+              value={newCompany[item?.rank - 1]?.rank || ""}
+              onChange={e =>
+                setNewCompany((prev: any) => {
+                  const arr = [...prev];
+                  arr[item?.rank - 1].rank = e.target.value;
+                  return arr;
+                })
+              }
+              placeholder="Enter grade here..."
+            />
+          );
+        },
+      },
+    ];
+    return cols;
+  }, [companies, columns]);
+
+  const handleDropdown = (value: string[]) => {
     setCompanies(value);
-
-    setTableData(
-      data.map(item => {
-        const obj: Partial<Record<CompanyName, string>> = {};
-        value.forEach((x: CompanyName) => (obj[x] = item[x]));
-        return obj;
-      })
-    );
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCompanyName(e.target.value);
+  const addGrade = () => {};
+
+  const onCancel = () => {
+    setInitialState();
+    history.goBack();
   };
 
-  const addGrade = () => {
-    setTableData(prev => [
-      ...prev,
-      { id: Math.floor(Math.random() * 100).toString() },
-    ]);
+  const handleSubmit = async () => {
+    try {
+      if (isEdit) {
+        await editGradeCompany();
+      } else {
+        await addGradeCompany();
+      }
+      showSuccessPopup({
+        title: isEdit ? "Grade Company Updated" : "New Grade Company Added",
+        desc: `You have successfully ${
+          isEdit ? "updated the" : "added new"
+        } grade company`,
+        onClick: () => history.push(Paths.Settings.grade_map_table.listing),
+      });
+    } catch (error) {
+      message.success(error?.message);
+      console.log(error);
+    }
   };
 
+  const addGradeCompany = async () => {
+    const company_id = gradeClientCompanies.find(
+      (company: IGradeClientCompany) => company.name === companyName
+    ).id;
+    await createGradeCompany({
+      company_id,
+      grades: newCompany,
+    });
+    setInitialState();
+  };
+
+  const editGradeCompany = async () =>
+    await updateGradeCompany({
+      id: state?.grade_company?.id,
+      grades: newCompany,
+    });
+
+  const setInitialState = () => {
+    setNewCompany(taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null })));
+    setCompanyName("");
+  };
+  console.log("newCompany", newCompany);
   return (
     <>
       <Row>
         <Col span={24}>
-          <div className="main-heading mb-16">Add new company</div>
+          <div className="main-heading mb-16">
+            {isEdit ? "Update company" : "Add new company"}
+          </div>
         </Col>
       </Row>
       <div className="addGradeCompany">
@@ -82,48 +197,62 @@ const AddGradeCompany = () => {
         <Row justify="space-between" className="addGradeCompany__fields">
           <Col span={9}>
             <label>Company name</label>
-            <Input
-              value={companyName as string}
-              onChange={handleInput}
-              placeholder="Enter company name here..."
-              size="large"
-            />
-          </Col>
-          <Col span={9}>
-            <label>
-              Choose company{" "}
-              <span className="addGradeCompany__fields--optional">
-                (optional)
-              </span>
-            </label>
             <Select
-              value={companies}
+              loading={isLoadingClientCompanies}
+              value={companyName.length ? companyName : undefined}
               size="large"
               showArrow
-              mode="multiple"
-              placeholder="Select industry from here..."
+              placeholder="Select company name from here..."
               showSearch={false}
-              onChange={handleDropdown}
+              onChange={(name: string) => setCompanyName(name)}
             >
-              {COMPANIES.map(({ title, id, value }: ICompany) => (
-                <Option key={id} value={value}>
-                  {title}
-                </Option>
-              ))}
+              {gradeClientCompanies?.map(
+                ({ name, id }: IGradeClientCompany) => (
+                  <Option key={id} value={name}>
+                    {name}
+                  </Option>
+                )
+              )}
             </Select>
           </Col>
-          <Col span={3} />
+          {!isEdit ? (
+            <>
+              <Col span={9}>
+                <label>
+                  Choose company{" "}
+                  <span className="addGradeCompany__fields--optional">
+                    (optional)
+                  </span>
+                </label>
+                <Select
+                  loading={isLoadingGradeCompanies}
+                  value={companies}
+                  size="large"
+                  showArrow
+                  mode="multiple"
+                  placeholder="Select industry from here..."
+                  showSearch={false}
+                  onChange={handleDropdown}
+                >
+                  {gradeCompanies?.map(
+                    ({ name, id }: { name: string; id: number }) => (
+                      <Option key={id} value={name}>
+                        {name}
+                      </Option>
+                    )
+                  )}
+                </Select>
+              </Col>
+              <Col span={3} />
+            </>
+          ) : null}
         </Row>
         <Row>
           <div className="sub-heading addGradeCompany__title">
-            Create Grade Table
+            {`${isEdit ? "Update" : "Create"} Grade Table`}
           </div>
 
-          <Table
-            pagination={false}
-            columns={cols || columns}
-            data={tableData}
-          />
+          <Table pagination={false} columns={[...cols]} data={rows} />
           <div className="addGradeCompany__lastRow">
             <div
               onClick={addGrade}
@@ -134,6 +263,20 @@ const AddGradeCompany = () => {
             </div>
           </div>
         </Row>
+      </div>
+      <div className="addGradeCompany__buttons">
+        <Button
+          disabled={!isEdit && !companyName.length}
+          onClick={handleSubmit}
+          type="primary"
+        >
+          {isCreating || isUpdating ? (
+            <LoadingOutlined className="spinner" />
+          ) : (
+            `${isEdit ? "Update" : "Add"} Grade Company`
+          )}
+        </Button>
+        <Button onClick={onCancel}>Cancel</Button>
       </div>
     </>
   );
