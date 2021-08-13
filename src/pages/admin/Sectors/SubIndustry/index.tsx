@@ -23,7 +23,7 @@ const SubIndustry = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [deleteSubIndustry, { isLoading: isDeleting }] =
     useDeleteSubIndustryMutation();
-  const { data: industry, pagination } = data || {};
+  const { data: sub_industries, pagination } = data || {};
 
   console.log("params", params);
 
@@ -125,9 +125,13 @@ const SubIndustry = () => {
 
       <Row className="mt-20">
         <Table
-          data={industry?.sub_industries}
+          data={sub_industries}
           columns={columns}
           isLoading={isLoading}
+          pagination={true}
+          count={pagination?.count}
+          onChangePage={setPage}
+          page={page}
         />
       </Row>
     </>
