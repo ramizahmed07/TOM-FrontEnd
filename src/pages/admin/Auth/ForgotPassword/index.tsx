@@ -145,7 +145,6 @@ const ResendLinkView = ({ sendLink, email }: IProps) => {
       ErrorServices(error);
     }
   }
-};
 
 return (
   <div className="resend-link-container">
