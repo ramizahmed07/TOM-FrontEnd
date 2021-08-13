@@ -22,13 +22,13 @@ const slice = createSlice({
       .addMatcher(
         gradeApi.endpoints.fetchTARanks.matchFulfilled,
         (state, { payload }) => {
-          state.taRanks = payload;
+          state.taRanks = payload?.data;
         }
       )
       .addMatcher(
         gradeApi.endpoints.fetchAllGradeCompanies.matchFulfilled,
         (state, { payload }) => {
-          state.allGradeCompanies = payload;
+          state.allGradeCompanies = payload?.data;
         }
       );
   },

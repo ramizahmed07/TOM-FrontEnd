@@ -15,7 +15,7 @@ const slice = createSlice({
     builder.addMatcher(
       sectorsApi.endpoints.fetchSectors.matchFulfilled,
       (state, { payload }) => {
-        state.sectors = payload;
+        state.sectors = payload.data;
       }
     );
   },

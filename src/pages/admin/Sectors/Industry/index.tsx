@@ -25,7 +25,7 @@ const Industry = () => {
   const { data: industries, pagination } = data || {};
 
   const onRowClick = (data: any) => {
-    history.push(`/sectors/${id}/${data?.id}`, { data: data?.sub_industries });
+    history.push(`/sectors/${id}/${data?.id}`);
   };
 
   const editIndustry = (

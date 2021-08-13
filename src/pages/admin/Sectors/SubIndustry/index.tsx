@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Col, message, Row, TableColumnsType } from "antd";
 
@@ -6,19 +6,26 @@ import Button from "@components/Button";
 import Table from "@components/Table";
 import { ISubIndustry } from "@store/sectors";
 import AddSubIndustry from "./AddSubIndustry";
-import { useDeleteSubIndustryMutation } from "@services";
+import {
+  useDeleteSubIndustryMutation,
+  useFetchSubIndustriesQuery,
+} from "@services";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const SubIndustry = () => {
   let sub_industry_id = useRef<any>(null);
+  const [page, setPage] = useState(1);
+  const params = useParams();
+  const { industry_id: id } = useParams<{ industry_id: string }>();
+  const { data, isLoading } = useFetchSubIndustriesQuery({ id, page });
   const [selectedSubIndustry, setSelectedSubIndustry] =
     useState<null | ISubIndustry>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const {
-    state: { data },
-  } = useLocation<{ data: ISubIndustry[] }>();
   const [deleteSubIndustry, { isLoading: isDeleting }] =
     useDeleteSubIndustryMutation();
+  const { data: industry, pagination } = data || {};
+
+  console.log("params", params);
 
   const editSubIndustry = (
     sub_industry: ISubIndustry,
@@ -117,7 +124,11 @@ const SubIndustry = () => {
       </Row>
 
       <Row className="mt-20">
-        <Table data={data} columns={columns} />
+        <Table
+          data={industry?.sub_industries}
+          columns={columns}
+          isLoading={isLoading}
+        />
       </Row>
     </>
   );

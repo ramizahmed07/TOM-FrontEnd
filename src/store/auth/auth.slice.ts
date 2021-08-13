@@ -20,9 +20,9 @@ const slice = createSlice({
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
-        state.permissions = payload.permissions;
+        state.user = payload?.data?.user;
+        state.token = payload?.data?.token;
+        state.permissions = payload?.data?.permissions;
       }
     );
   },
