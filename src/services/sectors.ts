@@ -20,8 +20,8 @@ export const sectorsApi = createApi({
       providesTags: ["Sectors"],
     }),
     fetchIndustries: builder.query({
-      query: ({ id }) => ({
-        url: `/sector/${id}/industries/`,
+      query: ({ id, page = 1 }) => ({
+        url: `/sector/${id}/industries/?page=${page}`,
         method: "GET",
       }),
       providesTags: ["Industries"],

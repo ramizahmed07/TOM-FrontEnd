@@ -17,10 +17,12 @@ const Industry = () => {
   const [selectedIndustry, setSelectedIndustry] = useState<IIndustry | null>(
     null
   );
+  const [page, setPage] = useState(1);
   const { sector_id: id } = useParams<{ sector_id: string }>();
-  const { data, isLoading } = useFetchIndustriesQuery({ id });
+  const { data, isLoading } = useFetchIndustriesQuery({ id, page });
   const [deleteIndustry, { isLoading: isDeleting }] =
     useDeleteIndustryMutation();
+  const { data: industries, pagination } = data || {};
 
   const onRowClick = (data: any) => {
     history.push(`/sectors/${id}/${data?.id}`, { data: data?.sub_industries });
@@ -130,9 +132,13 @@ const Industry = () => {
       <Row className="mt-20">
         <Table
           onRowClick={onRowClick}
-          data={data}
+          data={industries}
           columns={columns}
           isLoading={isLoading}
+          pagination={true}
+          count={pagination?.count}
+          onChangePage={setPage}
+          page={page}
         />
       </Row>
     </>
