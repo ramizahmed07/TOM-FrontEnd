@@ -20,6 +20,7 @@ import {
 } from "@store/grade";
 import { getRows, showSuccessPopup } from "@utils";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Paths } from "@/router";
 
 const { Option } = Select;
 
@@ -63,7 +64,7 @@ const AddGradeCompany = () => {
         )
       : taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null }))
   );
-  console.log("newCompany", newCompany);
+
   const additional_cols: any = useMemo(() => {
     return (
       allGradeCompanies?.map((company: IGradeCompany) => ({
@@ -163,6 +164,7 @@ const AddGradeCompany = () => {
         desc: `You have successfully ${
           isEdit ? "updated the" : "added new"
         } grade company`,
+        onClick: () => history.push(Paths.Settings.grade_map_table.listing),
       });
     } catch (error) {
       message.success(error?.message);
