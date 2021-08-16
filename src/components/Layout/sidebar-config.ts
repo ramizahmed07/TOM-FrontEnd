@@ -1,4 +1,5 @@
 import { ReactComponent as UsersIcon } from "@assets/images/users.svg";
+import { ReactComponent as CompaniesIcon } from "@assets/images/companies.svg";
 import { ReactComponent as SubAdminIcon } from "@assets/images/sub-admin.svg";
 import { ReactComponent as SettingsIcon } from "@assets/images/settings.svg";
 import { ReactComponent as IndustryIcon } from "@assets/images/industry.svg";
@@ -37,6 +38,11 @@ const config: Array<Config> = [
       sub_admins.listing,
     ],
     sub: [
+      {
+        title: "Companies",
+        icon: CompaniesIcon,
+        path: "/companies",
+      },
       {
         title: "Sub-Admins",
         icon: SubAdminIcon,
