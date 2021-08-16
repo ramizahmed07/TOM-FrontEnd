@@ -1,11 +1,11 @@
 import { store } from "@store";
 
 export const checkPermission = (permission: string | undefined | string[]) => {
+  const permissions = store?.getState()?.auth?.permissions;
+  if (permissions?.includes("all")) return true;
   if (!permission) return true;
   if (Array.isArray(permission))
-    return permission?.some(x =>
-      store?.getState()?.auth?.permissions?.includes(x)
-    );
+    return permission?.some(x => permissions?.includes(x));
 
-  return store?.getState()?.auth?.permissions?.includes(permission!);
+  return permissions?.includes(permission!);
 };

@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Col, Input, message, Row } from "antd";
-import { useEffect } from "react";
 
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
@@ -12,7 +11,6 @@ import {
   useUpdateIndustryMutation,
 } from "@services";
 import { IIndustry } from "@store/sectors";
-import { useEffect } from "react";
 
 interface AddIndustryProps extends IModal {
   selectedIndustry: IIndustry | null;

@@ -23,7 +23,9 @@ const slice = createSlice({
       (state, { payload }) => {
         state.user = payload?.data?.user;
         state.token = payload?.data?.token;
-        state.permissions = payload?.data?.permissions;
+        state.permissions = !payload?.data?.permissions?.length
+          ? ["all"]
+          : payload?.data?.permissions;
       }
     );
   },

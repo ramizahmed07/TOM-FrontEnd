@@ -48,7 +48,7 @@ export const sectorsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Industries"],
+      invalidatesTags: ["Industries", "Sectors"],
     }),
     createSubIndustry: builder.mutation({
       query: body => ({
@@ -56,6 +56,7 @@ export const sectorsApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Sub-Industries", "Industries"],
     }),
     deleteSector: builder.mutation({
       query: ({ id }) => ({
@@ -69,14 +70,14 @@ export const sectorsApi = createApi({
         url: `/industry/${id}/`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Industries"],
+      invalidatesTags: ["Industries", "Sectors"],
     }),
     deleteSubIndustry: builder.mutation({
       query: ({ id }) => ({
         url: `/sub-industry/${id}/`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Sub-Industries"],
+      invalidatesTags: ["Sub-Industries", "Industries"],
     }),
     updateSector: builder.mutation({
       query: body => ({
@@ -92,7 +93,7 @@ export const sectorsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["Industries"],
+      invalidatesTags: ["Industries", "Sectors"],
     }),
     updateSubIndustry: builder.mutation({
       query: body => ({
@@ -100,7 +101,7 @@ export const sectorsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["Sub-Industries"],
+      invalidatesTags: ["Sub-Industries", "Industries"],
     }),
     uploadSectors: builder.mutation({
       query: body => ({
