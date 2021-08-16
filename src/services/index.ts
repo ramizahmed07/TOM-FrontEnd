@@ -7,3 +7,4 @@ export * from "./grade";
 export * from "./job.function";
 export * from "./sub.job.function";
 export * from "./sub.admin";
+export * from "./companies";

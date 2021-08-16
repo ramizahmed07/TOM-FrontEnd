@@ -12,17 +12,19 @@ import {
   Input,
 } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 import "./style.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { data, TableRow } from "./dumpData";
-import { useHistory } from "react-router-dom";
-import { Paths } from "@/router";
+import { Paths } from "@router";
+import { useFetchCompaniesQuery } from "@services";
 
 const CompanyList = () => {
   const history = useHistory();
-
+  const { data: companiesData, isLoading } = useFetchCompaniesQuery(null);
+  const { data: companies, pagination } = companiesData || {};
   const createNewCompany = () =>
     history.push(Paths.Users.companies.create_company);
 

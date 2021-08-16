@@ -1,12 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { gradeApi } from "@services";
-import { IGradeCompany, ITARank } from "./grade.types";
-
-interface IGradeState {
-  taRanks: ITARank[];
-  allGradeCompanies: IGradeCompany[];
-}
+import { IGradeState } from "./grade.types";
 
 const initialState: IGradeState = {
   taRanks: [],
