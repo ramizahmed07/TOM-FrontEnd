@@ -4,17 +4,16 @@ import ResetPassword from "@pages/admin/Auth/ResetPassword";
 import GradeMapTable from "@pages/admin/GradeMapTable";
 import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
 import JobFunction from "@pages/admin/JobFunction";
-import SubJobFunction from "@/pages/admin/JobFunction/SubJobFunction";
-import Sectors from "@/pages/admin/Sectors";
-import Industry from "@/pages/admin/Sectors/Industry";
+import SubJobFunction from "@pages/admin/JobFunction/SubJobFunction";
+import Sectors from "@pages/admin/Sectors";
+import Industry from "@pages/admin/Sectors/Industry";
 import SubIndustry from "@pages/admin/Sectors/SubIndustry";
-// import CompanyList from "@/pages/admin/User/Companies/company-list";
-import Companies from "@/pages/admin/Companies";
-import CompanyCreate from "@pages/admin/User/Companies/CompanyCreate";
+import Companies from "@pages/admin/Companies";
+import CreateCompany from "@pages/admin/Companies/CreateCompany";
 import SubAdminsCreate from "@pages/admin/User/SubAdmins/SubAdminsCreate";
+import SubAdminsEdit from "@pages/admin/User/SubAdmins/SubAdminEdit";
 import SubAdminsList from "@pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute, permissions } from "@router";
-import SubAdminsEdit from "@pages/admin/User/SubAdmins/SubAdminEdit";
 
 export const routeConfig: IRoute[] = [
   {
@@ -45,7 +44,7 @@ export const routeConfig: IRoute[] = [
   },
   {
     path: Paths.Users.companies.create_company,
-    component: CompanyCreate,
+    component: CreateCompany,
     key: "Company New Company",
     exact: true,
     breadcrumb: "Users / Companies list / Create new company",
