@@ -8,12 +8,13 @@ import SubJobFunction from "@/pages/admin/JobFunction/SubJobFunction";
 import Sectors from "@/pages/admin/Sectors";
 import Industry from "@/pages/admin/Sectors/Industry";
 import SubIndustry from "@pages/admin/Sectors/SubIndustry";
-import CompanyList from "@/pages/admin/User/Companies/company-list";
-import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
-import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
-import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
+// import CompanyList from "@/pages/admin/User/Companies/company-list";
+import Companies from "@/pages/admin/Companies";
+import CompanyCreate from "@pages/admin/User/Companies/CompanyCreate";
+import SubAdminsCreate from "@pages/admin/User/SubAdmins/SubAdminsCreate";
+import SubAdminsList from "@pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute, permissions } from "@router";
-import SubAdminsEdit from "@/pages/admin/User/SubAdmins/SubAdminEdit";
+import SubAdminsEdit from "@pages/admin/User/SubAdmins/SubAdminEdit";
 
 export const routeConfig: IRoute[] = [
   {
@@ -36,7 +37,7 @@ export const routeConfig: IRoute[] = [
   },
   {
     path: Paths.Users.companies.listing,
-    component: CompanyList,
+    component: Companies,
     key: "Companies",
     exact: true,
     breadcrumb: "Users / Companies list",
