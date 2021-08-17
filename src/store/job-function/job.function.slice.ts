@@ -17,7 +17,6 @@ const slice = createSlice({
             .addMatcher(
                 jobFunctionApi.endpoints.list.matchFulfilled,
                 (state, { payload }) => {
-                    console.log('payload: ', payload);
                     state.list = payload.data;
                 }
             )

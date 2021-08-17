@@ -51,9 +51,8 @@ const AddSector: FC<AddSectorProps> = ({
       setIsVisible(false);
       showSuccessPopup({
         title: selectedSector ? "Sector Updated" : "New Sector Created",
-        desc: `You have successfully ${
-          selectedSector ? "updated the" : "created new"
-        } sector.`,
+        desc: `You have successfully ${selectedSector ? "updated the" : "created new"
+          } sector.`,
       });
     } catch (error) {
       message.error(error?.message);

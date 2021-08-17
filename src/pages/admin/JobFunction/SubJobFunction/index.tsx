@@ -82,7 +82,7 @@ const SubJobFunction = () => {
                                 "Delete"
                             )}
                         </span>
-                    </div>
+                    </div >
                 );
             },
         },
