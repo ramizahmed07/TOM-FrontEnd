@@ -1,4 +1,3 @@
-import { useTypedSelector } from "@/hooks";
 import { FC } from "react";
 import { Redirect, Route } from "react-router-dom";
 

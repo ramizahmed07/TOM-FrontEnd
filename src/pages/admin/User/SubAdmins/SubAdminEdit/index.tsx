@@ -72,10 +72,6 @@ const SubAdminsEdit = () => {
                             code: phone_code,
                             phone: phone_number,
                         },
-<<<<<<< HEAD
-=======
-
->>>>>>> ef664fd410cbee4d6f7c261db8058f3e6faaefa5
                         remember: true
                     }}
                     name="sub_admin"

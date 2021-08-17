@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import { permissions } from "@/router";
-=======
->>>>>>> ef664fd410cbee4d6f7c261db8058f3e6faaefa5
 import { createSlice } from "@reduxjs/toolkit";
 
 import { authApi } from "@services";
