@@ -103,7 +103,6 @@ const SubAdminsList = () => {
   }
 
   const onEditSubAdmin = async (id: string) => {
-    alert(id)
     sub_admin_id.current = id;
     try {
       await getSubAdmin(id).unwrap();
