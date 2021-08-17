@@ -52,19 +52,6 @@ const Login = () => {
   const checkError = (name: string) =>
     errorFields?.some((x: any) => x.name.includes(name));
 
-  const logoutUser = async () => {
-    try {
-      const token = loadRefreshToken();
-      console.log({ token });
-      const res = await logout({
-        refresh: token,
-      });
-      console.log("res", { res });
-    } catch (error) {
-      console.log("err", error);
-    }
-  };
-
   return (
     <Row className="auth__container">
       <AuthLandingImg />
@@ -77,7 +64,6 @@ const Login = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
-          <button onClick={logoutUser}>Log out</button>
           {/* FORM */}
           <Form
             name="login"

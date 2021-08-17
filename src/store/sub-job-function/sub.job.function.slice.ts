@@ -17,13 +17,13 @@ const slice = createSlice({
             .addMatcher(
                 subJobFunctionApi.endpoints.sjfList.matchFulfilled,
                 (state, { payload }) => {
-                    state.list = payload;
+                    state.list = payload.data;
                 }
             )
             .addMatcher(
                 subJobFunctionApi.endpoints.getJSF.matchFulfilled,
                 (state, { payload }) => {
-                    state.jsf = payload;
+                    state.jsf = payload.data;
                 }
             );
     },

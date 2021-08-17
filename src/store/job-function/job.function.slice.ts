@@ -17,13 +17,14 @@ const slice = createSlice({
             .addMatcher(
                 jobFunctionApi.endpoints.list.matchFulfilled,
                 (state, { payload }) => {
-                    state.list = payload;
+                    console.log('payload: ', payload);
+                    state.list = payload.data;
                 }
             )
             .addMatcher(
                 jobFunctionApi.endpoints.getJF.matchFulfilled,
                 (state, { payload }) => {
-                    state.jobFunctionItem = payload;
+                    state.jobFunctionItem = payload.data;
                 }
             );
     },

@@ -24,7 +24,7 @@ const SubJobFunction = () => {
     const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
     const [isAddJSFVisible, setIsAddJSFVisible] = useState(false);
     const [isEditJSFVisible, setIsEditJSFVisible] = useState(false);
-    const [getSJFList] = useSjfListMutation();
+    const [getSJFList, { isLoading }] = useSjfListMutation();
     const [deleteJSF, { isLoading: isDeleting }] = useDeleteJSFMutation();
     const [editJsfId, setEditJSFId] = useState<string>('');
     const [getJSF, { isLoading: isGettingJSF }] = useGetJSFMutation();
@@ -68,9 +68,6 @@ const SubJobFunction = () => {
             render: ({ id }) => {
                 return (
                     <div>
-                        {/* <span className="table__action__btn" onClick={() => onEditJSf(id)}>Edit</span> */}
-
-
                         <span className="table__action__btn" onClick={() => onEditJSf(id)}>
                             {isGettingJSF && id === jsf_id?.current ? (
                                 <LoadingOutlined color="primary" className="spinner" />
@@ -78,13 +75,6 @@ const SubJobFunction = () => {
                                 "Edit"
                             )}
                         </span>
-
-
-                        {/* <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id)}>
-                            Delete
-                        </span> */}
-
-
                         <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJSFromApi(id)}>
                             {isDeleting && id === jsf_id?.current ? (
                                 <LoadingOutlined color="red" className="spinner" />
@@ -147,7 +137,7 @@ const SubJobFunction = () => {
                 </Col>
             </Row>
             <Row>
-                <Table data={jfReducer.jobFunctionItem.job_sub_functions} columns={columns} />
+                <Table data={jfReducer.jobFunctionItem.job_sub_functions} columns={columns} isLoading={isLoading} />
             </Row>
         </>
     );

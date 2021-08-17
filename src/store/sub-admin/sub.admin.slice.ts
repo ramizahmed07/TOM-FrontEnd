@@ -17,13 +17,13 @@ const slice = createSlice({
             .addMatcher(
                 subAdminApi.endpoints.subAdminList.matchFulfilled,
                 (state, { payload }) => {
-                    state.list = payload;
+                    state.list = payload.data;
                 }
             )
             .addMatcher(
                 subAdminApi.endpoints.getSubAdmin.matchFulfilled,
                 (state, { payload }) => {
-                    state.subAdmin = payload;
+                    state.subAdmin = payload.data;
                 }
             );
 

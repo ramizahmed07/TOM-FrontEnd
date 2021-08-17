@@ -12,7 +12,6 @@ import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
 import EditJobFunction from "./EditJobFunction";
-import { Paths } from "@/router";
 import { LoadingOutlined } from "@ant-design/icons";
 
 type JobSubFunction = {
@@ -57,12 +56,9 @@ const JobFunction = () => {
     },
     {
       title: "Job Function",
-      dataIndex: "jobFunction",
-      key: "jobFunction",
+      key: "name",
+      dataIndex: "name",
       width: "20%",
-      render: ({ id, name, }) => {
-        return <span style={{ cursor: "pointer" }} onClick={() => onNavigateSJF(id, name)}>{name}</span>
-      }
     },
     {
       title: "Job Sub-Function",
@@ -115,8 +111,8 @@ const JobFunction = () => {
       ]) as any),
   ];
 
-  const onNavigateSJF = (id: number, name: string) => {
-    history.push(`/job-sub-function/${id}`, { id });
+  const onRowClick = (data: any) => {
+    history.push(`/job-sub-function/${data.id}`, { id: data.id });
   }
 
   const onEditJf = async (id: string) => {
@@ -216,7 +212,11 @@ const JobFunction = () => {
         </Col>
       </Row>
       <Row>
-        <Table data={jfReducer.list} columns={columns} />
+        <Table data={jfReducer.list} columns={columns}
+          onRowClick={onRowClick}
+          isLoading={isLoading}
+
+        />
       </Row>
     </>
   );
