@@ -4,43 +4,8 @@ import { Col, Row, TableColumnsType } from "antd";
 import Table from "@components/Table";
 import AddJobFunction from "./AddJobFunction";
 import Button from "@components/Button";
-
-const columns: TableColumnsType<TableRow> = [
-  {
-    title: "id",
-    dataIndex: "id",
-    key: "id",
-    width: "10%",
-  },
-  {
-    title: "Job Function",
-    dataIndex: "jobFunction",
-    key: "jobFunction",
-    width: "20%",
-  },
-  {
-    title: "Job Sub-Function",
-    dataIndex: "jobSubFunction",
-    key: "jobSubFunction",
-    width: "55%",
-  },
-  {
-    title: "Actions",
-    key: "action",
-    fixed: "right",
-    width: "15%",
-    render: () => {
-      return (
-        <div>
-          <span className="table__action__btn">Edit</span>
-          <span className="table__action__btn table__action__btn--delete">
-            Delete
-          </span>
-        </div>
-      );
-    },
-  },
-];
+import { checkPermission } from "@utils";
+import { permissions } from "@router";
 
 type TableRow = {
   id: string;
@@ -63,6 +28,55 @@ const data: TableRow[] = [
 
 const JobFunction = () => {
   const [isVisible, setIsVisible] = useState(false);
+
+  const columns: TableColumnsType<TableRow> = [
+    {
+      title: "id",
+      dataIndex: "id",
+      key: "id",
+      width: "10%",
+    },
+    {
+      title: "Job Function",
+      dataIndex: "jobFunction",
+      key: "jobFunction",
+      width: "20%",
+    },
+    {
+      title: "Job Sub-Function",
+      dataIndex: "jobSubFunction",
+      key: "jobSubFunction",
+      width: "55%",
+    },
+    ...((!checkPermission([
+      permissions.UPDATE_JOB_SUB_FUNCTION,
+      permissions.DELETE_JOB_SUB_FUNCTION,
+    ])
+      ? []
+      : [
+          {
+            title: "Actions",
+            key: "action",
+            fixed: "right",
+            width: "15%",
+            render: () => {
+              return (
+                <div>
+                  {checkPermission(permissions.UPDATE_JOB_SUB_FUNCTION) && (
+                    <span className="table__action__btn">Edit</span>
+                  )}
+                  {checkPermission(permissions.DELETE_JOB_SUB_FUNCTION) && (
+                    <span className="table__action__btn table__action__btn--delete">
+                      Delete
+                    </span>
+                  )}
+                </div>
+              );
+            },
+          },
+        ]) as any),
+  ];
+
   return (
     <>
       <AddJobFunction setIsVisible={setIsVisible} isVisible={isVisible} />
@@ -87,9 +101,11 @@ const JobFunction = () => {
           </Button>
         </Col>
         <Col className="align-end" span={8}>
-          <Button variant="add" onClick={() => setIsVisible(true)}>
-            Add New Job
-          </Button>
+          {checkPermission(permissions.CREATE_JOB_SUB_FUNCTION) && (
+            <Button variant="add" onClick={() => setIsVisible(true)}>
+              Add New Job
+            </Button>
+          )}
         </Col>
       </Row>
       <Row>

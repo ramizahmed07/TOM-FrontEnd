@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Col, Input, message, Row } from "antd";
-import { useEffect } from "react";
 
 import Modal from "@components/Modal";
 import { IModal } from "@/types";

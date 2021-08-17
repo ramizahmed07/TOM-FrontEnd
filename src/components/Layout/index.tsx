@@ -10,6 +10,7 @@ import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
 import { useBreadcrumbs } from "@hooks";
+import { checkPermission } from "@/utils";
 
 const { Header, Content, Sider } = AntdLayout;
 
@@ -74,20 +75,22 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </div>
                   {config.title}
                 </NavLink>
-                {config.sub?.map((subLink: any, i: number) => (
-                  <NavLink
-                    key={i}
-                    to={subLink.path || ""}
-                    className="sider__sub__link"
-                    activeClassName="sider__sub__link--active"
-                    onClick={() => subLink.path && history.push(subLink.path)}
-                  >
-                    <div className="sider__icon__container">
-                      <subLink.icon className="sider__link__icon" />
-                    </div>
-                    {subLink.title}
-                  </NavLink>
-                ))}
+                {config.sub?.map((subLink: any, i: number) =>
+                  checkPermission(subLink?.permission) ? (
+                    <NavLink
+                      key={i}
+                      to={subLink.path || ""}
+                      className="sider__sub__link"
+                      activeClassName="sider__sub__link--active"
+                      onClick={() => subLink.path && history.push(subLink.path)}
+                    >
+                      <div className="sider__icon__container">
+                        <subLink.icon className="sider__link__icon" />
+                      </div>
+                      {subLink.title}
+                    </NavLink>
+                  ) : null
+                )}
               </div>
             );
           })}

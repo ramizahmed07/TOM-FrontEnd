@@ -5,7 +5,7 @@ import { ReactComponent as IndustryIcon } from "@assets/images/industry.svg";
 import { ReactComponent as JobFunctionIcon } from "@assets/images/job-function.svg";
 import { ReactComponent as ListIcon } from "@assets/images/list.svg";
 import { ReactComponent as DashboardIcon } from "@assets/images/dashboard.svg";
-import { Paths } from "@router";
+import { Paths, permissions } from "@router";
 
 const {
   Users: { companies, sub_admins },
@@ -18,6 +18,7 @@ export type Config = {
   path: string | Array<string>;
   routingPath?: string;
   sub?: Array<Config>;
+  permission?: string;
 };
 
 const config: Array<Config> = [
@@ -58,11 +59,13 @@ const config: Array<Config> = [
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
         path: sectors.listing,
+        permission: permissions.VIEW_SECTOR,
       },
       {
         title: "Job Function & Sub-Function",
         icon: JobFunctionIcon,
         path: job_function,
+        permission: permissions.VIEW_JOB_SUB_FUNCTION,
       },
       {
         title: "Grade map table",

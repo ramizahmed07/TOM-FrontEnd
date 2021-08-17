@@ -1,3 +1,4 @@
+export * as permissions from "./permissions";
 export * as Paths from "./paths";
 export * from "./routeConfig";
 export * from "./types";
