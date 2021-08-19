@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import {
     Col,
     Row,
@@ -8,34 +8,31 @@ import {
     Select,
     message,
 } from "antd";
-import { Option } from "antd/lib/mentions";
 import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
 import en from "world_countries_lists/data/en/world.json";
 
 // import "./style.less";
-import Layout from "@/components/Layout";
-import { useAddSubAdminMutation, useEditSubAdminMutation, useGetSubAdminMutation } from "@/services/sub.admin";
-import { useEffect } from "react";
+import { useEditSubAdminMutation, useSubAdminListMutation } from "@/services/sub.admin";
 import { ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
 import { useSelector } from "react-redux";
 import { ICombineReducerProps } from "@/store";
 import { useHistory, useParams } from "react-router-dom";
 import { ErrorServices } from "@/services";
 
+
 const SubAdminsEdit = () => {
     let subAdminForm = useRef<any>(null);
     const history = useHistory();
+    const [form] = Form.useForm()
     const subAdminReducer: ISubAdminReducer = useSelector((state: ICombineReducerProps) => state.subAdmin);
-    const { first_name, last_name, phone_number, phone_code, role, email } = subAdminReducer.subAdmin;
     const [editSubAdmin, { isLoading }] = useEditSubAdminMutation();
-    const [getSubAdmin] = useGetSubAdminMutation();
+    const [getSubAdminList] = useSubAdminListMutation();
     const params: { sub_admin_id: string } = useParams();
 
     const id = params.sub_admin_id;
 
     const onSubmit = async (payload: any) => {
         try {
-            // payload.phone_number = `+${payload.contact_number.code}${payload.contact_number.phone}`
             payload.phone_code = payload.contact_number.code;
             payload.phone_number = payload.contact_number.phone;
             delete payload.contact_number;
@@ -53,10 +50,35 @@ const SubAdminsEdit = () => {
     }, []);
 
     const onEditSubAdmin = async () => {
-        try {
-            await getSubAdmin(params.sub_admin_id).unwrap();
-        } catch (error) {
-            ErrorServices(error);
+        if (!subAdminReducer.list.length) {
+            try {
+                await getSubAdminList('').unwrap();
+                // setTimeout(() => {
+                updateInitialValues();
+                // }, 3000);
+            } catch (error) {
+                ErrorServices(error);
+            }
+        } else {
+            updateInitialValues();
+        }
+    }
+
+    const updateInitialValues = () => {
+        if (subAdminReducer.list.length) {
+            subAdminReducer.list.find(item => {
+                if (item.id && item?.id == params.sub_admin_id) {
+                    const value = {
+                        ...item,
+                        contact_number: {
+                            code: item.phone_code,
+                            phone: item.phone_number,
+                        },
+                        remember: true,
+                    };
+                    form.setFieldsValue(value)
+                };
+            });
         }
     }
 
@@ -66,14 +88,7 @@ const SubAdminsEdit = () => {
             <ConfigProvider locale={en}>
 
                 <Form
-                    initialValues={{
-                        first_name, last_name, phone_number, role, email,
-                        contact_number: {
-                            code: phone_code,
-                            phone: phone_number,
-                        },
-                        remember: true
-                    }}
+                    form={form}
                     name="sub_admin"
                     ref={subAdminForm}
                     labelCol={{ span: 24 }}
@@ -142,11 +157,7 @@ const SubAdminsEdit = () => {
                                             },
                                         ]}
                                     >
-                                        <CountryPhoneInput
-                                        // value={{
-                                        //     short: "us",
-                                        // }}
-                                        />
+                                        <CountryPhoneInput />
                                     </Form.Item>
 
                                     <Form.Item
@@ -183,9 +194,9 @@ const SubAdminsEdit = () => {
                                         ]}
                                     >
                                         <Select placeholder="Select role from here...">
-                                            <Option value="TOM_SUPER_USER">Super User</Option>
-                                            <Option value="TOM_ADMIN">Admin</Option>
-                                            <Option value="TOM_SALES">Sales</Option>
+                                            <Select.Option value="TOM_SUPER_USER">Super User</Select.Option>
+                                            <Select.Option value="TOM_ADMIN">Admin</Select.Option>
+                                            <Select.Option value="TOM_SALES">Sales</Select.Option>
                                         </Select>
                                     </Form.Item>
 
@@ -222,7 +233,6 @@ const SubAdminsEdit = () => {
                     </div>
                 </Form>
             </ConfigProvider>
-
         </>
     );
 };
