@@ -100,7 +100,7 @@ const SubAdminsCreate = () => {
 
                 <div className="contact__person__sub_container">
                   <Form.Item
-                    className="form__item contact__person_item "
+                    className="form__item contact__person_item"
                     label={
                       <label className="input__label">Contact number</label>
                     }
@@ -112,7 +112,7 @@ const SubAdminsCreate = () => {
                       },
                     ]}
                   >
-                    <CountryPhoneInput className="form__input" />
+                    <CountryPhoneInput width='25vw' height="39.31" />
                   </Form.Item>
 
                   <Form.Item
@@ -148,10 +148,12 @@ const SubAdminsCreate = () => {
                       },
                     ]}
                   >
-                    <Select placeholder="Select role from here...">
-                      <Option value="TOM_SUPER_USER">Super User</Option>
-                      <Option value="TOM_ADMIN">Admin</Option>
-                      <Option value="TOM_SALES">Sales</Option>
+                    <Select
+                      className="form__select"
+                      placeholder="Select role from here...">
+                      <Select.Option value="TOM_SUPER_USER">Super User</Select.Option>
+                      <Select.Option value="TOM_ADMIN">Admin</Select.Option>
+                      <Select.Option value="TOM_SALES">Sales</Select.Option>
                     </Select>
                   </Form.Item>
 

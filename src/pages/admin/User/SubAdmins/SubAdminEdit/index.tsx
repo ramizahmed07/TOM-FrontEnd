@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import {
-    Col,
-    Row,
     Button,
     Input,
     Form,
@@ -11,7 +9,7 @@ import {
 import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
 import en from "world_countries_lists/data/en/world.json";
 
-// import "./style.less";
+import "./style.less";
 import { useEditSubAdminMutation, useSubAdminListMutation } from "@/services/sub.admin";
 import { ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
 import { useSelector } from "react-redux";
@@ -53,9 +51,7 @@ const SubAdminsEdit = () => {
         if (!subAdminReducer.list.length) {
             try {
                 await getSubAdminList('').unwrap();
-                // setTimeout(() => {
                 updateInitialValues();
-                // }, 3000);
             } catch (error) {
                 ErrorServices(error);
             }
@@ -84,7 +80,7 @@ const SubAdminsEdit = () => {
 
     return (
         <>
-            <h1 className="form_heading">Create sub admin</h1>
+            <h1 className="form_heading">Edit sub admin</h1>
             <ConfigProvider locale={en}>
 
                 <Form
@@ -145,7 +141,7 @@ const SubAdminsEdit = () => {
 
                                 <div className="contact__person__sub_container">
                                     <Form.Item
-                                        className="form__item contact__person_item "
+                                        className="form__item contact__person_item"
                                         label={
                                             <label className="input__label">Contact number</label>
                                         }
@@ -157,7 +153,7 @@ const SubAdminsEdit = () => {
                                             },
                                         ]}
                                     >
-                                        <CountryPhoneInput />
+                                        <CountryPhoneInput width="25vw" height="39.31" />
                                     </Form.Item>
 
                                     <Form.Item
@@ -193,7 +189,9 @@ const SubAdminsEdit = () => {
                                             },
                                         ]}
                                     >
-                                        <Select placeholder="Select role from here...">
+                                        <Select
+                                            className="form__select"
+                                            placeholder="Select role from here...">
                                             <Select.Option value="TOM_SUPER_USER">Super User</Select.Option>
                                             <Select.Option value="TOM_ADMIN">Admin</Select.Option>
                                             <Select.Option value="TOM_SALES">Sales</Select.Option>
