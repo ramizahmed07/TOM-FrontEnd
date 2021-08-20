@@ -33,7 +33,7 @@ const config: Array<Config> = [
     icon: UsersIcon,
     path: [
       companies.listing,
-      companies.create_company,
+      companies.create,
       sub_admins.create,
       sub_admins.listing,
     ],

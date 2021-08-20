@@ -26,8 +26,7 @@ const Companies = () => {
   const { data: companiesData, isLoading: isFetching } =
     useFetchCompaniesQuery(null);
   const { data, pagination } = companiesData || {};
-  const createNewCompany = () =>
-    history.push(Paths.Users.companies.create_company);
+  const createNewCompany = () => history.push(Paths.Users.companies.create);
 
   const columns: TableColumnsType<ICompany> = [
     {

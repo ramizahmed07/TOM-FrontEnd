@@ -1,13 +1,18 @@
 import { Col, Row } from "antd";
+import { FC } from "react";
+import { Route, Switch } from "react-router-dom";
 
 import "./companyProfile.less";
 import Tabs from "./Tabs";
-
 import BusinessUnits from "./BusinessUnits";
 import CompanyDetails from "./CompanyDetails";
-import { Route, Switch } from "react-router-dom";
+import { IRoute, Routes } from "@router";
 
-const CompanyProfile = () => {
+interface ICompanyProfile {
+  routes: IRoute[];
+}
+
+const CompanyProfile: FC<ICompanyProfile> = ({ routes }) => {
   return (
     <div className="companyProfile">
       <Row>
@@ -21,14 +26,7 @@ const CompanyProfile = () => {
          * @TODO Add proper routes, Ramiz
          */}
 
-        <Switch>
-          <Route exact path="/profile/details">
-            <CompanyDetails />
-          </Route>
-          <Route exact path="/profile/business-units">
-            <BusinessUnits />
-          </Route>
-        </Switch>
+        <Routes routes={routes} />
       </div>
     </div>
   );

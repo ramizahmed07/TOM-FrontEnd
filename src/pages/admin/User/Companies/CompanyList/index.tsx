@@ -118,13 +118,11 @@ const CompanyList = () => {
                 className="form__input"
                 type="email"
                 placeholder="Search by name or ID..."
-                prefix={<SearchOutlined style={{ color: "#435465" }} />}
+                prefix={<SearchOutlined color="#435465" />}
               />
               <Button
                 type="primary"
-                onClick={() =>
-                  history.push(Paths.Users.companies.create_company)
-                }
+                onClick={() => history.push(Paths.Users.companies.create)}
               >
                 <PlusOutlined /> Create new company
               </Button>
