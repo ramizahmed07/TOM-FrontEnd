@@ -18,8 +18,8 @@ export const companiesApi = createApi({
 
     // Region Services
     fetchRegions: builder.query({
-      query: ({ id = 8 }) => ({
-        url: `/company/${id}/regions/`,
+      query: ({ id = 8, page = 1 }) => ({
+        url: `/company/${id}/regions/?page=${page}`,
         method: "GET",
       }),
     }),
