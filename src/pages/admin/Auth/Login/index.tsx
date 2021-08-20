@@ -29,11 +29,16 @@ const Login = () => {
     setErrorFields([]);
     const { email, password } = values;
     try {
-      await login({
+      const res = await login({
         email,
         password,
       }).unwrap();
-      history.push(Paths.Dashboard.dashboard);
+      console.log("res", res);
+      if (res?.data?.is_one_time_password) {
+        history.push(Paths.Auth.reset_password);
+      } else {
+        history.push(Paths.Dashboard.dashboard);
+      }
     } catch (error) {
       setErrorFields([{ errors: [error?.message], name: ["password"] }] as any);
       form.setFields([
