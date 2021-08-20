@@ -1,39 +1,33 @@
 import React, { FC, useState, useEffect } from "react";
 import { Button, Col, Input, message, Row } from "antd";
-import { useSelector } from "react-redux";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { ErrorServices, useEditJSFMutation, useGetJFMutation } from "@services";
-import { ICombineReducerProps } from "@store";
-import { ISubJobFunctionReducer } from "@/store/sub-job-function/sub.job.function.types";
+import { ErrorServices, useEditJSFMutation } from "@services";
 import { useParams } from "react-router-dom";
 
 export interface IEditJobSubFunction extends IModal {
-    editJsfId?: string;
+    jsfItem: { [key: string]: any };
     job_function_id: string | number;
     updateList: () => void;
 
 }
 
 
-const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, editJsfId, updateList }) => {
-    const jfsReducer: ISubJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.subJobFunction);
+const EditJobSubFunction: FC<IEditJobSubFunction> = ({ isVisible, setIsVisible, jsfItem, updateList }) => {
     const [jobFunction, setJobFunction] = useState('');
     const [editJSF, { isLoading }] = useEditJSFMutation();
     const params: { job_id: string } = useParams();
-    const [getJF] = useGetJFMutation();
-
     const id = Number(params?.job_id);
 
 
     useEffect(() => {
-        setJobFunction(jfsReducer.jsf.name);
-    }, [jfsReducer.jsf.name]);
+        setJobFunction(jsfItem.name);
+    }, [jsfItem]);
 
     const onSubmit = async () => {
         try {
-            await editJSF({ id: jfsReducer.jsf.id, job_function_id: id, name: jobFunction }).unwrap();
+            await editJSF({ id: jsfItem.id, job_function_id: id, name: jobFunction }).unwrap();
             updateList();
             closeModal();
             message.success('Job Sub Function successfully updated')

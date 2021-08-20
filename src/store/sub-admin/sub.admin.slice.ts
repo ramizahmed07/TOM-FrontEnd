@@ -5,7 +5,8 @@ import { ISubAdminReducer } from "./sub.admin.types";
 
 const initialState: ISubAdminReducer = {
     list: [],
-    subAdmin: {}
+    subAdmin: {},
+    pagination: {},
 };
 
 const slice = createSlice({
@@ -18,12 +19,15 @@ const slice = createSlice({
                 subAdminApi.endpoints.subAdminList.matchFulfilled,
                 (state, { payload }) => {
                     state.list = payload.data;
+
+                    state.pagination = payload.pagination;
                 }
             )
             .addMatcher(
                 subAdminApi.endpoints.getSubAdmin.matchFulfilled,
                 (state, { payload }) => {
                     state.subAdmin = payload.data;
+                    state.pagination = payload.pagination;
                 }
             );
 

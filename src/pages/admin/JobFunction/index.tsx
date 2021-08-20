@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Col, message, Row, TableColumnsType } from "antd";
+import { Col, Dropdown, Menu, message, Row, TableColumnsType } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -12,17 +13,17 @@ import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
 import EditJobFunction from "./EditJobFunction";
-import { LoadingOutlined } from "@ant-design/icons";
+import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 
-type JobSubFunction = {
+type JobSubFunctionType = {
   id: number;
   name: string;
 }
 
-type TableRow = {
+type JobFunctionType = {
   id: number;
   name: string;
-  job_sub_functions: Array<JobSubFunction>
+  job_sub_functions: Array<JobSubFunctionType>
 };
 
 const JobFunction = () => {
@@ -33,8 +34,7 @@ const JobFunction = () => {
   const [isEditJFVisible, setIsEditJFVisible] = useState(false);
   const [getJFList, { isLoading }] = useListMutation();
   const [deleteJF, { isLoading: isDeleting }] = useDeleteJFMutation();
-  const [editJfId, setEditJFId] = useState<string>('');
-  const [getJF, { isLoading: isGettingJF }] = useGetJFMutation();
+  const [jfItem, setJfItem] = useState({});
 
   const [uploadJobFunction, { isLoading: isUploading }] =
     useUploadJobFunctionsMutation();
@@ -47,7 +47,26 @@ const JobFunction = () => {
     getJFListFromApi();
   }, []);
 
-  const columns: TableColumnsType<TableRow> = [
+  const handleActionDropdown = ({
+    item,
+    key,
+    domEvent,
+  }: {
+    key: string;
+    domEvent:
+    | React.MouseEvent<HTMLElement, MouseEvent>
+    | React.KeyboardEvent<HTMLElement>;
+    item: JobFunctionType;
+  }) => {
+    domEvent.stopPropagation();
+    if (key === "2") {
+      deleteJFFromApi(item?.id.toString());
+    } else {
+      onEditJf(item);
+    }
+  };
+
+  const columns: TableColumnsType<JobFunctionType> = [
     {
       title: "id",
       dataIndex: "id",
@@ -66,7 +85,7 @@ const JobFunction = () => {
       width: "55%",
       render: ({ job_sub_functions }) => {
         if (Array.isArray(job_sub_functions) && job_sub_functions.length) {
-          return job_sub_functions.map((val: JobSubFunction) => {
+          return job_sub_functions.map((val: JobSubFunctionType) => {
             return val.name
           }).join(', ');
         }
@@ -83,27 +102,34 @@ const JobFunction = () => {
           title: "Actions",
           key: "action",
           fixed: "right",
-          width: "15%",
-          render: ({ id }: TableRow) => {
-            return (
-              <div>
+          width: "10%",
+          render: (item: JobFunctionType) => {
+            const menu = (
+              <Menu
+                onClick={({ key, domEvent }) =>
+                  handleActionDropdown({ item, key, domEvent })
+                }
+                tabIndex={1}
+              >
                 {checkPermission(permissions.UPDATE_JOB_SUB_FUNCTION) && (
-
-                  <span className="table__action__btn" onClick={() => onEditJf(id.toString())}>{isGettingJF && id === jf_id?.current ? (
-                    <LoadingOutlined color="primary" className="spinner" />
-                  ) : (
-                    "Edit"
-                  )}</span>
+                  <Menu.Item key="1">Edit</Menu.Item>
                 )}
                 {checkPermission(permissions.DELETE_JOB_SUB_FUNCTION) && (
-                  <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJFFromApi(id.toString())}>
-                    {isDeleting && id === jf_id?.current ? (
-                      <LoadingOutlined color="red" className="spinner" />
-                    ) : (
-                      "Delete"
-                    )}
-                  </span>
+                  <Menu.Item key="2" danger>
+                    Delete
+                  </Menu.Item>
                 )}
+              </Menu>
+            );
+            return (
+              <div className="table__action__menu">
+                <Dropdown overlay={menu} trigger={["click"]}>
+                  <MenuIcon
+                    onClick={e => {
+                      e.stopPropagation();
+                    }}
+                  />
+                </Dropdown>
               </div>
             );
           },
@@ -115,11 +141,9 @@ const JobFunction = () => {
     history.push(`/job-sub-function/${data.id}`, { id: data.id });
   }
 
-  const onEditJf = async (id: string) => {
-    jf_id.current = id;
+  const onEditJf = async (item: JobFunctionType) => {
     try {
-      await getJF(id).unwrap();
-      setEditJFId(id);
+      setJfItem(item);
       setIsEditJFVisible(true);
     } catch (error) {
       ErrorServices(error);
@@ -172,7 +196,7 @@ const JobFunction = () => {
   return (
     <>
       <AddJobFunction setIsVisible={setIsAddJFVisible} isVisible={isAddJFVisible} />
-      <EditJobFunction setIsVisible={setIsEditJFVisible} isVisible={isEditJFVisible} editJfId={editJfId} />
+      <EditJobFunction setIsVisible={setIsEditJFVisible} isVisible={isEditJFVisible} jfItem={jfItem} />
       <Row>
         <Col span={24}>
           <div className="main-heading">Job Function & Sub-Function</div>
