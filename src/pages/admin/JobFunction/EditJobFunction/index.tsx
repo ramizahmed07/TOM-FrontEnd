@@ -5,26 +5,23 @@ import { useSelector } from "react-redux";
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
 import { ErrorServices, useEditJFMutation, useListMutation } from "@services";
-import { ICombineReducerProps } from "@store";
-import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 
 export interface IEditJobFunction extends IModal {
-    editJfId?: string;
+    jfItem: { [key: string]: any };
 }
 
-const EditJobFunction: FC<IEditJobFunction> = ({ isVisible, setIsVisible, editJfId }) => {
-    const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
+const EditJobFunction: FC<IEditJobFunction> = ({ isVisible, setIsVisible, jfItem }) => {
     const [getJFList] = useListMutation();
     const [jobFunction, setJobFunction] = useState('');
     const [editJF, { isLoading }] = useEditJFMutation();
 
     useEffect(() => {
-        setJobFunction(jfReducer.jobFunctionItem.name);
-    }, [jfReducer.jobFunctionItem.name]);
+        setJobFunction(jfItem.name);
+    }, [jfItem]);
 
     const onSubmit = async () => {
         try {
-            await editJF({ id: editJfId, name: jobFunction }).unwrap();
+            await editJF({ id: jfItem.id, name: jobFunction }).unwrap();
             await getJFList('').unwrap();
             closeModal();
         } catch (error) {

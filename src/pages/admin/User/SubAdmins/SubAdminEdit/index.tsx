@@ -25,7 +25,7 @@ const SubAdminsEdit = () => {
     const history = useHistory();
     const [form] = Form.useForm()
     const subAdminReducer: ISubAdminReducer = useSelector((state: ICombineReducerProps) => state.subAdmin);
-    const [editSubAdmin, { isLoading }] = useEditSubAdminMutation();
+    const [editSubAdmin, { isLoading, isSuccess }] = useEditSubAdminMutation();
     const [getSubAdminList] = useSubAdminListMutation();
     const params: { sub_admin_id: string } = useParams();
 

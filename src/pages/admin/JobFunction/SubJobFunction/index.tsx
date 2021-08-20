@@ -1,33 +1,29 @@
-import { useEffect, useRef, useState } from "react";
-import { Col, message, Row, TableColumnsType } from "antd";
+import { useEffect, useState } from "react";
+import { Col, Dropdown, Menu, message, Row, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useParams } from "react-router-dom";
 
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { ErrorServices, useDeleteJFMutation, useDeleteJSFMutation, useGetJFMutation, useGetJSFMutation, useListMutation, useSjfListMutation } from "@services";
+import { ErrorServices, useDeleteJSFMutation, useGetJFMutation, useSjfListMutation } from "@services";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
-import { Paths } from "@/router";
-import { useLocation, useParams } from "react-router-dom";
 import AddJobSubFunction from "./AddJobSubFunction";
 import EditJobSubFunction from "./EditJobSubFunction";
-import { LoadingOutlined } from "@ant-design/icons";
+import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 
-type TableRow = {
+type SubJobFunctionType = {
     id: number;
     name: string;
 };
 
 const SubJobFunction = () => {
-    let jsf_id = useRef<any>(null);
     const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
     const [isAddJSFVisible, setIsAddJSFVisible] = useState(false);
     const [isEditJSFVisible, setIsEditJSFVisible] = useState(false);
     const [getSJFList, { isLoading }] = useSjfListMutation();
-    const [deleteJSF, { isLoading: isDeleting }] = useDeleteJSFMutation();
-    const [editJsfId, setEditJSFId] = useState<string>('');
-    const [getJSF, { isLoading: isGettingJSF }] = useGetJSFMutation();
+    const [deleteJSF] = useDeleteJSFMutation();
+    const [jsfItem, setJsfItem] = useState({});
     const params: { job_id: string } = useParams();
     const [getJF] = useGetJFMutation();
 
@@ -47,7 +43,27 @@ const SubJobFunction = () => {
         }
     }
 
-    const columns: TableColumnsType<TableRow> = [
+    const handleActionDropdown = ({
+        item,
+        key,
+        domEvent,
+    }: {
+        key: string;
+        domEvent:
+        | React.MouseEvent<HTMLElement, MouseEvent>
+        | React.KeyboardEvent<HTMLElement>;
+        item: SubJobFunctionType;
+    }) => {
+        domEvent.stopPropagation();
+        if (key === "2") {
+            deleteJSFromApi(item?.id.toString());
+        } else {
+            onEditJSf(item);
+        }
+    };
+
+
+    const columns: TableColumnsType<SubJobFunctionType> = [
         {
             title: "id",
             dataIndex: "id",
@@ -58,41 +74,45 @@ const SubJobFunction = () => {
             title: "Job Sub Function",
             key: "name",
             dataIndex: "name",
-            width: "20%",
+            width: "50%",
         },
         {
             title: "Actions",
             key: "action",
             fixed: "right",
-            width: "15%",
-            render: ({ id }) => {
+            width: "5%",
+            render: (item: SubJobFunctionType) => {
+                const menu = (
+                    <Menu
+                        onClick={({ key, domEvent }) =>
+                            handleActionDropdown({ item, key, domEvent })
+                        }
+                        tabIndex={1}
+                    >
+                        <Menu.Item key="1">Edit</Menu.Item>
+                        <Menu.Item key="2" danger>
+                            Delete
+                        </Menu.Item>
+                    </Menu>
+                );
                 return (
-                    <div>
-                        <span className="table__action__btn" onClick={() => onEditJSf(id)}>
-                            {isGettingJSF && id === jsf_id?.current ? (
-                                <LoadingOutlined color="primary" className="spinner" />
-                            ) : (
-                                "Edit"
-                            )}
-                        </span>
-                        <span className="table__action__btn table__action__btn--delete" onClick={() => deleteJSFromApi(id)}>
-                            {isDeleting && id === jsf_id?.current ? (
-                                <LoadingOutlined color="red" className="spinner" />
-                            ) : (
-                                "Delete"
-                            )}
-                        </span>
-                    </div >
+                    <div className="table__action__menu">
+                        <Dropdown overlay={menu} trigger={["click"]}>
+                            <MenuIcon
+                                onClick={e => {
+                                    e.stopPropagation();
+                                }}
+                            />
+                        </Dropdown>
+                    </div>
                 );
             },
         },
     ];
 
-    const onEditJSf = async (id: string) => {
-        jsf_id.current = id;
+    const onEditJSf = async (item: SubJobFunctionType) => {
         try {
-            await getJSF(id).unwrap;
-            setEditJSFId(id);
+            setJsfItem(item);
             setIsEditJSFVisible(true);
         } catch (error) {
             ErrorServices(error);
@@ -109,7 +129,6 @@ const SubJobFunction = () => {
 
     const deleteJSFromApi = async (id: string) => {
         try {
-            jsf_id.current = id;
             await deleteJSF(id).unwrap();
             getSJFListFromApi();
             updateListData();
@@ -121,7 +140,7 @@ const SubJobFunction = () => {
     return (
         <>
             <AddJobSubFunction setIsVisible={setIsAddJSFVisible} isVisible={isAddJSFVisible} job_function_id={id} updateList={updateListData} />
-            <EditJobSubFunction setIsVisible={setIsEditJSFVisible} isVisible={isEditJSFVisible} editJsfId={editJsfId} job_function_id={id} updateList={updateListData} />
+            <EditJobSubFunction setIsVisible={setIsEditJSFVisible} isVisible={isEditJSFVisible} jsfItem={jsfItem} job_function_id={id} updateList={updateListData} />
             <Row>
                 <Col span={24}>
                     <div className="main-heading">Sub Job Function</div>
