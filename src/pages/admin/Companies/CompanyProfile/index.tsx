@@ -22,10 +22,6 @@ const CompanyProfile: FC<ICompanyProfile> = ({ routes }) => {
       </Row>
       <Tabs />
       <div className="companyProfile__content">
-        {/**
-         * @TODO Add proper routes, Ramiz
-         */}
-
         <Routes routes={routes} />
       </div>
     </div>

@@ -1,11 +1,16 @@
 import { Dropdown, Menu, TableColumnsType } from "antd";
+import { useState } from "react";
 
+import "./regions.less";
 import Button from "@/components/Button";
 import Table from "@components/Table";
 import EmptyMessage from "../EmptyMessage";
-import BuildingImg from "@assets/images/building.png";
+import Globe from "@assets/images/international.png";
+import AddRegion from "./AddRegion";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
+import { useFetchRegionsQuery } from "@/services";
+import { ICountry } from "@/store/countries";
 
 type TableRow = {
   id: string;
@@ -24,39 +29,34 @@ const columns: TableColumnsType<TableRow> = [
     width: "5%",
   },
   {
-    title: "business unit name",
-    dataIndex: "businessUnitName",
-    key: "businessUnitName",
-    width: "18%",
-  },
-  {
-    title: "sector",
-    dataIndex: "sector",
-    key: "sector",
+    title: "region name",
+    dataIndex: "name",
+    key: "name",
     width: "15%",
   },
+
   {
-    title: "industy",
-    dataIndex: "industry",
-    key: "industry",
-    width: "22%",
+    title: "Countries",
+    dataIndex: "countries",
+    key: "countries",
+    width: "35%",
+    filters: [],
+    filterIcon: <FilterIcon className="table__filter__icon" />,
+    render: (countries: ICountry[]) => (
+      <div className="regions__table__countries">
+        {countries?.map(({ name }) => name).join(", ")}
+      </div>
+    ),
+  },
+  {
+    title: "business unit",
+    dataIndex: "businessUnit",
+    key: "businessUnit",
+    width: "35%",
     filters: [],
     filterIcon: <FilterIcon className="table__filter__icon" />,
   },
-  {
-    title: "sub-industry",
-    dataIndex: "subIndustry",
-    key: "subIndustry",
-    width: "20%",
-    filters: [],
-    filterIcon: <FilterIcon className="table__filter__icon" />,
-  },
-  {
-    title: "region",
-    dataIndex: "region",
-    key: "region",
-    width: "10%",
-  },
+
   {
     title: <span className="align-center">action</span>,
     key: "action",
@@ -86,25 +86,40 @@ const columns: TableColumnsType<TableRow> = [
   },
 ];
 
-const data: TableRow[] = [];
-
 const Regions = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const { data: regionsData, isLoading } = useFetchRegionsQuery({});
+  const { data: regions, pagination } = regionsData || {};
+
+  console.log("regionsData", regionsData);
   return (
-    <div>
+    <div className="regions">
+      <AddRegion isVisible={isVisible} setIsVisible={setIsVisible} />
+      <div
+        className={`${
+          !regions.length && "regions__addBtn--hidden"
+        } regions__addBtn`}
+      >
+        <Button variant="add" onClick={() => setIsVisible(true)}>
+          Create region
+        </Button>
+      </div>
+
       <Table
-        data={data}
+        data={regions}
         columns={columns}
         pagination={false}
+        isLoading={isLoading}
         locale={{
           emptyText: (
             <EmptyMessage
-              img={BuildingImg}
-              title="No business unit found"
-              message="You didn’t added any business unit for this
-            company yet!"
+              img={Globe}
+              title="No Regions found"
+              message="You didn’t created any regions for this
+              company yet!"
             >
-              <Button variant="add" onClick={() => console.log("clicked")}>
-                Create business unit
+              <Button variant="add" onClick={() => setIsVisible(true)}>
+                Create region
               </Button>
             </EmptyMessage>
           ),

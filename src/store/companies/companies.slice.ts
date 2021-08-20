@@ -15,7 +15,7 @@ const slice = createSlice({
     builder.addMatcher(
       companiesApi.endpoints.fetchCompanies.matchFulfilled,
       (state, { payload }) => {
-        console.log("payload", payload);
+        state.companies = payload?.data;
       }
     );
   },

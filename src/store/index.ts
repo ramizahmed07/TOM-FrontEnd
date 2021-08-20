@@ -39,6 +39,7 @@ import { ISubAdminReducer } from "./sub-admin/sub.admin.types";
 import { subAdminReducer } from "./sub-admin";
 import { companiesReducer } from "./companies";
 import { IBusinessUnitState } from "./business-unit";
+import { countriesReducer } from "./countries";
 
 export interface ICombineReducerProps {
   auth: IAuthState;
@@ -66,6 +67,7 @@ const appReducer = combineReducers({
   subJobFunction: subJobFunctionReducer,
   subAdmin: subAdminReducer,
   companies: companiesReducer,
+  countries: countriesReducer,
 });
 
 const persistConfig = {

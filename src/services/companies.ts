@@ -11,11 +11,19 @@ export const companiesApi = createApi({
   endpoints: builder => ({
     fetchCompanies: builder.query({
       query: () => ({
-        url: "/",
+        url: "/companies/",
+        method: "GET",
+      }),
+    }),
+
+    // Region Services
+    fetchRegions: builder.query({
+      query: ({ id = 8 }) => ({
+        url: `/company/${id}/regions/`,
         method: "GET",
       }),
     }),
   }),
 });
 
-export const { useFetchCompaniesQuery } = companiesApi;
+export const { useFetchCompaniesQuery, useFetchRegionsQuery } = companiesApi;

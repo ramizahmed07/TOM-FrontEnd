@@ -1,0 +1,19 @@
+.regions {
+  position: relative;
+  &__table__countries {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  &__addBtn {
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    top: -88px;
+
+    &--hidden {
+      display: none;
+    }
+  }
+}

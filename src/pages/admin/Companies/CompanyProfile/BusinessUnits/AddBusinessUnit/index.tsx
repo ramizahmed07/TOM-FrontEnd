@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Col, Input, message, Row, Select } from "antd";
 
-import "./addBusinessUnit.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import {
