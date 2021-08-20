@@ -18,6 +18,7 @@ import storage from "redux-persist/lib/storage";
 
 import {
   authApi,
+  businessUnitApi,
   gradeApi,
   sectorsApi,
   jobFunctionApi,
@@ -26,6 +27,7 @@ import {
   companiesApi,
 } from "@services";
 import { authReducer } from "./auth";
+import { businessUnitReducer } from "./business-unit";
 import { sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
 import { jobFunctionReducer } from "./job-function";
@@ -36,9 +38,11 @@ import { subJobFunctionReducer } from "./sub-job-function";
 import { ISubAdminReducer } from "./sub-admin/sub.admin.types";
 import { subAdminReducer } from "./sub-admin";
 import { companiesReducer } from "./companies";
+import { IBusinessUnitState } from "./business-unit";
 
 export interface ICombineReducerProps {
   auth: IAuthState;
+  businessUnit: IBusinessUnitState;
   jobFunction: IJobFunctionReducer;
   subJobFunction: ISubJobFunctionReducer;
   subAdmin: ISubAdminReducer;
@@ -46,6 +50,7 @@ export interface ICombineReducerProps {
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
+  [businessUnitApi.reducerPath]: businessUnitApi.reducer,
   [sectorsApi.reducerPath]: sectorsApi.reducer,
   [gradeApi.reducerPath]: gradeApi.reducer,
   [jobFunctionApi.reducerPath]: jobFunctionApi.reducer,
@@ -53,6 +58,7 @@ const appReducer = combineReducers({
   [companiesApi.reducerPath]: companiesApi.reducer,
   [subAdminApi.reducerPath]: subAdminApi.reducer,
   auth: authReducer,
+  businessUnit: businessUnitReducer,
   sectors: sectorsReducer,
   grade: gradeReducer,
   jobFunction: jobFunctionReducer,
