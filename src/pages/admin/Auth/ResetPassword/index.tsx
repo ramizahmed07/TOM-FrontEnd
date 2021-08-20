@@ -7,10 +7,12 @@ import "../style.less";
 import AuthLandingImg from "@/pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
 import { useChangePasswordMutation } from "@services";
+import { useTypedSelector } from "@/hooks";
 
 const ResetPassword = () => {
   const history = useHistory();
   const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const auth = useTypedSelector(state => state.auth);
   const changeUserPassword = async (values: {
     password: string;
     retypePassword: string;
@@ -26,7 +28,9 @@ const ResetPassword = () => {
     try {
       await changePassword({
         password,
-        token: window.location.href.split("?token=")[1],
+        token: auth?.is_one_time_password
+          ? auth?.token?.access
+          : window.location.href.split("?token=")[1],
       }).unwrap();
       history.push(Paths.Auth.login);
     } catch (error) {

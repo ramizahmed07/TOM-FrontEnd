@@ -11,6 +11,7 @@ const initialState: IAuthState = {
     refresh: null,
   },
   permissions: [],
+  is_one_time_password: false,
 };
 
 const slice = createSlice({
@@ -21,11 +22,17 @@ const slice = createSlice({
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        state.user = payload?.data?.user;
-        state.token = payload?.data?.token;
-        state.permissions = !payload?.data?.permissions?.length
-          ? ["all"]
-          : payload?.data?.permissions;
+        if (payload?.data?.is_one_time_password) {
+          state.is_one_time_password = payload?.data?.is_one_time_password;
+          state.token.access = payload?.data?.token;
+        } else {
+          state.is_one_time_password = payload?.data?.is_one_time_password;
+          state.user = payload?.data?.user;
+          state.token = payload?.data?.token;
+          state.permissions = !payload?.data?.permissions?.length
+            ? ["all"]
+            : payload?.data?.permissions;
+        }
       }
     );
   },

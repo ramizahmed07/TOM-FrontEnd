@@ -5,4 +5,5 @@ export interface IAuthState {
     refresh: null | string;
   };
   permissions: string[];
+  is_one_time_password: boolean;
 }
