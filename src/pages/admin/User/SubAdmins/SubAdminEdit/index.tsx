@@ -47,22 +47,22 @@ const SubAdminsEdit = () => {
         onEditSubAdmin();
     }, []);
 
-    const onEditSubAdmin = async () => {
+    const onEditSubAdmin = () => {
         if (!subAdminReducer.list.length) {
-            try {
-                await getSubAdminList('').unwrap();
-                updateInitialValues();
-            } catch (error) {
-                ErrorServices(error);
-            }
+            getSubAdminList('').unwrap()
+                .then(res => {
+                    console.log('Res: ', res);
+                    updateInitialValues(res.data);
+                }).catch(error => ErrorServices(error));
         } else {
             updateInitialValues();
         }
     }
 
-    const updateInitialValues = () => {
-        if (subAdminReducer.list.length) {
-            subAdminReducer.list.find(item => {
+    const updateInitialValues = (res?: any) => {
+        const items = (res && res) || subAdminReducer.list;
+        if (items.length) {
+            items.find((item: any) => {
                 if (item.id && item?.id == params.sub_admin_id) {
                     const value = {
                         ...item,
