@@ -57,9 +57,8 @@ const AddIndustry: FC<AddIndustryProps> = ({
       setIsVisible(false);
       showSuccessPopup({
         title: selectedIndustry ? "Industry Updated!" : "New Industry Created",
-        desc: `You have successfully ${
-          selectedIndustry ? "updated the" : "created new"
-        } industry.`,
+        desc: `You have successfully ${selectedIndustry ? "updated the" : "created new"
+          } industry.`,
       });
     } catch (error) {
       message.error(error?.message);

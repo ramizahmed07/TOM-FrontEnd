@@ -7,7 +7,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 import "../style.less";
 import AuthLandingImg from "@pages/admin/Auth/AuthLandingImg";
 import { Paths } from "@router";
-import { useLoginMutation } from "@services";
+import { ErrorServices, useLoginMutation, useLogoutMutation, loadRefreshToken } from "@services";
 
 interface ILoginForm {
   email: string;
@@ -19,6 +19,7 @@ const Login = () => {
   const history = useHistory();
   const [errorFields, setErrorFields] = useState([]);
   const [login, { isLoading }] = useLoginMutation();
+  const [logout, { isLoading: loggingout }] = useLogoutMutation();
   const [form] = Form.useForm();
 
   const onFinishedFailed = (errorInfo: any) => {
@@ -35,6 +36,8 @@ const Login = () => {
       }).unwrap();
       history.push(Paths.Dashboard.dashboard);
     } catch (error) {
+      ErrorServices(error);
+
       setErrorFields([{ errors: [error?.message], name: ["password"] }] as any);
       form.setFields([
         {
@@ -77,9 +80,8 @@ const Login = () => {
               validateTrigger="onSubmit"
               label={
                 <label
-                  className={`${
-                    checkError("email") ? "error__label" : "input__label"
-                  }`}
+                  className={`${checkError("email") ? "error__label" : "input__label"
+                    }`}
                 >
                   Email Address
                 </label>
@@ -153,7 +155,7 @@ const Login = () => {
           </Form>
         </div>
       </Col>
-    </Row>
+    </Row >
   );
 };
 

@@ -16,18 +16,41 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi, gradeApi, sectorsApi } from "@services";
+import { authApi, gradeApi, sectorsApi, jobFunctionApi, subJobFunctionApi, subAdminApi } from "@services";
 import { authReducer } from "./auth";
 import { sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
+import { jobFunctionReducer } from "./job-function";
+import { IAuthState } from "./auth/auth.types";
+import { IJobFunctionReducer } from "./job-function/job.function.types";
+import { ISubJobFunctionReducer } from "./sub-job-function/sub.job.function.types";
+import { subJobFunctionReducer } from "./sub-job-function";
+import { ISubAdminReducer } from "./sub-admin/sub.admin.types";
+import { subAdminReducer } from "./sub-admin";
+
+export interface ICombineReducerProps {
+  auth: IAuthState;
+  jobFunction: IJobFunctionReducer;
+  subJobFunction: ISubJobFunctionReducer;
+  subAdmin: ISubAdminReducer
+}
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [sectorsApi.reducerPath]: sectorsApi.reducer,
   [gradeApi.reducerPath]: gradeApi.reducer,
+  [jobFunctionApi.reducerPath]: jobFunctionApi.reducer,
+  [subJobFunctionApi.reducerPath]: subJobFunctionApi.reducer,
+  [subAdminApi.reducerPath]: subAdminApi.reducer,
   auth: authReducer,
   sectors: sectorsReducer,
   grade: gradeReducer,
+  jobFunction: jobFunctionReducer,
+  subJobFunction: subJobFunctionReducer,
+  subAdmin: subAdminReducer,
+  yolo: () => ({
+    userr: null,
+  }),
 });
 
 const persistConfig = {

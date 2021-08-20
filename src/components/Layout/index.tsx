@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar } from "antd";
+import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar, message } from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
@@ -10,12 +10,14 @@ import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
 import { useBreadcrumbs } from "@hooks";
-import { checkPermission } from "@/utils";
+import { ErrorServices, loadRefreshToken, useLogoutMutation } from "@services";
+import { checkPermission } from "@utils";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+  const [onLogout] = useLogoutMutation();
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -36,15 +38,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const breadcrumbs_list = breadcrumbs.map(({ breadcrumb }) => breadcrumb);
   const breadcrumb = breadcrumbs_list
     ?.map((x: any) => x?.props?.children)
-    [breadcrumbs_list.length - 1]?.split(" /");
+  [breadcrumbs_list.length - 1]?.split(" /");
+
+  const onLogoutFromServer = async () => {
+    try {
+      await onLogout({ refresh: loadRefreshToken() }).unwrap();
+      message.success(`User has been successfully logout`);
+    } catch (error) {
+      ErrorServices(error);
+    }
+  }
 
   const menu = (
     <Menu>
-      <Menu.Item key="1">Clicking me will not close the menu.</Menu.Item>
-      <Menu.Item key="2">Clicking me will not close the menu also.</Menu.Item>
-      <Menu.Item key="3">Clicking me will close the menu.</Menu.Item>
+      <Menu.Item key="1" onClick={onLogoutFromServer}>Log out</Menu.Item>
     </Menu>
   );
+
 
   if (
     Object.values(Paths.Auth).some(path =>

@@ -1,17 +1,19 @@
-import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
-import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
 import ForgotPassword from "@pages/admin/Auth/ForgotPassword";
 import Login from "@pages/admin/Auth/Login";
 import ResetPassword from "@pages/admin/Auth/ResetPassword";
 import GradeMapTable from "@pages/admin/GradeMapTable";
 import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
 import JobFunction from "@pages/admin/JobFunction";
-import Sectors from "@pages/admin/Sectors";
-import Industry from "@pages/admin/Sectors/Industry";
+import SubJobFunction from "@/pages/admin/JobFunction/SubJobFunction";
+import Sectors from "@/pages/admin/Sectors";
+import Industry from "@/pages/admin/Sectors/Industry";
 import SubIndustry from "@pages/admin/Sectors/SubIndustry";
-import CompanyList from "@pages/admin/User/Companies/company-list";
-import CompanyCreate from "@pages/admin/User/Companies/CompanyCreate";
+import CompanyList from "@/pages/admin/User/Companies/company-list";
+import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
+import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
+import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute, permissions } from "@router";
+import SubAdminsEdit from "@/pages/admin/User/SubAdmins/SubAdminEdit";
 
 export const routeConfig: IRoute[] = [
   {
@@ -48,6 +50,32 @@ export const routeConfig: IRoute[] = [
     breadcrumb: "Users / Companies list / Create new company",
     isPrivate: true,
   },
+
+  {
+    path: Paths.Users.sub_admins.listing,
+    component: SubAdminsList,
+    key: "SubAminList",
+    exact: true,
+    breadcrumb: "Users / Sub-Admins",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Users.sub_admins.create,
+    component: SubAdminsCreate,
+    key: "SubAdminsCreate",
+    exact: true,
+    breadcrumb: "Users / Sub-Admins/ Create Sub Admin",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Users.sub_admins.edit,
+    component: SubAdminsEdit,
+    key: "SubAdminsEdit",
+    exact: true,
+    breadcrumb: "Users / Sub-Admins/ Create Sub Admin",
+    isPrivate: true,
+  },
+
   {
     path: Paths.Settings.sectors.listing,
     component: Sectors,
@@ -75,10 +103,17 @@ export const routeConfig: IRoute[] = [
     permission: permissions.VIEW_SUB_INDUSTRY,
   },
   {
-    path: Paths.Settings.job_function,
+    path: Paths.Settings.job_function.listing,
     component: JobFunction,
     key: "Job Function",
-    breadcrumb: "Settings / Job Function & Sub-Function",
+    breadcrumb: "Settings / Job Function",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Settings.job_function.sub_job_function,
+    component: SubJobFunction,
+    key: "Sub Job Function",
+    breadcrumb: "Settings / Job Function / Sub-Function",
     isPrivate: true,
     permission: permissions.VIEW_JOB_SUB_FUNCTION,
   },
