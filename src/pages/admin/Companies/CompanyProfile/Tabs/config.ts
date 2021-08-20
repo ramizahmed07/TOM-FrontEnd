@@ -16,9 +16,4 @@ export const TABS = [
     title: "Regions",
     path: Paths.Users.companies.profile.regions,
   },
-  {
-    id: 4,
-    title: "Legal entities",
-    path: "/profile/legal-entities",
-  },
 ];

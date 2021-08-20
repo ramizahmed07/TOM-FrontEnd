@@ -14,9 +14,10 @@ import CompanyProfile from "@pages/admin/Companies/CompanyProfile";
 import SubAdminsCreate from "@pages/admin/User/SubAdmins/SubAdminsCreate";
 import SubAdminsEdit from "@pages/admin/User/SubAdmins/SubAdminEdit";
 import SubAdminsList from "@pages/admin/User/SubAdmins/SubAdminsList";
-import { Paths, IRoute, permissions } from "@router";
 import CompanyDetails from "@pages/admin/Companies/CompanyProfile/CompanyDetails";
-import BusinessUnits from "@/pages/admin/Companies/CompanyProfile/BusinessUnits";
+import BusinessUnits from "@pages/admin/Companies/CompanyProfile/BusinessUnits";
+import Regions from "@pages/admin/Companies/CompanyProfile/Regions";
+import { Paths, IRoute, permissions } from "@router";
 
 export const routeConfig: IRoute[] = [
   {
@@ -73,7 +74,14 @@ export const routeConfig: IRoute[] = [
         component: BusinessUnits,
         key: "Companies",
         exact: true,
-
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.regions,
+        component: Regions,
+        key: "Companies",
+        exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,
       },
