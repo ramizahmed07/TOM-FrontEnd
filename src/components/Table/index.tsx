@@ -24,7 +24,19 @@ const Table: FC<ITable> = ({
   page = 1,
   count = 10,
   onChangePage,
+  locale,
 }) => {
+  const localeConfig = {
+    emptyText: isLoading ? (
+      <>
+        {[1, 2, 3, 4].map(x => (
+          <Skeleton.Input key={4} size="small" active={true} />
+        ))}
+      </>
+    ) : (
+      <Empty />
+    ),
+  };
   return (
     <Col span={24}>
       <AntTable
@@ -37,17 +49,7 @@ const Table: FC<ITable> = ({
         dataSource={isLoading ? [] : data}
         pagination={false}
         rowKey="id"
-        locale={{
-          emptyText: isLoading ? (
-            <>
-              {[1, 2, 3, 4].map(x => (
-                <Skeleton.Input key={4} size="small" active={true} />
-              ))}
-            </>
-          ) : (
-            <Empty />
-          ),
-        }}
+        locale={locale || localeConfig}
       />
       {data?.length && pagination ? (
         <div className="table__pagination">
