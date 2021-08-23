@@ -4,15 +4,42 @@ import { Button, Col, Input, Row, Select } from "antd";
 import "./addBusinessUnit.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
-import { Sector, SECTORS, INDUSTRIES, dropdown } from "./config";
 
 const { Option } = Select;
+export interface Sector {
+  id: string;
+  name: string;
+}
 
-const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
+export type dropdown = string | undefined;
+
+export interface IBusinessUnit extends IModal {
+  sectorList: Array<Sector>;
+  industryList: Array<Sector>;
+  subIndustryList: Array<Sector>;
+}
+
+const AddBusinessUnit: React.FC<IBusinessUnit> = ({
+  isVisible,
+  setIsVisible,
+  sectorList,
+  industryList,
+  subIndustryList,
+}) => {
   const [sector, setSector] = React.useState<dropdown>(undefined);
   const [industry, setIndustry] = React.useState<dropdown>(undefined);
   const [subIndustry, setSubIndustry] = React.useState<dropdown>(undefined);
   const [unitName, setUnitName] = React.useState("");
+
+  const onSubmit = () => {
+    const payload = {
+      sector,
+      industry,
+      subIndustry,
+      unitName,
+    };
+    console.log(payload);
+  };
 
   return (
     <Modal
@@ -22,6 +49,7 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           disabled={!sector || !industry || !unitName || !subIndustry}
           key="1"
           type="primary"
+          onClick={() => onSubmit()}
         >
           Add Sector
         </Button>,
@@ -54,9 +82,9 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
               placeholder="Select sector from here..."
               onChange={val => setSector(val)}
             >
-              {SECTORS.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {sectorList.map(({ id, name }: Sector) => (
+                <Option key={id} value={name}>
+                  {name}
                 </Option>
               ))}
             </Select>
@@ -73,9 +101,9 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
               showSearch={false}
               onChange={val => setIndustry(val)}
             >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {industryList.map(({ id, name }: Sector) => (
+                <Option key={id} value={name}>
+                  {name}
                 </Option>
               ))}
             </Select>
@@ -90,9 +118,9 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
               showSearch={false}
               onChange={val => setSubIndustry(val)}
             >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {subIndustryList.map(({ id, name }: Sector) => (
+                <Option key={id} value={name}>
+                  {name}
                 </Option>
               ))}
             </Select>
