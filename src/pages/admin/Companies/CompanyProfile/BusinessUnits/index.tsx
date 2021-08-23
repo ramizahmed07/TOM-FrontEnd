@@ -1,7 +1,9 @@
 import React from "react";
 import { Dropdown, Menu, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
+import "./style.less";
 import AddBusinessUnit from "./AddBusinessUnit";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
@@ -17,7 +19,6 @@ import {
 } from "@services";
 import { ICombineReducerProps } from "@store";
 import { IBusinessUnitItem, IBusinessUnitState } from "@store/business-unit";
-import { useParams } from "react-router-dom";
 
 const BusinessUnits = () => {
   const sectorReducer = useSelector(
@@ -26,7 +27,7 @@ const BusinessUnits = () => {
   const businessUnitReducer: IBusinessUnitState = useSelector(
     (state: ICombineReducerProps) => state.businessUnit
   );
-  const [isVisible, setIsVisible] = React.useState(true);
+  const [isVisible, setIsVisible] = React.useState(false);
   const [getBusinsesUnits, { isLoading }] = useFetchBusinessUnitMutation();
   const [deleteBusinessUnit] = useDeleteBusinessUnitMutation();
   const [fetchAllSectors] = useFetchAllSectorsMutation();
@@ -78,7 +79,7 @@ const BusinessUnits = () => {
       title: "sector",
       key: "sector",
       width: "15%",
-      render: item => item.sector.name,
+      render: item => item.sector.name || "",
     },
     {
       title: "industy",
@@ -86,7 +87,7 @@ const BusinessUnits = () => {
       width: "22%",
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
-      render: item => item.industry.name,
+      render: item => (item.industry ? item.industry.name : ""),
     },
     {
       title: "sub-industry",
@@ -94,7 +95,7 @@ const BusinessUnits = () => {
       width: "20%",
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
-      render: item => item.sub_industry.name,
+      render: item => (item.sub_industry ? item.sub_industry.name : ""),
     },
     {
       title: "region",
@@ -160,6 +161,13 @@ const BusinessUnits = () => {
         setIsVisible={onCloseModal}
         company_id={company_id}
       />
+      <Button
+        variant="add"
+        className="add__business_unit_btn"
+        onClick={() => setIsVisible(true)}
+      >
+        Create business unit
+      </Button>
       <Table
         isLoading={isLoading}
         data={businessUnitReducer.list}

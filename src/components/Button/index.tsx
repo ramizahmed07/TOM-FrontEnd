@@ -9,10 +9,11 @@ const Button: React.FC<IButton & React.HTMLProps<HTMLButtonElement>> = ({
   children,
   variant,
   isLoading,
+  className,
 }) => {
   return (
     <AntButton
-      className={`btn btn--${variant}`}
+      className={`btn btn--${variant} ${className}`}
       type="primary"
       onClick={onClick}
       icon={
