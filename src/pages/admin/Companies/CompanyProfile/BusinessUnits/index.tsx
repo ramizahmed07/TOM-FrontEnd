@@ -12,6 +12,7 @@ import EmptyMessage from "@pages/admin/Companies/CompanyProfile/EmptyMessage";
 import {
   ErrorServices,
   useDeleteBusinessUnitMutation,
+  useFetchAllSectorsMutation,
   useFetchBusinessUnitMutation,
 } from "@services";
 import { ICombineReducerProps } from "@store";
@@ -25,6 +26,7 @@ const BusinessUnits = () => {
   const [isVisible, setIsVisible] = React.useState(false);
   const [getBusinsesUnits, { isLoading }] = useFetchBusinessUnitMutation();
   const [deleteBusinessUnit] = useDeleteBusinessUnitMutation();
+  const [fetchAllSectors] = useFetchAllSectorsMutation();
   const params: { company_id: string } = useParams();
   const company_id = params.company_id;
 
@@ -34,6 +36,7 @@ const BusinessUnits = () => {
 
   const fetchListFromApi = async () => {
     await getBusinsesUnits({ company_id });
+    await fetchAllSectors("");
   };
 
   const handleActionDropdown = ({
@@ -51,7 +54,7 @@ const BusinessUnits = () => {
     if (key === "2") {
       deleteBUFromApi(item?.id.toString());
     } else {
-      // onEditJf(item);
+      editBUFromApi();
     }
   };
 
@@ -140,9 +143,16 @@ const BusinessUnits = () => {
     }
   };
 
+  const editBUFromApi = () => {};
+
   return (
     <div>
-      <AddBusinessUnit isVisible={isVisible} setIsVisible={setIsVisible} />
+      {/* <AddBusinessUnit
+        sectorList=[]
+      industryList=[]
+      subIndustryList=[]
+
+      isVisible={false} setIsVisible={setIsVisible} /> */}
       <Table
         isLoading={isLoading}
         data={businessUnitReducer.list}

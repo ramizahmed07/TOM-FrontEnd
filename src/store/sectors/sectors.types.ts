@@ -6,6 +6,7 @@ export interface ISector {
 }
 
 export interface ISectorsState {
+  allSectors: [];
   sectors: ISector[];
 }
 
