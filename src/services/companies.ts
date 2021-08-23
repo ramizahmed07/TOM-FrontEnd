@@ -5,7 +5,7 @@ import { tomService } from "./restService";
 export const companiesApi = createApi({
   reducerPath: "companiesApi",
   baseQuery: tomService({
-    baseUrl: `${process.env.REACT_APP_BASE_URL}/companies`,
+    baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
   tagTypes: ["Companies", "Regions"],
 
