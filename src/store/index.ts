@@ -28,7 +28,7 @@ import {
 } from "@services";
 import { authReducer } from "./auth";
 import { businessUnitReducer } from "./business-unit";
-import { sectorsReducer } from "./sectors";
+import { ISectorsState, sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
 import { jobFunctionReducer } from "./job-function";
 import { IAuthState } from "./auth/auth.types";
@@ -46,6 +46,7 @@ export interface ICombineReducerProps {
   jobFunction: IJobFunctionReducer;
   subJobFunction: ISubJobFunctionReducer;
   subAdmin: ISubAdminReducer;
+  sectors: ISectorsState;
 }
 
 const appReducer = combineReducers({

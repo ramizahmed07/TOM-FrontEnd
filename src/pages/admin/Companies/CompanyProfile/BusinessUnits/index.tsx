@@ -20,6 +20,9 @@ import { IBusinessUnitItem, IBusinessUnitState } from "@store/business-unit";
 import { useParams } from "react-router-dom";
 
 const BusinessUnits = () => {
+  const sectorReducer = useSelector(
+    (state: ICombineReducerProps) => state.sectors
+  );
   const businessUnitReducer: IBusinessUnitState = useSelector(
     (state: ICombineReducerProps) => state.businessUnit
   );
@@ -147,12 +150,11 @@ const BusinessUnits = () => {
 
   return (
     <div>
-      {/* <AddBusinessUnit
-        sectorList=[]
-      industryList=[]
-      subIndustryList=[]
-
-      isVisible={false} setIsVisible={setIsVisible} /> */}
+      <AddBusinessUnit
+        allSectorList={sectorReducer.allSectors}
+        isVisible={true}
+        setIsVisible={setIsVisible}
+      />
       <Table
         isLoading={isLoading}
         data={businessUnitReducer.list}
