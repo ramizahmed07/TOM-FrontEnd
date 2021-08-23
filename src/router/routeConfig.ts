@@ -18,6 +18,7 @@ import CompanyDetails from "@pages/admin/Companies/CompanyProfile/CompanyDetails
 import BusinessUnits from "@pages/admin/Companies/CompanyProfile/BusinessUnits";
 import Regions from "@pages/admin/Companies/CompanyProfile/Regions";
 import { Paths, IRoute, permissions } from "@router";
+import BusinessUnit from "@/pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnit";
 
 export const routeConfig: IRoute[] = [
   {
@@ -64,7 +65,7 @@ export const routeConfig: IRoute[] = [
       {
         path: Paths.Users.companies.profile.details,
         component: CompanyDetails,
-        key: "Companies",
+        key: "Companies Details",
         exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,
@@ -72,7 +73,15 @@ export const routeConfig: IRoute[] = [
       {
         path: Paths.Users.companies.profile.business_units,
         component: BusinessUnits,
-        key: "Companies",
+        key: "Business Units",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_unit,
+        component: BusinessUnit,
+        key: "Business Unit",
         exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,
@@ -80,7 +89,7 @@ export const routeConfig: IRoute[] = [
       {
         path: Paths.Users.companies.profile.regions,
         component: Regions,
-        key: "Companies",
+        key: "Regions",
         exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,

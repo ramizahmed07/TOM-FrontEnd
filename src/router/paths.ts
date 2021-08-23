@@ -15,6 +15,7 @@ const Users = {
     profile: {
       details: "/companies/:company_id",
       business_units: "/companies/:company_id/business-units",
+      business_unit: "/companies/:company_id/business-units/:business_unit_id",
       regions: "/companies/:company_id/regions",
     },
   },
