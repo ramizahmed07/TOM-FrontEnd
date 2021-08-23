@@ -102,6 +102,7 @@ export const store = configureStore({
     authApi.middleware,
     sectorsApi.middleware,
     gradeApi.middleware,
+    companiesApi.middleware,
   ],
 });
 

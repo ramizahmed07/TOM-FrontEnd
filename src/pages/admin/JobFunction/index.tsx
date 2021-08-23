@@ -8,7 +8,14 @@ import Table from "@components/Table";
 import Button from "@components/Button";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";
-import { ErrorServices, useDeleteJFMutation, useDownloadJobFunctionsMutation, useGetJFMutation, useListMutation, useUploadJobFunctionsMutation } from "@services";
+import {
+  ErrorServices,
+  useDeleteJFMutation,
+  useDownloadJobFunctionsMutation,
+  useGetJFMutation,
+  useListMutation,
+  useUploadJobFunctionsMutation,
+} from "@services";
 import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
@@ -18,18 +25,20 @@ import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 type JobSubFunctionType = {
   id: number;
   name: string;
-}
+};
 
 type JobFunctionType = {
   id: number;
   name: string;
-  job_sub_functions: Array<JobSubFunctionType>
+  job_sub_functions: Array<JobSubFunctionType>;
 };
 
 const JobFunction = () => {
   const history = useHistory();
   let jf_id = useRef<any>(null);
-  const jfReducer: IJobFunctionReducer = useSelector((state: ICombineReducerProps) => state.jobFunction);
+  const jfReducer: IJobFunctionReducer = useSelector(
+    (state: ICombineReducerProps) => state.jobFunction
+  );
   const [isAddJFVisible, setIsAddJFVisible] = useState(false);
   const [isEditJFVisible, setIsEditJFVisible] = useState(false);
   const [getJFList, { isLoading }] = useListMutation();
@@ -39,7 +48,8 @@ const JobFunction = () => {
   const [uploadJobFunction, { isLoading: isUploading }] =
     useUploadJobFunctionsMutation();
 
-  const [downloadJobFunction, { isLoading: isDownloading }] = useDownloadJobFunctionsMutation();
+  const [downloadJobFunction, { isLoading: isDownloading }] =
+    useDownloadJobFunctionsMutation();
 
   const inputRef = useRef<any>(null);
 
@@ -54,8 +64,8 @@ const JobFunction = () => {
   }: {
     key: string;
     domEvent:
-    | React.MouseEvent<HTMLElement, MouseEvent>
-    | React.KeyboardEvent<HTMLElement>;
+      | React.MouseEvent<HTMLElement, MouseEvent>
+      | React.KeyboardEvent<HTMLElement>;
     item: JobFunctionType;
   }) => {
     domEvent.stopPropagation();
@@ -85,12 +95,14 @@ const JobFunction = () => {
       width: "55%",
       render: ({ job_sub_functions }) => {
         if (Array.isArray(job_sub_functions) && job_sub_functions.length) {
-          return job_sub_functions.map((val: JobSubFunctionType) => {
-            return val.name
-          }).join(', ');
+          return job_sub_functions
+            .map((val: JobSubFunctionType) => {
+              return val.name;
+            })
+            .join(", ");
         }
         return null;
-      }
+      },
     },
     ...((!checkPermission([
       permissions.UPDATE_JOB_SUB_FUNCTION,
@@ -98,48 +110,48 @@ const JobFunction = () => {
     ])
       ? []
       : [
-        {
-          title: "Actions",
-          key: "action",
-          fixed: "right",
-          width: "10%",
-          render: (item: JobFunctionType) => {
-            const menu = (
-              <Menu
-                onClick={({ key, domEvent }) =>
-                  handleActionDropdown({ item, key, domEvent })
-                }
-                tabIndex={1}
-              >
-                {checkPermission(permissions.UPDATE_JOB_SUB_FUNCTION) && (
-                  <Menu.Item key="1">Edit</Menu.Item>
-                )}
-                {checkPermission(permissions.DELETE_JOB_SUB_FUNCTION) && (
-                  <Menu.Item key="2" danger>
-                    Delete
-                  </Menu.Item>
-                )}
-              </Menu>
-            );
-            return (
-              <div className="table__action__menu">
-                <Dropdown overlay={menu} trigger={["click"]}>
-                  <MenuIcon
-                    onClick={e => {
-                      e.stopPropagation();
-                    }}
-                  />
-                </Dropdown>
-              </div>
-            );
+          {
+            title: "Actions",
+            key: "action",
+            fixed: "right",
+            width: "10%",
+            render: (item: JobFunctionType) => {
+              const menu = (
+                <Menu
+                  onClick={({ key, domEvent }) =>
+                    handleActionDropdown({ item, key, domEvent })
+                  }
+                  tabIndex={1}
+                >
+                  {checkPermission(permissions.UPDATE_JOB_SUB_FUNCTION) && (
+                    <Menu.Item key="1">Edit</Menu.Item>
+                  )}
+                  {checkPermission(permissions.DELETE_JOB_SUB_FUNCTION) && (
+                    <Menu.Item key="2" danger>
+                      Delete
+                    </Menu.Item>
+                  )}
+                </Menu>
+              );
+              return (
+                <div className="table__action__menu">
+                  <Dropdown overlay={menu} trigger={["click"]}>
+                    <MenuIcon
+                      onClick={e => {
+                        e.stopPropagation();
+                      }}
+                    />
+                  </Dropdown>
+                </div>
+              );
+            },
           },
-        },
-      ]) as any),
+        ]) as any),
   ];
 
   const onRowClick = (data: any) => {
     history.push(`/job-sub-function/${data.id}`, { id: data.id });
-  }
+  };
 
   const onEditJf = async (item: JobFunctionType) => {
     try {
@@ -148,16 +160,16 @@ const JobFunction = () => {
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   const getJFListFromApi = async () => {
     try {
-      await getJFList('').unwrap();
+      await getJFList("").unwrap();
       message.success("List has been successfully fetched");
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   const deleteJFFromApi = async (id: string) => {
     jf_id.current = id;
@@ -167,7 +179,7 @@ const JobFunction = () => {
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   const uploadFile = async (event: any) => {
     event.stopPropagation();
@@ -182,21 +194,28 @@ const JobFunction = () => {
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   const downloadFile = async (event: any) => {
     try {
-      await downloadJobFunction('').unwrap();
+      await downloadJobFunction("").unwrap();
       message.success("CSV Data Downloaded Successfully");
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   return (
     <>
-      <AddJobFunction setIsVisible={setIsAddJFVisible} isVisible={isAddJFVisible} />
-      <EditJobFunction setIsVisible={setIsEditJFVisible} isVisible={isEditJFVisible} jfItem={jfItem} />
+      <AddJobFunction
+        setIsVisible={setIsAddJFVisible}
+        isVisible={isAddJFVisible}
+      />
+      <EditJobFunction
+        setIsVisible={setIsEditJFVisible}
+        isVisible={isEditJFVisible}
+        jfItem={jfItem}
+      />
       <Row>
         <Col span={24}>
           <div className="main-heading">Job Function & Sub-Function</div>
@@ -209,21 +228,16 @@ const JobFunction = () => {
             type="file"
             ref={inputRef}
             hidden={true}
-            onChange={(e) => uploadFile(e)}
+            onChange={e => uploadFile(e)}
           />
-          <Button
-            variant="upload"
-            onClick={() => inputRef?.current?.click()}
-          >
-            {isUploading ?
-              <LoadingOutlined
-                color="white" className="spinner" />
-              : 'Upload Job Functions'}
+          <Button variant="upload" onClick={() => inputRef?.current?.click()}>
+            {isUploading ? (
+              <LoadingOutlined color="white" className="spinner" />
+            ) : (
+              "Upload Job Functions"
+            )}
           </Button>
-          <Button
-            variant="download"
-            onClick={downloadFile}
-          >
+          <Button variant="download" onClick={downloadFile}>
             Download Job Functions
           </Button>
         </Col>
@@ -236,10 +250,11 @@ const JobFunction = () => {
         </Col>
       </Row>
       <Row>
-        <Table data={jfReducer.list} columns={columns}
+        <Table
+          data={jfReducer.list}
+          columns={columns}
           onRowClick={onRowClick}
           isLoading={isLoading}
-
         />
       </Row>
     </>

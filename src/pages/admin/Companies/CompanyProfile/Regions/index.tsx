@@ -1,4 +1,5 @@
-import { Row } from "antd";
+import { useParams } from "react-router-dom";
+import { message, Row } from "antd";
 import { useState } from "react";
 
 import "./regions.less";
@@ -7,18 +8,68 @@ import Table from "@components/Table";
 import EmptyMessage from "../EmptyMessage";
 import Globe from "@assets/images/international.png";
 import AddRegion from "./AddRegion";
-import { useFetchRegionsQuery } from "@services";
-import { columns } from "./config";
+import {
+  ErrorServices,
+  useDeleteRegionMutation,
+  useFetchRegionsQuery,
+} from "@services";
+import { getColumns } from "./config";
+import { IRegion } from "@store/companies";
 
 const Regions = () => {
   const [page, setPage] = useState(1);
+  const { company_id } = useParams<{ company_id: string }>();
   const [isVisible, setIsVisible] = useState(false);
-  const { data: regionsData, isLoading } = useFetchRegionsQuery({ page });
+  const { data: regionsData, isLoading } = useFetchRegionsQuery({
+    id: company_id,
+    page,
+  });
+  const [deleteRegion] = useDeleteRegionMutation();
   const { data: regions, pagination } = regionsData || {};
+  const [selectedRegion, setSelectedRegion] = useState<null | IRegion>(null);
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteRegion({ company_id, region_id: id }).unwrap();
+      message.success("Sector deleted successfully!");
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
+
+  const handleActionDropdown = ({
+    item,
+    key,
+    domEvent,
+  }: {
+    key: string;
+    domEvent:
+      | React.MouseEvent<HTMLElement, MouseEvent>
+      | React.KeyboardEvent<HTMLElement>;
+    item: IRegion;
+  }) => {
+    domEvent.stopPropagation();
+    if (key === "2") {
+      handleDelete(item?.id!);
+    } else {
+      setSelectedRegion(item);
+      setIsVisible(true);
+    }
+  };
+
+  const columns = getColumns(handleActionDropdown);
 
   return (
     <div className="regions">
-      <AddRegion isVisible={isVisible} setIsVisible={setIsVisible} />
+      {isVisible ? (
+        <AddRegion
+          setSelectedRegion={setSelectedRegion}
+          selectedRegion={selectedRegion}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      ) : null}
       <div
         className={`${
           !regions?.length && "regions__addBtn--hidden"

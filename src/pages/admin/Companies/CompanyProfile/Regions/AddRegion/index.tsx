@@ -1,28 +1,114 @@
-import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
-import { Sector, SECTORS, INDUSTRIES } from "./config";
 import { useTypedSelector } from "@hooks";
-import { ICountry } from "@/store/countries";
+import { ICountry } from "@store/countries";
+import {
+  ErrorServices,
+  useCreateRegionMutation,
+  useUpdateRegionMutation,
+} from "@services";
+import { showSuccessPopup } from "@/utils";
+import { IRegion } from "@store/companies";
 
 const { Option } = Select;
 
-const AddRegion: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
-  const [name, setName] = useState("");
-  const [countries, setCountries] = useState<string[]>([]);
-  const [businessUnits, setBusinessUnits] = useState<string[]>([]);
+interface IAddRegion extends IModal {
+  selectedRegion: IRegion | null;
+  setSelectedRegion: React.Dispatch<React.SetStateAction<IRegion | null>>;
+}
+
+const INITIAL_STATE: IRegion = {
+  name: "",
+  countries: [],
+  business_units: [],
+};
+
+const AddRegion: React.FC<IAddRegion> = ({
+  selectedRegion,
+  setSelectedRegion,
+  isVisible,
+  setIsVisible,
+}) => {
+  const [region, setRegion] = useState(INITIAL_STATE);
+  const [createRegion, { isLoading }] = useCreateRegionMutation();
+  const [updateRegion, { isLoading: isUpdating }] = useUpdateRegionMutation();
+  const { company_id } = useParams<{ company_id: string }>();
   const { countries: countriesList } = useTypedSelector(
     state => state.countries
   );
-  console.log(countriesList);
+
+  const {
+    name,
+    countries: country_ids,
+    business_units: business_unit_ids,
+    id,
+  } = region || {};
+
+  useEffect(() => {
+    if (selectedRegion) {
+      setRegion({
+        ...selectedRegion,
+        countries: selectedRegion?.countries.map((country: any) => country.id),
+      } as IRegion);
+    }
+    return () => {
+      setSelectedRegion(null);
+    };
+  }, [selectedRegion, setSelectedRegion]);
+
+  const onSubmit = async () => {
+    try {
+      if (selectedRegion) editRegion();
+      else addRegion();
+      setIsVisible(false);
+      showSuccessPopup({
+        title: `Region ${selectedRegion ? "Updated" : "Created"}`,
+        desc: `You have successfully ${
+          selectedRegion ? "updated" : "create"
+        } a region.`,
+      });
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
+
+  const addRegion = async () =>
+    await createRegion({
+      body: {
+        id,
+        name,
+        country_ids,
+        business_unit_ids,
+      },
+      company_id,
+    }).unwrap();
+
+  const editRegion = async () =>
+    await updateRegion({
+      body: { id, name, country_ids, business_unit_ids },
+      company_id,
+    });
 
   return (
     <Modal
       footer={[
-        <Button disabled={!name.length} key="1" type="primary">
-          Create Region
+        <Button
+          onClick={onSubmit}
+          disabled={!region.name.length}
+          key="1"
+          type="primary"
+        >
+          {isLoading || isUpdating ? (
+            <LoadingOutlined className="spinner" />
+          ) : (
+            "Create Region"
+          )}
         </Button>,
         <Button key="2" onClick={() => setIsVisible(false)}>
           Cancel
@@ -36,10 +122,12 @@ const AddRegion: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           <Col span={11}>
             <label>Name of a region</label>
             <Input
-              onChange={e => setName(e.target.value)}
+              onChange={e =>
+                setRegion(prev => ({ ...prev, name: e.target.value }))
+              }
               placeholder="Enter business unit name here..."
               size="large"
-              value={name}
+              value={region.name}
             />
           </Col>
         </Row>
@@ -51,16 +139,21 @@ const AddRegion: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           <Col span={11}>
             <label>Select and search countries</label>
             <Select
-              value={countries}
+              value={region?.countries as number[]}
               size="large"
               showArrow
               mode="multiple"
               placeholder="Select countries from here..."
               showSearch={false}
-              onChange={val => setCountries(val)}
+              onChange={(val: number[]) =>
+                setRegion(prev => ({
+                  ...prev,
+                  countries: val as number[],
+                }))
+              }
             >
               {countriesList.map(({ name, id }: ICountry) => (
-                <Option key={id} value={name}>
+                <Option key={id} value={id}>
                   {name}
                 </Option>
               ))}
@@ -68,7 +161,7 @@ const AddRegion: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           </Col>
           <Col span={11}>
             <label>Select business units</label>
-            <Select
+            {/* <Select
               value={businessUnits}
               size="large"
               showArrow
@@ -82,7 +175,7 @@ const AddRegion: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
                   {title}
                 </Option>
               ))}
-            </Select>
+            </Select> */}
           </Col>
         </Row>
       </>

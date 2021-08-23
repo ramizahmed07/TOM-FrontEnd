@@ -9,6 +9,7 @@ import {
   Tag,
   Button,
   Input,
+  message,
 } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
@@ -17,16 +18,37 @@ import "./companies.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { Paths } from "@router";
-import { useFetchCompaniesQuery } from "@services";
+import {
+  ErrorServices,
+  useFetchCompaniesQuery,
+  useUpdateCompanyStatusMutation,
+} from "@services";
 import { ICompany } from "@store/companies";
 import Table from "@components/Table";
 
 const Companies = () => {
   const history = useHistory();
+  const [updateCompanyStatus] = useUpdateCompanyStatusMutation();
   const { data: companiesData, isLoading: isFetching } =
     useFetchCompaniesQuery(null);
   const { data, pagination } = companiesData || {};
+
   const createNewCompany = () => history.push(Paths.Users.companies.create);
+
+  const toggleSwitch = async (
+    status: boolean,
+    company_id: number,
+    e: MouseEvent
+  ) => {
+    e.stopPropagation();
+    try {
+      await updateCompanyStatus({ company_id, status });
+      message.success("Status updated!");
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
 
   const columns: TableColumnsType<ICompany> = [
     {
@@ -84,7 +106,7 @@ const Companies = () => {
         return (
           <Switch
             defaultChecked={record.is_active}
-            onChange={() => alert("Toggle")}
+            onChange={(val, e) => toggleSwitch(val, record?.id!, e)}
           />
         );
       },
@@ -119,6 +141,10 @@ const Companies = () => {
     },
   ];
 
+  const onRowClick = (data: any) => {
+    history.push(`/companies/${data?.id}`);
+  };
+
   return (
     <div className="companies">
       <Row>
@@ -136,7 +162,12 @@ const Companies = () => {
             </Button>
           </div>
 
-          <Table columns={columns} data={data} isLoading={isFetching} />
+          <Table
+            onRowClick={onRowClick}
+            columns={columns}
+            data={data}
+            isLoading={isFetching}
+          />
         </Col>
       </Row>
     </div>

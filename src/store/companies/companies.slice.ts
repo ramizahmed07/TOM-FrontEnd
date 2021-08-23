@@ -8,7 +8,7 @@ const initialState: ICompaniesState = {
 };
 
 const slice = createSlice({
-  name: "gradeCompanies",
+  name: "companies",
   initialState,
   reducers: {},
   extraReducers: builder => {

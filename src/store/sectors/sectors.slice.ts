@@ -1,6 +1,6 @@
-import { sectorsApi } from "@/services";
 import { createSlice } from "@reduxjs/toolkit";
 
+import { sectorsApi } from "@services";
 import { ISectorsState } from "./sectors.types";
 
 const initialState: ISectorsState = {
