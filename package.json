@@ -41,7 +41,8 @@
     "eject": "craco eject",
     "precommit-msg": "echo 'Starting precommit hooks...' && exit 0",
     "postinstall": "husky install",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:staging": "env-cmd -f .env.staging craco build"
   },
   "eslintConfig": {
     "extends": [
