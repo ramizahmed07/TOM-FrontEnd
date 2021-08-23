@@ -26,7 +26,7 @@ const BusinessUnits = () => {
   const businessUnitReducer: IBusinessUnitState = useSelector(
     (state: ICombineReducerProps) => state.businessUnit
   );
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(true);
   const [getBusinsesUnits, { isLoading }] = useFetchBusinessUnitMutation();
   const [deleteBusinessUnit] = useDeleteBusinessUnitMutation();
   const [fetchAllSectors] = useFetchAllSectorsMutation();
@@ -137,7 +137,6 @@ const BusinessUnits = () => {
   ];
 
   const deleteBUFromApi = async (business_unit_id: string) => {
-    alert("inside del");
     try {
       await deleteBusinessUnit({ company_id, business_unit_id }).unwrap();
       fetchListFromApi();
@@ -148,12 +147,18 @@ const BusinessUnits = () => {
 
   const editBUFromApi = () => {};
 
+  const onCloseModal = () => {
+    setIsVisible(false);
+    fetchListFromApi();
+  };
+
   return (
     <div>
       <AddBusinessUnit
         allSectorList={sectorReducer.allSectors}
-        isVisible={true}
-        setIsVisible={setIsVisible}
+        isVisible={isVisible}
+        setIsVisible={onCloseModal}
+        company_id={company_id}
       />
       <Table
         isLoading={isLoading}

@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Col, Input, Row, Select } from "antd";
+import { Button, Col, Input, message, Row, Select } from "antd";
 
 import "./addBusinessUnit.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
+import { ErrorServices, useAddBusinessUnitMutation } from "@services";
 
 const { Option } = Select;
 
@@ -30,12 +31,14 @@ type Payload = {
 
 export interface IBusinessUnit extends IModal {
   allSectorList: [];
+  company_id: string;
 }
 
 const AddBusinessUnit: React.FC<IBusinessUnit> = ({
   isVisible,
   setIsVisible,
   allSectorList,
+  company_id,
 }) => {
   const [sector, setSector] = React.useState<any>(undefined);
   const [industry, setIndustry] = React.useState<dropdown>(undefined);
@@ -43,8 +46,9 @@ const AddBusinessUnit: React.FC<IBusinessUnit> = ({
   const [subIndustry, setSubIndustry] = React.useState<dropdown>(undefined);
   const [subIndustryList, setSubIndustryList] = React.useState<[]>([]);
   const [name, setName] = React.useState("");
+  const [addBusinessUnit] = useAddBusinessUnitMutation();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (name.length) {
       const payload: Payload = {
         name,
@@ -58,6 +62,13 @@ const AddBusinessUnit: React.FC<IBusinessUnit> = ({
       subIndustry &&
         subIndustry.length &&
         (payload.sub_industry_id = Number(JSON.parse(subIndustry).id));
+      try {
+        await addBusinessUnit({ company_id, body: payload });
+        message.success("Business unit has been successfully added.");
+        setIsVisible(false);
+      } catch (error) {
+        ErrorServices(error);
+      }
     }
   };
 

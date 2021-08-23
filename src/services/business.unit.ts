@@ -22,8 +22,18 @@ export const businessUnitApi = createApi({
         method: "DELETE",
       }),
     }),
+    addBusinessUnit: builder.mutation({
+      query: ({ company_id, body }) => ({
+        url: `/${company_id}/business-unit/`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useFetchBusinessUnitMutation, useDeleteBusinessUnitMutation } =
-  businessUnitApi;
+export const {
+  useFetchBusinessUnitMutation,
+  useDeleteBusinessUnitMutation,
+  useAddBusinessUnitMutation,
+} = businessUnitApi;
