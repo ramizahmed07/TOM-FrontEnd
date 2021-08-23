@@ -1,12 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { baseUrl } from "./constants";
 import { tomService } from "./restService";
 
 export const gradeApi = createApi({
   reducerPath: "gradeApi",
   baseQuery: tomService({
-    baseUrl: `${baseUrl}/grade`,
+    baseUrl: `${process.env.REACT_APP_BASE_URL}/grade`,
   }),
   tagTypes: ["AllGradeCompanies", "ClientCompanies"],
 

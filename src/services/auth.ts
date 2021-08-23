@@ -1,12 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { baseUrl } from "./constants";
 import { tomService } from "./restService";
 
 export const authApi = createApi({
   reducerPath: "authApi ",
   baseQuery: tomService({
-    baseUrl: `${baseUrl}/auth`,
+    baseUrl: `${process.env.REACT_APP_BASE_URL}/auth`,
   }),
 
   endpoints: builder => ({

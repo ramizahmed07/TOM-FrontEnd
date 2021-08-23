@@ -5,7 +5,6 @@ import { routeConfig, Routes } from "@router";
 import Layout from "@components/Layout";
 
 const App = () => {
-  console.log("process,", process.env.REACT_APP_BASE_URL);
   return (
     <Router>
       <Layout>
