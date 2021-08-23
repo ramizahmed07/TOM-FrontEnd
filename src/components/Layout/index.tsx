@@ -1,5 +1,12 @@
 import React from "react";
-import { Layout as AntdLayout, Menu, Breadcrumb, Dropdown, Avatar, message } from "antd";
+import {
+  Layout as AntdLayout,
+  Menu,
+  Breadcrumb,
+  Dropdown,
+  Avatar,
+  message,
+} from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import "./layout.less";
@@ -9,13 +16,14 @@ import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
 import config, { Config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
-import { useBreadcrumbs } from "@hooks";
+import { useBreadcrumbs, useTypedSelector } from "@hooks";
 import { ErrorServices, loadRefreshToken, useLogoutMutation } from "@services";
 import { checkPermission } from "@utils";
 
 const { Header, Content, Sider } = AntdLayout;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const { user } = useTypedSelector(state => state.auth);
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
   const [onLogout] = useLogoutMutation();
   const { pathname } = useLocation();
@@ -38,7 +46,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const breadcrumbs_list = breadcrumbs.map(({ breadcrumb }) => breadcrumb);
   const breadcrumb = breadcrumbs_list
     ?.map((x: any) => x?.props?.children)
-  [breadcrumbs_list.length - 1]?.split(" /");
+    [breadcrumbs_list.length - 1]?.split(" /");
 
   const onLogoutFromServer = async () => {
     try {
@@ -47,14 +55,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   const menu = (
     <Menu>
-      <Menu.Item key="1" onClick={onLogoutFromServer}>Log out</Menu.Item>
+      <Menu.Item key="1" onClick={onLogoutFromServer}>
+        Log out
+      </Menu.Item>
     </Menu>
   );
-
 
   if (
     Object.values(Paths.Auth).some(path =>
@@ -120,8 +129,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <div className="profile__menu__toggle">
                 <Avatar size={32} src={profilePic} />
                 <div className="profile__menu__text__container">
-                  <span className="profile__menu__user__name">Salman Ali</span>
-                  <span className="profile__menu__user__role">Admin</span>
+                  <span className="profile__menu__user__name">{`${user?.first_name} ${user?.last_name}`}</span>
+                  <span className="profile__menu__user__role">
+                    {user?.role}
+                  </span>
                 </div>
                 <div className="profile__menu__icon__container">
                   <Down className="profile__menu__icon" />
