@@ -19,6 +19,8 @@ const Users = {
         regions: "/companies/:company_id/business-units/:business_unit_id",
         countries:
           "/companies/:company_id/business-units/:business_unit_id/:region_id",
+        legal_entities:
+          "/companies/:company_id/business-units/:business_unit_id/:region_id/:country_id",
       },
 
       regions: "/companies/:company_id/regions",
