@@ -182,7 +182,7 @@ const AddGradeCompany = () => {
     setNewCompany(taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null })));
     setCompanyName("");
   };
-  console.log("newCompany", newCompany);
+
   return (
     <>
       <Row>

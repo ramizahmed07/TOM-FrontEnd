@@ -10,7 +10,7 @@ const BusinessUnitCountries = () => {
     useParams<{ company_id: string; region_id: string }>();
   const { data: region, isLoading } = useFetchRegionQuery({ company_id, id });
   const { data } = region || {};
-  console.log("::::", region);
+
   return (
     <>
       <Row className="mb-20">
