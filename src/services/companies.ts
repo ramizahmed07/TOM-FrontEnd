@@ -66,6 +66,23 @@ export const companiesApi = createApi({
       invalidatesTags: ["LegalEntities"],
     }),
 
+    deleteLegalEntity: builder.mutation({
+      query: ({ company_id, id }) => ({
+        url: `/company/${company_id}/legal-entity/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["LegalEntities"],
+    }),
+
+    updateLegalEntity: builder.mutation({
+      query: ({ name, id, company_id }) => ({
+        url: `/company/${company_id}/legal-entity/${id}/`,
+        method: "PUT",
+        body: { name },
+      }),
+      invalidatesTags: ["LegalEntities"],
+    }),
+
     /**
      * @Services - Regions
      */
@@ -115,6 +132,8 @@ export const {
   useFetchAllBusinessUnitsQuery,
   useFetchLegalEntitiesQuery,
   useCreateLegalEntityMutation,
+  useDeleteLegalEntityMutation,
+  useUpdateLegalEntityMutation,
   useFetchRegionsQuery,
   useFetchRegionQuery,
   useCreateRegionMutation,

@@ -1,48 +1,60 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Col, Input, Row } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { IModal } from "@/types";
 import Modal from "@components/Modal";
-import { ErrorServices, useCreateLegalEntityMutation } from "@services";
+import {
+  ErrorServices,
+  useCreateLegalEntityMutation,
+  useUpdateLegalEntityMutation,
+} from "@services";
 import { showSuccessPopup } from "@utils";
+import { IParams } from "../config";
+import { ILegalEntity } from "@store/companies";
 
 interface IAddLegalEntity extends IModal {
-  // selectedIndustry: IIndustry | null;
-  // setSelectedIndustry: React.Dispatch<React.SetStateAction<IIndustry | null>>;
+  selectedEntity: ILegalEntity | null;
+  setSelectedEntity: React.Dispatch<React.SetStateAction<ILegalEntity | null>>;
 }
-type Params = {
-  region_id: string;
-  country_id: string;
-  business_unit_id: string;
-  company_id: string;
-};
 
-const AddLegalEntity: FC<IAddLegalEntity> = ({ isVisible, setIsVisible }) => {
+const AddLegalEntity: FC<IAddLegalEntity> = ({
+  isVisible,
+  setIsVisible,
+  setSelectedEntity,
+  selectedEntity,
+}) => {
   const [name, setName] = useState("");
   const { region_id, country_id, business_unit_id, company_id } =
-    useParams<Params>();
+    useParams<IParams>();
   const [createLegalEntity, { isLoading: isCreating }] =
     useCreateLegalEntityMutation();
 
-  const onSubmit = async () => {
-    const data = {
-      body: {
-        region_id: +region_id,
-        country_id: +country_id,
-        business_unit_id: +business_unit_id,
-        name,
-      },
-      company_id: +company_id,
+  const [updateLegalEntity, { isLoading: isUpdating }] =
+    useUpdateLegalEntityMutation();
+
+  useEffect(() => {
+    if (selectedEntity) {
+      setName(selectedEntity?.name);
+    }
+    return () => {
+      setSelectedEntity(null);
     };
+  }, [selectedEntity, setSelectedEntity]);
+
+  const onSubmit = async () => {
     try {
-      await addLegalEntity(data);
+      if (selectedEntity) {
+        await editLegalEntity();
+      } else {
+        await addLegalEntity();
+      }
       setIsVisible(false);
       showSuccessPopup({
-        title: false ? "Industry Updated!" : "New Industry Created",
+        title: selectedEntity ? "Industry Updated!" : "New Industry Created",
         desc: `You have successfully ${
-          false ? "updated the" : "created new"
+          selectedEntity ? "updated the" : "created new"
         } industry.`,
       });
     } catch (error) {
@@ -51,17 +63,33 @@ const AddLegalEntity: FC<IAddLegalEntity> = ({ isVisible, setIsVisible }) => {
     }
   };
 
-  const addLegalEntity = async (data: any) =>
-    await createLegalEntity(data).unwrap();
+  const addLegalEntity = async () =>
+    await createLegalEntity({
+      body: {
+        region_id: +region_id,
+        country_id: +country_id,
+        business_unit_id: +business_unit_id,
+        name,
+      },
+      company_id: +company_id,
+    }).unwrap();
 
-  //   const editLegalEntity = async (data) => {
-  //     await up({ ...industry, sector_id }).unwrap();
+  const editLegalEntity = async () =>
+    await updateLegalEntity({
+      name,
+      id: selectedEntity?.id,
+      company_id,
+    }).unwrap();
 
   return (
     <Modal
       footer={[
         <Button disabled={!name} onClick={onSubmit} key="1" type="primary">
-          {isCreating ? <LoadingOutlined className="spinner" /> : "Add"}
+          {isCreating || isUpdating ? (
+            <LoadingOutlined className="spinner" />
+          ) : (
+            "Add"
+          )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel

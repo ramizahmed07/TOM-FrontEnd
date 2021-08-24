@@ -1,32 +1,64 @@
-import { Col, Row } from "antd";
-import { useState } from "react";
+import { Col, message, Row } from "antd";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useFetchLegalEntitiesQuery } from "@services";
+import {
+  ErrorServices,
+  useDeleteLegalEntityMutation,
+  useFetchLegalEntitiesQuery,
+} from "@services";
+import { getColumns, IParams } from "./config";
+import { ILegalEntity } from "@store/companies";
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { columns } from "./config";
 import AddLegalEntity from "./AddLegalEntity";
 
 const LegalEntities = () => {
+  const params = useParams<IParams>();
+  let entity_id = useRef<any>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const params = useParams<{
-    business_unit_id: string;
-    company_id: string;
-    country_id: string;
-    region_id: string;
-  }>();
-
+  const [selectedEntity, setSelectedEntity] = useState<ILegalEntity | null>(
+    null
+  );
   const { data: legalEntities, isLoading } = useFetchLegalEntitiesQuery({
     ...params,
   });
+  const [deleteLegalEntity, { isLoading: isDeleting }] =
+    useDeleteLegalEntityMutation();
   const { data, pagination } = legalEntities || {};
-  console.log("legal", legalEntities);
+
+  const handleDelete = async (id: number) => {
+    try {
+      entity_id.current = id;
+      await deleteLegalEntity({ company_id: +params?.company_id, id }).unwrap();
+      message.success("Industry deleted successfully!");
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
+
+  const handleUpdate = (legalEntity: ILegalEntity) => {
+    setSelectedEntity(legalEntity);
+    setIsVisible(true);
+  };
+
+  const columns = getColumns({
+    handleDelete,
+    isDeleting,
+    entity_id,
+    handleUpdate,
+  });
 
   return (
     <>
       {isVisible ? (
-        <AddLegalEntity isVisible={isVisible} setIsVisible={setIsVisible} />
+        <AddLegalEntity
+          setSelectedEntity={setSelectedEntity}
+          selectedEntity={selectedEntity}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
       ) : null}
       <Row className="mb-20">
         <Col span={16}>
