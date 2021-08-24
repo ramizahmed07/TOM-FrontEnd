@@ -3,11 +3,8 @@
   padding: 0;
   &__row {
     margin: 0 -32px;
-    padding: 32px;
+    padding: 0 32px 32px 32px;
     &:first-of-type {
-      padding-top: 0;
-    }
-    &:not(:last-of-type) {
       border-bottom: @border;
       margin-bottom: 24px;
     }
@@ -16,21 +13,19 @@
   .ant-modal-content {
     border-radius: 4px;
     height: 100%;
-    // overflow-y: auto;
     position: relative;
   }
   .ant-modal-header {
     border-radius: 4px 4px 0 0;
+    padding: 24px 32px;
   }
   .ant-modal-body {
     padding: 32px 32px 0 32px;
-    height: calc(100% - 144px);
+    height: calc(100% - 159px);
     overflow-y: auto;
   }
   .ant-modal-footer {
     border-top: 0;
-    // position: absolute;
-    // bottom: 0;
     padding: 24px 32px;
     width: 100%;
     display: flex;
