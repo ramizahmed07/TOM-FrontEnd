@@ -87,22 +87,22 @@ const Sectors = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
-      width: "10%",
+      width: 100,
     },
     {
       title: "Sector",
       dataIndex: "name",
       key: "sector",
-      width: "20%",
+      width: 200,
     },
     {
       title: "Industry",
       dataIndex: "industries",
       key: "industry",
-      width: "55%",
+      width: 400,
       render: (industries: IIndustry[]) => {
         const names = industries?.map((industry: IIndustry) => industry.name);
-        return <span>{names.join(", ")}</span>;
+        return <span className="text-wrap">{names.join(", ")}</span>;
       },
     },
     ...((!checkPermission([
@@ -115,7 +115,7 @@ const Sectors = () => {
             title: <span className="align-center">Actions</span>,
             key: "action",
             fixed: "right",
-            width: "15%",
+            width: 100,
             render: (item: ISector) => {
               const menu = (
                 <Menu

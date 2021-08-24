@@ -30,7 +30,7 @@ export const getColumns = (
       title: "id",
       dataIndex: "id",
       key: "id",
-      width: "5%",
+      width: "10%",
     },
     {
       title: "region name",
@@ -56,7 +56,7 @@ export const getColumns = (
       title: "business unit",
       dataIndex: "business_units",
       key: "businessUnit",
-      width: "35%",
+      width: "30%",
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
       render: (units: { name: string; id: number }[]) => (
