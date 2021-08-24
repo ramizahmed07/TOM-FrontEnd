@@ -1,28 +1,27 @@
+import { Link, useParams } from "react-router-dom";
 import { Col, Row, TableColumnsType } from "antd";
 
 import Table from "@components/Table";
-import { Link } from "react-router-dom";
+import { useFetchBusinessUnitQuery } from "@services";
 
 const columns: TableColumnsType<any> = [
   {
     title: "id",
     dataIndex: "id",
     key: "id",
-    width: "10%",
+    width: 100,
   },
   {
     title: "Region",
-    key: "region",
-    dataIndex: "region",
-    width: "70%",
-    render: () => "Regionnn",
+    key: "name",
+    dataIndex: "name",
+    width: `calc(100% - 300px)`,
   },
 
   {
     title: "Actions",
     key: "action",
-    fixed: "right",
-    width: "20%",
+    width: 200,
     align: "center",
     render: (item: any) => (
       <Link
@@ -35,24 +34,18 @@ const columns: TableColumnsType<any> = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    region: "USA",
-  },
-  {
-    id: 2,
-    region: "PK",
-  },
-  {
-    id: 3,
-    region: "UK",
-  },
-];
-
 const BusinessUnitRegions = () => {
-  const onRowClick = (data: any) => console.log("onRowClick");
+  const { company_id, business_unit_id: id } =
+    useParams<{ company_id: string; business_unit_id: string }>();
+  const { data: businessUnit, isLoading } = useFetchBusinessUnitQuery({
+    company_id,
+    id,
+  });
+  const { data } = businessUnit || {};
+  const regions = data?.region_business_units?.map(({ region }: any) => region);
 
+  const onRowClick = (data: any) => console.log("onRowClick");
+  console.log("data", regions);
   return (
     <>
       <Row className="mb-20">
@@ -61,7 +54,12 @@ const BusinessUnitRegions = () => {
         </Col>
       </Row>
       <Row>
-        <Table onRowClick={onRowClick} data={data} columns={columns} />
+        <Table
+          onRowClick={onRowClick}
+          isLoading={isLoading}
+          data={regions}
+          columns={columns}
+        />
       </Row>
     </>
   );
