@@ -19,6 +19,7 @@ import BusinessUnits from "@pages/admin/Companies/CompanyProfile/BusinessUnits";
 import Regions from "@pages/admin/Companies/CompanyProfile/Regions";
 import BusinessUnitRegions from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitRegions";
 import BusinessUnitCountries from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitCountries";
+import LegalEntities from "@pages/admin/Companies/CompanyProfile/BusinessUnits/LegalEntities";
 import { Paths, IRoute, permissions } from "@router";
 
 export const routeConfig: IRoute[] = [
@@ -91,6 +92,14 @@ export const routeConfig: IRoute[] = [
         path: Paths.Users.companies.profile.business_units.countries,
         component: BusinessUnitCountries,
         key: "Business Unit Countries",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_units.legal_entities,
+        component: LegalEntities,
+        key: "Legal Entities",
         exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,

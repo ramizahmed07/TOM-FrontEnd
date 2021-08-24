@@ -27,3 +27,8 @@ export interface IRegion {
   countries: ICountry[] | number[];
   business_units: any;
 }
+
+export interface ILegalEntity {
+  id: number;
+  name: string;
+}
