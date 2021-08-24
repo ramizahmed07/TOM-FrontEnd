@@ -47,18 +47,23 @@ export const getColumns = (
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
       render: (countries: ICountry[]) => (
-        <div className="regions__table__countries">
+        <div className="text-wrap">
           {countries?.map(({ name }) => name).join(", ")}
         </div>
       ),
     },
     {
       title: "business unit",
-      dataIndex: "businessUnit",
+      dataIndex: "business_units",
       key: "businessUnit",
       width: "35%",
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
+      render: (units: { name: string; id: number }[]) => (
+        <div className="text-wrap">
+          {units?.map(({ name }) => name).join(", ")}
+        </div>
+      ),
     },
 
     {

@@ -33,7 +33,7 @@ const Table: FC<ITable> = ({
           onClick: e => onRowClick && onRowClick(record),
         })}
         className="table"
-        scroll={{ x: 1300 }}
+        scroll={{ x: "100%" }}
         columns={columns}
         dataSource={isLoading ? [] : data}
         pagination={false}

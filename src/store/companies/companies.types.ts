@@ -1,4 +1,4 @@
-import { User } from "../auth";
+import { User } from "../auth/auth.types";
 import { ICountry } from "../countries";
 
 export interface ICompany {

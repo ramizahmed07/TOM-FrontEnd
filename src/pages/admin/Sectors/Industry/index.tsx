@@ -58,7 +58,7 @@ const Industry = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
-      width: "7%",
+      width: "10%",
     },
 
     {
@@ -71,7 +71,7 @@ const Industry = () => {
       title: "Sub-Industry",
       dataIndex: "sub_industries",
       key: "subIndustry",
-      width: "55%",
+      width: "47%",
       render: sub_industries => {
         const names = sub_industries?.map(
           (sub_industry: ISubIndustry) => sub_industry.name
@@ -89,7 +89,7 @@ const Industry = () => {
             title: "Actions",
             key: "action",
             fixed: "right",
-            width: "15%",
+            width: "20%",
             render: (industry: IIndustry) => {
               return (
                 <>

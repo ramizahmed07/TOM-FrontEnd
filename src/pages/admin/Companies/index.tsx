@@ -52,32 +52,32 @@ const Companies = () => {
 
   const columns: TableColumnsType<ICompany> = [
     {
-      title: <div className="companies__table__col__title">Company ID</div>,
+      title: <div className="text-wrap">Company ID</div>,
       dataIndex: "id",
       key: "id",
       width: 110,
     },
     {
-      title: <div className="companies__table__col__title">Company Name</div>,
+      title: <div className="text-wrap">Company Name</div>,
       dataIndex: "name",
       key: "name",
       width: 130,
     },
     {
-      title: <div className="companies__table__col__title">Name</div>,
+      title: <div className="text-wrap">Name</div>,
       key: "name",
       width: 120,
       render: (record: ICompany) =>
         `${record.user?.first_name} ${record.user?.last_name}`,
     },
     {
-      title: <div className="companies__table__col__title">Email</div>,
+      title: <div className="text-wrap">Email</div>,
       key: "email",
       width: 200,
       render: (record: ICompany) => record.user?.email,
     },
     {
-      title: <div className="companies__table__col__title">Location</div>,
+      title: <div className="text-wrap">Location</div>,
       dataIndex: "country_headquarter",
       key: "country_headquarter",
       width: 120,
@@ -85,7 +85,7 @@ const Companies = () => {
       filterIcon: <FilterIcon className="table__filter__icon" />,
     },
     {
-      title: <div className="companies__table__col__title">Status Company</div>,
+      title: <div className="text-wrap">Status Company</div>,
       dataIndex: "status",
       key: "status",
       width: 130,
@@ -99,7 +99,7 @@ const Companies = () => {
       },
     },
     {
-      title: <div className="companies__table__col__title">Status</div>,
+      title: <div className="text-wrap">Status</div>,
       width: 90,
       align: "center",
       render: (record: ICompany) => {
@@ -112,7 +112,7 @@ const Companies = () => {
       },
     },
     {
-      title: <div className="companies__table__col__title">Action</div>,
+      title: <div className="text-wrap">Action</div>,
       key: "action",
       fixed: "right",
       width: 80,

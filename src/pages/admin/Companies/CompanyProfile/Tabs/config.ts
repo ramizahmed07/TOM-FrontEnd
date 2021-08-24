@@ -9,7 +9,7 @@ export const TABS = [
   {
     id: 2,
     title: "Business units",
-    path: Paths.Users.companies.profile.business_units,
+    path: Paths.Users.companies.profile.business_units.listing,
   },
   {
     id: 3,

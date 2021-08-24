@@ -13,7 +13,7 @@ const countriesReducer = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchCountries.fulfilled, (state, action) => {
-      state.countries = action.payload.reverse();
+      state.countries = action?.payload?.reverse();
     });
   },
 });

@@ -12,17 +12,22 @@ interface ICompanyProfile {
 
 const CompanyProfile: FC<ICompanyProfile> = ({ routes }) => {
   const match = matchPath(window.location.pathname, {
-    path: Paths.Users.companies.profile.business_unit,
+    path: Paths.Users.companies.profile.business_units.regions,
   });
 
   return (
     <div className="companyProfile">
-      <Row>
-        <Col span={24}>
-          <div className="main-heading mb-16">Company details</div>
-        </Col>
-      </Row>
-      {match ? null : <Tabs />}
+      {match ? null : (
+        <>
+          <Row>
+            <Col span={24}>
+              <div className="main-heading mb-16">Company details</div>
+            </Col>
+          </Row>
+          <Tabs />
+        </>
+      )}
+
       <div className="companyProfile__content">
         <Routes routes={routes} />
       </div>

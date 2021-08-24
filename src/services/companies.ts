@@ -30,6 +30,24 @@ export const companiesApi = createApi({
     }),
 
     /**
+     * @Services - Business Units
+     */
+    fetchBusinessUnit: builder.query({
+      query: ({ id, company_id }) => ({
+        url: `/company/${id}/regions/`,
+        method: "GET",
+      }),
+      providesTags: ["Regions"],
+    }),
+
+    fetchAllBusinessUnits: builder.query({
+      query: ({ company_id }) => ({
+        url: `/company/${company_id}/business-unit/all`,
+        method: "GET",
+      }),
+    }),
+
+    /**
      * @Services - Regions
      */
     fetchRegions: builder.query({
@@ -72,4 +90,5 @@ export const {
   useCreateRegionMutation,
   useDeleteRegionMutation,
   useUpdateRegionMutation,
+  useFetchAllBusinessUnitsQuery,
 } = companiesApi;

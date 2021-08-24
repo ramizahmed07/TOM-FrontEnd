@@ -17,8 +17,9 @@ import SubAdminsList from "@pages/admin/User/SubAdmins/SubAdminsList";
 import CompanyDetails from "@pages/admin/Companies/CompanyProfile/CompanyDetails";
 import BusinessUnits from "@pages/admin/Companies/CompanyProfile/BusinessUnits";
 import Regions from "@pages/admin/Companies/CompanyProfile/Regions";
+import BusinessUnitRegions from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitRegions";
+import BusinessUnitCountries from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitCountries";
 import { Paths, IRoute, permissions } from "@router";
-import BusinessUnit from "@/pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnit";
 
 export const routeConfig: IRoute[] = [
   {
@@ -71,7 +72,7 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_units,
+        path: Paths.Users.companies.profile.business_units.listing,
         component: BusinessUnits,
         key: "Business Units",
         exact: true,
@@ -79,9 +80,17 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_unit,
-        component: BusinessUnit,
-        key: "Business Unit",
+        path: Paths.Users.companies.profile.business_units.regions,
+        component: BusinessUnitRegions,
+        key: "Business Unit Regions",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_units.countries,
+        component: BusinessUnitCountries,
+        key: "Business Unit Countries",
         exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,

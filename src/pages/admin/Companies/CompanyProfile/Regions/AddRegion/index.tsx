@@ -10,10 +10,12 @@ import { ICountry } from "@store/countries";
 import {
   ErrorServices,
   useCreateRegionMutation,
+  useFetchAllBusinessUnitsQuery,
   useUpdateRegionMutation,
 } from "@services";
 import { showSuccessPopup } from "@/utils";
 import { IRegion } from "@store/companies";
+import { data } from "@/pages/admin/User/Companies/CompanyList/dumpData";
 
 const { Option } = Select;
 
@@ -34,10 +36,14 @@ const AddRegion: React.FC<IAddRegion> = ({
   isVisible,
   setIsVisible,
 }) => {
-  const [region, setRegion] = useState(INITIAL_STATE);
-  const [createRegion, { isLoading }] = useCreateRegionMutation();
-  const [updateRegion, { isLoading: isUpdating }] = useUpdateRegionMutation();
   const { company_id } = useParams<{ company_id: string }>();
+  const [region, setRegion] = useState(INITIAL_STATE);
+  const { data: businessUnits, isLoading } = useFetchAllBusinessUnitsQuery({
+    company_id,
+  });
+  const { data } = businessUnits || {};
+  const [createRegion, { isLoading: isCreating }] = useCreateRegionMutation();
+  const [updateRegion, { isLoading: isUpdating }] = useUpdateRegionMutation();
   const { countries: countriesList } = useTypedSelector(
     state => state.countries
   );
@@ -48,6 +54,8 @@ const AddRegion: React.FC<IAddRegion> = ({
     business_units: business_unit_ids,
     id,
   } = region || {};
+
+  console.log("data", { data, isLoading });
 
   useEffect(() => {
     if (selectedRegion) {
@@ -104,7 +112,7 @@ const AddRegion: React.FC<IAddRegion> = ({
           key="1"
           type="primary"
         >
-          {isLoading || isUpdating ? (
+          {isCreating || isUpdating ? (
             <LoadingOutlined className="spinner" />
           ) : (
             "Create Region"
@@ -161,21 +169,26 @@ const AddRegion: React.FC<IAddRegion> = ({
           </Col>
           <Col span={11}>
             <label>Select business units</label>
-            {/* <Select
-              value={businessUnits}
+            <Select
+              value={region?.business_units as number[]}
               size="large"
               showArrow
               mode="multiple"
               placeholder="Select business units from here..."
               showSearch={false}
-              onChange={val => setBusinessUnits(val)}
+              onChange={(val: number[]) =>
+                setRegion(prev => ({
+                  ...prev,
+                  business_units: val as number[],
+                }))
+              }
             >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {data?.map(({ name, id }: { name: string; id: number }) => (
+                <Option key={id} value={id}>
+                  {name}
                 </Option>
               ))}
-            </Select> */}
+            </Select>
           </Col>
         </Row>
       </>
