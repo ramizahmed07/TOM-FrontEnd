@@ -8,11 +8,14 @@ import Modal from "@components/Modal";
 import {
   ErrorServices,
   useCreateLegalEntityMutation,
+  useFetchBusinessUnitQuery,
+  useFetchRegionQuery,
   useUpdateLegalEntityMutation,
 } from "@services";
 import { showSuccessPopup } from "@utils";
 import { IParams } from "../config";
 import { ILegalEntity } from "@store/companies";
+import { useTypedSelector } from "@/hooks";
 
 interface IAddLegalEntity extends IModal {
   selectedEntity: ILegalEntity | null;
@@ -28,11 +31,19 @@ const AddLegalEntity: FC<IAddLegalEntity> = ({
   const [name, setName] = useState("");
   const { region_id, country_id, business_unit_id, company_id } =
     useParams<IParams>();
+  const { data: region } = useFetchRegionQuery({
+    company_id,
+    id: region_id,
+  });
+  const { data: businessUnit } = useFetchBusinessUnitQuery({
+    company_id,
+    id: business_unit_id,
+  });
   const [createLegalEntity, { isLoading: isCreating }] =
     useCreateLegalEntityMutation();
-
   const [updateLegalEntity, { isLoading: isUpdating }] =
     useUpdateLegalEntityMutation();
+  const { countries } = useTypedSelector(state => state?.countries);
 
   useEffect(() => {
     if (selectedEntity) {
@@ -115,17 +126,23 @@ const AddLegalEntity: FC<IAddLegalEntity> = ({
         <Row justify="space-between" className="modal__row ">
           <Col span={11}>
             <label>Business Unit</label>
-            <Input size="large" disabled />
+            <Input value={businessUnit?.data?.name} size="large" disabled />
           </Col>
           <Col span={11}>
             <label>Region</label>
-            <Input size="large" disabled />
+            <Input value={region?.data?.name} size="large" disabled />
           </Col>
         </Row>
         <Row className="modal__row">
           <Col span={11}>
             <label>Country</label>
-            <Input size="large" disabled />
+            <Input
+              value={
+                countries?.find(country => country?.id === +country_id)?.name
+              }
+              size="large"
+              disabled
+            />
           </Col>
         </Row>
       </>
