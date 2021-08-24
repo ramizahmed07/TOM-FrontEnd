@@ -8,6 +8,7 @@ import {
   message,
 } from "antd";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
+import _ from "lodash";
 
 import "./layout.less";
 import { Paths, routeConfig } from "@router";
@@ -131,7 +132,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <div className="profile__menu__text__container">
                   <span className="profile__menu__user__name">{`${user?.first_name} ${user?.last_name}`}</span>
                   <span className="profile__menu__user__role">
-                    {user?.role}
+                    {_.replace(_.startCase(_.toLower(user?.role)), "_", " ")}
                   </span>
                 </div>
                 <div className="profile__menu__icon__container">
