@@ -85,9 +85,6 @@ const AddGradeCompany = () => {
   const rows = getRows(taRanks, allGradeCompanies) || [];
 
   /**
-   * @TODO = DELETE GRADE COMPANY
-   */
-  /**
    * The purpose below is to show/hide and sort the columns
    * it relies on companies dropdown
    */

@@ -7,7 +7,7 @@ export const companiesApi = createApi({
   baseQuery: tomService({
     baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
-  tagTypes: ["Companies", "Regions"],
+  tagTypes: ["Companies", "Regions", "LegalEntities"],
 
   endpoints: builder => ({
     /**
@@ -54,6 +54,16 @@ export const companiesApi = createApi({
         url: `/company/${company_id}/business-unit/${business_unit_id}/region/${region_id}/country/${country_id}/legal-entities/`,
         method: "GET",
       }),
+      providesTags: ["LegalEntities"],
+    }),
+
+    createLegalEntity: builder.mutation({
+      query: ({ body, company_id }) => ({
+        url: `/company/${company_id}/legal-entity/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["LegalEntities"],
     }),
 
     /**
@@ -104,6 +114,7 @@ export const {
   useFetchBusinessUnitQuery,
   useFetchAllBusinessUnitsQuery,
   useFetchLegalEntitiesQuery,
+  useCreateLegalEntityMutation,
   useFetchRegionsQuery,
   useFetchRegionQuery,
   useCreateRegionMutation,
