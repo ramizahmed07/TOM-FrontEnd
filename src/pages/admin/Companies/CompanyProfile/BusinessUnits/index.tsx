@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Menu, TableColumnsType } from "antd";
+import { Dropdown, Menu, message, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -28,6 +28,8 @@ const BusinessUnits = () => {
     (state: ICombineReducerProps) => state.businessUnit
   );
   const [isVisible, setIsVisible] = React.useState(false);
+  const [editBusinessUnitItem, setEditBusinessUnitItem] = React.useState(null);
+  const [businessUnitId, setBusinessUnitId] = React.useState("");
   const [getBusinsesUnits, { isLoading }] = useFetchBusinessUnitMutation();
   const [deleteBusinessUnit] = useDeleteBusinessUnitMutation();
   const [fetchAllSectors] = useFetchAllSectorsMutation();
@@ -39,8 +41,13 @@ const BusinessUnits = () => {
   }, []);
 
   const fetchListFromApi = async () => {
-    await getBusinsesUnits({ company_id });
-    await fetchAllSectors("");
+    try {
+      await getBusinsesUnits({ company_id }).unwrap();
+      await fetchAllSectors("").unwrap();
+      message.success("Successfully fetched list");
+    } catch (error) {
+      ErrorServices(error);
+    }
   };
 
   const handleActionDropdown = ({
@@ -54,11 +61,12 @@ const BusinessUnits = () => {
       | React.KeyboardEvent<HTMLElement>;
     item: IBusinessUnitItem;
   }) => {
+    setBusinessUnitId(item?.id.toString());
     domEvent.stopPropagation();
     if (key === "2") {
       deleteBUFromApi(item?.id.toString());
     } else {
-      editBUFromApi();
+      editBUFromApi(item);
     }
   };
 
@@ -79,7 +87,7 @@ const BusinessUnits = () => {
       title: "sector",
       key: "sector",
       width: "15%",
-      render: item => item.sector.name || "",
+      render: ({ sector }) => sector && sector.name,
     },
     {
       title: "industy",
@@ -87,7 +95,7 @@ const BusinessUnits = () => {
       width: "22%",
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
-      render: item => (item.industry ? item.industry.name : ""),
+      render: ({ industry }) => industry && industry.name,
     },
     {
       title: "sub-industry",
@@ -95,7 +103,7 @@ const BusinessUnits = () => {
       width: "20%",
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
-      render: item => (item.sub_industry ? item.sub_industry.name : ""),
+      render: ({ sub_industry }) => sub_industry && sub_industry.name,
     },
     {
       title: "region",
@@ -141,16 +149,21 @@ const BusinessUnits = () => {
     try {
       await deleteBusinessUnit({ company_id, business_unit_id }).unwrap();
       fetchListFromApi();
+      setBusinessUnitId("");
     } catch (error) {
       ErrorServices(error);
     }
   };
 
-  const editBUFromApi = () => {};
+  const editBUFromApi = (item: any) => {
+    setEditBusinessUnitItem(item);
+    setIsVisible(true);
+  };
 
   const onCloseModal = () => {
+    setBusinessUnitId("");
     setIsVisible(false);
-    fetchListFromApi();
+    setEditBusinessUnitItem(null);
   };
 
   return (
@@ -160,6 +173,9 @@ const BusinessUnits = () => {
         isVisible={isVisible}
         setIsVisible={onCloseModal}
         company_id={company_id}
+        editBusinessUnitItem={editBusinessUnitItem}
+        fetchListFromApi={fetchListFromApi}
+        businessUnitId={businessUnitId}
       />
       <Button
         variant="add"

@@ -29,6 +29,13 @@ export const businessUnitApi = createApi({
         body,
       }),
     }),
+    editBusinessUnit: builder.mutation({
+      query: ({ company_id, business_unit_id, body }) => ({
+        url: `/${company_id}/business-unit/${business_unit_id}/`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -36,4 +43,5 @@ export const {
   useFetchBusinessUnitMutation,
   useDeleteBusinessUnitMutation,
   useAddBusinessUnitMutation,
+  useEditBusinessUnitMutation,
 } = businessUnitApi;
