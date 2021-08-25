@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Menu, message, TableColumnsType } from "antd";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import "./style.less";
 import AddBusinessUnit from "./AddBusinessUnit";
@@ -27,6 +27,7 @@ const BusinessUnits = () => {
   const businessUnitReducer: IBusinessUnitState = useSelector(
     (state: ICombineReducerProps) => state.businessUnit
   );
+  const history = useHistory();
   const [isVisible, setIsVisible] = React.useState(false);
   const [editBusinessUnitItem, setEditBusinessUnitItem] = React.useState(null);
   const [businessUnitId, setBusinessUnitId] = React.useState("");
@@ -166,6 +167,10 @@ const BusinessUnits = () => {
     setEditBusinessUnitItem(null);
   };
 
+  const onRowClick = (data: any) => {
+    history.push(`${window.location.pathname}/${data?.id}`);
+  };
+
   return (
     <div>
       <AddBusinessUnit
@@ -188,6 +193,7 @@ const BusinessUnits = () => {
         isLoading={isLoading}
         data={businessUnitReducer.list}
         columns={columns}
+        onRowClick={onRowClick}
         pagination={false}
         locale={{
           emptyText: (
