@@ -1,12 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { baseUrl } from "./constants";
 import { tomService } from "./restService";
 
 export const businessUnitApi = createApi({
   reducerPath: "businessUnitApi",
   baseQuery: tomService({
-    baseUrl: `${baseUrl}/company`,
+    baseUrl: `${process.env.REACT_APP_BASE_URL}/company`,
   }),
 
   endpoints: builder => ({
