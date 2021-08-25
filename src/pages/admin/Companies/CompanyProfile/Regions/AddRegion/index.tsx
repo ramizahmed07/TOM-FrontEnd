@@ -55,13 +55,14 @@ const AddRegion: React.FC<IAddRegion> = ({
     id,
   } = region || {};
 
-  console.log("data", { data, isLoading });
-
   useEffect(() => {
     if (selectedRegion) {
       setRegion({
         ...selectedRegion,
-        countries: selectedRegion?.countries.map((country: any) => country.id),
+        countries: selectedRegion?.countries.map((country: any) => country?.id),
+        business_units: selectedRegion?.business_units.map(
+          (unit: any) => unit?.id
+        ),
       } as IRegion);
     }
     return () => {
@@ -115,7 +116,7 @@ const AddRegion: React.FC<IAddRegion> = ({
           {isCreating || isUpdating ? (
             <LoadingOutlined className="spinner" />
           ) : (
-            "Create Region"
+            `${selectedRegion ? "Update" : "Create"} Region`
           )}
         </Button>,
         <Button key="2" onClick={() => setIsVisible(false)}>

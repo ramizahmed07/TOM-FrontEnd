@@ -30,20 +30,21 @@ export const getColumns = (
       title: "id",
       dataIndex: "id",
       key: "id",
-      width: "10%",
+      width: 100,
     },
     {
       title: "region name",
       dataIndex: "name",
       key: "name",
-      width: "15%",
+      width: 300,
+      render: (name: string) => <div className="text-wrap">{name}</div>,
     },
 
     {
       title: "Countries",
       dataIndex: "countries",
       key: "countries",
-      width: "35%",
+      width: 300,
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
       render: (countries: ICountry[]) => (
@@ -56,7 +57,7 @@ export const getColumns = (
       title: "business unit",
       dataIndex: "business_units",
       key: "businessUnit",
-      width: "30%",
+      width: `calc(100% - 860px)`,
       filters: [],
       filterIcon: <FilterIcon className="table__filter__icon" />,
       render: (units: { name: string; id: number }[]) => (
@@ -70,7 +71,7 @@ export const getColumns = (
       title: <span className="align-center">action</span>,
       key: "action",
       fixed: "right",
-      width: "10%",
+      width: 160,
 
       render: (item: IRegion) => {
         const menu = (
