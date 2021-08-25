@@ -58,25 +58,26 @@ const Industry = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
-      width: "10%",
+      width: 100,
     },
 
     {
       title: "Industry",
       dataIndex: "name",
       key: "industry",
-      width: "23%",
+      width: `calc(50% - 260px)`,
+      render: (name: string) => <div className="text-wrap">{name}</div>,
     },
     {
       title: "Sub-Industry",
       dataIndex: "sub_industries",
       key: "subIndustry",
-      width: "47%",
+      width: `calc(50% - 260px)`,
       render: sub_industries => {
         const names = sub_industries?.map(
           (sub_industry: ISubIndustry) => sub_industry.name
         );
-        return <span>{names.join(", ")}</span>;
+        return <span className="text-wrap">{names.join(", ")}</span>;
       },
     },
     ...((!checkPermission([
@@ -89,7 +90,7 @@ const Industry = () => {
             title: "Actions",
             key: "action",
             fixed: "right",
-            width: "20%",
+            width: 160,
             render: (industry: IIndustry) => {
               return (
                 <>
