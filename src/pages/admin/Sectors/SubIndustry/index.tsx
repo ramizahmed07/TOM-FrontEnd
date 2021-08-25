@@ -55,20 +55,15 @@ const SubIndustry = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
-      width: "7%",
+      width: 100,
     },
 
     {
       title: "Sub-Industry",
       dataIndex: "name",
       key: "subIndustry",
-      width: "23%",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      width: "55%",
+      width: `calc(100% - 260px)`,
+      render: (name: string) => <div className="text-wrap">{name}</div>,
     },
     ...((!checkPermission([
       permissions.UPDATE_SUB_INDUSTRY,
@@ -80,7 +75,7 @@ const SubIndustry = () => {
             title: "Actions",
             key: "action",
             fixed: "right",
-            width: "15%",
+            width: 160,
             render: (item: ISubIndustry) => {
               return (
                 <div>
