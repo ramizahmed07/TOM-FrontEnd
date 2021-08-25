@@ -1,35 +1,176 @@
 import React from "react";
-import { Button, Col, Input, Row, Select } from "antd";
+import { Button, Col, Input, message, Row, Select } from "antd";
 
 import "./addBusinessUnit.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
-import { Sector, SECTORS, INDUSTRIES, dropdown } from "./config";
+import {
+  ErrorServices,
+  useAddBusinessUnitMutation,
+  useEditBusinessUnitMutation,
+} from "@services";
 
 const { Option } = Select;
 
-const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
+export interface Industry {
+  id: string;
+  name: string;
+  sub_industries: Array<{}>;
+}
+
+export interface Sector {
+  id: string;
+  name: string;
+  industries: Array<Industry>;
+}
+
+export type dropdown = string | undefined;
+
+type Payload = {
+  name: string;
+  sector_id?: number;
+  industry_id?: number;
+  sub_industry_id?: number;
+};
+
+export interface IBusinessUnit extends IModal {
+  fetchListFromApi: () => void;
+  allSectorList: [];
+  company_id: string;
+  businessUnitId?: string;
+  editBusinessUnitItem: null | {
+    name: string;
+    sector: { [k: string]: string };
+    industry: { [k: string]: string };
+    sub_industry: { [k: string]: string };
+  };
+}
+
+const AddBusinessUnit: React.FC<IBusinessUnit> = ({
+  isVisible,
+  setIsVisible,
+  allSectorList,
+  company_id,
+  fetchListFromApi,
+  editBusinessUnitItem,
+  businessUnitId,
+}) => {
   const [sector, setSector] = React.useState<dropdown>(undefined);
   const [industry, setIndustry] = React.useState<dropdown>(undefined);
+  const [industryList, setIndustryList] = React.useState<[]>([]);
   const [subIndustry, setSubIndustry] = React.useState<dropdown>(undefined);
-  const [unitName, setUnitName] = React.useState("");
+  const [subIndustryList, setSubIndustryList] = React.useState<[]>([]);
+  const [name, setName] = React.useState("");
+  const [addBusinessUnit] = useAddBusinessUnitMutation();
+  const [editBusinessUnit] = useEditBusinessUnitMutation();
+  const isEdit = editBusinessUnitItem ? true : false;
+
+  React.useEffect(() => {
+    setInitialValues();
+  }, [editBusinessUnitItem]);
+
+  React.useEffect(() => {
+    if (sector && sector.length) {
+      const { id } = JSON.parse(sector);
+      allSectorList.find((sector: any) => {
+        if (sector.id == id) {
+          setIndustryList(sector.industries);
+        }
+      });
+    }
+  }, [sector]);
+
+  React.useEffect(() => {
+    if (sector && sector.length && industry && industry.length) {
+      const { sub_industries } = JSON.parse(industry);
+      setSubIndustryList(sub_industries);
+    }
+  }, [industry]);
+
+  const setInitialValues = () => {
+    if (editBusinessUnitItem) {
+      const { name, sector, industry, sub_industry } = editBusinessUnitItem;
+      name && setName(name);
+      if (editBusinessUnitItem.sector) {
+        setSector(JSON.stringify(editBusinessUnitItem.sector));
+        if (industry) {
+          allSectorList.find((s: any) => {
+            if (s.id == sector.id) {
+              s.industries.find((i: any) => {
+                if (i.id == industry.id) {
+                  setIndustry(JSON.stringify(i));
+                }
+              });
+            }
+          });
+          sub_industry && setSubIndustry(JSON.stringify(sub_industry));
+        }
+      }
+    }
+  };
+
+  const onSubmit = async () => {
+    if (name.length) {
+      const payload: Payload = {
+        name,
+      };
+      sector &&
+        sector.length &&
+        (payload.sector_id = Number(JSON.parse(sector).id));
+      industry &&
+        industry.length &&
+        (payload.industry_id = Number(JSON.parse(industry).id));
+      subIndustry &&
+        subIndustry.length &&
+        (payload.sub_industry_id = Number(JSON.parse(subIndustry).id));
+      try {
+        if (isEdit) {
+          await editBusinessUnit({
+            company_id,
+            business_unit_id: businessUnitId,
+            body: payload,
+          }).unwrap();
+        } else {
+          await addBusinessUnit({ company_id, body: payload }).unwrap();
+        }
+        message.success(
+          `Business unit has been successfully ${isEdit ? "updated" : "added"}.`
+        );
+        resetAll();
+        fetchListFromApi();
+        setIsVisible(false);
+      } catch (error) {
+        ErrorServices(error);
+      }
+    }
+  };
+
+  const resetAll = () => {
+    setSector(undefined);
+    setIndustry(undefined);
+    setSubIndustry(undefined);
+    setIndustryList([]);
+    setSubIndustryList([]);
+    setName("");
+  };
 
   return (
     <Modal
       footer={[
-        <Button
-          // onClick={addSector}
-          disabled={!sector || !industry || !unitName || !subIndustry}
-          key="1"
-          type="primary"
-        >
-          Add Sector
+        <Button disabled={!name} key="1" type="primary" onClick={onSubmit}>
+          {`${isEdit ? "Update" : "Add"} Sector`}
         </Button>,
-        <Button key="2" onClick={() => setIsVisible(false)}>
+        <Button
+          key="2"
+          onClick={() => {
+            resetAll();
+            setIsVisible(false);
+          }}
+        >
           Cancel
         </Button>,
       ]}
-      title="Create a Business Unit"
+      title={`${isEdit ? "Update" : "Create"} a Business Unit`}
       isVisible={isVisible}
     >
       <>
@@ -37,11 +178,15 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           <Col span={11}>
             <label>Name of a business unit</label>
             <Input
-              onChange={e => setUnitName(e.target.value)}
+              onChange={e => {
+                // setNameError(false)
+                setName(e.target.value);
+              }}
               placeholder="Enter business unit name here..."
               size="large"
-              value={unitName}
+              value={name}
             />
+            {/* {nameError ? <span>Name is required</span> : null} */}
           </Col>
         </Row>
         <div className="sub-heading mb-32">Choose Sector & Industry</div>
@@ -49,14 +194,22 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           <Col span={11}>
             <label>Select a sector</label>
             <Select
-              value={sector}
+              value={sector && JSON.parse(sector).name}
               size="large"
               placeholder="Select sector from here..."
-              onChange={val => setSector(val)}
+              onChange={val => {
+                setSubIndustryList([]);
+                setIndustry(undefined);
+                setSubIndustry(undefined);
+                setSector(val);
+              }}
             >
-              {SECTORS.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {allSectorList.map(({ id, name, industries }: Sector) => (
+                <Option
+                  key={id}
+                  value={JSON.stringify({ id, name, industries })}
+                >
+                  {name}
                 </Option>
               ))}
             </Select>
@@ -66,16 +219,22 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           <Col span={11}>
             <label>Select industry</label>
             <Select
-              value={industry}
+              value={industry && JSON.parse(industry).name}
               size="large"
               showArrow
               placeholder="Select industry from here..."
               showSearch={false}
-              onChange={val => setIndustry(val)}
+              onChange={val => {
+                setIndustry(val);
+                setSubIndustry(undefined);
+              }}
             >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {industryList.map(({ id, name, sub_industries }: Industry) => (
+                <Option
+                  key={id}
+                  value={JSON.stringify({ id, name, sub_industries })}
+                >
+                  {name}
                 </Option>
               ))}
             </Select>
@@ -83,16 +242,16 @@ const AddBusinessUnit: React.FC<IModal> = ({ isVisible, setIsVisible }) => {
           <Col span={11}>
             <label>Select Sub-Industry</label>
             <Select
-              value={subIndustry}
+              value={subIndustry && JSON.parse(subIndustry).name}
               size="large"
               showArrow
               placeholder="Select sub-industry from here..."
               showSearch={false}
               onChange={val => setSubIndustry(val)}
             >
-              {INDUSTRIES.map(({ title, id, value }: Sector) => (
-                <Option key={id} value={value}>
-                  {title}
+              {subIndustryList.map(({ id, name }: Sector) => (
+                <Option key={id} value={JSON.stringify({ id, name })}>
+                  {name}
                 </Option>
               ))}
             </Select>

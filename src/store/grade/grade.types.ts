@@ -20,3 +20,8 @@ export interface IGradeClientCompany {
   id: number;
   name: string;
 }
+
+export interface IGradeState {
+  taRanks: ITARank[];
+  allGradeCompanies: IGradeCompany[];
+}

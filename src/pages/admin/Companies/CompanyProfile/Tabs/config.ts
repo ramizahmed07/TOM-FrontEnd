@@ -1,18 +1,20 @@
+import { Paths } from "@router";
+
 export const TABS = [
   {
     id: 1,
     title: "Company details",
-    path: "/profile/details",
+    path: Paths.Users.companies.profile.details,
   },
   {
     id: 2,
     title: "Business units",
-    path: "/profile/business-units",
+    path: Paths.Users.companies.profile.business_units,
   },
   {
     id: 3,
     title: "Regions",
-    path: "/profile/regions",
+    path: Paths.Users.companies.profile.regions,
   },
   {
     id: 4,

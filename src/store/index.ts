@@ -16,9 +16,19 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import { authApi, gradeApi, sectorsApi, jobFunctionApi, subJobFunctionApi, subAdminApi } from "@services";
+import {
+  authApi,
+  businessUnitApi,
+  gradeApi,
+  sectorsApi,
+  jobFunctionApi,
+  subJobFunctionApi,
+  subAdminApi,
+  companiesApi,
+} from "@services";
 import { authReducer } from "./auth";
-import { sectorsReducer } from "./sectors";
+import { businessUnitReducer } from "./business-unit";
+import { ISectorsState, sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
 import { jobFunctionReducer } from "./job-function";
 import { IAuthState } from "./auth/auth.types";
@@ -27,30 +37,35 @@ import { ISubJobFunctionReducer } from "./sub-job-function/sub.job.function.type
 import { subJobFunctionReducer } from "./sub-job-function";
 import { ISubAdminReducer } from "./sub-admin/sub.admin.types";
 import { subAdminReducer } from "./sub-admin";
+import { companiesReducer } from "./companies";
+import { IBusinessUnitState } from "./business-unit";
 
 export interface ICombineReducerProps {
   auth: IAuthState;
+  businessUnit: IBusinessUnitState;
   jobFunction: IJobFunctionReducer;
   subJobFunction: ISubJobFunctionReducer;
-  subAdmin: ISubAdminReducer
+  subAdmin: ISubAdminReducer;
+  sectors: ISectorsState;
 }
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
+  [businessUnitApi.reducerPath]: businessUnitApi.reducer,
   [sectorsApi.reducerPath]: sectorsApi.reducer,
   [gradeApi.reducerPath]: gradeApi.reducer,
   [jobFunctionApi.reducerPath]: jobFunctionApi.reducer,
   [subJobFunctionApi.reducerPath]: subJobFunctionApi.reducer,
+  [companiesApi.reducerPath]: companiesApi.reducer,
   [subAdminApi.reducerPath]: subAdminApi.reducer,
   auth: authReducer,
+  businessUnit: businessUnitReducer,
   sectors: sectorsReducer,
   grade: gradeReducer,
   jobFunction: jobFunctionReducer,
   subJobFunction: subJobFunctionReducer,
   subAdmin: subAdminReducer,
-  yolo: () => ({
-    userr: null,
-  }),
+  companies: companiesReducer,
 });
 
 const persistConfig = {

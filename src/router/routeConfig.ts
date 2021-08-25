@@ -4,16 +4,19 @@ import ResetPassword from "@pages/admin/Auth/ResetPassword";
 import GradeMapTable from "@pages/admin/GradeMapTable";
 import AddGradeCompany from "@pages/admin/GradeMapTable/AddGradeCompany";
 import JobFunction from "@pages/admin/JobFunction";
-import SubJobFunction from "@/pages/admin/JobFunction/SubJobFunction";
-import Sectors from "@/pages/admin/Sectors";
-import Industry from "@/pages/admin/Sectors/Industry";
+import SubJobFunction from "@pages/admin/JobFunction/SubJobFunction";
+import Sectors from "@pages/admin/Sectors";
+import Industry from "@pages/admin/Sectors/Industry";
 import SubIndustry from "@pages/admin/Sectors/SubIndustry";
-import CompanyList from "@/pages/admin/User/Companies/company-list";
-import CompanyCreate from "@/pages/admin/User/Companies/CompanyCreate";
-import SubAdminsCreate from "@/pages/admin/User/SubAdmins/SubAdminsCreate";
-import SubAdminsList from "@/pages/admin/User/SubAdmins/SubAdminsList";
+import Companies from "@pages/admin/Companies";
+import CreateCompany from "@pages/admin/Companies/CreateCompany";
+import CompanyProfile from "@pages/admin/Companies/CompanyProfile";
+import SubAdminsCreate from "@pages/admin/User/SubAdmins/SubAdminsCreate";
+import SubAdminsEdit from "@pages/admin/User/SubAdmins/SubAdminEdit";
+import SubAdminsList from "@pages/admin/User/SubAdmins/SubAdminsList";
 import { Paths, IRoute, permissions } from "@router";
-import SubAdminsEdit from "@/pages/admin/User/SubAdmins/SubAdminEdit";
+import CompanyDetails from "@pages/admin/Companies/CompanyProfile/CompanyDetails";
+import BusinessUnits from "@/pages/admin/Companies/CompanyProfile/BusinessUnits";
 
 export const routeConfig: IRoute[] = [
   {
@@ -36,21 +39,46 @@ export const routeConfig: IRoute[] = [
   },
   {
     path: Paths.Users.companies.listing,
-    component: CompanyList,
+    component: Companies,
     key: "Companies",
     exact: true,
     breadcrumb: "Users / Companies list",
     isPrivate: true,
   },
   {
-    path: Paths.Users.companies.create_company,
-    component: CompanyCreate,
+    path: Paths.Users.companies.create,
+    component: CreateCompany,
     key: "Company New Company",
     exact: true,
     breadcrumb: "Users / Companies list / Create new company",
     isPrivate: true,
   },
+  {
+    path: Paths.Users.companies.profile.details,
+    component: CompanyProfile,
+    key: "Companies",
+    breadcrumb: "Users / Companies list",
+    isPrivate: true,
+    routes: [
+      {
+        path: Paths.Users.companies.profile.details,
+        component: CompanyDetails,
+        key: "Companies",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_units,
+        component: BusinessUnits,
+        key: "Companies",
+        exact: true,
 
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+    ],
+  },
   {
     path: Paths.Users.sub_admins.listing,
     component: SubAdminsList,

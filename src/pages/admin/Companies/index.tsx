@@ -13,15 +13,15 @@ import {
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
-import "./style.less";
+import "./companies.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { Paths } from "@router";
 import { useFetchCompaniesQuery } from "@services";
-import { ICompany } from "@/store/companies";
-import Table from "@/components/Table";
+import { ICompany } from "@store/companies";
+import Table from "@components/Table";
 
-const CompanyList = () => {
+const Companies = () => {
   const history = useHistory();
   const { data: companiesData, isLoading: isFetching } =
     useFetchCompaniesQuery(null);
@@ -120,16 +120,16 @@ const CompanyList = () => {
   ];
 
   return (
-    <>
+    <div className="companies">
       <Row>
         <Col span={24}>
-          <h1 className="page__heading">Companies list</h1>
-          <div className="header__container">
+          <div className="main-heading mb-16">Companies list</div>
+          <div className="companies__upper mb-20">
             <Input
-              className="form__input"
+              className="companies__upper__searchbar"
               type="email"
               placeholder="Search by name or ID..."
-              prefix={<SearchOutlined style={{ color: "#435465" }} />}
+              prefix={<SearchOutlined color="#435465" />}
             />
             <Button onClick={createNewCompany} type="primary">
               <PlusOutlined /> Create new company
@@ -139,8 +139,8 @@ const CompanyList = () => {
           <Table columns={columns} data={data} isLoading={isFetching} />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 
-export default CompanyList;
+export default Companies;

@@ -23,7 +23,7 @@ const CompanyDetails = () => {
 
         <Button
           type="primary"
-          onClick={() => history.push(Paths.Users.companies.create_company)}
+          onClick={() => history.push(Paths.Users.companies.create)}
         >
           Edit Company Details
         </Button>

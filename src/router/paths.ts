@@ -11,7 +11,12 @@ const Dashboard = {
 const Users = {
   companies: {
     listing: "/companies",
-    create_company: "/companies/create-company",
+    create: "/companies/create",
+    profile: {
+      details: "/companies/:company_id",
+      business_units: "/companies/:company_id/business-units",
+      regions: "/companies/:company_id/regions",
+    },
   },
   sub_admins: {
     listing: "/sub-admins",
@@ -27,8 +32,8 @@ const Settings = {
     sub_industry: "/sectors/:sector_id/:industry_id",
   },
   job_function: {
-    listing: '/job-function',
-    sub_job_function: '/job-sub-function/:job_id',
+    listing: "/job-function",
+    sub_job_function: "/job-sub-function/:job_id",
   },
   grade_map_table: {
     listing: "/grade-map-table",

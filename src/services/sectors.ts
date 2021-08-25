@@ -9,6 +9,14 @@ export const sectorsApi = createApi({
   }),
   tagTypes: ["Sectors", "Industries", "Sub-Industries"],
   endpoints: builder => ({
+    fetchAllSectors: builder.mutation({
+      query: () => {
+        return {
+          url: `/sectors/all`,
+          method: "GET",
+        };
+      },
+    }),
     fetchSectors: builder.query({
       query: (page = 1) => {
         return {
@@ -121,6 +129,7 @@ export const sectorsApi = createApi({
 });
 
 export const {
+  useFetchAllSectorsMutation,
   useFetchSectorsQuery,
   useCreateSectorMutation,
   useFetchIndustriesQuery,

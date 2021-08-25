@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ISectorsState } from "./sectors.types";
 
 const initialState: ISectorsState = {
+  allSectors: [],
   sectors: [],
 };
 
@@ -12,12 +13,19 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addMatcher(
-      sectorsApi.endpoints.fetchSectors.matchFulfilled,
-      (state, { payload }) => {
-        state.sectors = payload.data;
-      }
-    );
+    builder
+      .addMatcher(
+        sectorsApi.endpoints.fetchAllSectors.matchFulfilled,
+        (state, { payload }) => {
+          state.allSectors = payload.data;
+        }
+      )
+      .addMatcher(
+        sectorsApi.endpoints.fetchSectors.matchFulfilled,
+        (state, { payload }) => {
+          state.sectors = payload.data;
+        }
+      );
   },
 });
 
