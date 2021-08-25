@@ -14,8 +14,8 @@ export const companiesApi = createApi({
      * @Services - Companies
      */
     fetchCompanies: builder.query({
-      query: () => ({
-        url: "/companies/",
+      query: (page = 1) => ({
+        url: `/companies/?page=${page}`,
         method: "GET",
       }),
       providesTags: ["Companies"],

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Col,
   Row,
@@ -16,7 +16,6 @@ import { useHistory } from "react-router-dom";
 
 import "./companies.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { Paths } from "@router";
 import {
   ErrorServices,
@@ -28,9 +27,10 @@ import Table from "@components/Table";
 
 const Companies = () => {
   const history = useHistory();
+  const [page, setPage] = useState(1);
   const [updateCompanyStatus] = useUpdateCompanyStatusMutation();
   const { data: companiesData, isLoading: isFetching } =
-    useFetchCompaniesQuery(null);
+    useFetchCompaniesQuery(page);
   const { data, pagination } = companiesData || {};
 
   const createNewCompany = () => history.push(Paths.Users.companies.create);
@@ -52,43 +52,48 @@ const Companies = () => {
 
   const columns: TableColumnsType<ICompany> = [
     {
-      title: <div className="text-wrap">Company ID</div>,
+      title: "ID",
       dataIndex: "id",
       key: "id",
-      width: 110,
+      width: 100,
     },
     {
-      title: <div className="text-wrap">Company Name</div>,
+      title: "Company Name",
       dataIndex: "name",
       key: "name",
-      width: 130,
+      width: 200,
+      render: (name: string) => <div className="text-wrap">{name}</div>,
     },
     {
-      title: <div className="text-wrap">Name</div>,
+      title: "Name",
       key: "name",
       width: 120,
-      render: (record: ICompany) =>
-        `${record.user?.first_name} ${record.user?.last_name}`,
+      render: (record: ICompany) => (
+        <div className="text-wrap">
+          {`${record.user?.first_name} ${record.user?.last_name}`}
+        </div>
+      ),
     },
     {
-      title: <div className="text-wrap">Email</div>,
+      title: "Email",
       key: "email",
-      width: 200,
-      render: (record: ICompany) => record.user?.email,
+      width: 250,
+      render: (record: ICompany) => (
+        <div className="text-wrap">{record.user?.email}</div>
+      ),
     },
     {
-      title: <div className="text-wrap">Location</div>,
+      title: "Location",
       dataIndex: "country_headquarter",
       key: "country_headquarter",
-      width: 120,
-      filters: [],
-      filterIcon: <FilterIcon className="table__filter__icon" />,
+      width: 150,
+      render: (location: string) => <div className="text-wrap">{location}</div>,
     },
     {
-      title: <div className="text-wrap">Status Company</div>,
+      title: "Status Company",
       dataIndex: "status",
       key: "status",
-      width: 130,
+      width: 200,
       render: (status: string) => {
         const color: { [key: string]: string } = {
           active: "green",
@@ -99,7 +104,7 @@ const Companies = () => {
       },
     },
     {
-      title: <div className="text-wrap">Status</div>,
+      title: "Status",
       width: 90,
       align: "center",
       render: (record: ICompany) => {
@@ -112,10 +117,10 @@ const Companies = () => {
       },
     },
     {
-      title: <div className="text-wrap">Action</div>,
+      title: "Action",
       key: "action",
       fixed: "right",
-      width: 80,
+      width: 160,
       align: "center",
       render: () => {
         const menu = (
@@ -167,6 +172,10 @@ const Companies = () => {
             columns={columns}
             data={data}
             isLoading={isFetching}
+            pagination={true}
+            count={pagination?.count}
+            onChangePage={setPage}
+            page={page}
           />
         </Col>
       </Row>
