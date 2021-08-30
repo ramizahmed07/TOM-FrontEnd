@@ -60,8 +60,7 @@ const Login = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Welcome to{" "}
-            <span className="auth__company__name">Talent Accelerator</span>
+            Welcome to <span className="theme">Talent Accelerator</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
