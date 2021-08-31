@@ -179,7 +179,7 @@ const ResendLinkView = ({ sendLink, email }: IProps) => {
   );
 };
 
-const ForgotPassword = () => {
+const ClientForgotPassword = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
   const [email, setEmail] = useState("");
@@ -222,4 +222,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ClientForgotPassword;

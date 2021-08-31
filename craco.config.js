@@ -14,6 +14,7 @@ module.exports = {
       "@router": path.resolve(__dirname, "src/router/"),
       "@hooks": path.resolve(__dirname, "src/hooks/"),
       "@services": path.resolve(__dirname, "src/services/"),
+      "@styles": path.resolve(__dirname, "src/styles/"),
     },
   },
   plugins: [

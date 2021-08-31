@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
 
-import "./styles/index.less";
+import "@styles/index.less";
 import { routeConfig, Routes } from "@router";
 import Layout from "@components/Layout";
 import { useDispatch } from "react-redux";

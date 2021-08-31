@@ -2,6 +2,9 @@ const Auth = {
   login: "/login",
   forgot_password: "/forgot-password",
   reset_password: "/reset-password",
+  client_login: "/client/login",
+  client_forgot_password: "/client/forgot-password",
+  client_reset_password: "/client/reset-password",
 };
 
 const Dashboard = {

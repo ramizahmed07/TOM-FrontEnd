@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
@@ -7,53 +5,8 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
 import { Paths } from "@router";
-import { ErrorServices, useLoginMutation } from "@services";
 
-interface ILoginForm {
-  email: string;
-  password: string;
-  remember: boolean;
-}
-
-const Login = () => {
-  const history = useHistory();
-  const [errorFields, setErrorFields] = useState([]);
-  const [login, { isLoading }] = useLoginMutation();
-  const [form] = Form.useForm();
-
-  const onFinishedFailed = (errorInfo: any) => {
-    setErrorFields(errorInfo.errorFields);
-  };
-
-  const signIn = async (values: ILoginForm) => {
-    setErrorFields([]);
-    const { email, password } = values;
-    try {
-      const res = await login({
-        email,
-        password,
-      }).unwrap();
-      if (res?.data?.is_one_time_password) {
-        history.push(Paths.Auth.reset_password);
-      } else {
-        history.push(Paths.Dashboard.dashboard);
-      }
-    } catch (error) {
-      ErrorServices(error);
-
-      setErrorFields([{ errors: [error?.message], name: ["password"] }] as any);
-      form.setFields([
-        {
-          name: "password",
-          errors: [error?.message],
-        },
-      ]);
-    }
-  };
-
-  const checkError = (name: string) =>
-    errorFields?.some((x: any) => x.name.includes(name));
-
+const ClientLogin = () => {
   return (
     <Row className="auth__container">
       <AuthLandingImg />
@@ -66,27 +19,19 @@ const Login = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
-          {/* FORM */}
           <Form
             name="login"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
-            onFinish={signIn}
-            onFinishFailed={onFinishedFailed}
             layout="vertical"
-            form={form}
             className="auth__form"
           >
             <Form.Item
               className="form__item"
               validateTrigger="onSubmit"
               label={
-                <label
-                  className={`${
-                    checkError("email") ? "error__label" : "input__label"
-                  }`}
-                >
+                <label className={`${false ? "error__label" : "input__label"}`}>
                   Email Address
                 </label>
               }
@@ -108,15 +53,11 @@ const Login = () => {
               validateTrigger="onSubmit"
               label={
                 <div className="auth__password__label">
-                  <label
-                    className={
-                      checkError("password") ? "error__label" : "input__label"
-                    }
-                  >
+                  <label className={false ? "error__label" : "input__label"}>
                     Password
                   </label>
                   <Link
-                    to={Paths.Auth.forgot_password}
+                    to={Paths.Auth.client_forgot_password}
                     className="auth__forgot__password"
                   >
                     Forgot password?
@@ -149,11 +90,7 @@ const Login = () => {
                 className="login__btn"
                 size="large"
               >
-                {isLoading ? (
-                  <LoadingOutlined className="spinner" />
-                ) : (
-                  "Sign In"
-                )}
+                {false ? <LoadingOutlined className="spinner" /> : "Sign In"}
               </Button>
             </Form.Item>
           </Form>
@@ -163,4 +100,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ClientLogin;

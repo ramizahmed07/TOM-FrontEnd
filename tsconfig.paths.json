@@ -8,6 +8,7 @@
       "@components/*": ["./components/*"],
       "@types/*": ["./types/*"],
       "@store/*": ["./store/*"],
+      "@styles/*": ["./styles/*"],
       "@router": ["./router"],
       "@hooks": ["./hooks"],
       "@services": ["./services"],
