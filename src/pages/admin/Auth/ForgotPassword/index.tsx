@@ -214,7 +214,7 @@ const ForgotPassword = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Back to{" "}
             <Link
-              className="auth__form__prompt backToLogin"
+              className="auth__form__prompt backToLogin link"
               to={Paths.Auth.login}
             >
               Login

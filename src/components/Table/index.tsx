@@ -13,6 +13,7 @@ interface ITable {
   pagination?: boolean;
   onChangePage?: React.Dispatch<React.SetStateAction<number>>;
   count?: number;
+  scroll?: number;
 }
 
 const Table: FC<ITable> = ({
@@ -25,6 +26,7 @@ const Table: FC<ITable> = ({
   count = 10,
   onChangePage,
   locale,
+  scroll,
 }) => {
   return (
     <Col span={24}>
@@ -33,7 +35,7 @@ const Table: FC<ITable> = ({
           onClick: () => onRowClick && onRowClick(record),
         })}
         className={`table ${onRowClick ? "onRowHover" : ""}`}
-        scroll={{ x: 1300 }}
+        scroll={{ x: scroll || "100%" }}
         columns={columns}
         dataSource={isLoading ? [] : data}
         pagination={false}

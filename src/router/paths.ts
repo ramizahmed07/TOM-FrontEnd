@@ -53,8 +53,13 @@ const Settings = {
   },
 };
 
+const client = {
+  grade_setup: "/client/grade-setup",
+  salary_range: "/client/salary-range",
+};
+
 const Companies = {
   company_profile: "/profile",
 };
 
-export { Auth, Settings, Users, Dashboard, Companies };
+export { Auth, Settings, Users, Dashboard, Companies, client };

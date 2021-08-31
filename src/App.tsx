@@ -1,12 +1,12 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import "@styles/index.less";
 import { routeConfig, Routes } from "@router";
+import { fetchCountries } from "@services";
 import Layout from "@components/Layout";
-import { useDispatch } from "react-redux";
-import { useTypedSelector } from "./hooks";
+import { useTypedSelector } from "@hooks";
 import { adminVars, clientVars } from "./constants";
-import { fetchCountries } from "./services";
 
 declare global {
   interface Window {

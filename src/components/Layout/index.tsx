@@ -76,7 +76,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <AntdLayout className="layout__container">
       <AntdLayout>
-        <Sider width={200} className="layout__sider site-layout-background">
+        <Sider width={200} className="layout__sider sider">
           <div className="sider__logo__container">
             <Logo />
           </div>

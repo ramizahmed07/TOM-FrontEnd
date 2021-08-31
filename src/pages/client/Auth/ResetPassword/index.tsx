@@ -7,9 +7,9 @@ import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
 import { Paths } from "@router";
 import { useChangePasswordMutation } from "@services";
-import { useTypedSelector } from "@hooks";
+import { useTypedSelector } from "@/hooks";
 
-const ClientResetPassword = () => {
+const ResetPassword = () => {
   const history = useHistory();
   const [changePassword, { isLoading }] = useChangePasswordMutation();
   const auth = useTypedSelector(state => state.auth);
@@ -45,7 +45,7 @@ const ClientResetPassword = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Reset your <span className="auth__company__name">Password?</span>
+            Reset your <span className="primary-color">Password?</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
             Enter your new password below
@@ -65,7 +65,9 @@ const ClientResetPassword = () => {
               className="form__item"
               label={
                 <div className="auth__password__label">
-                  <label className="input__label">Type new password</label>
+                  <label className="input__label secondary-color">
+                    Type new password
+                  </label>
                 </div>
               }
               name="password"
@@ -83,7 +85,9 @@ const ClientResetPassword = () => {
               className="form__item"
               label={
                 <div className="auth__password__label">
-                  <label className="input__label">Re-type new password</label>
+                  <label className="input__label secondary-color">
+                    Re-type new password
+                  </label>
                 </div>
               }
               name="retypePassword"
@@ -119,7 +123,7 @@ const ClientResetPassword = () => {
           <Typography.Paragraph className="auth__form__prompt">
             Back to{" "}
             <Link
-              className="auth__form__prompt backToLogin"
+              className="auth__form__prompt backToLogin link"
               to={Paths.Auth.login}
             >
               Login?
@@ -131,4 +135,4 @@ const ClientResetPassword = () => {
   );
 };
 
-export default ClientResetPassword;
+export default ResetPassword;

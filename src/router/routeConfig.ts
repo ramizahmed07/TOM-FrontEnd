@@ -24,6 +24,8 @@ import ClientLogin from "@pages/client/Auth/Login";
 import ClientResetPassword from "@pages/client/Auth/ResetPassword";
 import ClientForgotPassword from "@pages/client/Auth/ForgotPassword";
 import { Paths, IRoute, permissions } from "@router";
+import GradeSetup from "@/pages/client/GradeSetup";
+import SalaryRange from "@/pages/client/SalaryRange";
 
 export const routeConfig: IRoute[] = [
   {
@@ -224,13 +226,6 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Dashboard.dashboard,
-    component: "Dashboard",
-    key: "Dashboard",
-    breadcrumb: "Dashboard",
-    isPrivate: true,
-  },
-  {
     path: Paths.Users.sub_admins.listing,
     component: SubAdminsList,
     key: "List sub admins",
@@ -243,6 +238,27 @@ export const routeConfig: IRoute[] = [
     component: SubAdminsCreate,
     key: "Add new sub admin",
     breadcrumb: "Users / Sub admins / Add new sub admin",
+    isPrivate: true,
+  },
+  {
+    path: Paths.client.grade_setup,
+    component: GradeSetup,
+    key: "Grade Setup",
+    breadcrumb: "Compensation System / Grade Setup",
+    isPrivate: true,
+  },
+  {
+    path: Paths.client.salary_range,
+    component: SalaryRange,
+    key: "Salary Range",
+    breadcrumb: "Compensation System / Salary Range",
+    isPrivate: true,
+  },
+  {
+    path: Paths.Dashboard.dashboard,
+    component: "Dashboard",
+    key: "Dashboard",
+    breadcrumb: "Dashboard",
     isPrivate: true,
   },
 ];
