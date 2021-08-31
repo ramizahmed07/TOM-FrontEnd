@@ -5,8 +5,8 @@ import { routeConfig, Routes } from "@router";
 import Layout from "@components/Layout";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "./hooks";
-import { fetchCountries } from "./services";
 import { adminVars, clientVars } from "./constants";
+import { fetchCountries } from "./services";
 
 declare global {
   interface Window {
