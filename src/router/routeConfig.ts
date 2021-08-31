@@ -20,6 +20,9 @@ import Regions from "@pages/admin/Companies/CompanyProfile/Regions";
 import BusinessUnitRegions from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitRegions";
 import BusinessUnitCountries from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitCountries";
 import LegalEntities from "@pages/admin/Companies/CompanyProfile/BusinessUnits/LegalEntities";
+import ClientLogin from "@pages/client/Auth/Login";
+import ClientResetPassword from "@pages/client/Auth/ResetPassword";
+import ClientForgotPassword from "@pages/client/Auth/ForgotPassword";
 import { Paths, IRoute, permissions } from "@router";
 
 export const routeConfig: IRoute[] = [
@@ -30,16 +33,34 @@ export const routeConfig: IRoute[] = [
     isPrivate: false,
   },
   {
+    path: Paths.Auth.client_login,
+    component: ClientLogin,
+    key: "Client Login",
+    isPrivate: false,
+  },
+  {
     path: Paths.Auth.forgot_password,
     component: ForgotPassword,
     key: "Forgot Password",
     isPrivate: false,
   },
   {
+    path: Paths.Auth.client_forgot_password,
+    component: ClientForgotPassword,
+    key: "Client Forgot Password",
+    isPrivate: false,
+  },
+  {
     path: Paths.Auth.reset_password,
     component: ResetPassword,
     key: "Reset Password",
-    isPrivate: false,
+    isPrivate: true,
+  },
+  {
+    path: Paths.Auth.client_reset_password,
+    component: ClientResetPassword,
+    key: "Reset Password",
+    isPrivate: true,
   },
   {
     path: Paths.Users.companies.listing,

@@ -7,9 +7,9 @@ import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
 import { Paths } from "@router";
 import { useChangePasswordMutation } from "@services";
-import { useTypedSelector } from "@/hooks";
+import { useTypedSelector } from "@hooks";
 
-const ResetPassword = () => {
+const ClientResetPassword = () => {
   const history = useHistory();
   const [changePassword, { isLoading }] = useChangePasswordMutation();
   const auth = useTypedSelector(state => state.auth);
@@ -131,4 +131,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ClientResetPassword;
