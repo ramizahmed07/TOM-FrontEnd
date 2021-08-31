@@ -1,15 +1,15 @@
 import { useState, useRef } from "react";
-import { Col, message, Row, TableColumnsType } from "antd";
+import { Col, message, Row } from "antd";
 import { useHistory, useParams } from "react-router-dom";
-import { LoadingOutlined } from "@ant-design/icons";
 
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
 import Button from "@components/Button";
-import { IIndustry, ISubIndustry } from "@store/sectors";
+import { IIndustry } from "@store/sectors";
 import { useDeleteIndustryMutation, useFetchIndustriesQuery } from "@services";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";
+import { getColumns } from "./config";
 
 const Industry = () => {
   const history = useHistory();
@@ -53,75 +53,12 @@ const Industry = () => {
     }
   };
 
-  const columns: TableColumnsType<IIndustry> = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-      width: "7%",
-    },
-
-    {
-      title: "Industry",
-      dataIndex: "name",
-      key: "industry",
-      width: "23%",
-    },
-    {
-      title: "Sub-Industry",
-      dataIndex: "sub_industries",
-      key: "subIndustry",
-      width: "55%",
-      render: sub_industries => {
-        const names = sub_industries?.map(
-          (sub_industry: ISubIndustry) => sub_industry.name
-        );
-        return <span>{names.join(", ")}</span>;
-      },
-    },
-    ...((!checkPermission([
-      permissions.UPDATE_INDUSTRY,
-      permissions.DELETE_INDUSTRY,
-    ])
-      ? []
-      : [
-          {
-            title: "Actions",
-            key: "action",
-            fixed: "right",
-            width: "15%",
-            render: (industry: IIndustry) => {
-              return (
-                <>
-                  {checkPermission(permissions.UPDATE_INDUSTRY) && (
-                    <div
-                      onClick={event => editIndustry(industry, event)}
-                      className="table__action__btn"
-                    >
-                      Edit
-                    </div>
-                  )}
-
-                  {checkPermission(permissions.DELETE_INDUSTRY) && (
-                    <div
-                      onClick={event =>
-                        handleDeleteIndustry(industry?.id, event)
-                      }
-                      className="table__action__btn table__action__btn--delete"
-                    >
-                      {isDeleting && industry?.id === industry_id?.current ? (
-                        <LoadingOutlined color="red" className="spinner" />
-                      ) : (
-                        "Delete"
-                      )}
-                    </div>
-                  )}
-                </>
-              );
-            },
-          },
-        ])! as any),
-  ];
+  const columns = getColumns({
+    isDeleting,
+    industry_id,
+    editIndustry,
+    handleDeleteIndustry,
+  });
 
   return (
     <>

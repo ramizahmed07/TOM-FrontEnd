@@ -26,30 +26,33 @@ const Table: FC<ITable> = ({
   onChangePage,
   locale,
 }) => {
-  const localeConfig = {
-    emptyText: isLoading ? (
-      <>
-        {[1, 2, 3, 4].map(x => (
-          <Skeleton.Input key={4} size="small" active={true} />
-        ))}
-      </>
-    ) : (
-      <Empty />
-    ),
-  };
   return (
     <Col span={24}>
       <AntTable
         onRow={(record: any) => ({
-          onClick: e => onRowClick && onRowClick(record),
+          onClick: () => onRowClick && onRowClick(record),
         })}
         className="table"
-        scroll={{ x: 1300 }}
+        scroll={{ x: "100%" }}
         columns={columns}
         dataSource={isLoading ? [] : data}
         pagination={false}
         rowKey="id"
-        locale={locale || localeConfig}
+        locale={
+          !data?.length && !isLoading
+            ? locale
+            : {
+                emptyText: isLoading ? (
+                  <>
+                    {[1, 2, 3, 4].map(x => (
+                      <Skeleton.Input key={4} size="small" active={true} />
+                    ))}
+                  </>
+                ) : (
+                  <Empty />
+                ),
+              }
+        }
       />
       {data?.length && pagination ? (
         <div className="table__pagination">

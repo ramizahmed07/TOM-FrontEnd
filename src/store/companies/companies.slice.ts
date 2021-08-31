@@ -8,14 +8,14 @@ const initialState: ICompaniesState = {
 };
 
 const slice = createSlice({
-  name: "gradeCompanies",
+  name: "companies",
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder.addMatcher(
       companiesApi.endpoints.fetchCompanies.matchFulfilled,
       (state, { payload }) => {
-        console.log("payload", payload);
+        state.companies = payload?.data;
       }
     );
   },

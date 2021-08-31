@@ -57,8 +57,9 @@ const AddIndustry: FC<AddIndustryProps> = ({
       setIsVisible(false);
       showSuccessPopup({
         title: selectedIndustry ? "Industry Updated!" : "New Industry Created",
-        desc: `You have successfully ${selectedIndustry ? "updated the" : "created new"
-          } industry.`,
+        desc: `You have successfully ${
+          selectedIndustry ? "updated the" : "created new"
+        } industry.`,
       });
     } catch (error) {
       message.error(error?.message);
@@ -69,10 +70,8 @@ const AddIndustry: FC<AddIndustryProps> = ({
   const addIndustry = async () =>
     await createIndustry({ ...industry, sector_id: +sector_id }).unwrap();
 
-  const editIndustry = async () => {
-    console.log("indust", industry);
+  const editIndustry = async () =>
     await updateIndustry({ ...industry, sector_id }).unwrap();
-  };
 
   return (
     <Modal

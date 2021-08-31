@@ -14,7 +14,15 @@ const Users = {
     create: "/companies/create",
     profile: {
       details: "/companies/:company_id",
-      business_units: "/companies/:company_id/business-units",
+      business_units: {
+        listing: "/companies/:company_id/business-units",
+        regions: "/companies/:company_id/business-units/:business_unit_id",
+        countries:
+          "/companies/:company_id/business-units/:business_unit_id/:region_id",
+        legal_entities:
+          "/companies/:company_id/business-units/:business_unit_id/:region_id/:country_id",
+      },
+
       regions: "/companies/:company_id/regions",
     },
   },

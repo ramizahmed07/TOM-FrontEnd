@@ -1,4 +1,5 @@
-import { User } from "../auth";
+import { User } from "../auth/auth.types";
+import { ICountry } from "../countries";
 
 export interface ICompany {
   id?: number;
@@ -18,4 +19,16 @@ export interface ICompany {
 
 export interface ICompaniesState {
   companies: ICompany[];
+}
+
+export interface IRegion {
+  id?: number;
+  name: string;
+  countries: ICountry[] | number[];
+  business_units: any;
+}
+
+export interface ILegalEntity {
+  id: number;
+  name: string;
 }

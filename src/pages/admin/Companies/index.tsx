@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Col,
   Row,
@@ -9,64 +9,91 @@ import {
   Tag,
   Button,
   Input,
+  message,
 } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
 import "./companies.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
 import { Paths } from "@router";
-import { useFetchCompaniesQuery } from "@services";
+import {
+  ErrorServices,
+  useFetchCompaniesQuery,
+  useUpdateCompanyStatusMutation,
+} from "@services";
 import { ICompany } from "@store/companies";
 import Table from "@components/Table";
 
 const Companies = () => {
   const history = useHistory();
+  const [page, setPage] = useState(1);
+  const [updateCompanyStatus] = useUpdateCompanyStatusMutation();
   const { data: companiesData, isLoading: isFetching } =
-    useFetchCompaniesQuery(null);
+    useFetchCompaniesQuery(page);
   const { data, pagination } = companiesData || {};
+
   const createNewCompany = () => history.push(Paths.Users.companies.create);
+
+  const toggleSwitch = async (
+    status: boolean,
+    company_id: number,
+    e: MouseEvent
+  ) => {
+    e.stopPropagation();
+    try {
+      await updateCompanyStatus({ company_id, status });
+      message.success("Status updated!");
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
 
   const columns: TableColumnsType<ICompany> = [
     {
-      title: <div className="companies__table__col__title">Company ID</div>,
+      title: "ID",
       dataIndex: "id",
       key: "id",
-      width: 110,
+      width: 100,
     },
     {
-      title: <div className="companies__table__col__title">Company Name</div>,
+      title: "Company Name",
       dataIndex: "name",
       key: "name",
-      width: 130,
+      width: 200,
+      render: (name: string) => <div className="text-wrap">{name}</div>,
     },
     {
-      title: <div className="companies__table__col__title">Name</div>,
+      title: "Name",
       key: "name",
       width: 120,
-      render: (record: ICompany) =>
-        `${record.user?.first_name} ${record.user?.last_name}`,
+      render: (record: ICompany) => (
+        <div className="text-wrap">
+          {`${record.user?.first_name} ${record.user?.last_name}`}
+        </div>
+      ),
     },
     {
-      title: <div className="companies__table__col__title">Email</div>,
+      title: "Email",
       key: "email",
-      width: 200,
-      render: (record: ICompany) => record.user?.email,
+      width: 250,
+      render: (record: ICompany) => (
+        <div className="text-wrap">{record.user?.email}</div>
+      ),
     },
     {
-      title: <div className="companies__table__col__title">Location</div>,
+      title: "Location",
       dataIndex: "country_headquarter",
       key: "country_headquarter",
-      width: 120,
-      filters: [],
-      filterIcon: <FilterIcon className="table__filter__icon" />,
+      width: 150,
+      render: (location: string) => <div className="text-wrap">{location}</div>,
     },
     {
-      title: <div className="companies__table__col__title">Status Company</div>,
+      title: "Status Company",
       dataIndex: "status",
       key: "status",
-      width: 130,
+      width: 200,
       render: (status: string) => {
         const color: { [key: string]: string } = {
           active: "green",
@@ -77,23 +104,23 @@ const Companies = () => {
       },
     },
     {
-      title: <div className="companies__table__col__title">Status</div>,
+      title: "Status",
       width: 90,
       align: "center",
       render: (record: ICompany) => {
         return (
           <Switch
             defaultChecked={record.is_active}
-            onChange={() => alert("Toggle")}
+            onChange={(val, e) => toggleSwitch(val, record?.id!, e)}
           />
         );
       },
     },
     {
-      title: <div className="companies__table__col__title">Action</div>,
+      title: "Action",
       key: "action",
       fixed: "right",
-      width: 80,
+      width: 160,
       align: "center",
       render: () => {
         const menu = (
@@ -119,6 +146,10 @@ const Companies = () => {
     },
   ];
 
+  const onRowClick = (data: any) => {
+    history.push(`/companies/${data?.id}`);
+  };
+
   return (
     <div className="companies">
       <Row>
@@ -136,7 +167,16 @@ const Companies = () => {
             </Button>
           </div>
 
-          <Table columns={columns} data={data} isLoading={isFetching} />
+          <Table
+            onRowClick={onRowClick}
+            columns={columns}
+            data={data}
+            isLoading={isFetching}
+            pagination={true}
+            count={pagination?.count}
+            onChangePage={setPage}
+            page={page}
+          />
         </Col>
       </Row>
     </div>

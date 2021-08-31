@@ -14,9 +14,13 @@ import CompanyProfile from "@pages/admin/Companies/CompanyProfile";
 import SubAdminsCreate from "@pages/admin/User/SubAdmins/SubAdminsCreate";
 import SubAdminsEdit from "@pages/admin/User/SubAdmins/SubAdminEdit";
 import SubAdminsList from "@pages/admin/User/SubAdmins/SubAdminsList";
-import { Paths, IRoute, permissions } from "@router";
 import CompanyDetails from "@pages/admin/Companies/CompanyProfile/CompanyDetails";
-import BusinessUnits from "@/pages/admin/Companies/CompanyProfile/BusinessUnits";
+import BusinessUnits from "@pages/admin/Companies/CompanyProfile/BusinessUnits";
+import Regions from "@pages/admin/Companies/CompanyProfile/Regions";
+import BusinessUnitRegions from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitRegions";
+import BusinessUnitCountries from "@pages/admin/Companies/CompanyProfile/BusinessUnits/BusinessUnitCountries";
+import LegalEntities from "@pages/admin/Companies/CompanyProfile/BusinessUnits/LegalEntities";
+import { Paths, IRoute, permissions } from "@router";
 
 export const routeConfig: IRoute[] = [
   {
@@ -63,17 +67,48 @@ export const routeConfig: IRoute[] = [
       {
         path: Paths.Users.companies.profile.details,
         component: CompanyDetails,
-        key: "Companies",
+        key: "Companies Details",
         exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_units,
+        path: Paths.Users.companies.profile.business_units.listing,
         component: BusinessUnits,
-        key: "Companies",
+        key: "Business Units",
         exact: true,
-
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_units.regions,
+        component: BusinessUnitRegions,
+        key: "Business Unit Regions",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_units.countries,
+        component: BusinessUnitCountries,
+        key: "Business Unit Countries",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.business_units.legal_entities,
+        component: LegalEntities,
+        key: "Legal Entities",
+        exact: true,
+        breadcrumb: "Users / Companies list",
+        isPrivate: true,
+      },
+      {
+        path: Paths.Users.companies.profile.regions,
+        component: Regions,
+        key: "Regions",
+        exact: true,
         breadcrumb: "Users / Companies list",
         isPrivate: true,
       },

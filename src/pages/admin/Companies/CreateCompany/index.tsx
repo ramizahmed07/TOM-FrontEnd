@@ -64,7 +64,6 @@ const CreateCompany = () => {
   }
 
   const handleImage = (info: any) => {
-    console.log("hjello", info.file.status);
     // if (info.file.status === 'uploading') {
 
     //   return;
@@ -73,8 +72,6 @@ const CreateCompany = () => {
     getBase64(info.file.originFileObj, (imageUrl: string) => {
       const blob = b64toBlob(imageUrl);
       const blobUrl = URL.createObjectURL(blob);
-
-      console.log("blob", blobUrl);
     });
   };
 

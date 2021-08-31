@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
-import { Col, Dropdown, Menu, message, Row, TableColumnsType } from "antd";
+import { Col, message, Row } from "antd";
 import { useHistory } from "react-router-dom";
 
-import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import Table from "@components/Table";
 import AddSector from "./AddSector";
 import Button from "@components/Button";
@@ -12,9 +11,10 @@ import {
   useFetchSectorsQuery,
   useUploadSectorsMutation,
 } from "@services";
-import { IIndustry, ISector } from "@store/sectors";
-import { checkPermission } from "@/utils";
+import { ISector } from "@store/sectors";
+import { checkPermission } from "@utils";
 import { permissions } from "@router";
+import { getColumns } from "./config";
 
 const Sectors = () => {
   const history = useHistory();
@@ -82,73 +82,7 @@ const Sectors = () => {
     }
   };
 
-  const columns: TableColumnsType<ISector> = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-      width: "10%",
-    },
-    {
-      title: "Sector",
-      dataIndex: "name",
-      key: "sector",
-      width: "20%",
-    },
-    {
-      title: "Industry",
-      dataIndex: "industries",
-      key: "industry",
-      width: "55%",
-      render: (industries: IIndustry[]) => {
-        const names = industries?.map((industry: IIndustry) => industry.name);
-        return <span>{names.join(", ")}</span>;
-      },
-    },
-    ...((!checkPermission([
-      permissions.UPDATE_SECTOR,
-      permissions.DELETE_SECTOR,
-    ])
-      ? []
-      : [
-          {
-            title: <span className="align-center">Actions</span>,
-            key: "action",
-            fixed: "right",
-            width: "15%",
-            render: (item: ISector) => {
-              const menu = (
-                <Menu
-                  onClick={({ key, domEvent }) =>
-                    handleActionDropdown({ item, key, domEvent })
-                  }
-                  tabIndex={1}
-                >
-                  {checkPermission(permissions.UPDATE_SECTOR) && (
-                    <Menu.Item key="1">Edit</Menu.Item>
-                  )}
-                  {checkPermission(permissions.DELETE_SECTOR) && (
-                    <Menu.Item key="2" danger>
-                      Delete
-                    </Menu.Item>
-                  )}
-                </Menu>
-              );
-              return (
-                <div className="table__action__menu">
-                  <Dropdown overlay={menu} trigger={["click"]}>
-                    <MenuIcon
-                      onClick={e => {
-                        e.stopPropagation();
-                      }}
-                    />
-                  </Dropdown>
-                </div>
-              );
-            },
-          },
-        ]) as any),
-  ];
+  const columns = getColumns({ handleActionDropdown });
 
   return (
     <>

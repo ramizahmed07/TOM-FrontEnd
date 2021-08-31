@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useRef, useState } from "react";
-import { Col, message, Row, TableColumnsType } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Col, message, Row } from "antd";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
@@ -13,6 +12,7 @@ import {
 } from "@services";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";
+import { getColumns } from "./config";
 
 const SubIndustry = () => {
   let sub_industry_id = useRef<any>(null);
@@ -50,66 +50,12 @@ const SubIndustry = () => {
     }
   };
 
-  const columns: TableColumnsType<ISubIndustry> = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-      width: "7%",
-    },
-
-    {
-      title: "Sub-Industry",
-      dataIndex: "name",
-      key: "subIndustry",
-      width: "23%",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      width: "55%",
-    },
-    ...((!checkPermission([
-      permissions.UPDATE_SUB_INDUSTRY,
-      permissions.DELETE_SUB_INDUSTRY,
-    ])
-      ? []
-      : [
-          {
-            title: "Actions",
-            key: "action",
-            fixed: "right",
-            width: "15%",
-            render: (item: ISubIndustry) => {
-              return (
-                <div>
-                  {checkPermission(permissions.UPDATE_SUB_INDUSTRY) && (
-                    <div
-                      onClick={event => editSubIndustry(item, event)}
-                      className="table__action__btn"
-                    >
-                      Edit
-                    </div>
-                  )}
-                  {checkPermission(permissions.DELETE_SUB_INDUSTRY) && (
-                    <div
-                      onClick={event => handleDelete(item?.id, event)}
-                      className="table__action__btn table__action__btn--delete"
-                    >
-                      {isDeleting && item?.id === sub_industry_id?.current ? (
-                        <LoadingOutlined color="red" className="spinner" />
-                      ) : (
-                        "Delete"
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            },
-          },
-        ]) as any),
-  ];
+  const columns = getColumns({
+    handleDelete,
+    editSubIndustry,
+    sub_industry_id,
+    isDeleting,
+  });
 
   return (
     <>

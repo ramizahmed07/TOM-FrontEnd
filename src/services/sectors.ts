@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { tomService } from "./restService";
 
 export const sectorsApi = createApi({
-  reducerPath: "sectorsApi ",
+  reducerPath: "sectorsApi",
   baseQuery: tomService({
     baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
