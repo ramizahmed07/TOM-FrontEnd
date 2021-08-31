@@ -1,6 +1,7 @@
 const path = require("path");
 const CracoLessPlugin = require("craco-less");
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
+
 const options = {
   antDir: path.join(__dirname, "./node_modules/antd"),
   stylesDir: path.join(__dirname, "./src"),
@@ -54,6 +55,7 @@ module.exports = {
       "@hooks": path.resolve(__dirname, "src/hooks/"),
       "@services": path.resolve(__dirname, "src/services/"),
       "@styles": path.resolve(__dirname, "src/styles/"),
+      "@constants": path.resolve(__dirname, "src/constants/"),
     },
   },
   plugins: [

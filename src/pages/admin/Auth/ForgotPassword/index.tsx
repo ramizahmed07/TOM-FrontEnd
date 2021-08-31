@@ -70,7 +70,7 @@ const SendLinkView = ({
   return (
     <>
       <Typography.Paragraph className="auth__form_title">
-        Forgot your <span className="auth__company__name">Password?</span>
+        Forgot your <span className="primary-color">Password?</span>
       </Typography.Paragraph>
       <Typography.Paragraph className="auth__form__prompt">
         Enter your registered email address below and we will send you a link to
@@ -91,7 +91,11 @@ const SendLinkView = ({
         <Form.Item
           className="form__item forgot__pwd_email"
           label={
-            <label className={`${hasError ? "error__label" : "input__label"}`}>
+            <label
+              className={`${
+                hasError ? "error__label" : "input__label"
+              } secondary-color `}
+            >
               Email address
             </label>
           }
@@ -144,7 +148,7 @@ const ResendLinkView = ({ sendLink, email }: IProps) => {
   return (
     <div className="resend-link-container">
       <Typography.Paragraph className="auth__form_title">
-        Check your <span className="auth__company__name">Email?</span>
+        Check your <span className="primary-color">Email?</span>
       </Typography.Paragraph>
       <Typography.Paragraph className="auth__form__prompt">
         Kindly check your email! We have sent you a link to reset your password.

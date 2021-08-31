@@ -1,4 +1,3 @@
-import { BrowserRouter as Router } from "react-router-dom";
 import { useEffect } from "react";
 
 import "@styles/index.less";
@@ -7,6 +6,7 @@ import Layout from "@components/Layout";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "./hooks";
 import { fetchCountries } from "./services";
+import { adminVars, clientVars } from "./constants";
 
 declare global {
   interface Window {
@@ -27,22 +27,16 @@ const App = () => {
 
   useEffect(() => {
     if (window.location.pathname?.includes("client")) {
-      window.less
-        .modifyVars({
-          "@primary-color": "#b3ff00",
-        })
-        .then((res: any) => console.log("res", res))
-        .catch((err: any) => console.log("err", err));
+      window.less.modifyVars(clientVars);
+    } else {
+      window.less.modifyVars(adminVars);
     }
-    console.log(window.location.pathname);
   }, []);
 
   return (
-    <Router>
-      <Layout>
-        <Routes routes={routeConfig} />
-      </Layout>
-    </Router>
+    <Layout>
+      <Routes routes={routeConfig} />
+    </Layout>
   );
 };
 

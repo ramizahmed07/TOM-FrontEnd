@@ -45,7 +45,7 @@ const ResetPassword = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Reset your <span className="auth__company__name">Password?</span>
+            Reset your <span className="primary-color">Password?</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
             Enter your new password below
@@ -65,7 +65,9 @@ const ResetPassword = () => {
               className="form__item"
               label={
                 <div className="auth__password__label">
-                  <label className="input__label">Type new password</label>
+                  <label className="input__label secondary-color">
+                    Type new password
+                  </label>
                 </div>
               }
               name="password"
@@ -83,7 +85,9 @@ const ResetPassword = () => {
               className="form__item"
               label={
                 <div className="auth__password__label">
-                  <label className="input__label">Re-type new password</label>
+                  <label className="input__label secondary-color">
+                    Re-type new password
+                  </label>
                 </div>
               }
               name="retypePassword"

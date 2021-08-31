@@ -60,7 +60,7 @@ const Login = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Welcome to <span className="theme">Talent Accelerator</span>
+            Welcome to <span className="primary-color">Talent Accelerator</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
@@ -84,7 +84,7 @@ const Login = () => {
                 <label
                   className={`${
                     checkError("email") ? "error__label" : "input__label"
-                  }`}
+                  } secondary-color`}
                 >
                   Email Address
                 </label>
@@ -108,15 +108,15 @@ const Login = () => {
               label={
                 <div className="auth__password__label">
                   <label
-                    className={
+                    className={`${
                       checkError("password") ? "error__label" : "input__label"
-                    }
+                    } secondary-color`}
                   >
                     Password
                   </label>
                   <Link
                     to={Paths.Auth.forgot_password}
-                    className="auth__forgot__password"
+                    className="auth__forgot__password link"
                   >
                     Forgot password?
                   </Link>
