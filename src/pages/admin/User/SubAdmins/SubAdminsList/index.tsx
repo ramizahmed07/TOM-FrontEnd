@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { TableColumnsType, Switch, Input, message, Row, Col } from "antd";
-import {
-  SearchOutlined,
-} from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -61,47 +59,47 @@ const SubAdminsList = () => {
     ...((!checkPermission(permissions.ENABLE_DISABLE_TOM_USER)
       ? []
       : [
-        {
-          title: "Active/Inactive",
-          width: 130,
-          render: ({ id, first_name, last_name, is_active }: any) => {
-            return (
-              <Switch
-                defaultChecked={is_active}
-                onChange={(checked: boolean) =>
-                  toggleSubAdminFromApi(
-                    id,
-                    `${first_name} ${last_name}`,
-                    checked
-                  )
-                }
-              />
-            );
+          {
+            title: "Active/Inactive",
+            width: 130,
+            render: ({ id, first_name, last_name, is_active }: any) => {
+              return (
+                <Switch
+                  defaultChecked={is_active}
+                  onChange={(checked: boolean) =>
+                    toggleSubAdminFromApi(
+                      id,
+                      `${first_name} ${last_name}`,
+                      checked
+                    )
+                  }
+                />
+              );
+            },
           },
-        },
-      ]) as any),
+        ]) as any),
     ...((!checkPermission(permissions.UPDATE_TOM_USER)
       ? []
       : [
-        {
-          title: "Action",
-          key: "action",
-          fixed: "right",
-          width: 80,
-          render: ({ id }: any) => {
-            return (
-              <div>
-                <span
-                  className="table__action__btn"
-                  onClick={() => history.push(`/sub-admins/edit/${id}`)}
-                >
-                  Edit
-                </span>
-              </div>
-            );
+          {
+            title: "Action",
+            key: "action",
+            fixed: "right",
+            width: 80,
+            render: ({ id }: any) => {
+              return (
+                <div>
+                  <span
+                    className="table__action__btn"
+                    onClick={() => history.push(`/sub-admins/edit/${id}`)}
+                  >
+                    Edit
+                  </span>
+                </div>
+              );
+            },
           },
-        },
-      ]) as any),
+        ]) as any),
   ];
 
   useEffect(() => {
@@ -140,22 +138,24 @@ const SubAdminsList = () => {
       </Row>
       <div className="header__container">
         <div />
-        {/* <Input
-                    className="form__input"
-                    type="email"
-                    placeholder='Search by name or ID...'
-                    prefix={<SearchOutlined style={{ color: '#435465' }} />}
-                /> */}
-        <Col className="align-end" span={8}>
-          <Button
-            variant="add"
-            onClick={() =>
-              history.push(Paths.Users.sub_admins.create)
-            }
-          >
-            Create sub admin
-          </Button>
-        </Col>
+        <Row className="mb-20">
+          <Col span={16}>
+            {/* <Input
+              className="form__input"
+              type="email"
+              placeholder="Search by name or ID..."
+              prefix={<SearchOutlined style={{ color: "#435465" }} />}
+            /> */}
+          </Col>
+          <Col className="align-end" span={8}>
+            <Button
+              variant="add"
+              onClick={() => history.push(Paths.Users.sub_admins.create)}
+            >
+              Create sub admin
+            </Button>
+          </Col>
+        </Row>
       </div>
 
       <Table
