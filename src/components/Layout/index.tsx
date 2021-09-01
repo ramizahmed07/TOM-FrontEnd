@@ -88,7 +88,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   key={idx}
                   to={getRoute(config.path)}
                   className="sider__link"
-                  activeClassName="sider__sub__link--active"
+                  activeClassName="sider__active"
                 >
                   <div className="sider__icon__container">
                     <config.icon className="sider__link__icon" />
@@ -101,7 +101,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                       key={i}
                       to={subLink.path || ""}
                       className="sider__sub__link"
-                      activeClassName="sider__sub__link--active"
+                      activeClassName="sider__active"
                       onClick={() => subLink.path && history.push(subLink.path)}
                     >
                       <div className="sider__icon__container">

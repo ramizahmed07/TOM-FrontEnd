@@ -10,6 +10,7 @@ const Button: React.FC<IButton & React.HTMLProps<HTMLButtonElement>> = ({
   variant,
   isLoading,
   className,
+  icon = true,
 }) => {
   return (
     <AntButton
@@ -17,17 +18,21 @@ const Button: React.FC<IButton & React.HTMLProps<HTMLButtonElement>> = ({
       type="primary"
       onClick={onClick}
       icon={
-        <div className="btn__icon">
-          {isLoading ? (
-            <LoadingOutlined className="spinner" />
-          ) : (
-            Icons[variant as Variant]
-          )}
-        </div>
+        icon && (
+          <div className="btn__icon">
+            {isLoading ? (
+              <LoadingOutlined className="spinner" />
+            ) : (
+              Icons[variant as Variant]
+            )}
+          </div>
+        )
       }
       size="large"
     >
-      <span className="btn__children">{children}</span>
+      <span className={`btn__children ${!icon && "no-margin"}`}>
+        {children}
+      </span>
     </AntButton>
   );
 };

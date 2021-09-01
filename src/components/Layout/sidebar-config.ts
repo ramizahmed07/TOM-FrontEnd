@@ -63,6 +63,18 @@ const config: Array<Config> = [
     ],
     sub: [
       {
+        title: "Grade Setup",
+        icon: IndustryIcon,
+        path: client.grade_setup,
+        // permission: permissions.VIEW_SECTOR,
+      },
+      {
+        title: "Salary Range",
+        icon: IndustryIcon,
+        path: client.salary_range,
+        // permission: permissions.VIEW_SECTOR,
+      },
+      {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
         path: sectors.listing,
