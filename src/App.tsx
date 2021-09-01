@@ -20,7 +20,7 @@ const App = () => {
   const { user } = useTypedSelector(state => state.auth);
 
   useEffect(() => {
-    if (!countries.length && user?.id) {
+    if (!countries?.length && user?.id) {
       dispatch(fetchCountries());
     }
   }, [dispatch, countries, user]);

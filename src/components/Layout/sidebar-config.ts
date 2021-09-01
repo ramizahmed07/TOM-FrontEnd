@@ -11,6 +11,7 @@ import { Paths, permissions } from "@router";
 const {
   Users: { companies, sub_admins },
   Settings: { sectors, job_function, grade_map_table },
+  client,
 } = Paths;
 
 export type Config = {
