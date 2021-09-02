@@ -9,6 +9,14 @@
   min-width: 252px !important;
   max-width: 252px !important;
   width: 252px !important;
+  .ant-layout-sider-children {
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .sider__logo__container {

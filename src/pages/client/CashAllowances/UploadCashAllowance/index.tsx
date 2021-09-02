@@ -2,14 +2,14 @@ import { Button, Col, Input, message, Row } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import { FC, useRef, useState } from "react";
 
-import "./uploadSalaryRange.less";
+import "./uploadCashAllowance.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import { showSuccessPopup, validateFile } from "@utils";
 
-interface IUploadSalaryRange extends IModal {}
+interface IUploadCashAllowance extends IModal {}
 
-const UploadSalaryRange: FC<IUploadSalaryRange> = ({
+const UploadCashAllowance: FC<IUploadCashAllowance> = ({
   isVisible,
   setIsVisible,
 }) => {
@@ -29,8 +29,8 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
   const handleSubmit = () => {
     setIsVisible(false);
     showSuccessPopup({
-      title: "New Salary Range Uploaded Successfully",
-      desc: "You have successfully added new salary grade",
+      title: "New Cash Allowance Uploaded Successfully",
+      desc: "You have successfully added new cash allowance",
       role: "client",
     });
   };
@@ -45,7 +45,7 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
           Cancel
         </Button>,
       ]}
-      title="Upload Salary Range"
+      title="Upload Cash Allowance"
       isVisible={isVisible}
     >
       <>
@@ -83,4 +83,4 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
     </Modal>
   );
 };
-export default UploadSalaryRange;
+export default UploadCashAllowance;

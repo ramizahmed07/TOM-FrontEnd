@@ -1,25 +1,27 @@
 import { Col, Row } from "antd";
 import { useState } from "react";
 
-import UploadSalaryRange from "./UploadSalaryRange";
 import Button from "@components/Button";
 import Table from "@components/Table";
 import Modal from "@components/Modal";
+import UploadCashAllowance from "./UploadCashAllowance";
 import { columns, versionsColumns } from "./config";
 
-const SalaryRange = () => {
+const CashAllowances = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [versionsModal, setVersionsModal] = useState(false);
-
   return (
     <>
       {isVisible && (
-        <UploadSalaryRange isVisible={isVisible} setIsVisible={setIsVisible} />
+        <UploadCashAllowance
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
       )}
       <Modal
         mode="versions"
         footer={null}
-        title="Previous Versions of Salary Range"
+        title="Previous Versions of Cash Allowances"
         isVisible={versionsModal}
         width={855}
         setIsVisible={setVersionsModal}
@@ -41,9 +43,10 @@ const SalaryRange = () => {
           pagination={false}
         />
       </Modal>
+
       <Row>
         <Col span={24}>
-          <div className="main-heading">Salary Range</div>
+          <div className="main-heading">Cash Allowances</div>
         </Col>
       </Row>
       <Row className="mt-16 mb-20">
@@ -68,32 +71,29 @@ const SalaryRange = () => {
             {
               country: "Pakistan",
               city: "Karachi",
-              tier: 2,
-              rangeType: "Tech",
-              grade: 14,
-              min: 20000,
-              mid: 50000,
-              max: 80000,
+              grade: "12",
+              name: "Meal",
+              amount_percentage: "Percentage",
+              basic: "Yes",
+              value: "80%",
             },
             {
               country: "Afghanistan",
               city: "Kabul",
-              tier: 1,
-              rangeType: "Non-Tech",
-              grade: 14,
-              min: 10000,
-              mid: 30000,
-              max: 50000,
+              grade: "11E",
+              name: "Meal",
+              amount_percentage: "Amount",
+              basic: "80000",
+              value: "Yes",
             },
             {
               country: "Pakistan",
               city: "Karachi",
-              tier: 2,
-              rangeType: "Tech",
-              grade: 14,
-              min: 20000,
-              mid: 50000,
-              max: 80000,
+              grade: "12",
+              name: "Meal",
+              amount_percentage: "Amount",
+              basic: "Yes",
+              value: "80%",
             },
           ]}
           columns={columns}
@@ -104,5 +104,4 @@ const SalaryRange = () => {
     </>
   );
 };
-
-export default SalaryRange;
+export default CashAllowances;

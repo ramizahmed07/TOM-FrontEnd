@@ -75,6 +75,18 @@ const config: Array<Config> = [
         // permission: permissions.VIEW_SECTOR,
       },
       {
+        title: "Cash Allowances",
+        icon: IndustryIcon,
+        path: client.cash_allowances,
+        // permission: permissions.VIEW_SECTOR,
+      },
+      {
+        title: "Short Term Incentive Plans",
+        icon: IndustryIcon,
+        path: client.short_term_ip,
+        // permission: permissions.VIEW_SECTOR,
+      },
+      {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
         path: sectors.listing,

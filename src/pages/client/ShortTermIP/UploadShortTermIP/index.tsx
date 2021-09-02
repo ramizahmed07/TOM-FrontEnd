@@ -1,20 +1,14 @@
 import { Button, Col, Input, message, Row } from "antd";
+import { useRef, useState, FC } from "react";
 import Checkbox from "antd/lib/checkbox/Checkbox";
-import { FC, useRef, useState } from "react";
 
-import "./uploadSalaryRange.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import { showSuccessPopup, validateFile } from "@utils";
 
-interface IUploadSalaryRange extends IModal {}
-
-const UploadSalaryRange: FC<IUploadSalaryRange> = ({
-  isVisible,
-  setIsVisible,
-}) => {
-  const inputRef = useRef<any>(null);
+const UploadShortTermIP: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [file, setFile] = useState<File | null>(null);
+  const inputRef = useRef<any>(null);
 
   const uploadFile = (event: any) => {
     var file = event?.target?.files[0];
@@ -29,8 +23,8 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
   const handleSubmit = () => {
     setIsVisible(false);
     showSuccessPopup({
-      title: "New Salary Range Uploaded Successfully",
-      desc: "You have successfully added new salary grade",
+      title: "Short Term Incentive Data Uploaded",
+      desc: "You have successfully uploaded short term incentive data.",
       role: "client",
     });
   };
@@ -38,14 +32,14 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
   return (
     <Modal
       footer={[
-        <Button onClick={handleSubmit} disabled={!file} key="1" type="primary">
+        <Button onClick={handleSubmit} key="1" type="primary">
           Upload
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
         </Button>,
       ]}
-      title="Upload Salary Range"
+      title="Upload Cash Allowance"
       isVisible={isVisible}
     >
       <>
@@ -83,4 +77,5 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
     </Modal>
   );
 };
-export default UploadSalaryRange;
+
+export default UploadShortTermIP;

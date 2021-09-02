@@ -56,6 +56,9 @@ const Settings = {
 const client = {
   grade_setup: "/client/grade-setup",
   salary_range: "/client/salary-range",
+  cash_allowances: "/client/cash-allowances",
+  short_term_ip: "/client/short-term-incentive-plans",
+  long_term_ip: "/client/long-term-incentive-plans",
 };
 
 const Companies = {
