@@ -3,7 +3,7 @@ import Checkbox from "antd/lib/checkbox/Checkbox";
 
 export const columns: TableColumnsType<any> = [
   {
-    title: "type of plans",
+    title: "type of stock",
     dataIndex: "type",
     key: "type",
     width: 200,
@@ -15,15 +15,39 @@ export const columns: TableColumnsType<any> = [
     width: 200,
   },
   {
-    title: "grade eligibility",
-    dataIndex: "gradeEligibility",
-    key: "tigradeEligibilityer",
+    title: "grade",
+    dataIndex: "grade",
+    key: "grade",
     width: 200,
   },
   {
-    title: "coverage",
-    dataIndex: "coverage",
-    key: "coverage",
+    title: "holding period",
+    dataIndex: "holdingPeriod",
+    key: "holdingPeriod",
+    width: 200,
+  },
+  {
+    title: "vesting type",
+    dataIndex: "vestingType",
+    key: "vestingType",
+    width: 200,
+  },
+  {
+    title: "installment type",
+    dataIndex: "installmentType",
+    key: "installmentType",
+    width: 200,
+  },
+  {
+    title: "date of grant",
+    dataIndex: "date",
+    key: "date",
+    width: 200,
+  },
+  {
+    title: "equity type",
+    dataIndex: "equityType",
+    key: "equityType",
     width: 200,
   },
   {

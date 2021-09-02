@@ -39,7 +39,7 @@ const UploadShortTermIP: FC<IModal> = ({ isVisible, setIsVisible }) => {
           Cancel
         </Button>,
       ]}
-      title="Upload STI Plan"
+      title="Upload LTI Plan"
       isVisible={isVisible}
     >
       <>

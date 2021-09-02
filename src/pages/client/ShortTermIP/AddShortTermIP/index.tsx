@@ -29,16 +29,19 @@ const AddShortTermIP: FC<IAddShortTermIP> = ({ isVisible, setIsVisible }) => {
           Cancel
         </Button>,
       ]}
-      title="Upload Cash Allowance"
+      title="Create a STI Plan"
       isVisible={isVisible}
     >
       <>
-        <Row justify="space-between" className="modal__row modal__bottomBorder">
-          <Col className="uploadSalaryRange__uploadField" span={11}>
+        <Row
+          justify="space-between"
+          className="modal__row modal__bottomBorder mb-24"
+        >
+          <Col span={11}>
             <label>Plan Name</label>
             <Input size="large" placeholder="Enter plan name here..." />
           </Col>
-          <Col className="uploadSalaryRange__uploadField" span={11}>
+          <Col span={11}>
             <label>Plan Type</label>
             <Select size="large" placeholder="Select plan type from here...">
               {[{ type: "New incentive plan", id: 1 }].map(
@@ -53,8 +56,8 @@ const AddShortTermIP: FC<IAddShortTermIP> = ({ isVisible, setIsVisible }) => {
         </Row>
         <div className="sub-heading mb-32">Choose Salary Range Duration</div>
         <Row justify="space-between" className="modal__row">
-          <Col className="uploadSalaryRange__uploadField" span={11}>
-            <label>Select a Grade</label>
+          <Col span={11}>
+            <label>Select Grades</label>
             <Select
               mode="multiple"
               size="large"
@@ -67,8 +70,8 @@ const AddShortTermIP: FC<IAddShortTermIP> = ({ isVisible, setIsVisible }) => {
               ))}
             </Select>
           </Col>
-          <Col className="uploadSalaryRange__uploadField" span={11}>
-            <label>Select Coverage</label>
+          <Col span={11}>
+            <label>Select Coverages</label>
             <Select
               mode="multiple"
               size="large"

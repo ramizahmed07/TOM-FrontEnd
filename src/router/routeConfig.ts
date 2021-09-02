@@ -23,11 +23,12 @@ import LegalEntities from "@pages/admin/Companies/CompanyProfile/BusinessUnits/L
 import ClientLogin from "@pages/client/Auth/Login";
 import ClientResetPassword from "@pages/client/Auth/ResetPassword";
 import ClientForgotPassword from "@pages/client/Auth/ForgotPassword";
+import GradeSetup from "@pages/client/GradeSetup";
+import SalaryRange from "@pages/client/SalaryRange";
+import CashAllowances from "@pages/client/CashAllowances";
+import ShortTermIP from "@pages/client/ShortTermIP";
+import LongTermIP from "@pages/client/LongTermIP";
 import { Paths, IRoute, permissions } from "@router";
-import GradeSetup from "@/pages/client/GradeSetup";
-import SalaryRange from "@/pages/client/SalaryRange";
-import CashAllowances from "@/pages/client/CashAllowances";
-import ShortTermIP from "@/pages/client/ShortTermIP";
 
 export const routeConfig: IRoute[] = [
   {
@@ -266,6 +267,13 @@ export const routeConfig: IRoute[] = [
   {
     path: Paths.client.short_term_ip,
     component: ShortTermIP,
+    key: "Short Term Incentive Plans",
+    breadcrumb: "Compensation System / Short Term Incentive Plans",
+    isPrivate: true,
+  },
+  {
+    path: Paths.client.long_term_ip,
+    component: LongTermIP,
     key: "Short Term Incentive Plans",
     breadcrumb: "Compensation System / Short Term Incentive Plans",
     isPrivate: true,

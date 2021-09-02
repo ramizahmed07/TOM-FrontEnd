@@ -87,6 +87,12 @@ const config: Array<Config> = [
         // permission: permissions.VIEW_SECTOR,
       },
       {
+        title: "Long Term Incentive Plans",
+        icon: IndustryIcon,
+        path: client.long_term_ip,
+        // permission: permissions.VIEW_SECTOR,
+      },
+      {
         title: "Sectors, Industry & Sub-Industry",
         icon: IndustryIcon,
         path: sectors.listing,

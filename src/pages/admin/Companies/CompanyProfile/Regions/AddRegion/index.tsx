@@ -146,7 +146,7 @@ const AddRegion: React.FC<IAddRegion> = ({
 
         <Row justify="space-between">
           <Col span={11}>
-            <label>Select and search countries</label>
+            <label>Select countries</label>
             <Select
               value={region?.countries as number[]}
               size="large"
