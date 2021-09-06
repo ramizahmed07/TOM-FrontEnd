@@ -1,12 +1,18 @@
 .table {
   font-weight: 500 !important;
+  &--client {
+    .ant-table-thead {
+      .ant-table-cell {
+        color: #000 !important;
+      }
+    }
+  }
   .ant-table-thead .ant-table-cell {
     padding-top: 13px !important;
     padding-bottom: 13px !important;
   }
 
   .ant-table-tbody .ant-table-cell {
-    color: @secondary-text !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     height: 49px !important;

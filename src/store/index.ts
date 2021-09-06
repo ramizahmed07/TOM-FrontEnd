@@ -25,6 +25,7 @@ import {
   subJobFunctionApi,
   subAdminApi,
   companiesApi,
+  gradeSetupApi,
 } from "@services";
 import { authReducer } from "./auth";
 import { businessUnitReducer } from "./business-unit";
@@ -59,6 +60,7 @@ const appReducer = combineReducers({
   [subJobFunctionApi.reducerPath]: subJobFunctionApi.reducer,
   [companiesApi.reducerPath]: companiesApi.reducer,
   [subAdminApi.reducerPath]: subAdminApi.reducer,
+  [gradeSetupApi.reducerPath]: gradeSetupApi.reducer,
   auth: authReducer,
   businessUnit: businessUnitReducer,
   sectors: sectorsReducer,
@@ -103,6 +105,7 @@ export const store = configureStore({
     sectorsApi.middleware,
     gradeApi.middleware,
     companiesApi.middleware,
+    gradeSetupApi.middleware,
   ],
 });
 

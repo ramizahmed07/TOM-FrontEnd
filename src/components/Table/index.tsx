@@ -34,7 +34,9 @@ const Table: FC<ITable> = ({
         onRow={(record: any) => ({
           onClick: () => onRowClick && onRowClick(record),
         })}
-        className={`table ${onRowClick ? "onRowHover" : ""}`}
+        className={`table ${onRowClick ? "onRowHover" : ""} ${
+          window.location.pathname.includes("client") && "table--client"
+        }`}
         scroll={{ x: scroll || "100%" }}
         columns={columns}
         dataSource={isLoading ? [] : data}

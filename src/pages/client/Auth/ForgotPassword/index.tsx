@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "@styles/auth.less";
 import "./forgotPassword.less";
 import { ErrorServices, useResetPasswordMutation } from "@services";
-import { Paths } from "@router";
+import { paths } from "@router";
 import AuthLandingImg from "@components/AuthLandingImg";
 
 interface IProps {
@@ -215,7 +215,7 @@ const ForgotPassword = () => {
             Back to{" "}
             <Link
               className="auth__form__prompt backToLogin link"
-              to={Paths.Auth.login}
+              to={paths.client.auth.login}
             >
               Login
             </Link>

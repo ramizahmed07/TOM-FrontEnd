@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 
 import "./companies.less";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
-import { Paths } from "@router";
+import { paths } from "@router";
 import {
   ErrorServices,
   useFetchCompaniesQuery,
@@ -33,7 +33,8 @@ const Companies = () => {
     useFetchCompaniesQuery(page);
   const { data, pagination } = companiesData || {};
 
-  const createNewCompany = () => history.push(Paths.Users.companies.create);
+  const createNewCompany = () =>
+    history.push(paths.admin.users.companies.create);
 
   const toggleSwitch = async (
     status: boolean,

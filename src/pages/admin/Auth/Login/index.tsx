@@ -6,7 +6,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
-import { Paths } from "@router";
+import { paths } from "@router";
 import { ErrorServices, useLoginMutation } from "@services";
 
 interface ILoginForm {
@@ -34,9 +34,9 @@ const Login = () => {
         password,
       }).unwrap();
       if (res?.data?.is_one_time_password) {
-        history.push(Paths.Auth.reset_password);
+        history.push(paths.admin.auth.reset_password);
       } else {
-        history.push(Paths.Dashboard.dashboard);
+        history.push(paths.admin.dashboard.dashboard);
       }
     } catch (error) {
       ErrorServices(error);
@@ -62,9 +62,9 @@ const Login = () => {
           <Typography.Paragraph className="auth__form_title">
             Welcome to <span className="primary-color">Talent Accelerator</span>
           </Typography.Paragraph>
-          <Typography.Paragraph className="auth__form__prompt">
+          <div className="auth__form__prompt">
             Login to your account to continue
-          </Typography.Paragraph>
+          </div>
           {/* FORM */}
           <Form
             name="login"
@@ -115,7 +115,7 @@ const Login = () => {
                     Password
                   </label>
                   <Link
-                    to={Paths.Auth.forgot_password}
+                    to={paths.admin.auth.forgot_password}
                     className="auth__forgot__password link"
                   >
                     Forgot password?

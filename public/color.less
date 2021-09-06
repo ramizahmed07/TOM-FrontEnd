@@ -16,6 +16,11 @@
 @link: #2f49d1;
 @sider-link: #fff;
 
+body,
+.ant-table-tbody .ant-table-cell {
+  color: @secondary-text !important;
+}
+
 .primary-color {
   color: @primary-color !important;
 }
@@ -38,6 +43,14 @@
   }
   &__active {
     color: @sider-link !important;
+    .sider__icon__container--client {
+      svg,
+      g,
+      path {
+        opacity: 1 !important;
+        fill: @primary-color !important;
+      }
+    }
   }
 }
 

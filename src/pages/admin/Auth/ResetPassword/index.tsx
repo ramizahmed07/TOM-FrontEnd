@@ -5,7 +5,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
-import { Paths } from "@router";
+import { paths } from "@router";
 import { useChangePasswordMutation } from "@services";
 import { useTypedSelector } from "@/hooks";
 
@@ -32,7 +32,7 @@ const ResetPassword = () => {
           ? auth?.token?.access
           : window.location.href.split("?token=")[1],
       }).unwrap();
-      history.push(Paths.Auth.login);
+      history.push(paths.admin.auth.login);
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +124,7 @@ const ResetPassword = () => {
             Back to{" "}
             <Link
               className="auth__form__prompt backToLogin link"
-              to={Paths.Auth.login}
+              to={paths.admin.auth.login}
             >
               Login?
             </Link>

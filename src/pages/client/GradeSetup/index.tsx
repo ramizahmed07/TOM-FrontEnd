@@ -1,12 +1,64 @@
-import { Col, Row } from "antd";
+import { useRef, useState } from "react";
+import { Col, message, Row } from "antd";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
-import { columns } from "./config";
+import {
+  ErrorServices,
+  useDeleteJobGradeMutation,
+  useFetchCompanyJobGradesQuery,
+} from "@services";
+import { getColumns, IJobGrade } from "./config";
+import AddGrade from "./AddGrade";
 
 const GradeSetup = () => {
+  const [page, setPage] = useState(1);
+  let jobGrade_id = useRef<any>(null);
+  const { data: jobGradesData, isLoading } = useFetchCompanyJobGradesQuery({
+    company_id: 1,
+    page,
+  });
+  const [deleteJobGrade, { isLoading: isDeleting }] =
+    useDeleteJobGradeMutation();
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedJobGrade, setSelectedJobGrade] = useState<null | IJobGrade>(
+    null
+  );
+  const { data, pagination } = jobGradesData || {};
+
+  const removeJobGrade = async (id: number) => {
+    try {
+      jobGrade_id.current = id;
+      await deleteJobGrade({ id, company_id: 1 });
+      message.success("Job Grade deleted successfully!");
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
+
+  const editJobGrade = (jobGrade: IJobGrade) => {
+    setSelectedJobGrade(jobGrade);
+    setIsVisible(true);
+  };
+
+  const columns = getColumns({
+    deleteJobGrade: removeJobGrade,
+    jobGrade_id,
+    isDeleting,
+    editJobGrade,
+  });
+
   return (
     <>
+      {isVisible && (
+        <AddGrade
+          selectedJobGrade={selectedJobGrade}
+          setSelectedJobGrade={setSelectedJobGrade}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      )}
       <Row>
         <Col span={24}>
           <div className="main-heading">Grade Setup</div>
@@ -16,30 +68,24 @@ const GradeSetup = () => {
         <Col className="align-start" span={16}>
           <Button variant="upload_client">Upload</Button>
           <Button variant="download_client">Download</Button>
+          <Button
+            onClick={() => setIsVisible(true)}
+            variant="versions"
+            icon={false}
+          >
+            Create Job Grade
+          </Button>
         </Col>
       </Row>
       <Row>
         <Table
-          //   onRowClick={onRowClick}
-          data={[
-            {
-              jobGrade: "11",
-              country: "Pakistan",
-              type: "Human Resources",
-            },
-            {
-              jobGrade: "33A",
-              country: "Afghanistan",
-              type: "Design",
-            },
-            {
-              jobGrade: "41E",
-              country: "Germany",
-              type: "Engineering",
-            },
-          ]}
+          data={data}
+          isLoading={isLoading}
           columns={columns}
-          pagination={false}
+          pagination={true}
+          count={pagination?.count}
+          onChangePage={setPage}
+          page={page}
         />
       </Row>
     </>

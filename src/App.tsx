@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import "@styles/index.less";
-import { routeConfig, Routes } from "@router";
+import { admin_routeConfig, client_routeConfig, Routes } from "@router";
 import { fetchCountries } from "@services";
 import Layout from "@components/Layout";
 import { useTypedSelector } from "@hooks";
@@ -35,7 +35,13 @@ const App = () => {
 
   return (
     <Layout>
-      <Routes routes={routeConfig} />
+      <Routes
+        routes={
+          window.location.pathname?.includes("client")
+            ? client_routeConfig
+            : admin_routeConfig
+        }
+      />
     </Layout>
   );
 };

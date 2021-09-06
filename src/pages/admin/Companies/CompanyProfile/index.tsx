@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import "./companyProfile.less";
 import Tabs from "./Tabs";
-import { IRoute, Paths, Routes } from "@router";
+import { IRoute, paths, Routes } from "@router";
 import { matchPath } from "react-router-dom";
 
 interface ICompanyProfile {
@@ -12,7 +12,7 @@ interface ICompanyProfile {
 
 const CompanyProfile: FC<ICompanyProfile> = ({ routes }) => {
   const match = matchPath(window.location.pathname, {
-    path: Paths.Users.companies.profile.business_units.regions,
+    path: paths.admin.users.companies.profile.business_units.regions,
   });
 
   return (

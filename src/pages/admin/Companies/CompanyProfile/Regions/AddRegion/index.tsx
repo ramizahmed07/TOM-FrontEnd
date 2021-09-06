@@ -13,9 +13,8 @@ import {
   useFetchAllBusinessUnitsQuery,
   useUpdateRegionMutation,
 } from "@services";
-import { showSuccessPopup } from "@/utils";
+import { showSuccessPopup } from "@utils";
 import { IRegion } from "@store/companies";
-import { data } from "@/pages/admin/User/Companies/CompanyList/dumpData";
 
 const { Option } = Select;
 

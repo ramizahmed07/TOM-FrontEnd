@@ -4,7 +4,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
-import { Paths } from "@router";
+import { paths } from "@router";
 
 const ClientLogin = () => {
   return (
@@ -65,7 +65,7 @@ const ClientLogin = () => {
                     Password
                   </label>
                   <Link
-                    to={Paths.Auth.client_forgot_password}
+                    to={paths.client.auth.forgot_password}
                     className="auth__forgot__password link"
                   >
                     Forgot password?

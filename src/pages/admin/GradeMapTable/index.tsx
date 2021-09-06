@@ -13,7 +13,7 @@ import {
 } from "@services";
 import { IGradeCompany } from "@store/grade";
 import { getRows } from "@utils";
-import { Paths } from "@router";
+import { paths } from "@router";
 
 const default_cols = [
   {
@@ -48,7 +48,7 @@ const GradeMapTable = () => {
       (company: IGradeCompany) => +company?.id === +id
     );
 
-    history.push(Paths.Settings.grade_map_table.edit_grade_company, {
+    history.push(paths.admin.settings.grade_map_table.edit_grade_company, {
       grade_company: {
         ...grade_company,
         grade_company_ranks: grade_company?.grade_company_ranks,
@@ -81,7 +81,7 @@ const GradeMapTable = () => {
       : [];
 
   const handleAddBtn = () => {
-    history.push(Paths.Settings.grade_map_table.create_grade_company);
+    history.push(paths.admin.settings.grade_map_table.create_grade_company);
   };
 
   const uploadFile = async (event: any) => {
