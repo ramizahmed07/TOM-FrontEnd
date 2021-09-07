@@ -150,7 +150,7 @@ const SubAdminsList = () => {
           <Col className="align-end" span={8}>
             <Button
               variant="add"
-              onClick={() => history.push(Paths.Users.sub_admins.create)}
+              onClick={() => history.push(paths.admin.users.sub_admins.create)}
             >
               Create sub admin
             </Button>
