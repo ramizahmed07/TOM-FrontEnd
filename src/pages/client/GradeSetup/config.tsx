@@ -1,5 +1,7 @@
-import { TableColumnsType } from "antd";
+import { Switch, TableColumnsType } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import moment from "moment";
+import Checkbox from "antd/lib/checkbox/Checkbox";
 
 import { ICountry } from "@store/countries";
 
@@ -67,6 +69,54 @@ export const getColumns = ({
           )}
         </div>
       </>
+    ),
+  },
+];
+
+export const getVersionsColumns = ({
+  handleActive,
+  active,
+}: {
+  handleActive: (id: number) => Promise<void>;
+  active: boolean;
+}): TableColumnsType<any> => [
+  {
+    title: "id",
+    dataIndex: "id",
+    key: "id",
+    width: "15%",
+  },
+  {
+    title: "created at",
+    dataIndex: "created_at",
+    key: "created_at",
+    width: "35%",
+    render: (date: string) => <div>{moment(date).format("do-MM-YYYY")}</div>,
+  },
+  {
+    title: "Active",
+    key: "active",
+    width: "15%",
+    align: "center",
+    render: (version: any) => (
+      <Switch
+        onChange={checked => {
+          if (!checked) return;
+          handleActive(version?.id);
+        }}
+        checked={active || version?.is_active === "TRUE"}
+        defaultChecked={version?.is_active === "TRUE"}
+      />
+    ),
+  },
+  {
+    title: "action",
+    key: "action",
+    width: "15%",
+    render: () => (
+      <div className="table__action__btn table__action__btn--client">
+        Download
+      </div>
     ),
   },
 ];
