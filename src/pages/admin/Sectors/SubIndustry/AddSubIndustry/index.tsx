@@ -10,7 +10,7 @@ import {
   useUpdateSubIndustryMutation,
 } from "@services";
 import { useParams } from "react-router-dom";
-import { ISubIndustry } from "@/store/sectors";
+import { ISubIndustry } from "@/types";
 import { useEffect } from "react";
 
 interface AddSubIndustryProps extends IModal {

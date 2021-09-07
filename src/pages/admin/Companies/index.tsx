@@ -22,8 +22,8 @@ import {
   useFetchCompaniesQuery,
   useUpdateCompanyStatusMutation,
 } from "@services";
-import { ICompany } from "@store/companies";
 import Table from "@components/Table";
+import { ICompany } from "@/types";
 
 const Companies = () => {
   const history = useHistory();

@@ -2,7 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
 
 import { permissions } from "@router";
-import { IIndustry, ISubIndustry } from "@store/sectors";
+import { IIndustry, ISubIndustry } from "@/types";
 import { checkPermission } from "@utils";
 
 export const getColumns = ({

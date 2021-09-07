@@ -11,7 +11,7 @@ import {
   useFetchTARanksQuery,
   useUploadGradeTableMutation,
 } from "@services";
-import { IGradeCompany } from "@store/grade";
+import { IGradeCompany } from "@/types";
 import { getRows } from "@utils";
 import { paths } from "@router";
 

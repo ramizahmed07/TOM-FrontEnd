@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
 import Modal from "@components/Modal";
@@ -9,10 +9,7 @@ import {
   useFetchCompanyCountriesQuery,
   useUpdateJobGradeMutation,
 } from "@services";
-import { IModal } from "@/types";
-import { ICountry } from "@store/countries";
-import { IJobGrade } from "../config";
-import { useEffect } from "react";
+import { ICountry, IJobGrade, IModal } from "@/types";
 
 const { Option } = Select;
 

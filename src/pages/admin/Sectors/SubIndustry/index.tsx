@@ -4,7 +4,7 @@ import { Col, message, Row } from "antd";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
-import { ISubIndustry } from "@store/sectors";
+import { ISubIndustry } from "@/types";
 import AddSubIndustry from "./AddSubIndustry";
 import {
   useDeleteSubIndustryMutation,

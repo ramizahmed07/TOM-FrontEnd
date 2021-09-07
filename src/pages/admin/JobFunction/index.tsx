@@ -16,7 +16,7 @@ import {
   useListMutation,
   useUploadJobFunctionsMutation,
 } from "@services";
-import { IJobFunctionReducer } from "@/store/job-function/job.function.types";
+import { IJobFunctionReducer } from "@/types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
 import EditJobFunction from "./EditJobFunction";

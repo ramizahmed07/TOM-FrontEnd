@@ -30,18 +30,21 @@ import {
 } from "@services";
 import { authReducer } from "./auth";
 import { businessUnitReducer } from "./business-unit";
-import { ISectorsState, sectorsReducer } from "./sectors";
+import { sectorsReducer } from "./sectors";
 import { gradeReducer } from "./grade";
 import { jobFunctionReducer } from "./job-function";
-import { IAuthState } from "./auth/auth.types";
-import { IJobFunctionReducer } from "./job-function/job.function.types";
-import { ISubJobFunctionReducer } from "./sub-job-function/sub.job.function.types";
 import { subJobFunctionReducer } from "./sub-job-function";
-import { ISubAdminReducer } from "./sub-admin/sub.admin.types";
 import { subAdminReducer } from "./sub-admin";
 import { companiesReducer } from "./companies";
-import { IBusinessUnitState } from "./business-unit";
 import { countriesReducer } from "./countries";
+import {
+  IJobFunctionReducer,
+  ISectorsState,
+  ISubAdminReducer,
+  IAuthState,
+  IBusinessUnitState,
+  ISubJobFunctionReducer,
+} from "@/types";
 
 export interface ICombineReducerProps {
   auth: IAuthState;

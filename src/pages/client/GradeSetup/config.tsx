@@ -1,17 +1,8 @@
 import { Switch, TableColumnsType } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 
-import { ICountry } from "@store/countries";
-
-export interface IJobGrade {
-  grade: string;
-  type: null | string;
-  country_ids?: number[];
-  countries?: ICountry[];
-  id?: number;
-}
+import { ICountry, IJobGrade } from "@/types";
 
 export const getColumns = ({
   deleteJobGrade,

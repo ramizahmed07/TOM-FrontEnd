@@ -1,5 +1,5 @@
 import { Col, message, Row } from "antd";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import UploadSalaryRange from "./UploadSalaryRange";
 import Button from "@components/Button";
@@ -12,8 +12,7 @@ import {
   useFetchCompanySalaryRangesQuery,
 } from "@services";
 import AddSalaryRange from "./AddSalaryRange";
-import { ISalaryRange } from "./types";
-import { useRef } from "react";
+import { ISalaryRange } from "@/types";
 
 const SalaryRange = () => {
   const salary_range_id = useRef<any>(null);

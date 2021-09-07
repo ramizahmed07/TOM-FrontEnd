@@ -11,7 +11,7 @@ import {
   useFetchSectorsQuery,
   useUploadSectorsMutation,
 } from "@services";
-import { ISector } from "@store/sectors";
+import { ISector } from "@/types";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";
 import { getColumns } from "./config";

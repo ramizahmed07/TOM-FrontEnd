@@ -8,9 +8,10 @@ import {
   useDeleteJobGradeMutation,
   useFetchCompanyJobGradesQuery,
 } from "@services";
-import { getColumns, IJobGrade } from "./config";
+import { getColumns } from "./config";
 import AddGrade from "./AddGrade";
 import Versions from "./Versions";
+import { IJobGrade } from "@/types";
 
 const GradeSetup = () => {
   const [page, setPage] = useState(1);

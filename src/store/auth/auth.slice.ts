@@ -1,8 +1,8 @@
 import { permissions } from "@/router";
+import { IAuthState } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { authApi } from "@services";
-import { IAuthState } from "./auth.types";
 
 const initialState: IAuthState = {
   user: null,

@@ -1,8 +1,9 @@
-import { ICountry } from "@/store/countries";
+import { ICountry } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
-import { ISalaryRange } from "./types";
+
+import { ISalaryRange } from "@/types";
 
 export const getColumns = ({
   editSalaryRange,

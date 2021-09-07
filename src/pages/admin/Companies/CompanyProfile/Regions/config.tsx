@@ -1,9 +1,9 @@
 import { Dropdown, Menu, TableColumnsType } from "antd";
 
-import { ICountry } from "@store/countries";
+import { ICountry } from "@/types";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { ReactComponent as FilterIcon } from "@assets/images/filter.svg";
-import { IRegion } from "@/store/companies";
+import { IRegion } from "@/types";
 
 export type TableRow = {
   id: number;

@@ -1,10 +1,10 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Col, Input, Row, Select } from "antd";
-import { FC, useState } from "react";
+import { useEffect, FC, useState } from "react";
 
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
 import { generateArrayOfYears } from "@/utils";
-import { ICountry } from "@store/countries";
+import { ICountry, IJobGrade, ISalaryRange, IModal } from "@/types";
 import {
   ErrorServices,
   useCreateSalaryRangeMutation,
@@ -12,10 +12,6 @@ import {
   useFetchCompanyJobGradesQuery,
   useUpdateSalaryRangeMutation,
 } from "@/services";
-import { LoadingOutlined } from "@ant-design/icons";
-import { IJobGrade } from "../../GradeSetup/config";
-import { useEffect } from "react";
-import { ISalaryRange } from "../types";
 
 const { Option } = Select;
 

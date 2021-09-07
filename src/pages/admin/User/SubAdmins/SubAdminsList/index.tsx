@@ -12,10 +12,7 @@ import {
   useToggleSubAdminMutation,
 } from "@/services/sub.admin";
 import { ICombineReducerProps } from "@/store";
-import {
-  ISubAdminItem,
-  ISubAdminReducer,
-} from "@/store/sub-admin/sub.admin.types";
+import { ISubAdminItem, ISubAdminReducer } from "@/types";
 import { ErrorServices } from "@/services";
 import { checkPermission } from "@/utils";
 

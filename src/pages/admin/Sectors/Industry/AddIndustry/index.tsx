@@ -10,7 +10,7 @@ import {
   useCreateIndustryMutation,
   useUpdateIndustryMutation,
 } from "@services";
-import { IIndustry } from "@store/sectors";
+import { IIndustry } from "@/types";
 
 interface AddIndustryProps extends IModal {
   selectedIndustry: IIndustry | null;
