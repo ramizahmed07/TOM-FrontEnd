@@ -1,28 +1,81 @@
-import { Col, Row } from "antd";
+import { Col, message, Row } from "antd";
 import { useState } from "react";
 
 import UploadSalaryRange from "./UploadSalaryRange";
 import Button from "@components/Button";
 import Table from "@components/Table";
 import Modal from "@components/Modal";
-import { columns, versionsColumns } from "./config";
+import { getColumns, versionsColumns } from "./config";
+import {
+  ErrorServices,
+  useDeleteSalaryRangeMutation,
+  useFetchCompanySalaryRangesQuery,
+} from "@services";
+import AddSalaryRange from "./AddSalaryRange";
+import { ISalaryRange } from "./types";
+import { useRef } from "react";
 
 const SalaryRange = () => {
+  const salary_range_id = useRef<any>(null);
+  const [page, setPage] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
-  const [versionsModal, setVersionsModal] = useState(false);
+  const [isUploadModal, setIsUploadModal] = useState(false);
+  const [selectedSalaryRange, setSelectedSalaryRange] =
+    useState<ISalaryRange | null>(null);
+  const [isVersionsModal, setIsVersionsModal] = useState(false);
+  const { data: salaryRanges, isLoading } = useFetchCompanySalaryRangesQuery({
+    company_id: 1,
+    page,
+  });
+  const { data, pagination } = salaryRanges || {};
+  const [deleteSalaryRange, { isLoading: isDeleting }] =
+    useDeleteSalaryRangeMutation();
+
+  const editSalaryRange = (salaryRange: ISalaryRange) => {
+    setSelectedSalaryRange(salaryRange);
+    setIsVisible(true);
+  };
+
+  const removeSalaryRange = async (id: number) => {
+    try {
+      salary_range_id.current = id;
+      await deleteSalaryRange({ company_id: 1, id }).unwrap();
+      message.success("Salary range deleted successfully!");
+    } catch (error) {
+      ErrorServices(error);
+    }
+  };
+
+  const columns = getColumns({
+    editSalaryRange,
+    isDeleting,
+    salary_range_id,
+    removeSalaryRange,
+  });
 
   return (
     <>
+      {isUploadModal && (
+        <UploadSalaryRange
+          isVisible={isUploadModal}
+          setIsVisible={setIsUploadModal}
+        />
+      )}
       {isVisible && (
-        <UploadSalaryRange isVisible={isVisible} setIsVisible={setIsVisible} />
+        <AddSalaryRange
+          selectedSalaryRange={selectedSalaryRange}
+          setSelectedSalaryRange={setSelectedSalaryRange}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
       )}
       <Modal
         mode="versions"
         footer={null}
         title="Previous Versions of Salary Range"
-        isVisible={versionsModal}
+        isVisible={isVersionsModal}
         width={855}
-        setIsVisible={setVersionsModal}
+        setIsVisible={setIsVersionsModal}
       >
         <Table
           data={[
@@ -48,57 +101,39 @@ const SalaryRange = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <Button onClick={() => setIsVisible(true)} variant="upload_client">
+          <Button
+            onClick={() => setIsUploadModal(true)}
+            variant="upload_client"
+          >
             Upload
           </Button>
           <Button variant="download_client">Download</Button>
           <Button
-            onClick={() => setVersionsModal(true)}
+            onClick={() => setIsVersionsModal(true)}
             variant="versions"
             icon={false}
           >
             Versions
           </Button>
+          <Button
+            onClick={() => setIsVisible(true)}
+            variant="versions"
+            icon={false}
+          >
+            Create Salary Range
+          </Button>
         </Col>
       </Row>
       <Row>
         <Table
-          //   onRowClick={onRowClick}
-          data={[
-            {
-              country: "Pakistan",
-              city: "Karachi",
-              tier: 2,
-              rangeType: "Tech",
-              grade: 14,
-              min: 20000,
-              mid: 50000,
-              max: 80000,
-            },
-            {
-              country: "Afghanistan",
-              city: "Kabul",
-              tier: 1,
-              rangeType: "Non-Tech",
-              grade: 14,
-              min: 10000,
-              mid: 30000,
-              max: 50000,
-            },
-            {
-              country: "Pakistan",
-              city: "Karachi",
-              tier: 2,
-              rangeType: "Tech",
-              grade: 14,
-              min: 20000,
-              mid: 50000,
-              max: 80000,
-            },
-          ]}
+          isLoading={isLoading}
+          data={data}
           columns={columns}
           scroll={1300}
-          pagination={false}
+          pagination={true}
+          count={pagination?.count}
+          onChangePage={setPage}
+          page={page}
         />
       </Row>
     </>
