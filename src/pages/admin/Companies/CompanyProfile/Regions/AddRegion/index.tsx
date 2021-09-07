@@ -13,9 +13,8 @@ import {
   useFetchAllBusinessUnitsQuery,
   useUpdateRegionMutation,
 } from "@services";
-import { showSuccessPopup } from "@/utils";
+import { showSuccessPopup } from "@utils";
 import { IRegion } from "@store/companies";
-import { data } from "@/pages/admin/User/Companies/CompanyList/dumpData";
 
 const { Option } = Select;
 
@@ -146,7 +145,7 @@ const AddRegion: React.FC<IAddRegion> = ({
 
         <Row justify="space-between">
           <Col span={11}>
-            <label>Select and search countries</label>
+            <label>Select countries</label>
             <Select
               value={region?.countries as number[]}
               size="large"

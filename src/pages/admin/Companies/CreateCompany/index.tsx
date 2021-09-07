@@ -18,7 +18,7 @@ import moment from "moment";
 
 import "./createCompany.less";
 import ImgUpload from "@assets/images/img-upload.png";
-import { generateArrayOfYears } from "@/utils";
+import { disabledDates, generateArrayOfYears } from "@/utils";
 
 function b64toBlob(dataURI: any) {
   var byteString = atob(dataURI.split(",")[1]);
@@ -57,9 +57,9 @@ const CreateCompany = () => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   function disabledDate(current: any) {
-    return (
-      current &&
-      current < moment(form.getFieldValue("contract_start_date")).endOf("day")
+    return disabledDates(
+      current,
+      moment(form.getFieldValue("contract_start_date")).endOf("day")
     );
   }
 

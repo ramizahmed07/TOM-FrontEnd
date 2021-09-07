@@ -14,6 +14,8 @@ interface ModalProps {
   children: React.ReactNode;
   width?: number;
   className?: string;
+  mode?: "versions" | "standard";
+  setIsVisible?: any;
 }
 
 const Modal: FC<ModalProps> = ({
@@ -23,6 +25,8 @@ const Modal: FC<ModalProps> = ({
   width = 1092,
   children,
   className,
+  setIsVisible,
+  mode = "standard",
 }) => {
   return (
     <AntModal
@@ -30,8 +34,11 @@ const Modal: FC<ModalProps> = ({
       centered={true}
       visible={isVisible}
       closable={false}
-      className={`modal ${className}`}
-      maskClosable={false}
+      onCancel={() => setIsVisible(false)}
+      className={`modal ${className} ${
+        mode === "versions" && "modal--versions"
+      }`}
+      maskClosable={mode === "versions"}
       destroyOnClose={true}
       footer={footer}
       width={width}

@@ -11,24 +11,27 @@ import { NavLink, useLocation, useHistory } from "react-router-dom";
 import _ from "lodash";
 
 import "./layout.less";
-import { Paths, routeConfig } from "@router";
+import { paths, admin_routeConfig, client_routeConfig } from "@router";
 import { ReactComponent as Logo } from "@assets/images/logo.svg";
 import { ReactComponent as Down } from "@assets/images/arrow-down.svg";
 import { ReactComponent as Bell } from "@assets/images/bell.svg";
-import config, { Config } from "./sidebar-config";
+import { IConfig, admin_config, client_config } from "./sidebar-config";
 import profilePic from "@assets/images/profile-pic.jpeg";
 import { useBreadcrumbs, useTypedSelector } from "@hooks";
 import { ErrorServices, loadRefreshToken, useLogoutMutation } from "@services";
 import { checkPermission } from "@utils";
 
 const { Header, Content, Sider } = AntdLayout;
-
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useTypedSelector(state => state.auth);
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
   const [onLogout] = useLogoutMutation();
   const { pathname } = useLocation();
   const history = useHistory();
+
+  const config = window.location.pathname?.includes("client")
+    ? client_config
+    : admin_config;
 
   const getRoute = (path: string | Array<string>): string => {
     if (typeof path == "string") return path;
@@ -41,9 +44,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     else return "";
   };
 
-  const breadcrumbs = useBreadcrumbs(routeConfig, {
-    disableDefaults: true,
-  });
+  const breadcrumbs = useBreadcrumbs(
+    window.location.pathname?.includes("client")
+      ? client_routeConfig
+      : admin_routeConfig,
+    {
+      disableDefaults: true,
+    }
+  );
   const breadcrumbs_list = breadcrumbs.map(({ breadcrumb }) => breadcrumb);
   const breadcrumb = breadcrumbs_list
     ?.map((x: any) => x?.props?.children)
@@ -67,8 +75,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 
   if (
-    Object.values(Paths.Auth).some(path =>
-      window.location.pathname.includes(path)
+    Object.values(paths.admin.auth).some(path =>
+      window.location.pathname.includes(path as string)
     )
   )
     return <div>{children}</div>;
@@ -76,11 +84,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <AntdLayout className="layout__container">
       <AntdLayout>
-        <Sider width={200} className="layout__sider site-layout-background">
+        <Sider width={200} className="layout__sider sider">
           <div className="sider__logo__container">
             <Logo />
           </div>
-          {config.map((config: Config, idx) => {
+          {config?.map((config: IConfig, idx) => {
             return (
               <div className="sider__links__container" key={idx}>
                 <NavLink
@@ -88,9 +96,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   key={idx}
                   to={getRoute(config.path)}
                   className="sider__link"
-                  activeClassName="sider__sub__link--active"
+                  activeClassName="sider__active"
                 >
-                  <div className="sider__icon__container">
+                  <div
+                    className={`sider__icon__container ${
+                      config?.client && "sider__icon__container--client"
+                    }`}
+                  >
                     <config.icon className="sider__link__icon" />
                   </div>
                   {config.title}
@@ -101,10 +113,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                       key={i}
                       to={subLink.path || ""}
                       className="sider__sub__link"
-                      activeClassName="sider__sub__link--active"
+                      activeClassName="sider__active"
                       onClick={() => subLink.path && history.push(subLink.path)}
                     >
-                      <div className="sider__icon__container">
+                      <div
+                        className={`sider__icon__container ${
+                          config?.client && "sider__icon__container--client"
+                        }`}
+                      >
                         <subLink.icon className="sider__link__icon" />
                       </div>
                       {subLink.title}

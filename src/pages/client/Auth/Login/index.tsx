@@ -4,7 +4,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
-import { Paths } from "@router";
+import { paths } from "@router";
 
 const ClientLogin = () => {
   return (
@@ -13,12 +13,12 @@ const ClientLogin = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Welcome to{" "}
-            <span className="auth__company__name">Talent Accelerator</span>
+            Welcome to <span className="primary-color">Talent Accelerator</span>
           </Typography.Paragraph>
           <Typography.Paragraph className="auth__form__prompt">
             Login to your account to continue
           </Typography.Paragraph>
+          {/* FORM */}
           <Form
             name="login"
             labelCol={{ span: 24 }}
@@ -31,7 +31,11 @@ const ClientLogin = () => {
               className="form__item"
               validateTrigger="onSubmit"
               label={
-                <label className={`${false ? "error__label" : "input__label"}`}>
+                <label
+                  className={`${
+                    false ? "error__label" : "input__label"
+                  } secondary-color`}
+                >
                   Email Address
                 </label>
               }
@@ -53,12 +57,16 @@ const ClientLogin = () => {
               validateTrigger="onSubmit"
               label={
                 <div className="auth__password__label">
-                  <label className={false ? "error__label" : "input__label"}>
+                  <label
+                    className={`${
+                      false ? "error__label" : "input__label"
+                    } secondary-color`}
+                  >
                     Password
                   </label>
                   <Link
-                    to={Paths.Auth.client_forgot_password}
-                    className="auth__forgot__password"
+                    to={paths.client.auth.forgot_password}
+                    className="auth__forgot__password link"
                   >
                     Forgot password?
                   </Link>

@@ -23,47 +23,36 @@ import LegalEntities from "@pages/admin/Companies/CompanyProfile/BusinessUnits/L
 import ClientLogin from "@pages/client/Auth/Login";
 import ClientResetPassword from "@pages/client/Auth/ResetPassword";
 import ClientForgotPassword from "@pages/client/Auth/ForgotPassword";
-import { Paths, IRoute, permissions } from "@router";
+import GradeSetup from "@pages/client/GradeSetup";
+import SalaryRange from "@pages/client/SalaryRange";
+import CashAllowances from "@pages/client/CashAllowances";
+import ShortTermIP from "@pages/client/ShortTermIP";
+import LongTermIP from "@pages/client/LongTermIP";
+import InternalPayrollData from "@pages/client/InternalPayrollData";
+import MarketData from "@pages/client/MarketData";
+import { paths, IRoute, permissions } from "@router";
 
-export const routeConfig: IRoute[] = [
+export const admin_routeConfig: IRoute[] = [
   {
-    path: Paths.Auth.login,
+    path: paths.admin.auth.login,
     component: Login,
     key: "Login",
     isPrivate: false,
   },
   {
-    path: Paths.Auth.client_login,
-    component: ClientLogin,
-    key: "Client Login",
-    isPrivate: false,
-  },
-  {
-    path: Paths.Auth.forgot_password,
+    path: paths.admin.auth.forgot_password,
     component: ForgotPassword,
     key: "Forgot Password",
     isPrivate: false,
   },
   {
-    path: Paths.Auth.client_forgot_password,
-    component: ClientForgotPassword,
-    key: "Client Forgot Password",
-    isPrivate: false,
-  },
-  {
-    path: Paths.Auth.reset_password,
+    path: paths.admin.auth.reset_password,
     component: ResetPassword,
     key: "Reset Password",
     isPrivate: true,
   },
   {
-    path: Paths.Auth.client_reset_password,
-    component: ClientResetPassword,
-    key: "Reset Password",
-    isPrivate: true,
-  },
-  {
-    path: Paths.Users.companies.listing,
+    path: paths.admin.users.companies.listing,
     component: Companies,
     key: "Companies",
     exact: true,
@@ -71,7 +60,7 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Users.companies.create,
+    path: paths.admin.users.companies.create,
     component: CreateCompany,
     key: "Company New Company",
     exact: true,
@@ -79,14 +68,14 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Users.companies.profile.details,
+    path: paths.admin.users.companies.profile.details,
     component: CompanyProfile,
     key: "Companies",
     breadcrumb: "Users / Companies list",
     isPrivate: true,
     routes: [
       {
-        path: Paths.Users.companies.profile.details,
+        path: paths.admin.users.companies.profile.details,
         component: CompanyDetails,
         key: "Companies Details",
         exact: true,
@@ -94,7 +83,7 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_units.listing,
+        path: paths.admin.users.companies.profile.business_units.listing,
         component: BusinessUnits,
         key: "Business Units",
         exact: true,
@@ -102,7 +91,7 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_units.regions,
+        path: paths.admin.users.companies.profile.business_units.regions,
         component: BusinessUnitRegions,
         key: "Business Unit Regions",
         exact: true,
@@ -110,7 +99,7 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_units.countries,
+        path: paths.admin.users.companies.profile.business_units.countries,
         component: BusinessUnitCountries,
         key: "Business Unit Countries",
         exact: true,
@@ -118,7 +107,7 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.business_units.legal_entities,
+        path: paths.admin.users.companies.profile.business_units.legal_entities,
         component: LegalEntities,
         key: "Legal Entities",
         exact: true,
@@ -126,7 +115,7 @@ export const routeConfig: IRoute[] = [
         isPrivate: true,
       },
       {
-        path: Paths.Users.companies.profile.regions,
+        path: paths.admin.users.companies.profile.regions,
         component: Regions,
         key: "Regions",
         exact: true,
@@ -136,7 +125,7 @@ export const routeConfig: IRoute[] = [
     ],
   },
   {
-    path: Paths.Users.sub_admins.listing,
+    path: paths.admin.users.sub_admins.listing,
     component: SubAdminsList,
     key: "SubAminList",
     exact: true,
@@ -144,7 +133,7 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Users.sub_admins.create,
+    path: paths.admin.users.sub_admins.create,
     component: SubAdminsCreate,
     key: "SubAdminsCreate",
     exact: true,
@@ -152,7 +141,7 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Users.sub_admins.edit,
+    path: paths.admin.users.sub_admins.edit,
     component: SubAdminsEdit,
     key: "SubAdminsEdit",
     exact: true,
@@ -161,7 +150,7 @@ export const routeConfig: IRoute[] = [
   },
 
   {
-    path: Paths.Settings.sectors.listing,
+    path: paths.admin.settings.sectors.listing,
     component: Sectors,
     key: "Sectors",
     exact: true,
@@ -170,7 +159,7 @@ export const routeConfig: IRoute[] = [
     permission: permissions.VIEW_SECTOR,
   },
   {
-    path: Paths.Settings.sectors.industry,
+    path: paths.admin.settings.sectors.industry,
     component: Industry,
     key: "Industry",
     breadcrumb: "Settings / Sectors / Industries",
@@ -179,7 +168,7 @@ export const routeConfig: IRoute[] = [
     permission: permissions.VIEW_INDUSTRY,
   },
   {
-    path: Paths.Settings.sectors.sub_industry,
+    path: paths.admin.settings.sectors.sub_industry,
     component: SubIndustry,
     key: "Sub-Industry",
     breadcrumb: "Settings / Sectors / Industries / Sub Industries",
@@ -187,14 +176,14 @@ export const routeConfig: IRoute[] = [
     permission: permissions.VIEW_SUB_INDUSTRY,
   },
   {
-    path: Paths.Settings.job_function.listing,
+    path: paths.admin.settings.job_function.listing,
     component: JobFunction,
     key: "Job Function",
     breadcrumb: "Settings / Job Function",
     isPrivate: true,
   },
   {
-    path: Paths.Settings.job_function.sub_job_function,
+    path: paths.admin.settings.job_function.sub_job_function,
     component: SubJobFunction,
     key: "Sub Job Function",
     breadcrumb: "Settings / Job Function / Sub-Function",
@@ -202,7 +191,7 @@ export const routeConfig: IRoute[] = [
     permission: permissions.VIEW_JOB_SUB_FUNCTION,
   },
   {
-    path: Paths.Settings.grade_map_table.listing,
+    path: paths.admin.settings.grade_map_table.listing,
     component: GradeMapTable,
     key: "Grade Map Table",
     exact: true,
@@ -210,28 +199,21 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Settings.grade_map_table.create_grade_company,
+    path: paths.admin.settings.grade_map_table.create_grade_company,
     component: AddGradeCompany,
     key: "Add new Company",
     breadcrumb: "Settings / Grade map table / Add new company",
     isPrivate: true,
   },
   {
-    path: Paths.Settings.grade_map_table.edit_grade_company,
+    path: paths.admin.settings.grade_map_table.edit_grade_company,
     component: AddGradeCompany,
     key: "Add new Company",
     breadcrumb: "Settings / Grade map table / Edit new company",
     isPrivate: true,
   },
   {
-    path: Paths.Dashboard.dashboard,
-    component: "Dashboard",
-    key: "Dashboard",
-    breadcrumb: "Dashboard",
-    isPrivate: true,
-  },
-  {
-    path: Paths.Users.sub_admins.listing,
+    path: paths.admin.users.sub_admins.listing,
     component: SubAdminsList,
     key: "List sub admins",
     breadcrumb: "Users / Sub admins",
@@ -239,10 +221,89 @@ export const routeConfig: IRoute[] = [
     isPrivate: true,
   },
   {
-    path: Paths.Users.sub_admins.create,
+    path: paths.admin.users.sub_admins.create,
     component: SubAdminsCreate,
     key: "Add new sub admin",
     breadcrumb: "Users / Sub admins / Add new sub admin",
+    isPrivate: true,
+  },
+
+  {
+    path: paths.admin.dashboard.dashboard,
+    component: "Dashboard",
+    key: "Dashboard",
+    breadcrumb: "Dashboard",
+    isPrivate: true,
+  },
+];
+
+export const client_routeConfig: IRoute[] = [
+  {
+    path: paths.client.auth.login,
+    component: ClientLogin,
+    key: "Client Login",
+    isPrivate: false,
+  },
+
+  {
+    path: paths.client.auth.forgot_password,
+    component: ClientForgotPassword,
+    key: "Client Forgot Password",
+    isPrivate: false,
+  },
+  {
+    path: paths.client.auth.reset_password,
+    component: ClientResetPassword,
+    key: "Reset Password",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.grade_setup,
+    component: GradeSetup,
+    key: "Grade Setup",
+    breadcrumb: "Compensation System / Grade Setup",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.salary_range,
+    component: SalaryRange,
+    key: "Salary Range",
+    breadcrumb: "Compensation System / Salary Range",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.cash_allowances,
+    component: CashAllowances,
+    key: "Cash Allowances",
+    breadcrumb: "Compensation System / Cash Allowances",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.short_term_ip,
+    component: ShortTermIP,
+    key: "Short Term Incentive Plans",
+    breadcrumb: "Compensation System / Short Term Incentive Plans",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.long_term_ip,
+    component: LongTermIP,
+    key: "Short Term Incentive Plans",
+    breadcrumb: "Compensation System / Short Term Incentive Plans",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.internal_payroll_data,
+    component: InternalPayrollData,
+    key: "Internal Payroll Data",
+    breadcrumb: "Compensation System / Internal Payroll Data",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.market_data,
+    component: MarketData,
+    key: "Market Data",
+    breadcrumb: "Compensation System / Market Data",
     isPrivate: true,
   },
 ];

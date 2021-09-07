@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { Paths, permissions } from "@/router";
+import { paths, permissions } from "@/router";
 import Button from "@components/Button";
 import Table from "@components/Table";
 import {

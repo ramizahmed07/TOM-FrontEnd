@@ -1,2 +1,1 @@
-export * from './Companies';
-export * from './SubAdmins';
+export * from "./SubAdmins";

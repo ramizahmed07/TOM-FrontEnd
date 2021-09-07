@@ -11,6 +11,7 @@
       "@styles/*": ["./styles/*"],
       "@router": ["./router"],
       "@hooks": ["./hooks"],
+      "@constants": ["./constants"],
       "@services": ["./services"],
       "@store": ["./store"],
       "@utils": ["./utils"]

@@ -10,3 +10,4 @@ export * from "./storage";
 export * from "./sub.admin";
 export * from "./sub.job.function";
 export * from "./countries";
+export * from "./gradeSetup";

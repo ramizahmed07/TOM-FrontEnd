@@ -6,7 +6,7 @@ import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
 
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
-import { Paths } from "@router";
+import { paths } from "@router";
 import { ErrorServices, useLoginMutation } from "@services";
 
 interface ILoginForm {
@@ -34,9 +34,9 @@ const Login = () => {
         password,
       }).unwrap();
       if (res?.data?.is_one_time_password) {
-        history.push(Paths.Auth.reset_password);
+        history.push(paths.admin.auth.reset_password);
       } else {
-        history.push(Paths.Dashboard.dashboard);
+        history.push(paths.admin.dashboard.dashboard);
       }
     } catch (error) {
       ErrorServices(error);
@@ -60,12 +60,11 @@ const Login = () => {
       <Col span={10} className="auth__right">
         <div className="auth__form__container">
           <Typography.Paragraph className="auth__form_title">
-            Welcome to{" "}
-            <span className="auth__company__name">Talent Accelerator</span>
+            Welcome to <span className="primary-color">Talent Accelerator</span>
           </Typography.Paragraph>
-          <Typography.Paragraph className="auth__form__prompt">
+          <div className="auth__form__prompt">
             Login to your account to continue
-          </Typography.Paragraph>
+          </div>
           {/* FORM */}
           <Form
             name="login"
@@ -85,7 +84,7 @@ const Login = () => {
                 <label
                   className={`${
                     checkError("email") ? "error__label" : "input__label"
-                  }`}
+                  } secondary-color`}
                 >
                   Email Address
                 </label>
@@ -109,15 +108,15 @@ const Login = () => {
               label={
                 <div className="auth__password__label">
                   <label
-                    className={
+                    className={`${
                       checkError("password") ? "error__label" : "input__label"
-                    }
+                    } secondary-color`}
                   >
                     Password
                   </label>
                   <Link
-                    to={Paths.Auth.forgot_password}
-                    className="auth__forgot__password"
+                    to={paths.admin.auth.forgot_password}
+                    className="auth__forgot__password link"
                   >
                     Forgot password?
                   </Link>

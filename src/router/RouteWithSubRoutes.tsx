@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Redirect, Route } from "react-router-dom";
 
-import { Paths } from ".";
+import { paths } from ".";
 import { useTypedSelector } from "@hooks";
 import { checkPermission } from "@utils";
 import { IRoute } from "./types";
@@ -23,7 +23,7 @@ const RouteWithSubRoutes: FC<IRoute> = route => {
             isAuthenticated ? (
               <route.component {...props} routes={route.routes} />
             ) : (
-              <Redirect to={Paths.Auth.login} />
+              <Redirect to={paths.admin.auth.login} />
             )
           ) : (
             <route.component {...props} routes={route.routes} />

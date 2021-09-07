@@ -1,12 +1,18 @@
-import { BrowserRouter as Router } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import "@styles/index.less";
-import { routeConfig, Routes } from "@router";
+import { admin_routeConfig, client_routeConfig, Routes } from "@router";
+import { fetchCountries } from "@services";
 import Layout from "@components/Layout";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { useTypedSelector } from "./hooks";
-import { fetchCountries } from "./services";
+import { useTypedSelector } from "@hooks";
+import { adminVars, clientVars } from "./constants";
+
+declare global {
+  interface Window {
+    less: any;
+  }
+}
 
 const App = () => {
   const dispatch = useDispatch();
@@ -14,17 +20,29 @@ const App = () => {
   const { user } = useTypedSelector(state => state.auth);
 
   useEffect(() => {
-    if (!countries.length && user?.id) {
+    if (!countries?.length && user?.id) {
       dispatch(fetchCountries());
     }
   }, [dispatch, countries, user]);
 
+  useEffect(() => {
+    if (window.location.pathname?.includes("client")) {
+      window.less.modifyVars(clientVars);
+    } else {
+      window.less.modifyVars(adminVars);
+    }
+  }, []);
+
   return (
-    <Router>
-      <Layout>
-        <Routes routes={routeConfig} />
-      </Layout>
-    </Router>
+    <Layout>
+      <Routes
+        routes={
+          window.location.pathname?.includes("client")
+            ? client_routeConfig
+            : admin_routeConfig
+        }
+      />
+    </Layout>
   );
 };
 

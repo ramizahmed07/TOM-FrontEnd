@@ -1,5 +1,35 @@
 const path = require("path");
 const CracoLessPlugin = require("craco-less");
+const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
+
+const options = {
+  antDir: path.join(__dirname, "./node_modules/antd"),
+  stylesDir: path.join(__dirname, "./src"),
+  varFile: path.join(__dirname, "./src/styles/theme.less"),
+  colorFilePath: path.join(__dirname, "./public/color.less"),
+  themeVariables: [
+    "@primary-color",
+    "@primary-color-light",
+    "@primary-white",
+    "@primary-black",
+    "@primary-black-light",
+    "@secondary-text",
+    "@white",
+    "@light-gray",
+    "@green-light",
+    "@blue-light",
+    "@error-color",
+    "@error-color-light",
+    "@border",
+    "@border-primary",
+    "@border-light-gray",
+    "@link",
+    "@sider-link",
+  ],
+  indexFileName: false,
+  generateOnce: false,
+};
+const ThemePlugin = new AntDesignThemePlugin(options);
 
 module.exports = {
   webpack: {
@@ -15,6 +45,7 @@ module.exports = {
       "@hooks": path.resolve(__dirname, "src/hooks/"),
       "@services": path.resolve(__dirname, "src/services/"),
       "@styles": path.resolve(__dirname, "src/styles/"),
+      "@constants": path.resolve(__dirname, "src/constants/"),
     },
   },
   plugins: [
@@ -30,6 +61,9 @@ module.exports = {
           },
         },
       },
+    },
+    {
+      plugin: ThemePlugin,
     },
   ],
 };
