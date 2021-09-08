@@ -4,8 +4,7 @@ import { useRef, useState } from "react";
 import UploadSalaryRange from "./UploadSalaryRange";
 import Button from "@components/Button";
 import Table from "@components/Table";
-import Modal from "@components/Modal";
-import { getColumns, versionsColumns } from "./config";
+import { getColumns } from "./config";
 import {
   ErrorServices,
   useDeleteSalaryRangeMutation,
@@ -13,6 +12,7 @@ import {
 } from "@services";
 import AddSalaryRange from "./AddSalaryRange";
 import { ISalaryRange } from "@/types";
+import SalaryRangeVersions from "./Versions";
 
 const SalaryRange = () => {
   const salary_range_id = useRef<any>(null);
@@ -68,31 +68,13 @@ const SalaryRange = () => {
           setIsVisible={setIsVisible}
         />
       )}
-      <Modal
-        mode="versions"
-        footer={null}
-        title="Previous Versions of Salary Range"
-        isVisible={isVersionsModal}
-        width={855}
-        setIsVisible={setIsVersionsModal}
-      >
-        <Table
-          data={[
-            {
-              name: "2019_salary_range.xls",
-              duration: "2019-2020",
-              date: "29th-may-2019",
-            },
-            {
-              name: "2020_salary_range.xls",
-              duration: "2020-2021",
-              date: "29th-june-2020",
-            },
-          ]}
-          columns={versionsColumns}
-          pagination={false}
+      {isVersionsModal && (
+        <SalaryRangeVersions
+          isVisible={isVersionsModal}
+          setIsVisible={setIsVersionsModal}
         />
-      </Modal>
+      )}
+
       <Row>
         <Col span={24}>
           <div className="main-heading">Salary Range</div>

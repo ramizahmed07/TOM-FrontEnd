@@ -16,13 +16,13 @@ export const salaryRangeApi = createApi({
       }),
       providesTags: ["SalaryRanges"],
     }),
-    // fetchJobGradeVersions: builder.query({
-    //   query: ({ company_id, page = 1 }) => ({
-    //     url: `/${company_id}/job-grade-versions/?page=${page}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["JobGradeVersions"],
-    // }),
+    fetchSalaryRangeVersions: builder.query({
+      query: ({ company_id, page = 1 }) => ({
+        url: `/${company_id}/salary-range-versions/?page=${page}`,
+        method: "GET",
+      }),
+      providesTags: ["SalaryRangeVersions"],
+    }),
     // fetchCompanyCountries: builder.query({
     //   query: ({ company_id }) => ({
     //     url: `/${company_id}/countries/`,
@@ -52,13 +52,13 @@ export const salaryRangeApi = createApi({
       }),
       invalidatesTags: ["SalaryRanges"],
     }),
-    // updateJobGradeVersion: builder.mutation({
-    //   query: ({ id, company_id }) => ({
-    //     url: `/${company_id}/job-grade-version/${id}/set-active/`,
-    //     method: "PATCH",
-    //   }),
-    //   invalidatesTags: ["JobGrades", "JobGradeVersions"],
-    // }),
+    updateSalaryRangeVersion: builder.mutation({
+      query: ({ id, company_id }) => ({
+        url: `/${company_id}/job-grade-version/${id}/set-active/`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["SalaryRanges", "SalaryRangeVersions"],
+    }),
   }),
 });
 export const {
@@ -66,4 +66,6 @@ export const {
   useCreateSalaryRangeMutation,
   useUpdateSalaryRangeMutation,
   useDeleteSalaryRangeMutation,
+  useFetchSalaryRangeVersionsQuery,
+  useUpdateSalaryRangeVersionMutation,
 } = salaryRangeApi;

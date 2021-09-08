@@ -10,7 +10,7 @@ import {
 } from "@services";
 import { getColumns } from "./config";
 import AddGrade from "./AddGrade";
-import Versions from "./Versions";
+import GradeSetupVersions from "./Versions";
 import { IJobGrade } from "@/types";
 
 const GradeSetup = () => {
@@ -64,7 +64,7 @@ const GradeSetup = () => {
       )}
 
       {isVersionsModal && (
-        <Versions
+        <GradeSetupVersions
           isVisible={isVersionsModal}
           setIsVisible={setIsVersionsModal}
         />

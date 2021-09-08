@@ -1,9 +1,8 @@
-import { ICountry } from "@/types";
 import { LoadingOutlined } from "@ant-design/icons";
-import { TableColumnsType } from "antd";
-import Checkbox from "antd/lib/checkbox/Checkbox";
+import moment from "moment";
+import { Switch, TableColumnsType } from "antd";
 
-import { ISalaryRange } from "@/types";
+import { ISalaryRange, ICountry } from "@/types";
 
 export const getColumns = ({
   editSalaryRange,
@@ -99,31 +98,41 @@ export const getColumns = ({
   },
 ];
 
-export const versionsColumns: TableColumnsType<any> = [
+export const getVersionsColumns = ({
+  handleActive,
+  active,
+}: {
+  handleActive: (id: number) => Promise<void>;
+  active: boolean;
+}): TableColumnsType<any> => [
   {
-    title: "file name",
-    dataIndex: "name",
-    key: "name",
-    width: "30%",
+    title: "id",
+    dataIndex: "id",
+    key: "id",
+    width: "15%",
   },
   {
-    title: "duration",
-    dataIndex: "duration",
-    key: "duration",
-    width: "25%",
-  },
-  {
-    title: "upload date",
-    dataIndex: "date",
-    key: "date",
-    width: "30%",
+    title: "created at",
+    dataIndex: "created_at",
+    key: "created_at",
+    width: "35%",
+    render: (date: string) => <div>{moment(date).format("do-MM-YYYY")}</div>,
   },
   {
     title: "Active",
     key: "active",
     width: "15%",
     align: "center",
-    render: () => <Checkbox />,
+    render: (version: any) => (
+      <Switch
+        onChange={checked => {
+          if (!checked) return;
+          handleActive(version?.id);
+        }}
+        checked={active || version?.is_active === "TRUE"}
+        defaultChecked={version?.is_active === "TRUE"}
+      />
+    ),
   },
   {
     title: "action",
