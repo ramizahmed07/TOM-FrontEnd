@@ -10,6 +10,7 @@ import {
   useUpdateJobGradeMutation,
 } from "@services";
 import { ICountry, IJobGrade, IModal } from "@/types";
+import { showSuccessPopup } from "@utils";
 
 const { Option } = Select;
 
@@ -61,6 +62,13 @@ const AddGrade: FC<IAddGrade> = ({
         await addJobGrade();
       }
       setIsVisible(false);
+      showSuccessPopup({
+        title: selectedJobGrade ? "Job Grade Updated" : "New Job Grade Created",
+        desc: `You have successfully ${
+          selectedJobGrade ? "updated the" : "created new"
+        } job grade.`,
+        role: "client",
+      });
     } catch (error) {
       ErrorServices(error);
       console.log(error);

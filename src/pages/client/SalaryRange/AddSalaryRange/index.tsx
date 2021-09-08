@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Select } from "antd";
 import { useEffect, FC, useState } from "react";
 
 import Modal from "@components/Modal";
-import { generateArrayOfYears } from "@/utils";
+import { generateArrayOfYears, showSuccessPopup } from "@utils";
 import { ICountry, IJobGrade, ISalaryRange, IModal } from "@/types";
 import {
   ErrorServices,
@@ -15,7 +15,7 @@ import {
 
 const { Option } = Select;
 
-export interface IAddSalaryRange extends IModal {
+interface IAddSalaryRange extends IModal {
   selectedSalaryRange: ISalaryRange | null;
   setSelectedSalaryRange: React.Dispatch<
     React.SetStateAction<ISalaryRange | null>
@@ -44,12 +44,12 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
     useState<ISalaryRange>(INITIAL_SALARY_RANGE);
   const [createSalaryRange, { isLoading: isCreating }] =
     useCreateSalaryRangeMutation();
+  const [updateSalaryRange, { isLoading: isUpdating }] =
+    useUpdateSalaryRangeMutation();
   const { data: countriesData, isLoading: isFetchingCountries } =
     useFetchCompanyCountriesQuery({
       company_id: 1,
     });
-  const [updateSalaryRange, { isLoading: isUpdating }] =
-    useUpdateSalaryRangeMutation();
   const { data: countries } = countriesData || {};
   const { data: jobGradesData, isLoading: isFetchingGrades } =
     useFetchCompanyJobGradesQuery({ company_id: 1 });
@@ -86,6 +86,15 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
         await addSalaryRange();
       }
       setIsVisible(false);
+      showSuccessPopup({
+        title: selectedSalaryRange
+          ? "Salary Range Updated"
+          : "New Salary Range Created",
+        desc: `You have successfully ${
+          selectedSalaryRange ? "updated the" : "created new"
+        } salary range.`,
+        role: "client",
+      });
     } catch (error) {
       ErrorServices(error);
       console.log(error);

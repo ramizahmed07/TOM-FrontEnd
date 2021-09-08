@@ -35,7 +35,7 @@ const SalaryRangeVersions: FC<IModal> = ({ isVisible, setIsVisible }) => {
     <Modal
       mode="versions"
       footer={null}
-      title="Previous Versions of Salary Range"
+      title="Previous Versions of Salary Ranges"
       isVisible={isVisible}
       width={855}
       setIsVisible={setIsVisible}

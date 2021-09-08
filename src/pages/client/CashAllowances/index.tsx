@@ -1,48 +1,84 @@
-import { Col, Row } from "antd";
+import { Col, message, Row } from "antd";
 import { useState } from "react";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
 import Modal from "@components/Modal";
 import UploadCashAllowance from "./UploadCashAllowance";
-import { columns, versionsColumns } from "./config";
+import { getColumns } from "./config";
+import AddCashAllowance from "./AddCashAllowance";
+import {
+  useFetchCashAllowancesQuery,
+  useDeleteCashAllowanceMutation,
+  ErrorServices,
+} from "@services";
+import { useRef } from "react";
+import { ICashAllowance } from "@/types";
+import CashAllowanceVersions from "./Versions";
 
 const CashAllowances = () => {
+  const company_id = 1;
+  const cashAllowance_id = useRef<any>(null);
+  const [page, setPage] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
-  const [versionsModal, setVersionsModal] = useState(false);
+  const [isUploadModal, setIsUploadModal] = useState(false);
+  const [isVersionsModal, setIsVersionsModal] = useState(false);
+  const [selectedCashAllowance, setSelectedCashAllowance] =
+    useState<null | ICashAllowance>(null);
+  const { data: cashAllowancesData, isLoading } = useFetchCashAllowancesQuery({
+    company_id,
+    page,
+  });
+  const [deleteCashAllowance, { isLoading: isDeleting }] =
+    useDeleteCashAllowanceMutation();
+  const { data, pagination } = cashAllowancesData || {};
+
+  const removeCashAllowance = async (id: number) => {
+    try {
+      cashAllowance_id.current = id;
+      await deleteCashAllowance({ company_id, id }).unwrap();
+      message.success("Cash allowance deleted successfully!");
+    } catch (error) {
+      cashAllowance_id.current = null;
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
+
+  const editCashAllowance = (cashAllowance: ICashAllowance) => {
+    setSelectedCashAllowance(cashAllowance);
+    setIsVisible(true);
+  };
+
+  const columns = getColumns({
+    removeCashAllowance,
+    isDeleting,
+    cashAllowance_id,
+    editCashAllowance,
+  });
+
   return (
     <>
       {isVisible && (
-        <UploadCashAllowance
+        <AddCashAllowance
+          selectedCashAllowance={selectedCashAllowance}
+          setSelectedCashAllowance={setSelectedCashAllowance}
           isVisible={isVisible}
           setIsVisible={setIsVisible}
         />
       )}
-      <Modal
-        mode="versions"
-        footer={null}
-        title="Previous Versions of Cash Allowances"
-        isVisible={versionsModal}
-        width={855}
-        setIsVisible={setVersionsModal}
-      >
-        <Table
-          data={[
-            {
-              name: "2019_salary_range.xls",
-              duration: "2019-2020",
-              date: "29th-may-2019",
-            },
-            {
-              name: "2020_salary_range.xls",
-              duration: "2020-2021",
-              date: "29th-june-2020",
-            },
-          ]}
-          columns={versionsColumns}
-          pagination={false}
+      {isUploadModal && (
+        <UploadCashAllowance
+          isVisible={isUploadModal}
+          setIsVisible={setIsUploadModal}
         />
-      </Modal>
+      )}
+      {isVersionsModal && (
+        <CashAllowanceVersions
+          isVisible={isVersionsModal}
+          setIsVisible={setIsVersionsModal}
+        />
+      )}
 
       <Row>
         <Col span={24}>
@@ -51,54 +87,40 @@ const CashAllowances = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <Button onClick={() => setIsVisible(true)} variant="upload_client">
+          <Button
+            onClick={() => setIsUploadModal(true)}
+            variant="upload_client"
+          >
             Upload
           </Button>
           <Button variant="download_client">Download</Button>
           <Button
-            onClick={() => setVersionsModal(true)}
+            onClick={() => setIsVersionsModal(true)}
             variant="versions"
             icon={false}
           >
             Versions
+          </Button>
+          <Button
+            onClick={() => setIsVisible(true)}
+            variant="versions"
+            icon={false}
+          >
+            Create Cash Allowance
           </Button>
         </Col>
       </Row>
       <Row>
         <Table
           //   onRowClick={onRowClick}
-          data={[
-            {
-              country: "Pakistan",
-              city: "Karachi",
-              grade: "12",
-              name: "Meal",
-              amount_percentage: "Percentage",
-              basic: "Yes",
-              value: "80%",
-            },
-            {
-              country: "Afghanistan",
-              city: "Kabul",
-              grade: "11E",
-              name: "Meal",
-              amount_percentage: "Amount",
-              basic: "80000",
-              value: "Yes",
-            },
-            {
-              country: "Pakistan",
-              city: "Karachi",
-              grade: "12",
-              name: "Meal",
-              amount_percentage: "Amount",
-              basic: "Yes",
-              value: "80%",
-            },
-          ]}
+          data={data}
           columns={columns}
-          scroll={1300}
-          pagination={false}
+          // scroll={1300}
+          isLoading={isLoading}
+          pagination={true}
+          count={pagination?.count}
+          onChangePage={setPage}
+          page={page}
         />
       </Row>
     </>

@@ -1,12 +1,26 @@
-import { TableColumnsType } from "antd";
-import Checkbox from "antd/lib/checkbox/Checkbox";
+import { Switch, TableColumnsType } from "antd";
+import moment from "moment";
+import { LoadingOutlined } from "@ant-design/icons";
 
-export const columns: TableColumnsType<any> = [
+import { ICashAllowance, ICountry } from "@/types";
+
+export const getColumns = ({
+  removeCashAllowance,
+  cashAllowance_id,
+  isDeleting,
+  editCashAllowance,
+}: {
+  isDeleting?: boolean;
+  removeCashAllowance: (id: number) => Promise<void>;
+  cashAllowance_id?: React.MutableRefObject<any>;
+  editCashAllowance: (cashAllowance: ICashAllowance) => void;
+}): TableColumnsType<any> => [
   {
     title: "country",
     dataIndex: "country",
     key: "country",
     width: 200,
+    render: (country: ICountry) => <div>{country?.name}</div>,
   },
   {
     title: "city",
@@ -20,73 +34,91 @@ export const columns: TableColumnsType<any> = [
     key: "grade",
     width: 150,
   },
-  {
-    title: "allowance name",
-    dataIndex: "name",
-    key: "name",
-    width: 250,
-  },
+
   {
     title: "amount/percentage",
-    dataIndex: "amount_percentage",
-    key: "amount_percentage",
+    dataIndex: "is_percentage",
+    key: "is_percentage",
     width: 250,
+    render: (is_percentage: boolean) =>
+      is_percentage ? "Percentage" : "Amount",
   },
   {
     title: "basic",
-    dataIndex: "basic",
-    key: "basic",
+    dataIndex: "is_basic_pay",
+    key: "is_basic_pay",
     width: 150,
+    render: (basic: boolean) => (basic ? "Yes" : "No"),
   },
   {
     title: "value",
-    dataIndex: "value",
     key: "value",
     width: 150,
+    render: (cashAllowance: ICashAllowance) =>
+      `${cashAllowance?.value}${cashAllowance?.is_percentage ? "%" : ""}`,
   },
   {
     title: "Actions",
     key: "actions",
     width: 160,
     fixed: "right",
-    render: () => (
+    render: (cashAllowance: ICashAllowance) => (
       <>
-        <div className="table__action__btn table__action__btn--client">
+        <div
+          onClick={() => editCashAllowance(cashAllowance)}
+          className="table__action__btn table__action__btn--client"
+        >
           Edit
         </div>
-        <div className="table__action__btn table__action__btn--delete">
-          Delete
+        <div
+          onClick={() => removeCashAllowance(cashAllowance?.id!)}
+          className="table__action__btn table__action__btn--delete"
+        >
+          {isDeleting && cashAllowance?.id === cashAllowance_id?.current ? (
+            <LoadingOutlined color="red" className="spinner" />
+          ) : (
+            "Delete"
+          )}
         </div>
       </>
     ),
   },
 ];
-
-export const versionsColumns: TableColumnsType<any> = [
+export const getVersionsColumns = ({
+  handleActive,
+  active,
+}: {
+  handleActive: (id: number) => Promise<void>;
+  active: boolean;
+}): TableColumnsType<any> => [
   {
-    title: "file name",
-    dataIndex: "name",
-    key: "name",
-    width: "30%",
+    title: "id",
+    dataIndex: "id",
+    key: "id",
+    width: "15%",
   },
   {
-    title: "duration",
-    dataIndex: "duration",
-    key: "duration",
-    width: "25%",
-  },
-  {
-    title: "upload date",
-    dataIndex: "date",
-    key: "date",
-    width: "30%",
+    title: "created at",
+    dataIndex: "created_at",
+    key: "created_at",
+    width: "35%",
+    render: (date: string) => <div>{moment(date).format("do-MM-YYYY")}</div>,
   },
   {
     title: "Active",
     key: "active",
     width: "15%",
     align: "center",
-    render: () => <Checkbox />,
+    render: (version: any) => (
+      <Switch
+        onChange={checked => {
+          if (!checked) return;
+          handleActive(version?.id);
+        }}
+        checked={active || version?.is_active === "TRUE"}
+        defaultChecked={version?.is_active === "TRUE"}
+      />
+    ),
   },
   {
     title: "action",

@@ -244,3 +244,19 @@ export interface ISalaryRange {
   salary_mid: number | null;
   salary_max: number | null;
 }
+
+/**
+ * @Cash_Allowances_Types
+ */
+
+export interface ICashAllowance {
+  id?: number;
+  grade: string;
+  country_id?: number | null;
+  country?: ICountry | undefined;
+  city: string | null;
+  is_all_grade: boolean;
+  is_percentage: boolean;
+  is_basic_pay: boolean;
+  value: null | number;
+}
