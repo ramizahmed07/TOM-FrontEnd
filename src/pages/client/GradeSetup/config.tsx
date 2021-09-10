@@ -37,8 +37,8 @@ export const getColumns = ({
     width: 250,
   },
   {
-    title: "action",
-    key: "type",
+    title: "actions",
+    key: "actions",
     width: 160,
     fixed: "right",
     render: (jobGrade: IJobGrade) => (

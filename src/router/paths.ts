@@ -50,6 +50,7 @@ const admin = {
     },
   },
 };
+
 const client = {
   dashboard: "/client",
   auth: {
@@ -64,6 +65,10 @@ const client = {
   long_term_ip: "/client/long-term-incentive-plans",
   internal_payroll_data: "/client/internal-payroll-data",
   market_data: "/client/market-data",
+  offers: {
+    listing: "/client/offers",
+    create: "/client/offers/create",
+  },
 };
 
 export { admin, client };

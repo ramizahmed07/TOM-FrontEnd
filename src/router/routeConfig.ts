@@ -30,6 +30,8 @@ import ShortTermIP from "@pages/client/ShortTermIP";
 import LongTermIP from "@pages/client/LongTermIP";
 import InternalPayrollData from "@pages/client/InternalPayrollData";
 import MarketData from "@pages/client/MarketData";
+import AddOffer from "@pages/client/Offers/AddOffer";
+import Offers from "@pages/client/Offers";
 import { paths, IRoute, permissions } from "@router";
 
 export const admin_routeConfig: IRoute[] = [
@@ -304,6 +306,21 @@ export const client_routeConfig: IRoute[] = [
     component: MarketData,
     key: "Market Data",
     breadcrumb: "Compensation System / Market Data",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.offers.listing,
+    component: Offers,
+    key: "Offers",
+    breadcrumb: "Offer Modeller / Offers",
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: paths.client.offers.create,
+    component: AddOffer,
+    key: "Create Offer",
+    breadcrumb: "Offer Modeller / Create Offer",
     isPrivate: true,
   },
 ];
