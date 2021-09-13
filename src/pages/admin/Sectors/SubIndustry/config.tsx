@@ -32,7 +32,7 @@ export const getColumns = ({
     {
       title: "Sub-Industry",
       dataIndex: "name",
-      key: "subIndustry",
+      key: "name",
       width: `calc(100% - 260px)`,
       render: (name: string) => <div className="text-wrap">{name}</div>,
     },
@@ -60,7 +60,7 @@ export const getColumns = ({
                   )}
                   {checkPermission(permissions.DELETE_SUB_INDUSTRY) && (
                     <div
-                      onClick={event => handleDelete(item?.id, event)}
+                      onClick={event => handleDelete(item?.id!, event)}
                       className="table__action__btn table__action__btn--delete"
                     >
                       {isDeleting && item?.id === sub_industry_id?.current ? (

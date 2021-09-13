@@ -67,6 +67,7 @@ const AddSector: FC<AddSectorProps> = ({
 
   return (
     <Modal
+      width={544}
       footer={[
         <Button
           onClick={handleSubmit}
@@ -91,7 +92,7 @@ const AddSector: FC<AddSectorProps> = ({
     >
       <>
         <Row className="modal__row">
-          <Col span={11}>
+          <Col span={24}>
             <label>Name</label>
             <Input
               size="large"

@@ -23,12 +23,16 @@ export const getColumns = ({
   },
   {
     title: "countries",
-    dataIndex: "countries",
     key: "countries",
     width: 250,
-    render: (countries: ICountry[]) => (
-      <div>{countries.map(({ name }) => name).join(", ")}</div>
-    ),
+    render: (jobGrade: IJobGrade) =>
+      jobGrade?.is_global! ? (
+        "Global"
+      ) : (
+        <div>
+          {jobGrade?.countries?.map(({ name }: ICountry) => name).join(", ")}
+        </div>
+      ),
   },
   {
     title: "type",

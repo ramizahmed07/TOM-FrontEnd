@@ -75,6 +75,7 @@ const AddIndustry: FC<AddIndustryProps> = ({
 
   return (
     <Modal
+      width={544}
       footer={[
         <Button onClick={handleSubmit} key="1" type="primary">
           {isLoading || isUpdating ? (
@@ -92,7 +93,7 @@ const AddIndustry: FC<AddIndustryProps> = ({
     >
       <>
         <Row className="modal__row">
-          <Col span={11}>
+          <Col span={24}>
             <label>Name</label>
             <Input
               size="large"

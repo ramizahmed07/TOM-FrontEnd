@@ -45,11 +45,13 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
     useCreateCashAllowanceMutation();
   const [updateCashAllowance, { isLoading: isUpdating }] =
     useUpdateCashAllowanceMutation();
+  const [gradeCountries, setGradeCountries] = useState<ICountry[]>([]);
   const { data: countriesData, isLoading: isFetchingCountries } =
     useFetchCompanyCountriesQuery({
       company_id,
     });
   const { data: countries } = countriesData || {};
+  const countryList = cashAllowance?.is_all_grade ? countries : gradeCountries;
   const { data: jobGradesData, isLoading: isFetchingGrades } =
     useFetchCompanyJobGradesQuery({ company_id });
   const { data: jobGrades } = jobGradesData || {};
@@ -60,6 +62,7 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
         ...selectedCashAllowance,
         country_id: selectedCashAllowance?.country?.id,
       });
+      // if(selectedCashAllowance?.country)
     }
     return () => {
       setSelectedCashAllowance(null);
@@ -81,6 +84,7 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
       ...cashAllowance,
       city: city || null,
       value: +value! || null,
+      grade: cashAllowance?.is_all_grade ? null : cashAllowance?.grade,
     };
     body?.id && delete body?.id;
     body?.country && delete body?.country;
@@ -124,11 +128,7 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
       width={544}
       footer={[
         <Button
-          disabled={
-            !cashAllowance.grade ||
-            !cashAllowance.country_id ||
-            !cashAllowance.value
-          }
+          disabled={!cashAllowance.country_id || !cashAllowance.value}
           onClick={handleSubmit}
           key="1"
           type="primary"
@@ -145,15 +145,43 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
           Cancel
         </Button>,
       ]}
-      title={`${selectedCashAllowance ? "Update" : "Create"} Job Grade`}
+      title={`${selectedCashAllowance ? "Update" : "Create"} Cash Allowance`}
       isVisible={isVisible}
     >
       <>
         <Row justify="space-between" className="modal__row">
           <Col span={11}>
+            <label>Grade</label>
+            <Select
+              disabled={cashAllowance?.is_all_grade}
+              loading={isFetchingGrades}
+              size="large"
+              showArrow
+              placeholder="Select grade from here..."
+              showSearch={false}
+              value={cashAllowance?.grade || undefined}
+              onChange={grade => {
+                const jobGrade = JSON.parse(grade) as IJobGrade;
+                console.log("job", jobGrade);
+                setCashAllowance((prev: ICashAllowance) => ({
+                  ...prev,
+                  grade,
+                  country_id: null,
+                }));
+                setGradeCountries(jobGrade?.countries!);
+              }}
+            >
+              {jobGrades?.map((jobGrade: IJobGrade) => (
+                <Option key={jobGrade.id} value={JSON.stringify(jobGrade)}>
+                  {jobGrade?.grade}
+                </Option>
+              ))}
+            </Select>
+          </Col>
+          <Col span={11}>
             <label>Country</label>
             <Select
-              disabled={!!selectedCashAllowance}
+              disabled={!cashAllowance?.is_all_grade && !cashAllowance.grade}
               loading={isFetchingCountries}
               size="large"
               showArrow
@@ -167,30 +195,9 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
                 }))
               }
             >
-              {countries?.map((country: ICountry) => (
+              {countryList?.map((country: ICountry) => (
                 <Option key={country?.id} value={country?.id}>
                   {country?.name}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-          <Col span={11}>
-            <label>Grade</label>
-            <Select
-              disabled={!!selectedCashAllowance}
-              loading={isFetchingGrades}
-              size="large"
-              showArrow
-              placeholder="Select grade from here..."
-              showSearch={false}
-              value={cashAllowance?.grade || undefined}
-              onChange={grade =>
-                setCashAllowance((prev: ICashAllowance) => ({ ...prev, grade }))
-              }
-            >
-              {jobGrades?.map((jobGrade: IJobGrade) => (
-                <Option key={jobGrade.id} value={jobGrade.grade}>
-                  {jobGrade?.grade}
                 </Option>
               ))}
             </Select>

@@ -8,7 +8,6 @@ import { ICountry, IJobGrade, ISalaryRange, IModal } from "@/types";
 import {
   ErrorServices,
   useCreateSalaryRangeMutation,
-  useFetchCompanyCountriesQuery,
   useFetchCompanyJobGradesQuery,
   useUpdateSalaryRangeMutation,
 } from "@/services";
@@ -46,11 +45,7 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
     useCreateSalaryRangeMutation();
   const [updateSalaryRange, { isLoading: isUpdating }] =
     useUpdateSalaryRangeMutation();
-  const { data: countriesData, isLoading: isFetchingCountries } =
-    useFetchCompanyCountriesQuery({
-      company_id: 1,
-    });
-  const { data: countries } = countriesData || {};
+  const [countries, setCountries] = useState<ICountry[]>([]);
   const { data: jobGradesData, isLoading: isFetchingGrades } =
     useFetchCompanyJobGradesQuery({ company_id: 1 });
   const { data: jobGrades } = jobGradesData || {};
@@ -64,6 +59,7 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
         ...clonedSalaryRange,
         country_id: selectedSalaryRange.country?.id,
       });
+      setCountries([selectedSalaryRange?.country!]);
     }
     return () => {
       setSelectedSalaryRange(null);
@@ -113,7 +109,7 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
       id: selectedSalaryRange?.id,
       body: { ...salaryRange },
     }).unwrap();
-
+  console.log("jobGrades", salaryRange);
   return (
     <Modal
       footer={[
@@ -149,10 +145,35 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
       <>
         <Row justify="space-between" className="modal__row">
           <Col span={11}>
+            <label>Grade</label>
+            <Select
+              // disabled={!!selectedSalaryRange}
+              loading={isFetchingGrades}
+              size="large"
+              showArrow
+              placeholder="Select grade from here..."
+              showSearch={false}
+              value={salaryRange?.grade || undefined}
+              onChange={(serializedJobGrade: any) => {
+                const { grade, countries } = JSON.parse(
+                  serializedJobGrade
+                ) as IJobGrade;
+
+                setSalaryRange(prev => ({ ...prev, grade, country_id: null }));
+                setCountries(countries!);
+              }}
+            >
+              {jobGrades?.map((jobGrade: IJobGrade) => (
+                <Option key={jobGrade.id} value={JSON.stringify(jobGrade)}>
+                  {jobGrade?.grade}
+                </Option>
+              ))}
+            </Select>
+          </Col>
+          <Col span={11}>
             <label>Country</label>
             <Select
-              disabled={!!selectedSalaryRange}
-              loading={isFetchingCountries}
+              disabled={!salaryRange?.grade}
               size="large"
               showArrow
               placeholder="Select country from here..."
@@ -168,27 +189,6 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
               {countries?.map((country: ICountry) => (
                 <Option key={country?.id} value={country?.id}>
                   {country?.name}
-                </Option>
-              ))}
-            </Select>
-          </Col>
-          <Col span={11}>
-            <label>Grade</label>
-            <Select
-              disabled={!!selectedSalaryRange}
-              loading={isFetchingGrades}
-              size="large"
-              showArrow
-              placeholder="Select grade from here..."
-              showSearch={false}
-              value={salaryRange?.grade || undefined}
-              onChange={grade =>
-                setSalaryRange((prev: any) => ({ ...prev, grade }))
-              }
-            >
-              {jobGrades?.map((jobGrade: IJobGrade) => (
-                <Option key={jobGrade.id} value={jobGrade.grade}>
-                  {jobGrade?.grade}
                 </Option>
               ))}
             </Select>

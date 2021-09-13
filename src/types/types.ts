@@ -176,8 +176,7 @@ export interface IIndustry {
 }
 
 export interface ISubIndustry {
-  id: number;
-  description: null | string;
+  id?: number;
   name: string;
 }
 
@@ -226,6 +225,7 @@ export interface IJobGrade {
   country_ids?: number[];
   countries?: ICountry[];
   id?: number;
+  is_global?: boolean;
 }
 
 /**
@@ -251,7 +251,7 @@ export interface ISalaryRange {
 
 export interface ICashAllowance {
   id?: number;
-  grade: string;
+  grade: string | null;
   country_id?: number | null;
   country?: ICountry | undefined;
   city: string | null;

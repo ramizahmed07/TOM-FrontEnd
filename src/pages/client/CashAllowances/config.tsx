@@ -30,9 +30,10 @@ export const getColumns = ({
   },
   {
     title: "grade",
-    dataIndex: "grade",
     key: "grade",
     width: 150,
+    render: (cashAllowance: ICashAllowance) =>
+      cashAllowance?.is_all_grade ? "All" : cashAllowance?.grade,
   },
 
   {
