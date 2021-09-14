@@ -23,12 +23,6 @@ export const salaryRangeApi = createApi({
       }),
       providesTags: ["SalaryRangeVersions"],
     }),
-    // fetchCompanyCountries: builder.query({
-    //   query: ({ company_id }) => ({
-    //     url: `/${company_id}/countries/`,
-    //     method: "GET",
-    //   }),
-    // }),
     createSalaryRange: builder.mutation({
       query: ({ body, company_id }) => ({
         url: `/${company_id}/salary-range/`,

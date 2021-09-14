@@ -83,7 +83,10 @@ export const tomService =
         const json = await res.json();
 
         let refreshed = false;
-        if (json.code === 1002 && json.message === "Invalid Token") {
+        if (
+          json.code === 5000 ||
+          (json.code === 1002 && json.message === "Invalid Token")
+        ) {
           await new Promise(async (res, rej) => {
             const refresh = loadRefreshToken();
             if (refresh) {
@@ -97,6 +100,7 @@ export const tomService =
                   }),
                 }
               );
+              console.log("res", res);
               const json = await res.json();
               saveTokens({ access: json.data.access, refresh });
               set(headers, "Authorization", `Bearer ${json.data.access}`);

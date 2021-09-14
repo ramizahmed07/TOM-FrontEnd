@@ -1,39 +1,42 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { Switch, TableColumnsType } from "antd";
 import moment from "moment";
-import { LoadingOutlined } from "@ant-design/icons";
 
-import { ICashAllowance, ICountry } from "@/types";
+import { IShortTermIncentive } from "@/types";
 
 export const getColumns = ({
-  removeCashAllowance,
-  cashAllowance_id,
+  removeShortTermIncentive,
+  shortTermIncentive_id,
   isDeleting,
-  editCashAllowance,
+  editShortTermIncentive,
 }: {
-  isDeleting?: boolean;
-  removeCashAllowance: (id: number) => Promise<void>;
-  cashAllowance_id?: React.MutableRefObject<any>;
-  editCashAllowance: (cashAllowance: ICashAllowance) => void;
+  removeShortTermIncentive: (id: number) => Promise<void>;
+  shortTermIncentive_id: React.MutableRefObject<any>;
+  isDeleting: boolean;
+  editShortTermIncentive: (incentive: IShortTermIncentive) => void;
 }): TableColumnsType<any> => [
   {
-    title: "country",
-    dataIndex: "country",
-    key: "country",
+    title: "plan name",
+    key: "name",
     width: 200,
-    render: (country: ICountry) => <div>{country?.name}</div>,
+    render: (incentive: IShortTermIncentive) => incentive?.plan?.name,
   },
   {
-    title: "city",
-    dataIndex: "city",
-    key: "city",
+    title: "country",
+    key: "country",
     width: 200,
+    render: (incentive: IShortTermIncentive) => (
+      <div className="text-wrap">
+        {incentive?.is_global ? "Global" : incentive?.country?.name}
+      </div>
+    ),
   },
   {
     title: "grade",
     key: "grade",
-    width: 150,
-    render: (cashAllowance: ICashAllowance) =>
-      cashAllowance?.is_all_grade ? "All" : cashAllowance?.grade,
+    width: 200,
+    render: (incentive: IShortTermIncentive) =>
+      incentive?.is_all_grade ? "All" : incentive?.grade,
   },
   {
     title: "amount/percentage",
@@ -44,37 +47,40 @@ export const getColumns = ({
       is_percentage ? "Percentage" : "Amount",
   },
   {
-    title: "basic",
-    dataIndex: "is_basic_pay",
-    key: "is_basic_pay",
-    width: 150,
-    render: (basic: boolean) => (basic ? "Yes" : "No"),
+    title: "target bonus",
+    key: "value",
+    width: 200,
+    render: (shortTermIncentive: IShortTermIncentive) =>
+      shortTermIncentive?.is_percentage
+        ? `${shortTermIncentive?.value}%`
+        : shortTermIncentive?.value,
   },
   {
-    title: "value",
-    key: "value",
-    width: 150,
-    render: (cashAllowance: ICashAllowance) =>
-      `${cashAllowance?.value}${cashAllowance?.is_percentage ? "%" : ""}`,
+    title: "basic pay or fixed",
+    dataIndex: "is_basic_pay",
+    key: "is_basic_pay",
+    width: 250,
+    render: (is_basic_pay: boolean) => (is_basic_pay ? "Basic" : "Fixed"),
   },
+
   {
     title: "Actions",
     key: "actions",
     width: 160,
     fixed: "right",
-    render: (cashAllowance: ICashAllowance) => (
+    render: (incentive: IShortTermIncentive) => (
       <>
         <div
-          onClick={() => editCashAllowance(cashAllowance)}
+          onClick={() => editShortTermIncentive(incentive)}
           className="table__action__btn table__action__btn--client"
         >
           Edit
         </div>
         <div
-          onClick={() => removeCashAllowance(cashAllowance?.id!)}
+          onClick={() => removeShortTermIncentive(incentive?.id)}
           className="table__action__btn table__action__btn--delete"
         >
-          {isDeleting && cashAllowance?.id === cashAllowance_id?.current ? (
+          {isDeleting && incentive?.id === shortTermIncentive_id?.current ? (
             <LoadingOutlined color="red" className="spinner" />
           ) : (
             "Delete"
@@ -84,6 +90,7 @@ export const getColumns = ({
     ),
   },
 ];
+
 export const getVersionsColumns = ({
   handleActive,
   active,

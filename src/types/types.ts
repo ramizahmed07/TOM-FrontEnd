@@ -260,3 +260,38 @@ export interface ICashAllowance {
   is_basic_pay: boolean;
   value: null | number;
 }
+
+/**
+ * @Short_Term_Plan_Types
+ */
+
+export interface IShortTermPlanType {
+  id: number;
+  name: string;
+}
+
+export interface IShortTermPlan {
+  id: number;
+  name: string;
+  is_global: boolean;
+  is_all_grade: boolean;
+  countries: ICountry[];
+  grades: string[];
+  type: IShortTermPlanType;
+}
+
+/**
+ * @Short_Term_Incentive_Types
+ */
+
+export interface IShortTermIncentive {
+  id: number;
+  grade: string;
+  country: ICountry;
+  is_all_grade: boolean;
+  is_global: boolean;
+  is_percentage: boolean;
+  is_basic_pay: boolean;
+  value: number;
+  plan: Omit<IShortTermPlan, "grades" | "countries">;
+}

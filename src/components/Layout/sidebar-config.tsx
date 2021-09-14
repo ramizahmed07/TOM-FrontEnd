@@ -136,7 +136,8 @@ export const client_config: Array<IConfig> = [
       client.grade_setup,
       client.salary_range,
       client.cash_allowances,
-      client.short_term_ip,
+      client.short_term_ip.plans,
+      client.short_term_ip.incentives,
       client.long_term_ip,
     ],
     sub: [
@@ -158,7 +159,7 @@ export const client_config: Array<IConfig> = [
       {
         title: `Short Term Incentives`,
         icon: STIPlanIcon,
-        path: client.short_term_ip,
+        path: client.short_term_ip.plans,
       },
       {
         title: "Long Term Incentives",

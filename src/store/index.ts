@@ -28,6 +28,7 @@ import {
   gradeSetupApi,
   salaryRangeApi,
   cashAllowancesApi,
+  shortTermIPApi,
 } from "@services";
 import { authReducer } from "./auth";
 import { businessUnitReducer } from "./business-unit";
@@ -68,6 +69,7 @@ const appReducer = combineReducers({
   [gradeSetupApi.reducerPath]: gradeSetupApi.reducer,
   [salaryRangeApi.reducerPath]: salaryRangeApi.reducer,
   [cashAllowancesApi.reducerPath]: cashAllowancesApi.reducer,
+  [shortTermIPApi.reducerPath]: shortTermIPApi.reducer,
   auth: authReducer,
   businessUnit: businessUnitReducer,
   sectors: sectorsReducer,
@@ -115,6 +117,7 @@ export const store = configureStore({
     gradeSetupApi.middleware,
     salaryRangeApi.middleware,
     cashAllowancesApi.middleware,
+    shortTermIPApi.middleware,
   ],
 });
 
