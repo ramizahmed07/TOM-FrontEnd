@@ -50,6 +50,7 @@ const admin = {
     },
   },
 };
+
 const client = {
   dashboard: "/client",
   auth: {
@@ -60,10 +61,17 @@ const client = {
   grade_setup: "/client/grade-setup",
   salary_range: "/client/salary-range",
   cash_allowances: "/client/cash-allowances",
-  short_term_ip: "/client/short-term-incentive-plans",
+  short_term_ip: {
+    plans: "/client/short-term-plans",
+    incentives: "/client/short-term-incentives",
+  },
   long_term_ip: "/client/long-term-incentive-plans",
   internal_payroll_data: "/client/internal-payroll-data",
   market_data: "/client/market-data",
+  offers: {
+    listing: "/client/offers",
+    create: "/client/offers/create",
+  },
 };
 
 export { admin, client };

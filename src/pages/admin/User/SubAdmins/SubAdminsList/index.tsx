@@ -12,10 +12,7 @@ import {
   useToggleSubAdminMutation,
 } from "@/services/sub.admin";
 import { ICombineReducerProps } from "@/store";
-import {
-  ISubAdminItem,
-  ISubAdminReducer,
-} from "@/store/sub-admin/sub.admin.types";
+import { ISubAdminItem, ISubAdminReducer } from "@/types";
 import { ErrorServices } from "@/services";
 import { checkPermission } from "@/utils";
 
@@ -150,7 +147,7 @@ const SubAdminsList = () => {
           <Col className="align-end" span={8}>
             <Button
               variant="add"
-              onClick={() => history.push(Paths.Users.sub_admins.create)}
+              onClick={() => history.push(paths.admin.users.sub_admins.create)}
             >
               Create sub admin
             </Button>

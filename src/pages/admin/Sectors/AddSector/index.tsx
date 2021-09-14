@@ -6,7 +6,7 @@ import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import { IModal } from "@/types";
 import { useCreateSectorMutation, useUpdateSectorMutation } from "@services";
-import { ISector } from "@store/sectors";
+import { ISector } from "@/types";
 
 interface AddSectorProps extends IModal {
   selectedSector: ISector | null;
@@ -51,8 +51,9 @@ const AddSector: FC<AddSectorProps> = ({
       setIsVisible(false);
       showSuccessPopup({
         title: selectedSector ? "Sector Updated" : "New Sector Created",
-        desc: `You have successfully ${selectedSector ? "updated the" : "created new"
-          } sector.`,
+        desc: `You have successfully ${
+          selectedSector ? "updated the" : "created new"
+        } sector.`,
       });
     } catch (error) {
       message.error(error?.message);
@@ -66,6 +67,7 @@ const AddSector: FC<AddSectorProps> = ({
 
   return (
     <Modal
+      width={544}
       footer={[
         <Button
           onClick={handleSubmit}
@@ -90,7 +92,7 @@ const AddSector: FC<AddSectorProps> = ({
     >
       <>
         <Row className="modal__row">
-          <Col span={11}>
+          <Col span={24}>
             <label>Name</label>
             <Input
               size="large"

@@ -11,3 +11,6 @@ export * from "./sub.admin";
 export * from "./sub.job.function";
 export * from "./countries";
 export * from "./gradeSetup";
+export * from "./salaryRange";
+export * from "./cashAllowances";
+export * from "./shortTermIP";

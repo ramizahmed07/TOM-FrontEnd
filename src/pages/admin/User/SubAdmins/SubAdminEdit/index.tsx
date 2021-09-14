@@ -8,7 +8,7 @@ import {
   useEditSubAdminMutation,
   useSubAdminListMutation,
 } from "@/services/sub.admin";
-import { ISubAdminReducer } from "@/store/sub-admin/sub.admin.types";
+import { ISubAdminReducer } from "@/types";
 import { useSelector } from "react-redux";
 import { ICombineReducerProps } from "@/store";
 import { useHistory, useParams } from "react-router-dom";

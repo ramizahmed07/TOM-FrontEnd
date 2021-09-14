@@ -5,7 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Table from "@components/Table";
 import AddIndustry from "./AddIndustry";
 import Button from "@components/Button";
-import { IIndustry } from "@store/sectors";
+import { IIndustry } from "@/types";
 import { useDeleteIndustryMutation, useFetchIndustriesQuery } from "@services";
 import { checkPermission } from "@utils";
 import { permissions } from "@router";

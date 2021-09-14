@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { fetchCountries } from "@services";
-import { ICountriesState } from "./countries.types";
+import { ICountry } from "@/types";
 
-const INITIAL_STATE: ICountriesState = {
+const INITIAL_STATE: { countries: ICountry[] } = {
   countries: [],
 };
 

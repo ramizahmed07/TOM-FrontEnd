@@ -16,6 +16,8 @@ import { ReactComponent as InternalPayrollIcon } from "@assets/images/client-int
 import { ReactComponent as MarketDataIcon } from "@assets/images/client-market-data-icon.svg";
 import { ReactComponent as CompensationSystemIcon } from "@assets/images/client-compensation-system-icon.svg";
 import { ReactComponent as ClientDashboardIcon } from "@assets/images/client-dashboard-icon.svg";
+import { ReactComponent as ClientCreateOfferIcon } from "@assets/images/client-create-offer-icon.svg";
+import { ReactComponent as ClientOfferModellerIcon } from "@assets/images/client-offer-modeller-icon.svg";
 import { paths, permissions } from "@router";
 
 const {
@@ -134,7 +136,8 @@ export const client_config: Array<IConfig> = [
       client.grade_setup,
       client.salary_range,
       client.cash_allowances,
-      client.short_term_ip,
+      client.short_term_ip.plans,
+      client.short_term_ip.incentives,
       client.long_term_ip,
     ],
     sub: [
@@ -156,7 +159,7 @@ export const client_config: Array<IConfig> = [
       {
         title: `Short Term Incentives`,
         icon: STIPlanIcon,
-        path: client.short_term_ip,
+        path: client.short_term_ip.plans,
       },
       {
         title: "Long Term Incentives",
@@ -172,6 +175,19 @@ export const client_config: Array<IConfig> = [
         title: "Market Data",
         icon: MarketDataIcon,
         path: client.market_data,
+      },
+    ],
+  },
+  {
+    title: "Offer Modeller",
+    icon: ClientOfferModellerIcon,
+    client: true,
+    path: [client.offers.listing, client.offers.create],
+    sub: [
+      {
+        title: "Offers",
+        icon: ClientCreateOfferIcon,
+        path: client.offers.listing,
       },
     ],
   },

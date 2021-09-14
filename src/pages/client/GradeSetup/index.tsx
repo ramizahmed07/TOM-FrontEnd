@@ -8,8 +8,10 @@ import {
   useDeleteJobGradeMutation,
   useFetchCompanyJobGradesQuery,
 } from "@services";
-import { getColumns, IJobGrade } from "./config";
+import { getColumns } from "./config";
 import AddGrade from "./AddGrade";
+import GradeSetupVersions from "./Versions";
+import { IJobGrade } from "@/types";
 
 const GradeSetup = () => {
   const [page, setPage] = useState(1);
@@ -21,6 +23,7 @@ const GradeSetup = () => {
   const [deleteJobGrade, { isLoading: isDeleting }] =
     useDeleteJobGradeMutation();
   const [isVisible, setIsVisible] = useState(false);
+  const [isVersionsModal, setIsVersionsModal] = useState(false);
   const [selectedJobGrade, setSelectedJobGrade] = useState<null | IJobGrade>(
     null
   );
@@ -59,6 +62,13 @@ const GradeSetup = () => {
           setIsVisible={setIsVisible}
         />
       )}
+
+      {isVersionsModal && (
+        <GradeSetupVersions
+          isVisible={isVersionsModal}
+          setIsVisible={setIsVersionsModal}
+        />
+      )}
       <Row>
         <Col span={24}>
           <div className="main-heading">Grade Setup</div>
@@ -67,7 +77,14 @@ const GradeSetup = () => {
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
           <Button variant="upload_client">Upload</Button>
-          <Button variant="download_client">Download</Button>
+          <Button variant="download_client">Download</Button>{" "}
+          <Button
+            onClick={() => setIsVersionsModal(true)}
+            variant="versions"
+            icon={false}
+          >
+            Versions
+          </Button>
           <Button
             onClick={() => setIsVisible(true)}
             variant="versions"

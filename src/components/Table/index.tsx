@@ -49,7 +49,7 @@ const Table: FC<ITable> = ({
                 emptyText: isLoading ? (
                   <>
                     {[1, 2, 3, 4].map(x => (
-                      <Skeleton.Input key={4} size="small" active={true} />
+                      <Skeleton.Input key={x} size="small" active={true} />
                     ))}
                   </>
                 ) : (

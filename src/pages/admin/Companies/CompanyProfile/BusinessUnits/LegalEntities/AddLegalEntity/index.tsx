@@ -14,7 +14,7 @@ import {
 } from "@services";
 import { showSuccessPopup } from "@utils";
 import { IParams } from "../config";
-import { ILegalEntity } from "@store/companies";
+import { ILegalEntity } from "@/types";
 import { useTypedSelector } from "@/hooks";
 
 interface IAddLegalEntity extends IModal {

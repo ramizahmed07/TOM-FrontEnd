@@ -27,11 +27,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuVisible, setIsMenuVisible] = React.useState(false);
   const [onLogout] = useLogoutMutation();
   const { pathname } = useLocation();
-  const history = useHistory();
 
   const config = window.location.pathname?.includes("client")
     ? client_config
     : admin_config;
+
+  const handleLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    path: string | Array<string>
+  ) => {
+    if (Array.isArray(path)) {
+      event.preventDefault();
+    }
+  };
 
   const getRoute = (path: string | Array<string>): string => {
     if (typeof path == "string") return path;
@@ -97,6 +105,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   to={getRoute(config.path)}
                   className="sider__link"
                   activeClassName="sider__active"
+                  onClick={event => handleLinkClick(event, config.path)}
                 >
                   <div
                     className={`sider__icon__container ${
@@ -114,7 +123,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                       to={subLink.path || ""}
                       className="sider__sub__link"
                       activeClassName="sider__active"
-                      onClick={() => subLink.path && history.push(subLink.path)}
+                      onClick={event => handleLinkClick(event, subLink.path)}
                     >
                       <div
                         className={`sider__icon__container ${

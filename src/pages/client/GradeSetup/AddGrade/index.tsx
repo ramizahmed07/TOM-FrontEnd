@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
 import Modal from "@components/Modal";
@@ -9,10 +9,9 @@ import {
   useFetchCompanyCountriesQuery,
   useUpdateJobGradeMutation,
 } from "@services";
-import { IModal } from "@/types";
-import { ICountry } from "@store/countries";
-import { IJobGrade } from "../config";
-import { useEffect } from "react";
+import { ICountry, IJobGrade, IModal } from "@/types";
+import { showSuccessPopup } from "@utils";
+import Checkbox from "antd/lib/checkbox/Checkbox";
 
 const { Option } = Select;
 
@@ -32,6 +31,7 @@ const AddGrade: FC<IAddGrade> = ({
     type: null,
     country_ids: [],
   });
+  const [isGlobal, setIsGlobal] = useState(false);
   const { data: countries, isLoading: isFetchingCountries } =
     useFetchCompanyCountriesQuery({
       company_id: 1,
@@ -50,6 +50,9 @@ const AddGrade: FC<IAddGrade> = ({
         type,
         country_ids: countries?.map(country => country.id),
       });
+      if (!countries?.length) {
+        setIsGlobal(true);
+      }
     }
     return () => {
       setSelectedJobGrade(null);
@@ -58,25 +61,37 @@ const AddGrade: FC<IAddGrade> = ({
 
   const handleSubmit = async () => {
     try {
+      console.log({ jobGrade });
+      const job_grade = {
+        ...(jobGrade as IJobGrade),
+        country_ids: isGlobal ? [] : jobGrade?.country_ids,
+      };
       if (selectedJobGrade) {
-        await editJobGrade();
+        await editJobGrade(job_grade);
       } else {
-        await addJobGrade();
+        await addJobGrade(job_grade);
       }
       setIsVisible(false);
+      showSuccessPopup({
+        title: selectedJobGrade ? "Job Grade Updated" : "New Job Grade Created",
+        desc: `You have successfully ${
+          selectedJobGrade ? "updated the" : "created new"
+        } job grade.`,
+        role: "client",
+      });
     } catch (error) {
       ErrorServices(error);
       console.log(error);
     }
   };
 
-  const addJobGrade = async () =>
+  const addJobGrade = async (jobGrade: IJobGrade) =>
     await createJobGrade({
       company_id: 1,
       body: { ...jobGrade },
     }).unwrap();
 
-  const editJobGrade = async () =>
+  const editJobGrade = async (jobGrade: IJobGrade) =>
     await updateJobGrade({
       company_id: 1,
       id: selectedJobGrade?.id,
@@ -139,6 +154,7 @@ const AddGrade: FC<IAddGrade> = ({
           <Col span={24}>
             <label>Countries</label>
             <Select
+              disabled={isGlobal}
               size="large"
               showArrow
               placeholder="Select industry from here..."
@@ -156,6 +172,16 @@ const AddGrade: FC<IAddGrade> = ({
                 </Option>
               ))}
             </Select>
+          </Col>
+        </Row>
+        <Row className="modal__row">
+          <Col span={24}>
+            <Checkbox
+              checked={isGlobal}
+              onChange={event => setIsGlobal(event.target.checked)}
+            >
+              Global
+            </Checkbox>
           </Col>
         </Row>
       </>

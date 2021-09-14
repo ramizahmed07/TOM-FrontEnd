@@ -1,6 +1,6 @@
 import { Dropdown, Menu, TableColumnsType } from "antd";
 
-import { IIndustry, ISector } from "@store/sectors";
+import { IIndustry, ISector } from "@/types";
 import { permissions } from "@router";
 import { checkPermission } from "@utils";
 import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";

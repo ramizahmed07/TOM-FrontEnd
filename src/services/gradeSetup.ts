@@ -7,7 +7,7 @@ export const gradeSetupApi = createApi({
   baseQuery: tomService({
     baseUrl: `${process.env.REACT_APP_BASE_URL}/company`,
   }),
-  tagTypes: ["JobGrades"],
+  tagTypes: ["JobGrades", "JobGradeVersions"],
   endpoints: builder => ({
     fetchCompanyJobGrades: builder.query({
       query: ({ company_id, page = 1 }) => ({
@@ -15,6 +15,13 @@ export const gradeSetupApi = createApi({
         method: "GET",
       }),
       providesTags: ["JobGrades"],
+    }),
+    fetchJobGradeVersions: builder.query({
+      query: ({ company_id, page = 1 }) => ({
+        url: `/${company_id}/job-grade-versions/?page=${page}`,
+        method: "GET",
+      }),
+      providesTags: ["JobGradeVersions"],
     }),
     fetchCompanyCountries: builder.query({
       query: ({ company_id }) => ({
@@ -45,12 +52,21 @@ export const gradeSetupApi = createApi({
       }),
       invalidatesTags: ["JobGrades"],
     }),
+    updateJobGradeVersion: builder.mutation({
+      query: ({ id, company_id }) => ({
+        url: `/${company_id}/job-grade-version/${id}/set-active/`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["JobGrades", "JobGradeVersions"],
+    }),
   }),
 });
 export const {
   useFetchCompanyJobGradesQuery,
   useFetchCompanyCountriesQuery,
+  useFetchJobGradeVersionsQuery,
   useCreateJobGradeMutation,
   useDeleteJobGradeMutation,
   useUpdateJobGradeMutation,
+  useUpdateJobGradeVersionMutation,
 } = gradeSetupApi;

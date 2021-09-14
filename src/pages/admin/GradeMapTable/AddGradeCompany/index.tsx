@@ -13,16 +13,17 @@ import {
   useUpdateGradeCompanyMutation,
 } from "@services";
 import { useTypedSelector } from "@hooks";
-import {
-  IGradeClientCompany,
-  IGradeCompany,
-  IGradeCompanyRank,
-} from "@store/grade";
+import { IGradeCompanyRank, IGradeCompany, ITARank } from "@/types";
 import { getRows, showSuccessPopup } from "@utils";
 import { LoadingOutlined } from "@ant-design/icons";
 import { paths } from "@/router";
 
 const { Option } = Select;
+
+interface IGradeClientCompany {
+  id: number;
+  name: string;
+}
 
 const default_cols = [
   {
@@ -67,7 +68,7 @@ const AddGradeCompany = () => {
             ta_rank_id,
           })
         )
-      : taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null }))
+      : taRanks?.map((rank: ITARank) => ({ ta_rank_id: rank.id, rank: null }))
   );
 
   const additional_cols: any = useMemo(() => {
@@ -180,7 +181,9 @@ const AddGradeCompany = () => {
     });
 
   const setInitialState = () => {
-    setNewCompany(taRanks?.map(rank => ({ ta_rank_id: rank.id, rank: null })));
+    setNewCompany(
+      taRanks?.map((rank: ITARank) => ({ ta_rank_id: rank.id, rank: null }))
+    );
     setCompanyName("");
   };
 

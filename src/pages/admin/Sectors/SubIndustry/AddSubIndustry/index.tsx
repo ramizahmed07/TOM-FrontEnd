@@ -10,7 +10,7 @@ import {
   useUpdateSubIndustryMutation,
 } from "@services";
 import { useParams } from "react-router-dom";
-import { ISubIndustry } from "@/store/sectors";
+import { ISubIndustry } from "@/types";
 import { useEffect } from "react";
 
 interface AddSubIndustryProps extends IModal {
@@ -28,7 +28,6 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
 }) => {
   const [subIndustry, setSubIndustry] = useState<Partial<ISubIndustry>>({
     name: "",
-    description: null,
   });
   const [createSubIndustry, { isLoading }] = useCreateSubIndustryMutation();
   const [updateSubIndustry, { isLoading: isUpdating }] =
@@ -51,6 +50,8 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
     }));
 
   const handleSubmit = async () => {
+    console.log(subIndustry);
+
     try {
       if (selectedSubIndustry) {
         await editSubIndustry();
@@ -86,6 +87,7 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
 
   return (
     <Modal
+      width={544}
       footer={[
         <Button
           onClick={handleSubmit}
@@ -110,7 +112,7 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
     >
       <>
         <Row className="modal__row">
-          <Col span={11}>
+          <Col span={24}>
             <label>Name</label>
             <Input
               size="large"

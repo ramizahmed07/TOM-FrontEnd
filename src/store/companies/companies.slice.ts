@@ -1,7 +1,7 @@
+import { ICompaniesState } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { companiesApi } from "@services";
-import { ICompaniesState } from "./companies.types";
 
 const initialState: ICompaniesState = {
   companies: [],

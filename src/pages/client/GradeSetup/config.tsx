@@ -1,15 +1,8 @@
-import { TableColumnsType } from "antd";
+import { Switch, TableColumnsType } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import moment from "moment";
 
-import { ICountry } from "@store/countries";
-
-export interface IJobGrade {
-  grade: string;
-  type: null | string;
-  country_ids?: number[];
-  countries?: ICountry[];
-  id?: number;
-}
+import { ICountry, IJobGrade } from "@/types";
 
 export const getColumns = ({
   deleteJobGrade,
@@ -30,12 +23,16 @@ export const getColumns = ({
   },
   {
     title: "countries",
-    dataIndex: "countries",
     key: "countries",
     width: 250,
-    render: (countries: ICountry[]) => (
-      <div>{countries.map(({ name }) => name).join(", ")}</div>
-    ),
+    render: (jobGrade: IJobGrade) =>
+      jobGrade?.is_global! ? (
+        "Global"
+      ) : (
+        <div>
+          {jobGrade?.countries?.map(({ name }: ICountry) => name).join(", ")}
+        </div>
+      ),
   },
   {
     title: "type",
@@ -44,8 +41,8 @@ export const getColumns = ({
     width: 250,
   },
   {
-    title: "action",
-    key: "type",
+    title: "actions",
+    key: "actions",
     width: 160,
     fixed: "right",
     render: (jobGrade: IJobGrade) => (
@@ -67,6 +64,54 @@ export const getColumns = ({
           )}
         </div>
       </>
+    ),
+  },
+];
+
+export const getVersionsColumns = ({
+  handleActive,
+  active,
+}: {
+  handleActive: (id: number) => Promise<void>;
+  active: boolean;
+}): TableColumnsType<any> => [
+  {
+    title: "id",
+    dataIndex: "id",
+    key: "id",
+    width: "15%",
+  },
+  {
+    title: "created at",
+    dataIndex: "created_at",
+    key: "created_at",
+    width: "35%",
+    render: (date: string) => <div>{moment(date).format("do-MM-YYYY")}</div>,
+  },
+  {
+    title: "Active",
+    key: "active",
+    width: "15%",
+    align: "center",
+    render: (version: any) => (
+      <Switch
+        onChange={checked => {
+          if (!checked) return;
+          handleActive(version?.id);
+        }}
+        checked={active || version?.is_active === "TRUE"}
+        defaultChecked={version?.is_active === "TRUE"}
+      />
+    ),
+  },
+  {
+    title: "action",
+    key: "action",
+    width: "15%",
+    render: () => (
+      <div className="table__action__btn table__action__btn--client">
+        Download
+      </div>
     ),
   },
 ];
