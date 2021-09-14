@@ -65,7 +65,10 @@ const client = {
     plans: "/client/short-term-plans",
     incentives: "/client/short-term-incentives",
   },
-  long_term_ip: "/client/long-term-incentive-plans",
+  long_term_ip: {
+    plans: "/client/long-term-plans",
+    incentives: "/client/long-term-incentives",
+  },
   internal_payroll_data: "/client/internal-payroll-data",
   market_data: "/client/market-data",
   offers: {

@@ -37,7 +37,7 @@ const ShortTermPlans = () => {
     try {
       shortTermPlan_id.current = id;
       await deleteShortTermPlan({ company_id, id }).unwrap();
-      message.success("Short term incentive plan successfully deleted!");
+      message.success("Short term incentive plan deleted successfully!");
     } catch (error) {
       ErrorServices(error);
       console.log(error);

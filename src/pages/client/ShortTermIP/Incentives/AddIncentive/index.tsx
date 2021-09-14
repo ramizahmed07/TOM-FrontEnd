@@ -9,19 +9,15 @@ import {
   IModal,
   IShortTermIncentive,
   IShortTermPlan,
-  IShortTermPlanType,
 } from "@/types";
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import {
   ErrorServices,
   useCreateShortTermIncentiveMutation,
-  useCreateShortTermPlanMutation,
   useFetchCompanyJobGradesQuery,
   useFetchShortTermPlansQuery,
-  useFetchShortTermPlanTypesQuery,
   useUpdateShortTermIncentiveMutation,
-  useUpdateShortTermPlanMutation,
 } from "@services";
 import { useTypedSelector } from "@hooks";
 
@@ -52,8 +48,6 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
   setSelectedShortTermIncentive,
 }) => {
   const company_id = 1;
-  const [isGlobal, setIsGlobal] = useState(false);
-  const [isAllGrades, setIsAllGrades] = useState(false);
   const { data: plansData, isLoading: isFetchingPlans } =
     useFetchShortTermPlansQuery({ company_id });
   const { data: plans } = plansData || {};
@@ -105,16 +99,6 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
         is_global,
         plan: { id: plan?.id, name: plan?.name },
       });
-      // const { grades, is_all_grade, is_global, name, countries, type } =
-      //   selectedShortTermIncentive;
-      // setShortTermPlan({
-      //   grades,
-      //   name,
-      //   plan_type_id: type?.id,
-      //   country_ids: countries?.map(({ id }) => id),
-      // });
-      // setIsGlobal(is_global);
-      // setIsAllGrades(is_all_grade);
     }
     return () => {
       setSelectedShortTermIncentive(null);

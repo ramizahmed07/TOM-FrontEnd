@@ -138,7 +138,8 @@ export const client_config: Array<IConfig> = [
       client.cash_allowances,
       client.short_term_ip.plans,
       client.short_term_ip.incentives,
-      client.long_term_ip,
+      client.long_term_ip.plans,
+      client.long_term_ip.incentives,
     ],
     sub: [
       {
@@ -164,7 +165,7 @@ export const client_config: Array<IConfig> = [
       {
         title: "Long Term Incentives",
         icon: LTIPlanIcon,
-        path: client.long_term_ip,
+        path: client.long_term_ip.plans,
       },
       {
         title: "Internal Payroll",

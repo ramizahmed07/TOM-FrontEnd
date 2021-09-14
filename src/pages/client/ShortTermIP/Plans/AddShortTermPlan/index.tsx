@@ -8,7 +8,7 @@ import {
   IJobGrade,
   IModal,
   IShortTermPlan,
-  IShortTermPlanType,
+  IPlanType,
 } from "@/types";
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
@@ -98,7 +98,7 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
       }
       setIsVisible(false);
       showSuccessPopup({
-        title: `Short Team Incentives Plan ${
+        title: `Short Term Incentives Plan ${
           selectedShortTermPlan ? "Updated!" : "Created!"
         }`,
         desc: `You have successfully ${
@@ -120,7 +120,7 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
       company_id,
       id: selectedShortTermPlan?.id,
       body,
-    });
+    }).unwrap();
 
   return (
     <Modal
@@ -175,7 +175,7 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
                 }))
               }
             >
-              {planTypes?.map(({ id, name }: IShortTermPlanType) => (
+              {planTypes?.map(({ id, name }: IPlanType) => (
                 <Option key={id} value={id}>
                   {name}
                 </Option>

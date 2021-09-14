@@ -29,6 +29,7 @@ import {
   salaryRangeApi,
   cashAllowancesApi,
   shortTermIPApi,
+  longTermIPApi,
 } from "@services";
 import { authReducer } from "./auth";
 import { businessUnitReducer } from "./business-unit";
@@ -70,6 +71,7 @@ const appReducer = combineReducers({
   [salaryRangeApi.reducerPath]: salaryRangeApi.reducer,
   [cashAllowancesApi.reducerPath]: cashAllowancesApi.reducer,
   [shortTermIPApi.reducerPath]: shortTermIPApi.reducer,
+  [longTermIPApi.reducerPath]: longTermIPApi.reducer,
   auth: authReducer,
   businessUnit: businessUnitReducer,
   sectors: sectorsReducer,
@@ -118,6 +120,7 @@ export const store = configureStore({
     salaryRangeApi.middleware,
     cashAllowancesApi.middleware,
     shortTermIPApi.middleware,
+    longTermIPApi.middleware,
   ],
 });
 

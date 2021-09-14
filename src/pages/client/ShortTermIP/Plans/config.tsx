@@ -16,14 +16,14 @@ export const getColumns = ({
   editShortTermPlan: (selectedShortTermPlan: IShortTermPlan) => void;
 }): TableColumnsType<any> => [
   {
-    title: "type of plans",
+    title: "type of plan",
     dataIndex: "type",
     key: "type",
     width: 250,
     render: (type: { id: number; name: string }) => type.name,
   },
   {
-    title: "plan name",
+    title: "name",
     dataIndex: "name",
     key: "name",
     width: 250,

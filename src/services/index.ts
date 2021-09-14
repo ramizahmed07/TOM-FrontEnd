@@ -14,3 +14,4 @@ export * from "./gradeSetup";
 export * from "./salaryRange";
 export * from "./cashAllowances";
 export * from "./shortTermIP";
+export * from "./longTermIP";

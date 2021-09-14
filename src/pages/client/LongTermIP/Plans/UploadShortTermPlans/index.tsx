@@ -6,7 +6,7 @@ import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import { showSuccessPopup, validateFile } from "@utils";
 
-const UploadShortTermIP: FC<IModal> = ({ isVisible, setIsVisible }) => {
+const UploadShortTermPlans: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [file, setFile] = useState<File | null>(null);
   const inputRef = useRef<any>(null);
 
@@ -78,4 +78,4 @@ const UploadShortTermIP: FC<IModal> = ({ isVisible, setIsVisible }) => {
   );
 };
 
-export default UploadShortTermIP;
+export default UploadShortTermPlans;
