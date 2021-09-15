@@ -1,20 +1,21 @@
 import { Col, message, Row } from "antd";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Button from "@components/Button";
 import Table from "@components/Table";
-import Modal from "@components/Modal";
-import UploadCashAllowance from "./UploadCashAllowance";
 import { getColumns } from "./config";
 import AddCashAllowance from "./AddCashAllowance";
 import {
   useFetchCashAllowancesQuery,
   useDeleteCashAllowanceMutation,
   ErrorServices,
+  useFetchCashAllowanceVersionsQuery,
+  useDownloadCashAllowancesQuery,
+  useUploadCashAllowancesMutation,
 } from "@services";
-import { useRef } from "react";
-import { ICashAllowance } from "@/types";
+import { ICashAllowance, IVersion } from "@/types";
 import CashAllowanceVersions from "./Versions";
+import Upload from "@components/Upload";
 
 const CashAllowances = () => {
   const company_id = 1;
@@ -32,6 +33,34 @@ const CashAllowances = () => {
   const [deleteCashAllowance, { isLoading: isDeleting }] =
     useDeleteCashAllowanceMutation();
   const { data, pagination } = cashAllowancesData || {};
+  const [download, setDownload] = useState(false);
+  const [uploadFile, setUploadFile] = useState({
+    file: null,
+    active: false,
+  });
+
+  const { data: versionsData, isLoading: isFetchingVersions } =
+    useFetchCashAllowanceVersionsQuery(
+      {
+        page: 1,
+        company_id,
+      },
+      { skip: !download }
+    );
+  const { data: versions } = versionsData || {};
+  const { isLoading: isDownloading } = useDownloadCashAllowancesQuery(
+    {
+      company_id,
+      version_id: versions?.find(
+        (version: IVersion) => version?.is_active === "TRUE"
+      )["id"],
+    },
+    {
+      skip: !versions?.length,
+    }
+  );
+  const [uploadJobGrades, { isLoading: isUploading }] =
+    useUploadCashAllowancesMutation();
 
   const removeCashAllowance = async (id: number) => {
     try {
@@ -50,6 +79,24 @@ const CashAllowances = () => {
     setIsVisible(true);
   };
 
+  const handleUpload = async () => {
+    const { file, active }: { file: any; active: boolean } = uploadFile;
+    setIsUploadModal(false);
+    try {
+      const formData = new FormData();
+      formData.append("attachment", file!, file?.name!);
+      const res = await uploadJobGrades({
+        company_id,
+        active,
+        body: formData,
+      }).unwrap();
+      message.success(res?.message);
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
+    }
+  };
+
   const columns = getColumns({
     removeCashAllowance,
     isDeleting,
@@ -59,18 +106,21 @@ const CashAllowances = () => {
 
   return (
     <>
+      {isUploadModal && (
+        <Upload
+          onSubmit={handleUpload}
+          isVisible={isUploadModal}
+          setIsVisible={setIsUploadModal}
+          file={uploadFile}
+          setFile={setUploadFile}
+        />
+      )}
       {isVisible && (
         <AddCashAllowance
           selectedCashAllowance={selectedCashAllowance}
           setSelectedCashAllowance={setSelectedCashAllowance}
           isVisible={isVisible}
           setIsVisible={setIsVisible}
-        />
-      )}
-      {isUploadModal && (
-        <UploadCashAllowance
-          isVisible={isUploadModal}
-          setIsVisible={setIsUploadModal}
         />
       )}
       {isVersionsModal && (
@@ -90,10 +140,17 @@ const CashAllowances = () => {
           <Button
             onClick={() => setIsUploadModal(true)}
             variant="upload_client"
+            isLoading={isUploading}
           >
             Upload
           </Button>
-          <Button variant="download_client">Download</Button>
+          <Button
+            onClick={() => setDownload(true)}
+            isLoading={isFetchingVersions || isDownloading}
+            variant="download_client"
+          >
+            Download
+          </Button>
           <Button
             onClick={() => setIsVersionsModal(true)}
             variant="versions"
@@ -112,10 +169,8 @@ const CashAllowances = () => {
       </Row>
       <Row>
         <Table
-          //   onRowClick={onRowClick}
           data={data}
           columns={columns}
-          // scroll={1300}
           isLoading={isLoading}
           pagination={true}
           count={pagination?.count}

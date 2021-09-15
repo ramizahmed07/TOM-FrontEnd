@@ -76,6 +76,7 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
     ? jobGrades?.map(({ grade }: IJobGrade) => grade)
     : planGrades;
   const countryList = shortTermIncentive?.is_global ? countries : planCountries;
+
   useEffect(() => {
     if (selectedShortTermIncentive) {
       console.log({ selectedShortTermIncentive });
@@ -172,7 +173,9 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
           Cancel
         </Button>,
       ]}
-      title={`${selectedShortTermIncentive ? "Update" : "Create"} a STI Plan`}
+      title={`${
+        selectedShortTermIncentive ? "Update" : "Create"
+      } a Short Term Incentive`}
       isVisible={isVisible}
     >
       <>

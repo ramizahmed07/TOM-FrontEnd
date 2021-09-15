@@ -5,30 +5,25 @@ import Modal from "@components/Modal";
 import { IModal } from "@/types";
 import {
   ErrorServices,
-  useFetchShortTermIncentiveVersionsQuery,
-  useUpdateShortTermIncentiveVersionMutation,
+  useFetchLongTermIncentiveVersionsQuery,
+  useUpdateLongTermIncentiveVersionMutation,
 } from "@services";
 import { getVersionsColumns } from "../config";
 
-const ShortTermIncentiveVersions: FC<IModal> = ({
-  isVisible,
-  setIsVisible,
-}) => {
+const LongTermIncentiveVersions: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const company_id = 1;
-  const { data: versions, isLoading } = useFetchShortTermIncentiveVersionsQuery(
-    {
-      company_id,
-    }
-  );
-  const [updateShortTermIncentiveVersion] =
-    useUpdateShortTermIncentiveVersionMutation();
+  const { data: versions, isLoading } = useFetchLongTermIncentiveVersionsQuery({
+    company_id,
+  });
+  const [updateLongTermIncentiveVersion] =
+    useUpdateLongTermIncentiveVersionMutation();
   const { data } = versions || {};
   console.log("versions", versions);
   const [active, setActive] = useState(false);
 
   const handleActive = async (id: number) => {
     try {
-      await updateShortTermIncentiveVersion({ id, company_id: 1 }).unwrap();
+      await updateLongTermIncentiveVersion({ id, company_id: 1 }).unwrap();
       setActive(active);
     } catch (error) {
       ErrorServices(error);
@@ -41,7 +36,7 @@ const ShortTermIncentiveVersions: FC<IModal> = ({
     <Modal
       mode="versions"
       footer={null}
-      title="Previous Versions of Short Term Incentives"
+      title="Previous Versions of Long Term Incentives"
       isVisible={isVisible}
       width={855}
       setIsVisible={setIsVisible}
@@ -56,4 +51,4 @@ const ShortTermIncentiveVersions: FC<IModal> = ({
   );
 };
 
-export default ShortTermIncentiveVersions;
+export default LongTermIncentiveVersions;

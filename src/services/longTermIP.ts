@@ -8,20 +8,18 @@ export const longTermIPApi = createApi({
     baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
   tagTypes: [
-    "LongTermPlanTypes",
     "LongTermPlans",
     "LongTermIncentives",
     "LongTermIncentiveVersions",
   ],
 
-  // Short Term Plans
+  // Long Term Plans
   endpoints: builder => ({
     fetchLongTermPlanTypes: builder.query({
       query: () => ({
         url: `/long-term-incentive-plan-types/`,
         method: "GET",
       }),
-      providesTags: ["LongTermPlanTypes"],
     }),
     fetchCurrencies: builder.query({
       query: () => ({
@@ -29,13 +27,13 @@ export const longTermIPApi = createApi({
         method: "GET",
       }),
     }),
-    // fetchShortTermIncentiveVersions: builder.query({
-    //   query: ({ company_id, page = 1 }) => ({
-    //     url: `/company/${company_id}/short-term-incentive-versions/?page=${page}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["LongTermIncentiveVersions"],
-    // }),
+    fetchLongTermIncentiveVersions: builder.query({
+      query: ({ company_id, page = 1 }) => ({
+        url: `/company/${company_id}/long-term-incentive-versions/?page=${page}`,
+        method: "GET",
+      }),
+      providesTags: ["LongTermIncentiveVersions"],
+    }),
     fetchLongTermPlans: builder.query({
       query: ({ company_id, page = 1 }) => ({
         url: `/company/${company_id}/long-term-incentive-plans/?page=${page}`,
@@ -67,44 +65,44 @@ export const longTermIPApi = createApi({
       invalidatesTags: ["LongTermPlans"],
     }),
 
-    // Short Term Incentives
-    // fetchShortTermIncentives: builder.query({
-    //   query: ({ company_id, page = 1 }) => ({
-    //     url: `/company/${company_id}/short-term-incentives/?page=${page}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["LongTermIncentives"],
-    // }),
-    // createShortTermIncentive: builder.mutation({
-    //   query: ({ company_id, body }) => ({
-    //     url: `/company/${company_id}/short-term-incentive/`,
-    //     method: "POST",
-    //     body,
-    //   }),
-    //   invalidatesTags: ["LongTermIncentives"],
-    // }),
-    // updateShortTermIncentive: builder.mutation({
-    //   query: ({ company_id, body, id }) => ({
-    //     url: `/company/${company_id}/short-term-incentive/${id}/`,
-    //     method: "PUT",
-    //     body,
-    //   }),
-    //   invalidatesTags: ["LongTermIncentives"],
-    // }),
-    // deleteShortTermIncentive: builder.mutation({
-    //   query: ({ company_id, id }) => ({
-    //     url: `/company/${company_id}/short-term-incentive/${id}/`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["LongTermIncentives"],
-    // }),
-    // updateShortTermIncentiveVersion: builder.mutation({
-    //   query: ({ id, company_id }) => ({
-    //     url: `/company/${company_id}/short-term-incentive-version/${id}/set-active/`,
-    //     method: "PATCH",
-    //   }),
-    //   invalidatesTags: ["LongTermIncentives", "LongTermIncentiveVersions"],
-    // }),
+    // Long Term Incentives
+    fetchLongTermIncentives: builder.query({
+      query: ({ company_id, page = 1 }) => ({
+        url: `/company/${company_id}/long-term-incentives/?page=${page}`,
+        method: "GET",
+      }),
+      providesTags: ["LongTermIncentives"],
+    }),
+    createLongTermIncentive: builder.mutation({
+      query: ({ company_id, body }) => ({
+        url: `/company/${company_id}/long-term-incentive/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["LongTermIncentives"],
+    }),
+    updateLongTermIncentive: builder.mutation({
+      query: ({ company_id, body, id }) => ({
+        url: `/company/${company_id}/long-term-incentive/${id}/`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["LongTermIncentives"],
+    }),
+    deleteLongTermIncentive: builder.mutation({
+      query: ({ company_id, id }) => ({
+        url: `/company/${company_id}/long-term-incentive/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["LongTermIncentives"],
+    }),
+    updateLongTermIncentiveVersion: builder.mutation({
+      query: ({ id, company_id }) => ({
+        url: `/company/${company_id}/long-term-incentive-version/${id}/set-active/`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["LongTermIncentives", "LongTermIncentiveVersions"],
+    }),
   }),
 });
 
@@ -115,12 +113,11 @@ export const {
   useDeleteLongTermPlanMutation,
   useCreateLongTermPlanMutation,
   useUpdateLongTermPlanMutation,
-  //   useUpdateShortTermPlanMutation,
-  //   useDeleteShortTermPlanMutation,
-  //   useFetchShortTermIncentivesQuery,
-  //   useCreateShortTermIncentiveMutation,
-  //   useUpdateShortTermIncentiveMutation,
-  //   useDeleteShortTermIncentiveMutation,
-  //   useFetchShortTermIncentiveVersionsQuery,
-  //   useUpdateShortTermIncentiveVersionMutation,
+
+  useFetchLongTermIncentivesQuery,
+  useCreateLongTermIncentiveMutation,
+  useDeleteLongTermIncentiveMutation,
+  useUpdateLongTermIncentiveMutation,
+  useFetchLongTermIncentiveVersionsQuery,
+  useUpdateLongTermIncentiveVersionMutation,
 } = longTermIPApi;

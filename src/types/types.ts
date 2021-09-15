@@ -319,6 +319,25 @@ export interface ILongTermPlan {
 }
 
 /**
+ * @Long_Term_Incentive_Types
+ */
+
+export interface ILongTermIncentive {
+  id: number;
+  grade: string | null;
+  country: ICountry | null;
+  year: number;
+  range_type: string;
+  is_all_grade: boolean;
+  is_global: boolean;
+  is_amount: boolean;
+  equity_min: number;
+  equity_mid: number;
+  equity_max: number;
+  plan: ILongTermPlan;
+}
+
+/**
  * @Currency_Type
  */
 
@@ -327,4 +346,14 @@ export interface ICurrency {
   name: string;
   symbol: string;
   code: string;
+}
+
+/**
+ * @Version_Type
+ */
+
+export interface IVersion {
+  created_at: string;
+  id: number;
+  is_active: string | null;
 }

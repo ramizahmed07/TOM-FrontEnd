@@ -53,6 +53,21 @@ export const salaryRangeApi = createApi({
       }),
       invalidatesTags: ["SalaryRanges", "SalaryRangeVersions"],
     }),
+    uploadSalaryRanges: builder.mutation({
+      query: ({ company_id, active, body }) => ({
+        url: `/${company_id}/salary-range/upload/?active=${active}/`,
+        method: "POST",
+        body,
+        formData: true,
+      }),
+      invalidatesTags: ["SalaryRanges", "SalaryRangeVersions"],
+    }),
+    downloadSalaryRanges: builder.query({
+      query: ({ company_id, version_id }) => ({
+        url: `/${company_id}/salary-range/download/?version_id=${version_id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -62,4 +77,6 @@ export const {
   useDeleteSalaryRangeMutation,
   useFetchSalaryRangeVersionsQuery,
   useUpdateSalaryRangeVersionMutation,
+  useDownloadSalaryRangesQuery,
+  useUploadSalaryRangesMutation,
 } = salaryRangeApi;

@@ -1,63 +1,70 @@
 import { Button, Col, Input, message, Row } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 
 import "./uploadSalaryRange.less";
 import Modal from "@components/Modal";
 import { IModal } from "@/types";
-import { showSuccessPopup, validateFile } from "@utils";
+import { validateFile } from "@utils";
 
-interface IUploadSalaryRange extends IModal {}
+interface IUpload extends IModal {
+  onSubmit: any;
+  file: { file: File | null; active: boolean };
+  setFile: React.Dispatch<
+    React.SetStateAction<{
+      file: null;
+      active: boolean;
+    }>
+  >;
+}
 
-const UploadSalaryRange: FC<IUploadSalaryRange> = ({
+const Upload: FC<IUpload> = ({
   isVisible,
   setIsVisible,
+  onSubmit,
+  file,
+  setFile,
 }) => {
   const inputRef = useRef<any>(null);
-  const [file, setFile] = useState<File | null>(null);
 
   const uploadFile = (event: any) => {
     var file = event?.target?.files[0];
     if (validateFile(file?.type)) {
-      console.log("file", file.type);
-      setFile(file);
+      setFile(prev => ({ ...prev, file }));
     } else {
       message.error("Only CVS and XLS file types are supported");
     }
   };
 
-  const handleSubmit = () => {
-    setIsVisible(false);
-    showSuccessPopup({
-      title: "New Salary Range Uploaded Successfully",
-      desc: "You have successfully added new salary grade",
-      role: "client",
-    });
-  };
-
   return (
     <Modal
+      width={544}
       footer={[
-        <Button onClick={handleSubmit} disabled={!file} key="1" type="primary">
+        <Button
+          onClick={onSubmit}
+          disabled={!file?.file}
+          key="1"
+          type="primary"
+        >
           Upload
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
         </Button>,
       ]}
-      title="Upload Salary Range"
+      title="Upload Job Grade"
       isVisible={isVisible}
     >
       <>
         <Row justify="space-between" className="modal__row">
-          <Col className="uploadSalaryRange__uploadField" span={11}>
+          <Col className="uploadSalaryRange__uploadField" span={24}>
             <label>Upload File</label>
             <Input
               size="large"
               name="name"
               readOnly
               accept=".csv, application/vnd.ms-excel"
-              value={file?.name || ""}
+              value={file?.file?.name || ""}
               placeholder="CVS and XLS are supported"
             />
             <Button
@@ -77,10 +84,17 @@ const UploadSalaryRange: FC<IUploadSalaryRange> = ({
           </Col>
         </Row>
         <Row className="mb-20">
-          <Checkbox>Active</Checkbox>
+          <Checkbox
+            checked={file?.active}
+            onChange={event =>
+              setFile(prev => ({ ...prev, active: event.target.checked }))
+            }
+          >
+            Active
+          </Checkbox>
         </Row>
       </>
     </Modal>
   );
 };
-export default UploadSalaryRange;
+export default Upload;

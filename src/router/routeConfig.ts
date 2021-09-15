@@ -32,6 +32,7 @@ import AddOffer from "@pages/client/Offers/AddOffer";
 import Offers from "@pages/client/Offers";
 import LongTermPlans from "@pages/client/LongTermIP/Plans";
 import ShortTermPlans from "@pages/client/ShortTermIP/Plans";
+import LongTermIncentives from "@pages/client/LongTermIP/Incentives";
 import ShortTermIncentives from "@pages/client/ShortTermIP/Incentives";
 import { paths, IRoute, permissions } from "@router";
 
@@ -298,8 +299,15 @@ export const client_routeConfig: IRoute[] = [
   {
     path: paths.client.long_term_ip.plans,
     component: LongTermPlans,
-    key: "Short Term Incentive Plans",
-    breadcrumb: "Compensation System / Short Term Incentive Plans",
+    key: "Long Term Incentive Plans",
+    breadcrumb: "Compensation System / Long Term Incentive Plans",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.long_term_ip.incentives,
+    component: LongTermIncentives,
+    key: "Long Term Incentive Plans",
+    breadcrumb: "Compensation System / Long Term Incentive Plans",
     isPrivate: true,
   },
   {

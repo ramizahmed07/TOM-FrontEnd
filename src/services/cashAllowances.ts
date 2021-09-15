@@ -54,6 +54,21 @@ export const cashAllowancesApi = createApi({
       }),
       invalidatesTags: ["CashAllowances", "CashAllowanceVersions"],
     }),
+    uploadCashAllowances: builder.mutation({
+      query: ({ company_id, active, body }) => ({
+        url: `/${company_id}/cash-allowance/upload/?active=${active}/`,
+        method: "POST",
+        body,
+        formData: true,
+      }),
+      invalidatesTags: ["CashAllowances", "CashAllowanceVersions"],
+    }),
+    downloadCashAllowances: builder.query({
+      query: ({ company_id, version_id }) => ({
+        url: `/${company_id}/cash-allowance/download/?version_id=${version_id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -63,4 +78,6 @@ export const {
   useUpdateCashAllowanceMutation,
   useFetchCashAllowanceVersionsQuery,
   useUpdateCashAllowanceVersionMutation,
+  useUploadCashAllowancesMutation,
+  useDownloadCashAllowancesQuery,
 } = cashAllowancesApi;

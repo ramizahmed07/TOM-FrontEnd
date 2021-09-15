@@ -1,5 +1,6 @@
 import { Col, message, Row } from "antd";
 import { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import Modal from "@components/Modal";
 import Table from "@components/Table";
@@ -12,12 +13,13 @@ import {
   useFetchLongTermPlansQuery,
 } from "@services";
 import { ILongTermPlan } from "@/types";
+import { paths } from "@router";
 
 const LongTermPlans = () => {
   const company_id = 1;
+  const history = useHistory();
   const longTermPlan_id = useRef<any>(null);
   const [page, setPage] = useState(1);
-  const [versionsModal, setVersionsModal] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedLongTermPlan, setSelectedLongTermPlan] =
     useState<ILongTermPlan | null>(null);
@@ -63,30 +65,6 @@ const LongTermPlans = () => {
         />
       )}
 
-      <Modal
-        mode="versions"
-        footer={null}
-        title="Previous Versions of Cash Allowances"
-        isVisible={versionsModal}
-        width={855}
-        setIsVisible={setVersionsModal}
-      >
-        <Table
-          data={[
-            {
-              name: "2019_salary_range.xls",
-              date: "29th-may-2019",
-            },
-            {
-              name: "2020_salary_range.xls",
-              date: "11th-may-2019",
-            },
-          ]}
-          columns={versionsColumns}
-          pagination={false}
-        />
-      </Modal>
-
       <Row>
         <Col span={24}>
           <div className="main-heading">Long Term Incentive Plans</div>
@@ -94,10 +72,8 @@ const LongTermPlans = () => {
       </Row>
       <Row className="mt-16 mb-20">
         <Col className="align-start" span={16}>
-          <Button variant="upload_client">Upload</Button>
-          <Button variant="download_client">Download</Button>
           <Button
-            onClick={() => setVersionsModal(true)}
+            onClick={() => history.push(paths.client.long_term_ip.incentives)}
             icon={false}
             variant="download_client"
           >
