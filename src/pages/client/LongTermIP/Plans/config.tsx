@@ -1,4 +1,4 @@
-import { ILongTermPlan } from "@/types";
+import { ILongTermPlan } from "@types";
 import { LoadingOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";

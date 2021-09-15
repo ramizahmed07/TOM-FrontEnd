@@ -10,7 +10,7 @@ import {
 } from "@services";
 import { getColumns } from "./config";
 import AddShortTermIncentive from "./AddIncentive";
-import { IShortTermIncentive } from "@/types";
+import { IShortTermIncentive } from "@types";
 import ShortTermIncentiveVersions from "./Versions";
 
 const ShortTermIncentives = () => {

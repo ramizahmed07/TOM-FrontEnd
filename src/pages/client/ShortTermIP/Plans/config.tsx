@@ -2,7 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import { TableColumnsType } from "antd";
 
-import { IShortTermPlan } from "@/types";
+import { IShortTermPlan } from "@types";
 
 export const getColumns = ({
   removeShortTermPlan,

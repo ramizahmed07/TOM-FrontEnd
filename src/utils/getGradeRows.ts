@@ -1,4 +1,4 @@
-import { IGradeCompany, ITARank } from "@/types";
+import { IGradeCompany, ITARank } from "@types";
 
 export const getRows = (taRanks: ITARank[], companies: IGradeCompany[]) => {
   const data = [];

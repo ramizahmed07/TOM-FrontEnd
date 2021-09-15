@@ -2,7 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Switch, TableColumnsType } from "antd";
 import moment from "moment";
 
-import { IShortTermIncentive } from "@/types";
+import { IShortTermIncentive } from "@types";
 
 export const getColumns = ({
   removeShortTermIncentive,

@@ -12,11 +12,10 @@ import {
   ErrorServices,
   useDeleteJFMutation,
   useDownloadJobFunctionsMutation,
-  useGetJFMutation,
   useListMutation,
   useUploadJobFunctionsMutation,
 } from "@services";
-import { IJobFunctionReducer } from "@/types";
+import { IJobFunctionReducer } from "@types";
 import { ICombineReducerProps } from "@store";
 import AddJobFunction from "./AddJobFunction";
 import EditJobFunction from "./EditJobFunction";

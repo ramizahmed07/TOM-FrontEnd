@@ -9,7 +9,7 @@ import {
   IModal,
   IShortTermIncentive,
   IShortTermPlan,
-} from "@/types";
+} from "@types";
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import {

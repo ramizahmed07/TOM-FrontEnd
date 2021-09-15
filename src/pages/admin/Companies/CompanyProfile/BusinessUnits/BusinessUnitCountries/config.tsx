@@ -1,7 +1,7 @@
 import { TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 
-import { ICountry } from "@/types";
+import { ICountry } from "@types";
 
 export const columns: TableColumnsType<ICountry> = [
   {

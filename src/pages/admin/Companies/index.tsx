@@ -23,7 +23,7 @@ import {
   useUpdateCompanyStatusMutation,
 } from "@services";
 import Table from "@components/Table";
-import { ICompany } from "@/types";
+import { ICompany } from "@types";
 
 const Companies = () => {
   const history = useHistory();

@@ -2,17 +2,16 @@ import { Col, message, Row } from "antd";
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import Modal from "@components/Modal";
 import Table from "@components/Table";
 import Button from "@components/Button";
-import { versionsColumns, getColumns } from "./config";
+import { getColumns } from "./config";
 import AddLongTermPlan from "./AddLongTermPlan";
 import {
   ErrorServices,
   useDeleteLongTermPlanMutation,
   useFetchLongTermPlansQuery,
 } from "@services";
-import { ILongTermPlan } from "@/types";
+import { ILongTermPlan } from "@types";
 import { paths } from "@router";
 
 const LongTermPlans = () => {

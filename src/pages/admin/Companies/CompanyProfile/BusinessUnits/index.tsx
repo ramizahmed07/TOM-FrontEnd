@@ -18,7 +18,7 @@ import {
   useFetchBusinessUnitMutation,
 } from "@services";
 import { ICombineReducerProps } from "@store";
-import { IBusinessUnitItem, IBusinessUnitState } from "@/types";
+import { IBusinessUnitItem, IBusinessUnitState } from "@types";
 
 const BusinessUnits = () => {
   const sectorReducer = useSelector(

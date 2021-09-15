@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { TableColumnsType, Switch, Input, message, Row, Col } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { TableColumnsType, Switch, message, Row, Col } from "antd";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -12,7 +11,7 @@ import {
   useToggleSubAdminMutation,
 } from "@/services/sub.admin";
 import { ICombineReducerProps } from "@/store";
-import { ISubAdminItem, ISubAdminReducer } from "@/types";
+import { ISubAdminItem, ISubAdminReducer } from "@types";
 import { ErrorServices } from "@/services";
 import { checkPermission } from "@/utils";
 

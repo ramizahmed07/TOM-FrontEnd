@@ -8,7 +8,7 @@ import {
   useFetchLegalEntitiesQuery,
 } from "@services";
 import { getColumns, IParams } from "./config";
-import { ILegalEntity } from "@/types";
+import { ILegalEntity } from "@types";
 import Table from "@components/Table";
 import Button from "@components/Button";
 import AddLegalEntity from "./AddLegalEntity";

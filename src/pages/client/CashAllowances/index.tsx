@@ -13,7 +13,7 @@ import {
   useDownloadCashAllowancesQuery,
   useUploadCashAllowancesMutation,
 } from "@services";
-import { ICashAllowance, IVersion } from "@/types";
+import { ICashAllowance, IVersion } from "@types";
 import CashAllowanceVersions from "./Versions";
 import Upload from "@components/Upload";
 

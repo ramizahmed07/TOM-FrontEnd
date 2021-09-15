@@ -3,13 +3,7 @@ import Checkbox from "antd/lib/checkbox/Checkbox";
 import { FC, useEffect, useState } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
-import {
-  ICountry,
-  IJobGrade,
-  IModal,
-  IShortTermPlan,
-  IPlanType,
-} from "@/types";
+import { ICountry, IJobGrade, IModal, IShortTermPlan, IPlanType } from "@types";
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import {

@@ -1,6 +1,6 @@
 import moment from "moment";
 import { LoadingOutlined } from "@ant-design/icons";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 
@@ -11,7 +11,7 @@ import {
   ILongTermPlan,
   IModal,
   IPlanType,
-} from "@/types";
+} from "@types";
 import Modal from "@components/Modal";
 import { getDaysOfMonth, showSuccessPopup } from "@utils";
 import { installment_types } from "../config";

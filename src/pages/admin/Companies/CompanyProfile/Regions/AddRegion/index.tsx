@@ -4,9 +4,8 @@ import { Button, Col, Input, Row, Select } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
 import { useTypedSelector } from "@hooks";
-import { ICountry } from "@/types";
+import { ICountry, IModal, IRegion } from "@types";
 import {
   ErrorServices,
   useCreateRegionMutation,
@@ -14,7 +13,6 @@ import {
   useUpdateRegionMutation,
 } from "@services";
 import { showSuccessPopup } from "@utils";
-import { IRegion } from "@/types";
 
 const { Option } = Select;
 

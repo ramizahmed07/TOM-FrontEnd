@@ -1,5 +1,4 @@
-import { permissions } from "@/router";
-import { IAuthState } from "@/types";
+import { IAuthState } from "@types";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { authApi } from "@services";

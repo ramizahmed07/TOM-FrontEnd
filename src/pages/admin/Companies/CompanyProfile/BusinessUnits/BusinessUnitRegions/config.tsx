@@ -1,4 +1,4 @@
-import { IRegion } from "@/types";
+import { IRegion } from "@types";
 import { TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 

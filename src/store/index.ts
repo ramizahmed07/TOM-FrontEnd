@@ -47,7 +47,7 @@ import {
   IAuthState,
   IBusinessUnitState,
   ISubJobFunctionReducer,
-} from "@/types";
+} from "@types";
 
 export interface ICombineReducerProps {
   auth: IAuthState;

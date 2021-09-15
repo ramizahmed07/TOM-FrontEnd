@@ -9,7 +9,7 @@ import {
   useFetchCompanyCountriesQuery,
   useUpdateJobGradeMutation,
 } from "@services";
-import { ICountry, IJobGrade, IModal } from "@/types";
+import { ICountry, IJobGrade, IModal } from "@types";
 import { showSuccessPopup } from "@utils";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 

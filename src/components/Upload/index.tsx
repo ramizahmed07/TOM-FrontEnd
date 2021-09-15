@@ -4,7 +4,7 @@ import { FC, useRef } from "react";
 
 import "./uploadSalaryRange.less";
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import { validateFile } from "@utils";
 
 interface IUpload extends IModal {

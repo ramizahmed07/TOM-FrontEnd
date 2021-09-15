@@ -1,5 +1,5 @@
 import { permissions } from "@/router";
-import { ISubIndustry } from "@/types";
+import { ISubIndustry } from "@types";
 import { checkPermission } from "@/utils";
 import { LoadingOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";

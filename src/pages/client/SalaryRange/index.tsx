@@ -13,7 +13,7 @@ import {
   useUploadSalaryRangesMutation,
 } from "@services";
 import AddSalaryRange from "./AddSalaryRange";
-import { ISalaryRange, IVersion } from "@/types";
+import { ISalaryRange, IVersion } from "@types";
 import SalaryRangeVersions from "./Versions";
 import Upload from "@components/Upload";
 

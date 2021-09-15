@@ -1,6 +1,6 @@
 import { businessUnitApi } from "@services";
 import { createSlice } from "@reduxjs/toolkit";
-import { IBusinessUnitState } from "@/types";
+import { IBusinessUnitState } from "@types";
 
 const initialState: IBusinessUnitState = {
   list: [],

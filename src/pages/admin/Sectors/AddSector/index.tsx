@@ -4,9 +4,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
-import { IModal } from "@/types";
 import { useCreateSectorMutation, useUpdateSectorMutation } from "@services";
-import { ISector } from "@/types";
+import { ISector, IModal } from "@types";
 
 interface AddSectorProps extends IModal {
   selectedSector: ISector | null;

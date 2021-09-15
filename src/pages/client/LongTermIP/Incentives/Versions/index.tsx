@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import Table from "@components/Table";
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import {
   ErrorServices,
   useFetchLongTermIncentiveVersionsQuery,

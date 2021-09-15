@@ -2,7 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { Switch, TableColumnsType } from "antd";
 
-import { ISalaryRange, ICountry } from "@/types";
+import { ISalaryRange, ICountry } from "@types";
 
 export const getColumns = ({
   editSalaryRange,

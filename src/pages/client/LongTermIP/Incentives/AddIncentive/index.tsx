@@ -11,7 +11,7 @@ import {
   ILongTermIncentive,
   ILongTermPlan,
   IModal,
-} from "@/types";
+} from "@types";
 import {
   ErrorServices,
   useCreateLongTermIncentiveMutation,

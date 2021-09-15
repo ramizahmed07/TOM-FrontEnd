@@ -6,12 +6,12 @@
       "@pages/*": ["./pages/*"],
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
-      "@types/*": ["./types/*"],
       "@store/*": ["./store/*"],
       "@styles/*": ["./styles/*"],
       "@router": ["./router"],
       "@hooks": ["./hooks"],
       "@constants": ["./constants"],
+      "@types": ["./types"],
       "@services": ["./services"],
       "@store": ["./store"],
       "@utils": ["./utils"]

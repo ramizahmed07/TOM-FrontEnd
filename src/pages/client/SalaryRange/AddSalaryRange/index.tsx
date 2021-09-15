@@ -4,7 +4,7 @@ import { useEffect, FC, useState } from "react";
 
 import Modal from "@components/Modal";
 import { generateArrayOfYears, showSuccessPopup } from "@utils";
-import { ICountry, IJobGrade, ISalaryRange, IModal } from "@/types";
+import { ICountry, IJobGrade, ISalaryRange, IModal } from "@types";
 import {
   ErrorServices,
   useCreateSalaryRangeMutation,

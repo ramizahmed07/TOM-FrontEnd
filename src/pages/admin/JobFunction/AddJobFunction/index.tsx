@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Button, Col, Input, Row } from "antd";
 
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import Modal from "@components/Modal";
 import { ErrorServices, useAddJFMutation, useListMutation } from "@/services";
 
@@ -13,7 +13,7 @@ const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const onSubmit = async () => {
     try {
       await addJF({ name: jobFunction }).unwrap();
-      await getJFList('').unwrap();
+      await getJFList("").unwrap();
       closeModal();
     } catch (error) {
       ErrorServices(error);
@@ -27,7 +27,7 @@ const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const closeModal = () => {
     setIsVisible(false);
     setJobFunction("");
-  }
+  };
 
   return (
     <Modal

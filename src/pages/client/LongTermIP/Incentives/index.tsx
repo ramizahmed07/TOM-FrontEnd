@@ -9,7 +9,7 @@ import {
   useDeleteLongTermIncentiveMutation,
 } from "@services";
 import { getColumns } from "./config";
-import { ILongTermIncentive } from "@/types";
+import { ILongTermIncentive } from "@types";
 import AddLongTermIncentive from "./AddIncentive";
 import LongTermIncentiveVersions from "./Versions";
 

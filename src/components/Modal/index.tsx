@@ -34,7 +34,7 @@ const Modal: FC<ModalProps> = ({
       centered={true}
       visible={isVisible}
       closable={false}
-      onCancel={() => setIsVisible(false)}
+      onCancel={() => setIsVisible && setIsVisible(false)}
       className={`modal ${className} ${
         mode === "versions" && "modal--versions"
       }`}

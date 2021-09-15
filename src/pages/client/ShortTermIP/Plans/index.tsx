@@ -10,7 +10,7 @@ import {
   useDeleteShortTermPlanMutation,
   useFetchShortTermPlansQuery,
 } from "@services";
-import { IShortTermPlan } from "@/types";
+import { IShortTermPlan } from "@types";
 import { paths } from "@/router";
 import AddShortTermPlan from "./AddShortTermPlan";
 import UploadShortTermPlan from "./UploadShortTermPlan";

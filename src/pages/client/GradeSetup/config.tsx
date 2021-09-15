@@ -2,7 +2,7 @@ import { Switch, TableColumnsType } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 
-import { ICountry, IJobGrade } from "@/types";
+import { ICountry, IJobGrade } from "@types";
 
 export const getColumns = ({
   deleteJobGrade,

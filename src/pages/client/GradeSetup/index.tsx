@@ -14,9 +14,8 @@ import {
 import { getColumns } from "./config";
 import AddGrade from "./AddGrade";
 import GradeSetupVersions from "./Versions";
-import { IJobGrade, IVersion } from "@/types";
+import { IJobGrade, IVersion } from "@types";
 import Upload from "@/components/Upload";
-import { showSuccessPopup } from "@/utils";
 
 const GradeSetup = () => {
   const company_id = 1;

@@ -2,7 +2,7 @@ import { Switch, TableColumnsType } from "antd";
 import moment from "moment";
 import { LoadingOutlined } from "@ant-design/icons";
 
-import { ICashAllowance, ICountry } from "@/types";
+import { ICashAllowance, ICountry } from "@types";
 
 export const getColumns = ({
   removeCashAllowance,

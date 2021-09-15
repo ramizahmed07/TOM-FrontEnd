@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { sectorsApi } from "@services";
-import { ISectorsState } from "@/types";
+import { ISectorsState } from "@types";
 
 const initialState: ISectorsState = {
   allSectors: [],
