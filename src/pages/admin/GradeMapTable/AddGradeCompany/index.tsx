@@ -8,8 +8,10 @@ import Table from "@components/Table";
 import { ReactComponent as PlusIcon } from "@assets/images/plus.svg";
 import {
   useCreateGradeCompanyMutation,
+  useFetchAllGradeCompaniesQuery,
   useFetchGradeClientCompaniesQuery,
   useFetchGradeCompaniesQuery,
+  useFetchTARanksQuery,
   useUpdateGradeCompanyMutation,
 } from "@services";
 import { useTypedSelector } from "@hooks";
@@ -41,7 +43,11 @@ const AddGradeCompany = () => {
   const history = useHistory();
   const isEdit =
     pathname.includes("edit") && state?.grade_company?.grade_company_ranks;
-  const { allGradeCompanies, taRanks } = useTypedSelector(state => state.grade);
+  // const { allGradeCompanies, taRanks } = useTypedSelector(state => state.grade);
+  const { data: taRanksData } = useFetchTARanksQuery(null);
+  const { data: taRanks } = taRanksData || {};
+  const { data: companiesData } = useFetchAllGradeCompaniesQuery(null);
+  const { data: allGradeCompanies } = companiesData || {};
   const [companies, setCompanies] = useState<string[]>([]);
   const {
     data: gradeClientCompaniesData,
@@ -114,7 +120,11 @@ const AddGradeCompany = () => {
             <Input
               className="table__input"
               size="middle"
-              value={newCompany[item?.rank - 1]?.rank || ""}
+              value={
+                newCompany && newCompany[item?.rank - 1]
+                  ? newCompany[item?.rank - 1]?.rank
+                  : ""
+              }
               onChange={e =>
                 setNewCompany((prev: any) => {
                   const arr = [...prev];
