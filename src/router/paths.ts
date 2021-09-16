@@ -12,6 +12,7 @@ const admin = {
     companies: {
       listing: "/companies",
       create: "/companies/create",
+      edit: "/companies/:company_id/edit",
       profile: {
         details: "/companies/:company_id",
         business_units: {
