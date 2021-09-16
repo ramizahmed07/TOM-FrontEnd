@@ -3,7 +3,7 @@ import { useRef, useState, FC } from "react";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import { showSuccessPopup, validateFile } from "@utils";
 
 const UploadShortTermPlan: FC<IModal> = ({ isVisible, setIsVisible }) => {

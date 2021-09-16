@@ -10,7 +10,7 @@ import {
   useDeleteShortTermPlanMutation,
   useFetchShortTermPlansQuery,
 } from "@services";
-import { IShortTermPlan } from "@/types";
+import { IShortTermPlan } from "@types";
 import { paths } from "@/router";
 import AddShortTermPlan from "./AddShortTermPlan";
 import UploadShortTermPlan from "./UploadShortTermPlan";
@@ -37,7 +37,7 @@ const ShortTermPlans = () => {
     try {
       shortTermPlan_id.current = id;
       await deleteShortTermPlan({ company_id, id }).unwrap();
-      message.success("Short term incentive plan successfully deleted!");
+      message.success("Short term incentive plan deleted successfully!");
     } catch (error) {
       ErrorServices(error);
       console.log(error);

@@ -4,3 +4,4 @@ export * from "./checkPermission";
 export * from "./generateYears";
 export * from "./validateFile";
 export * from "./disabledDates";
+export * from "./getDaysOfMonth";

@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Select } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import { FC, useState, useEffect } from "react";
 
-import { ICashAllowance, ICountry, IJobGrade, IModal } from "@/types";
+import { ICashAllowance, ICountry, IJobGrade, IModal } from "@types";
 import Modal from "@components/Modal";
 import {
   ErrorServices,

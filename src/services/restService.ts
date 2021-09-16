@@ -34,7 +34,13 @@ const handleErrors = (
       data: json,
     };
   }
-  return { data: { data: json?.data, pagination: json?.pagination } };
+  return {
+    data: {
+      data: json?.data,
+      pagination: json?.pagination,
+      message: json?.message,
+    },
+  };
 };
 
 export const tomService =

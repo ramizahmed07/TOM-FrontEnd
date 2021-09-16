@@ -3,13 +3,7 @@ import Checkbox from "antd/lib/checkbox/Checkbox";
 import { FC, useEffect, useState } from "react";
 import { Button, Col, Input, Row, Select } from "antd";
 
-import {
-  ICountry,
-  IJobGrade,
-  IModal,
-  IShortTermPlan,
-  IShortTermPlanType,
-} from "@/types";
+import { ICountry, IJobGrade, IModal, IShortTermPlan, IPlanType } from "@types";
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
 import {
@@ -98,7 +92,7 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
       }
       setIsVisible(false);
       showSuccessPopup({
-        title: `Short Team Incentives Plan ${
+        title: `Short Term Incentives Plan ${
           selectedShortTermPlan ? "Updated!" : "Created!"
         }`,
         desc: `You have successfully ${
@@ -120,7 +114,7 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
       company_id,
       id: selectedShortTermPlan?.id,
       body,
-    });
+    }).unwrap();
 
   return (
     <Modal
@@ -175,7 +169,7 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
                 }))
               }
             >
-              {planTypes?.map(({ id, name }: IShortTermPlanType) => (
+              {planTypes?.map(({ id, name }: IPlanType) => (
                 <Option key={id} value={id}>
                   {name}
                 </Option>

@@ -13,7 +13,7 @@ import {
   useUpdateGradeCompanyMutation,
 } from "@services";
 import { useTypedSelector } from "@hooks";
-import { IGradeCompanyRank, IGradeCompany, ITARank } from "@/types";
+import { IGradeCompanyRank, IGradeCompany, ITARank } from "@types";
 import { getRows, showSuccessPopup } from "@utils";
 import { LoadingOutlined } from "@ant-design/icons";
 import { paths } from "@/router";

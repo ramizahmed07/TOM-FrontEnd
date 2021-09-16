@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { jobFunctionApi } from "@services";
-import { IJobFunctionReducer } from "@/types";
+import { IJobFunctionReducer } from "@types";
 
 const initialState: IJobFunctionReducer = {
   list: [],

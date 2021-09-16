@@ -1,7 +1,7 @@
 import { TableColumnsType } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
-import { ILegalEntity } from "@/types";
+import { ILegalEntity } from "@types";
 
 export interface IParams {
   region_id: string;

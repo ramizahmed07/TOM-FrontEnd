@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import Table from "@components/Table";
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import {
   ErrorServices,
   useFetchShortTermIncentiveVersionsQuery,
@@ -41,7 +41,7 @@ const ShortTermIncentiveVersions: FC<IModal> = ({
     <Modal
       mode="versions"
       footer={null}
-      title="Previous Versions of Salary Ranges"
+      title="Previous Versions of Short Term Incentives"
       isVisible={isVisible}
       width={855}
       setIsVisible={setIsVisible}

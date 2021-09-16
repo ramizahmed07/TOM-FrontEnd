@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, Input, message, Row, Select } from "antd";
 
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import {
   ErrorServices,
   useAddBusinessUnitMutation,

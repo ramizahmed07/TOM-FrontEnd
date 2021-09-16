@@ -4,13 +4,12 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import Modal from "@components/Modal";
 import { showSuccessPopup } from "@utils";
-import { IModal } from "@/types";
 import {
   useCreateSubIndustryMutation,
   useUpdateSubIndustryMutation,
 } from "@services";
 import { useParams } from "react-router-dom";
-import { ISubIndustry } from "@/types";
+import { ISubIndustry, IModal } from "@types";
 import { useEffect } from "react";
 
 interface AddSubIndustryProps extends IModal {

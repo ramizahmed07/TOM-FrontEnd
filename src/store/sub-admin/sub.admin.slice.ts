@@ -1,7 +1,7 @@
 import { subAdminApi } from "@/services/sub.admin";
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ISubAdminReducer } from "@/types";
+import { ISubAdminReducer } from "@types";
 
 const initialState: ISubAdminReducer = {
   list: [],

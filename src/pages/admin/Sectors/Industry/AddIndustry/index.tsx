@@ -4,13 +4,12 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Col, Input, message, Row } from "antd";
 
 import Modal from "@components/Modal";
-import { IModal } from "@/types";
 import { showSuccessPopup } from "@utils";
 import {
   useCreateIndustryMutation,
   useUpdateIndustryMutation,
 } from "@services";
-import { IIndustry } from "@/types";
+import { IIndustry, IModal } from "@types";
 
 interface AddIndustryProps extends IModal {
   selectedIndustry: IIndustry | null;

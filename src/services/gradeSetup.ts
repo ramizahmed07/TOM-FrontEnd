@@ -59,6 +59,21 @@ export const gradeSetupApi = createApi({
       }),
       invalidatesTags: ["JobGrades", "JobGradeVersions"],
     }),
+    uploadJobGrades: builder.mutation({
+      query: ({ company_id, active, body }) => ({
+        url: `/${company_id}/job-grade/upload/?active=${active}/`,
+        method: "POST",
+        body,
+        formData: true,
+      }),
+      invalidatesTags: ["JobGrades", "JobGradeVersions"],
+    }),
+    downloadJobGrades: builder.query({
+      query: ({ company_id, version_id }) => ({
+        url: `/${company_id}/job-grade/download/?version_id=${version_id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -69,4 +84,6 @@ export const {
   useDeleteJobGradeMutation,
   useUpdateJobGradeMutation,
   useUpdateJobGradeVersionMutation,
+  useDownloadJobGradesQuery,
+  useUploadJobGradesMutation,
 } = gradeSetupApi;

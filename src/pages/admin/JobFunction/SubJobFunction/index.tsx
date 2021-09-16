@@ -11,7 +11,7 @@ import {
   useGetJFMutation,
   useSjfListMutation,
 } from "@services";
-import { IJobFunctionReducer } from "@/types";
+import { IJobFunctionReducer } from "@types";
 import { ICombineReducerProps } from "@store";
 import AddJobSubFunction from "./AddJobSubFunction";
 import EditJobSubFunction from "./EditJobSubFunction";

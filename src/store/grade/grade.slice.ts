@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { IGradeState } from "@/types";
+import { IGradeState } from "@types";
 import { gradeApi } from "@services";
 
 const initialState: IGradeState = {

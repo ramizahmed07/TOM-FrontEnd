@@ -265,7 +265,7 @@ export interface ICashAllowance {
  * @Short_Term_Plan_Types
  */
 
-export interface IShortTermPlanType {
+export interface IPlanType {
   id: number;
   name: string;
 }
@@ -277,7 +277,7 @@ export interface IShortTermPlan {
   is_all_grade: boolean;
   countries: ICountry[];
   grades: string[];
-  type: IShortTermPlanType;
+  type: IPlanType;
 }
 
 /**
@@ -294,4 +294,66 @@ export interface IShortTermIncentive {
   is_basic_pay: boolean;
   value: number;
   plan: Omit<IShortTermPlan, "grades" | "countries">;
+}
+
+/**
+ * @Long_Term_Plan_Types
+ */
+
+export interface ILongTermPlan {
+  id: number;
+  name: string;
+  is_global: boolean;
+  is_all_grade: boolean;
+  grades: string[];
+  countries: ICountry[];
+  type: IPlanType;
+  currency: number;
+  holding_period: number;
+  is_installment: boolean;
+  is_amount: boolean;
+  is_adhoc: boolean;
+  date_of_grant: number;
+  month_of_grant: number;
+  installment_type: string;
+}
+
+/**
+ * @Long_Term_Incentive_Types
+ */
+
+export interface ILongTermIncentive {
+  id: number;
+  grade: string | null;
+  country: ICountry | null;
+  year: number;
+  range_type: string;
+  is_all_grade: boolean;
+  is_global: boolean;
+  is_amount: boolean;
+  equity_min: number;
+  equity_mid: number;
+  equity_max: number;
+  plan: ILongTermPlan;
+}
+
+/**
+ * @Currency_Type
+ */
+
+export interface ICurrency {
+  id: number;
+  name: string;
+  symbol: string;
+  code: string;
+}
+
+/**
+ * @Version_Type
+ */
+
+export interface IVersion {
+  created_at: string;
+  id: number;
+  is_active: string | null;
 }

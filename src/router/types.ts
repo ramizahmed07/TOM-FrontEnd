@@ -9,4 +9,5 @@ export interface IRoute {
   exact?: boolean;
   breadcrumb?: string;
   permission?: string;
+  resetPassword?: boolean;
 }

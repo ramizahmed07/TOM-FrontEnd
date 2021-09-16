@@ -1,4 +1,4 @@
-import { ICompaniesState } from "@/types";
+import { ICompaniesState } from "@types";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { companiesApi } from "@services";

@@ -1,20 +1,24 @@
 import { Col, message, Row } from "antd";
 import { useRef, useState } from "react";
 
-import UploadSalaryRange from "./UploadSalaryRange";
 import Button from "@components/Button";
 import Table from "@components/Table";
 import { getColumns } from "./config";
 import {
   ErrorServices,
   useDeleteSalaryRangeMutation,
+  useDownloadSalaryRangesQuery,
   useFetchCompanySalaryRangesQuery,
+  useFetchSalaryRangeVersionsQuery,
+  useUploadSalaryRangesMutation,
 } from "@services";
 import AddSalaryRange from "./AddSalaryRange";
-import { ISalaryRange } from "@/types";
+import { ISalaryRange, IVersion } from "@types";
 import SalaryRangeVersions from "./Versions";
+import Upload from "@components/Upload";
 
 const SalaryRange = () => {
+  const company_id = 1;
   const salary_range_id = useRef<any>(null);
   const [page, setPage] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
@@ -23,12 +27,40 @@ const SalaryRange = () => {
     useState<ISalaryRange | null>(null);
   const [isVersionsModal, setIsVersionsModal] = useState(false);
   const { data: salaryRanges, isLoading } = useFetchCompanySalaryRangesQuery({
-    company_id: 1,
+    company_id,
     page,
   });
   const { data, pagination } = salaryRanges || {};
   const [deleteSalaryRange, { isLoading: isDeleting }] =
     useDeleteSalaryRangeMutation();
+  const [download, setDownload] = useState(false);
+  const [uploadFile, setUploadFile] = useState({
+    file: null,
+    active: false,
+  });
+
+  const { data: versionsData, isLoading: isFetchingVersions } =
+    useFetchSalaryRangeVersionsQuery(
+      {
+        page: 1,
+        company_id,
+      },
+      { skip: !download }
+    );
+  const { data: versions } = versionsData || {};
+  const { isLoading: isDownloading } = useDownloadSalaryRangesQuery(
+    {
+      company_id,
+      version_id: versions?.find(
+        (version: IVersion) => version?.is_active === "TRUE"
+      )["id"],
+    },
+    {
+      skip: !versions?.length,
+    }
+  );
+  const [uploadJobGrades, { isLoading: isUploading }] =
+    useUploadSalaryRangesMutation();
 
   const editSalaryRange = (salaryRange: ISalaryRange) => {
     setSelectedSalaryRange(salaryRange);
@@ -38,10 +70,28 @@ const SalaryRange = () => {
   const removeSalaryRange = async (id: number) => {
     try {
       salary_range_id.current = id;
-      await deleteSalaryRange({ company_id: 1, id }).unwrap();
+      await deleteSalaryRange({ company_id, id }).unwrap();
       message.success("Salary range deleted successfully!");
     } catch (error) {
       ErrorServices(error);
+    }
+  };
+
+  const handleUpload = async () => {
+    const { file, active }: { file: any; active: boolean } = uploadFile;
+    setIsUploadModal(false);
+    try {
+      const formData = new FormData();
+      formData.append("attachment", file!, file?.name!);
+      const res = await uploadJobGrades({
+        company_id,
+        active,
+        body: formData,
+      }).unwrap();
+      message.success(res?.message);
+    } catch (error) {
+      message.error(error?.message);
+      console.log(error);
     }
   };
 
@@ -55,9 +105,12 @@ const SalaryRange = () => {
   return (
     <>
       {isUploadModal && (
-        <UploadSalaryRange
+        <Upload
+          onSubmit={handleUpload}
           isVisible={isUploadModal}
           setIsVisible={setIsUploadModal}
+          file={uploadFile}
+          setFile={setUploadFile}
         />
       )}
       {isVisible && (
@@ -85,10 +138,17 @@ const SalaryRange = () => {
           <Button
             onClick={() => setIsUploadModal(true)}
             variant="upload_client"
+            isLoading={isUploading}
           >
             Upload
           </Button>
-          <Button variant="download_client">Download</Button>
+          <Button
+            isLoading={isFetchingVersions || isDownloading}
+            variant="download_client"
+            onClick={() => setDownload(true)}
+          >
+            Download
+          </Button>
           <Button
             onClick={() => setIsVersionsModal(true)}
             variant="versions"

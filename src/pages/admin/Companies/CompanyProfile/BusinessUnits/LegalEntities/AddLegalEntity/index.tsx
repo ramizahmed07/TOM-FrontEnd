@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Col, Input, Row } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
-import { IModal } from "@/types";
+import { IModal } from "@types";
 import Modal from "@components/Modal";
 import {
   ErrorServices,
@@ -14,8 +14,8 @@ import {
 } from "@services";
 import { showSuccessPopup } from "@utils";
 import { IParams } from "../config";
-import { ILegalEntity } from "@/types";
-import { useTypedSelector } from "@/hooks";
+import { ILegalEntity } from "@types";
+import { useTypedSelector } from "@hooks";
 
 interface IAddLegalEntity extends IModal {
   selectedEntity: ILegalEntity | null;

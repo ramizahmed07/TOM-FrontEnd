@@ -14,7 +14,7 @@ import {
   useFetchRegionsQuery,
 } from "@services";
 import { getColumns } from "./config";
-import { IRegion } from "@/types";
+import { IRegion } from "@types";
 
 const Regions = () => {
   const [page, setPage] = useState(1);

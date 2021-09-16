@@ -7,8 +7,8 @@ import { checkPermission } from "@utils";
 import { IRoute } from "./types";
 
 const RouteWithSubRoutes: FC<IRoute> = route => {
-  const { user } = useTypedSelector(state => state.auth);
-  const isAuthenticated = user?.id;
+  const { user, token } = useTypedSelector(state => state.auth);
+  const isAuthenticated = user?.id || (route.resetPassword && token?.access);
 
   if (route?.permission && !checkPermission(route?.permission)) {
     const path = localStorage.getItem("prevPath");
