@@ -64,6 +64,7 @@ export const admin_config: Array<IConfig> = [
         title: "Sub-Admins",
         icon: SubAdminIcon,
         path: sub_admins.listing,
+        permission: permissions.VIEW_TOM_USER,
       },
     ],
   },

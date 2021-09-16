@@ -157,7 +157,7 @@ const AddBusinessUnit: React.FC<IBusinessUnit> = ({
     <Modal
       footer={[
         <Button disabled={!name} key="1" type="primary" onClick={onSubmit}>
-          {`${isEdit ? "Update" : "Add"} Sector`}
+          {`${isEdit ? "Update" : "Add"} Business Unit`}
         </Button>,
         <Button
           key="2"

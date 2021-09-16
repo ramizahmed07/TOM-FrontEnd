@@ -144,12 +144,16 @@ const SubAdminsList = () => {
             /> */}
           </Col>
           <Col className="align-end" span={8}>
-            <Button
-              variant="add"
-              onClick={() => history.push(paths.admin.users.sub_admins.create)}
-            >
-              Create sub admin
-            </Button>
+            {checkPermission(permissions.CREATE_TOM_USER) && (
+              <Button
+                variant="add"
+                onClick={() =>
+                  history.push(paths.admin.users.sub_admins.create)
+                }
+              >
+                Create sub admin
+              </Button>
+            )}
           </Col>
         </Row>
       </div>

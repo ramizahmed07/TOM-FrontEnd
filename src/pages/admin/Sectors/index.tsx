@@ -109,13 +109,15 @@ const Sectors = () => {
             hidden={true}
             onChange={uploadFile}
           />
-          <Button
-            isLoading={isUploading}
-            variant="upload"
-            onClick={() => inputRef?.current?.click()}
-          >
-            Upload Sectors
-          </Button>
+          {checkPermission(permissions.CREATE_SECTOR) && (
+            <Button
+              isLoading={isUploading}
+              variant="upload"
+              onClick={() => inputRef?.current?.click()}
+            >
+              Upload Sectors
+            </Button>
+          )}
           <Button
             isLoading={isDownloading}
             variant="download"
