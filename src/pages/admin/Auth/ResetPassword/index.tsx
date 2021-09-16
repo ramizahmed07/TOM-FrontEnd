@@ -6,7 +6,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import "@styles/auth.less";
 import AuthLandingImg from "@components/AuthLandingImg";
 import { paths } from "@router";
-import { useChangePasswordMutation } from "@services";
+import { ErrorServices, useChangePasswordMutation } from "@services";
 import { useTypedSelector } from "@/hooks";
 
 const ResetPassword = () => {
@@ -34,6 +34,7 @@ const ResetPassword = () => {
       }).unwrap();
       history.push(paths.admin.auth.login);
     } catch (error) {
+      ErrorServices(error);
       console.log(error);
     }
   };

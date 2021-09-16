@@ -54,6 +54,7 @@ export const admin_routeConfig: IRoute[] = [
     component: ResetPassword,
     key: "Reset Password",
     isPrivate: true,
+    resetPassword: true,
   },
   {
     path: paths.admin.users.companies.listing,
