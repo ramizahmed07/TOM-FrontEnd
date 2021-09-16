@@ -23,7 +23,13 @@ const RouteWithSubRoutes: FC<IRoute> = route => {
             isAuthenticated ? (
               <route.component {...props} routes={route.routes} />
             ) : (
-              <Redirect to={paths.admin.auth.login} />
+              <Redirect
+                to={
+                  window.location.pathname?.includes("client")
+                    ? paths.client.auth.login
+                    : paths.admin.auth.login
+                }
+              />
             )
           ) : (
             <route.component {...props} routes={route.routes} />

@@ -26,11 +26,11 @@ const App = () => {
   }, [dispatch, countries, user]);
 
   useEffect(() => {
-    // if (window.location.pathname?.includes("client")) {
-    //   window.less.modifyVars(clientVars);
-    // } else {
-    //   window.less.modifyVars(adminVars);
-    // }
+    if (window.location.pathname?.includes("client")) {
+      window.less.modifyVars(clientVars);
+    } else {
+      window.less.modifyVars(adminVars);
+    }
   }, []);
 
   return (

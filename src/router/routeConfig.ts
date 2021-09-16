@@ -267,7 +267,7 @@ export const client_routeConfig: IRoute[] = [
     path: paths.client.auth.reset_password,
     component: ClientResetPassword,
     key: "Reset Password",
-    isPrivate: true,
+    isPrivate: false,
   },
   {
     path: paths.client.grade_setup,
@@ -345,6 +345,13 @@ export const client_routeConfig: IRoute[] = [
     component: AddOffer,
     key: "Create Offer",
     breadcrumb: "Offer Modeller / Create Offer",
+    isPrivate: true,
+  },
+  {
+    path: paths.client.dashboard,
+    component: "Dashboard",
+    key: "Dashboard",
+    breadcrumb: "Dashboard",
     isPrivate: true,
   },
 ];
