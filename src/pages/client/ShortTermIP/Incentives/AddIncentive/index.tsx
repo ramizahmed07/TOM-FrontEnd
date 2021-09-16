@@ -79,7 +79,6 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
 
   useEffect(() => {
     if (selectedShortTermIncentive) {
-      console.log({ selectedShortTermIncentive });
       const {
         country,
         grade,
@@ -108,7 +107,6 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
 
   const handleSubmit = async () => {
     try {
-      console.log("shortTerm", shortTermIncentive);
       const { country_id, is_global, is_all_grade, grade, plan } =
         shortTermIncentive;
       const body = {
@@ -119,7 +117,6 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
         is_all_grade: grade ? is_all_grade : true,
         is_global: country_id ? is_global : true,
       };
-      console.log("body", body);
       if (selectedShortTermIncentive) {
         await editShortTermIncentive(body);
       } else {
@@ -194,7 +191,6 @@ const AddShortTermIncentive: FC<IAddShortTermIncentive> = ({
                 const { id, grades, name, countries } = JSON.parse(
                   serializedPlan
                 ) as IShortTermPlan;
-                console.log("TEST", JSON.parse(serializedPlan));
                 setShortTermIncentive(prev => ({
                   ...prev,
                   plan: { id, name },

@@ -106,7 +106,6 @@ export const tomService =
                   }),
                 }
               );
-              console.log("res", res);
               const json = await res.json();
               saveTokens({ access: json.data.access, refresh });
               set(headers, "Authorization", `Bearer ${json.data.access}`);

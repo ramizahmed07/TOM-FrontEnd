@@ -13,7 +13,6 @@ const UploadShortTermPlan: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const uploadFile = (event: any) => {
     var file = event?.target?.files[0];
     if (validateFile(file?.type)) {
-      console.log("file", file.type);
       setFile(file);
     } else {
       message.error("Only CVS and XLS file types are supported");

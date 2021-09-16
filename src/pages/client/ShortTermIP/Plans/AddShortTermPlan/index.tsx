@@ -60,7 +60,6 @@ const AddShortTermPlan: FC<IAddShortTermPlan> = ({
 
   useEffect(() => {
     if (selectedShortTermPlan) {
-      console.log({ selectedShortTermPlan });
       const { grades, is_all_grade, is_global, name, countries, type } =
         selectedShortTermPlan;
       setShortTermPlan({

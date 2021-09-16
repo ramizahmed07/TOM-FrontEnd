@@ -506,7 +506,6 @@ const CreateCompany = () => {
                   <CountryPhoneInput
                     placeholder="Enter contact number here..."
                     onChange={e => {
-                      console.log("e", e);
                       setCompany(prev => ({
                         ...prev,
                         person_phone_code: e.code as number,
