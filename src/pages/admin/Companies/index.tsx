@@ -117,34 +117,6 @@ const Companies = () => {
         );
       },
     },
-    {
-      title: "Action",
-      key: "action",
-      fixed: "right",
-      width: 160,
-      align: "center",
-      render: () => {
-        const menu = (
-          <Menu>
-            <Menu.Item className="table__action__item">Edit</Menu.Item>
-            <Menu.Item danger className="table__action__item">
-              Delete
-            </Menu.Item>
-          </Menu>
-        );
-        return (
-          <div className="table__action__menu">
-            <Dropdown
-              overlay={menu}
-              trigger={["click"]}
-              className="table__action__dropdown"
-            >
-              <MenuIcon />
-            </Dropdown>
-          </div>
-        );
-      },
-    },
   ];
 
   const onRowClick = (data: any) => {

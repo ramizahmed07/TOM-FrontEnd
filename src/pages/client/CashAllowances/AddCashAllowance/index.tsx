@@ -162,7 +162,6 @@ const AddCashAllowance: FC<IAddCashAllowance> = ({
               value={cashAllowance?.grade || undefined}
               onChange={grade => {
                 const jobGrade = JSON.parse(grade) as IJobGrade;
-                console.log("job", jobGrade);
                 setCashAllowance((prev: ICashAllowance) => ({
                   ...prev,
                   grade,

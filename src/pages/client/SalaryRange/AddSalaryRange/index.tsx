@@ -109,7 +109,7 @@ const AddSalaryRange: FC<IAddSalaryRange> = ({
       id: selectedSalaryRange?.id,
       body: { ...salaryRange },
     }).unwrap();
-  console.log("jobGrades", salaryRange);
+
   return (
     <Modal
       footer={[

@@ -61,7 +61,6 @@ const AddGrade: FC<IAddGrade> = ({
 
   const handleSubmit = async () => {
     try {
-      console.log({ jobGrade });
       const job_grade = {
         ...(jobGrade as IJobGrade),
         country_ids: isGlobal ? [] : jobGrade?.country_ids,

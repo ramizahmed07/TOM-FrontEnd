@@ -23,7 +23,6 @@ const ShortTermIncentiveVersions: FC<IModal> = ({
   const [updateShortTermIncentiveVersion] =
     useUpdateShortTermIncentiveVersionMutation();
   const { data } = versions || {};
-  console.log("versions", versions);
   const [active, setActive] = useState(false);
 
   const handleActive = async (id: number) => {

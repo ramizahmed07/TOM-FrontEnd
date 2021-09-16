@@ -21,6 +21,27 @@ export const companiesApi = createApi({
       providesTags: ["Companies"],
     }),
 
+    fetchCompany: builder.query({
+      query: ({ company_id }) => ({
+        url: `/company/${company_id}/`,
+        method: "GET",
+      }),
+    }),
+    createCompany: builder.mutation({
+      query: ({ body }) => ({
+        url: `/company/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Companies"],
+    }),
+    updateCompany: builder.mutation({
+      query: ({ body, company_id }) => ({
+        url: `/company/${company_id}/`,
+        method: "PATCH",
+        body,
+      }),
+    }),
     updateCompanyStatus: builder.mutation({
       query: ({ status, company_id }) => ({
         url: `/company/${company_id}/?active=${status}/`,
@@ -128,6 +149,9 @@ export const companiesApi = createApi({
 export const {
   useFetchCompaniesQuery,
   useUpdateCompanyStatusMutation,
+  useCreateCompanyMutation,
+  useFetchCompanyQuery,
+  useUpdateCompanyMutation,
   useFetchBusinessUnitQuery,
   useFetchAllBusinessUnitsQuery,
   useFetchLegalEntitiesQuery,

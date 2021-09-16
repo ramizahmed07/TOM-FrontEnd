@@ -4,21 +4,32 @@ import {
   Row,
   Button,
   Input,
-  Form,
   Select,
   DatePicker,
   Upload,
   message,
 } from "antd";
 import { Option } from "antd/lib/mentions";
-import { GoLocation } from "react-icons/go";
 import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
 import en from "world_countries_lists/data/en/world.json";
 import moment from "moment";
 
 import "./createCompany.less";
 import ImgUpload from "@assets/images/img-upload.png";
-import { disabledDates, generateArrayOfYears } from "@/utils";
+import { disabledDates, generateArrayOfYears, showSuccessPopup } from "@utils";
+import { useTypedSelector } from "@hooks";
+import {
+  ErrorServices,
+  useCreateCompanyMutation,
+  useFetchCompanyQuery,
+  useFetchCurrenciesQuery,
+  useUpdateCompanyMutation,
+} from "@/services";
+import { ICurrency } from "@/types";
+import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
+import { paths } from "@router";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
+import { useEffect } from "react";
 
 function b64toBlob(dataURI: any) {
   var byteString = atob(dataURI.split(",")[1]);
@@ -49,19 +60,110 @@ function beforeUpload(file: any) {
   return isJpgOrPng && isLt2M;
 }
 
+interface IFormValues {
+  country_id: number | null;
+  currency_id: number | null;
+  name: string;
+  address: string;
+  postal_code: string;
+  country_headquarter: string;
+  financial_year: number | null;
+  contract_start_date: string;
+  contract_end_date: string;
+  large_logo_url: string;
+  small_logo_url: string;
+  stock_tracking_ids: string[];
+  person_name: string;
+  person_phone_code: number | null;
+  person_phone_number: string;
+  person_email: string;
+  person_country_id: number | null;
+}
+
+const INITIAL_VALUES: IFormValues = {
+  country_id: null,
+  currency_id: null,
+  name: "",
+  address: "",
+  postal_code: "",
+  country_headquarter: "",
+  financial_year: null,
+  contract_end_date: "",
+  contract_start_date: "",
+  small_logo_url:
+    "https://cdn.sanity.io/images/92ui5egz/production/7c1c60e9afaaaa3cce61e5101717796d21b7f914-1426x1080.svg?auto=format",
+  large_logo_url:
+    "https://cdn.sanity.io/images/92ui5egz/production/7c1c60e9afaaaa3cce61e5101717796d21b7f914-1426x1080.svg?auto=format",
+  stock_tracking_ids: [],
+  person_name: "",
+  person_phone_code: null,
+  person_phone_number: "",
+  person_email: "",
+  person_country_id: null,
+};
+
+type IFormKeys = keyof IFormValues;
+
+const validateValues = (data: IFormValues) => {
+  let cond = false;
+  for (var key in data) {
+    if (data[key as IFormKeys] === "" || data[key as IFormKeys] === null) {
+      cond = true;
+    }
+  }
+  return cond;
+};
+
 const CreateCompany = () => {
-  const [form] = Form.useForm();
-  const [stockTrackingIds, setStockTrackingIds] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<any>(null);
-  const [endDate, setEndDate] = useState<any>(null);
+  const history = useHistory();
+  const { company_id } = useParams<{ company_id: string }>();
+  const { path } = useRouteMatch<{ path: string }>();
+  const [stockId, setStockId] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const { countries } = useTypedSelector(state => state.countries);
+  const [createCompany, { isLoading: isCreating }] = useCreateCompanyMutation();
+  const { data: currenciesData, isLoading: isFetchingCurrencies } =
+    useFetchCurrenciesQuery(null);
+  const { data: currencies } = currenciesData || {};
+  const [company, setCompany] = useState(INITIAL_VALUES);
+  const isEdit = path === paths.admin.users.companies.edit;
+  const { data: companyData, isLoading: isFetchingCompany } =
+    useFetchCompanyQuery(
+      { company_id },
+      {
+        skip: !isEdit,
+      }
+    );
+  const { data: selectedCompany } = companyData || {};
+  const [updateCompany, { isLoading: isUpdating }] = useUpdateCompanyMutation();
 
   function disabledDate(current: any) {
     return disabledDates(
       current,
-      moment(form.getFieldValue("contract_start_date")).endOf("day")
+      moment(moment(company?.contract_start_date)).endOf("day")
     );
   }
+
+  useEffect(() => {
+    if (isEdit && selectedCompany) {
+      const { country, currency, user, person_country } = selectedCompany;
+      const company = {
+        ...selectedCompany,
+        country_id: country?.id,
+        currency_id: currency?.id,
+        person_country_id: person_country?.id,
+        person_email: user?.email,
+        person_name: user?.first_name + user?.last_name,
+        person_phone_code: user?.phone_code,
+        person_phone_number: user?.phone_number,
+      };
+      delete company?.country;
+      delete company?.currency;
+      delete company?.user;
+      delete company?.person_country;
+      setCompany(company);
+    }
+  }, [selectedCompany, path, isEdit]);
 
   const handleImage = (info: any) => {
     // if (info.file.status === 'uploading') {
@@ -75,389 +177,421 @@ const CreateCompany = () => {
     });
   };
 
-  const handleStockTrackingIds = () => {
-    setStockTrackingIds((prev: string[]) => [
+  const onChange = (event: any) => {
+    setCompany(prev => ({
       ...prev,
-      form.getFieldValue("stock_tracking_ids"),
-    ]);
-    message.success("Stock tracking id added!");
+      [event.target.name]: event.target.value,
+    }));
   };
 
+  const onSubmit = async () => {
+    try {
+      if (isEdit) {
+        await editCompany(company);
+      } else {
+        await addCompany(company);
+      }
+      history.push(paths.admin.users.companies.listing);
+      showSuccessPopup({
+        title: false ? "Industry Updated" : "New Company Created",
+        desc: `You have successfully ${
+          false ? "updated the" : "created new"
+        } company.`,
+      });
+    } catch (error) {
+      ErrorServices(error);
+      console.log(error);
+    }
+  };
+
+  const addCompany = async (body: IFormValues) =>
+    await createCompany({ body }).unwrap();
+
+  const editCompany = async (body: IFormValues) =>
+    await updateCompany({ body, company_id }).unwrap();
+
   return (
-    <>
+    <div className="container">
       <Row>
-        <Col span={24} className="container">
-          <h1 className="form_heading">Create new company</h1>
-          <Form
-            form={form}
-            name="login"
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-            initialValues={{ remember: true }}
-            onFinish={values => {
-              console.log("VALUES", values);
-            }}
-            layout="vertical"
-            className="create__company__container"
-          >
-            <div className="basic__information_container">
-              <h1 className="section__heading basic_information_section_heading">
-                Basic information
-              </h1>
-              <div className="form__section">
-                <div className="form__section_container">
-                  <Form.Item
-                    className="form__item"
-                    label={<label className="input__label">Company name</label>}
-                    name="name"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter company name",
-                      },
-                    ]}
-                  >
-                    <Input
-                      className="form__input"
-                      type="text"
-                      placeholder="Enter company name here..."
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="form__item"
-                    label={<label className="input__label">Address</label>}
-                    name="address"
-                    rules={[
-                      { required: true, message: "Please enter address" },
-                    ]}
-                  >
-                    <Input
-                      className="form__input"
-                      type="text"
-                      placeholder="Enter company address here..."
-                      suffix={
-                        // <Tooltip title="Extra information">
-                        <GoLocation style={{ color: "rgba(0,0,0,.45)" }} />
-                        // </Tooltip>
-                      }
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    className="form__item"
-                    label={<label className="input__label">Postal code</label>}
-                    name="postal_code"
-                    rules={[
-                      { required: true, message: "Please enter postal code" },
-                    ]}
-                  >
-                    <Input
-                      className="form__input"
-                      type="text"
-                      placeholder="Enter postal code here..."
-                    />
-                  </Form.Item>
-                </div>
-                <div className="form__section_upload">
-                  <div className="form__section_upload_container">
-                    <Upload
-                      onChange={handleImage}
-                      beforeUpload={beforeUpload}
-                      showUploadList={false}
-                    >
-                      <img src={ImgUpload} alt="avatar" />
-                    </Upload>
-                    <p className="img_description_text">UPLOAD LARGE LOGO</p>
-                    <p className="img_description_size">1000 x 1000</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="corporate__information_container">
-              <h1 className="section__heading">Corporate Information</h1>
-              <div className="form__section">
-                <div className="form__section_container">
-                  <Form.Item
-                    className="form__item"
-                    label={
-                      <label className="input__label">
-                        Country Headquater{" "}
-                      </label>
-                    }
-                    name="country_headquater"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter country headquater",
-                      },
-                    ]}
-                  >
-                    <Input
-                      className="form__input"
-                      type="text"
-                      placeholder="Enter name of headquater"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    className="form__item"
-                    label={
-                      <label className="input__label">Base Currency</label>
-                    }
-                    name="base_currency"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter base currency",
-                      },
-                    ]}
-                  >
-                    <Select placeholder="Select base base currency">
-                      <Option value="AED">AED</Option>
-                      <Option value="GBB">GBB</Option>
-                      <Option value="GBB">GBB</Option>
-                    </Select>
-                  </Form.Item>
-
-                  <Form.Item
-                    className="form__item "
-                    label={
-                      <label className="input__label">Financial Year</label>
-                    }
-                    name="financial_year"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter financial year",
-                      },
-                    ]}
-                  >
-                    <Select placeholder="Select base base currency">
-                      {generateArrayOfYears(30)?.map((year: number) => (
-                        <Option key={year.toString()} value={year.toString()}>
-                          {year}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-
-                  <Form.Item
-                    className="form__item"
-                    label={
-                      <label className="input__label">Stock tracking ID</label>
-                    }
-                    name="stock_tracking_ids"
-                  >
-                    <div className="stock_tracking_id__container">
-                      <Input
-                        className="form__input"
-                        type="text"
-                        placeholder="Enter stock ID here..."
-                      />
-                      <Button
-                        type="primary"
-                        // htmlType="submit"
-                        // disabled={false}
-                        size="large"
-                        onClick={handleStockTrackingIds}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </Form.Item>
-                </div>
-
-                <div className="form__section_upload">
-                  <div className="form__section_upload_container">
-                    <Upload>
-                      <img src={ImgUpload} alt="avatar" />
-                    </Upload>
-                    <p className="img_description_text">UPLOAD SMALL LOGO</p>
-                    <p className="img_description_size">260 x 260</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="contract_details_container">
-              <h1 className="section__heading">Contract Details</h1>
-              <div className="form__section">
-                <div className="form__section_container">
-                  <label className="input__label">Contract Duration</label>
-                  <div className="form__section__container__row">
-                    <Form.Item
-                      className="form__item"
-                      name="contract_start_date"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter contract duration",
-                        },
-                      ]}
-                    >
-                      <div className="contract__details_year_container">
-                        <DatePicker
-                          className="datepicker__container"
-                          onChange={e => {
-                            form.setFieldsValue({
-                              contract_start_date: e,
-                            });
-                            setIsDisabled(false);
-                          }}
-                          placeholder="Starting Date (DD/MM/YY)"
-                        />
-                      </div>
-                    </Form.Item>
-                    <Form.Item
-                      className="form__item"
-                      name="contract_end_date"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter contract duration",
-                        },
-                      ]}
-                    >
-                      <div className="contract__details_year_container">
-                        <DatePicker
-                          disabled={isDisabled}
-                          disabledDate={disabledDate}
-                          className="datepicker__container"
-                          onChange={e =>
-                            form.setFieldsValue({
-                              contract_end_date: e,
-                            })
-                          }
-                          placeholder="Ending Date (DD/MM/YY)"
-                        />
-                      </div>
-                    </Form.Item>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="contract_details_container">
-              <h1 className="section__heading">Contact person details</h1>
-              <div className="form__section">
-                <div className="form__section_container">
-                  <div className="contact__person__sub_container">
-                    <Form.Item
-                      className="form__item contact__person_item"
-                      name="person_name"
-                      label={
-                        <label className="input__label">Contact person</label>
-                      }
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter contact person",
-                        },
-                      ]}
-                    >
-                      <Input
-                        className="form__input"
-                        type="text"
-                        placeholder="Enter name of contact person..."
-                      />
-                    </Form.Item>
-
-                    <Form.Item
-                      className="form__item contact__person_item"
-                      label={
-                        <label className="input__label">
-                          Contact person’s country
-                        </label>
-                      }
-                      name="contact_person_country"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please select contact person country",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Select country from here...">
-                        <Option value="pk">Pakistan</Option>
-                        <Option value="uae">UAE</Option>
-                        <Option value="china">China</Option>
-                      </Select>
-                    </Form.Item>
-                  </div>
-
-                  <div className="contact__person__sub_container">
-                    <Form.Item
-                      className="form__item contact__person_item "
-                      label={
-                        <label className="input__label">Contact number</label>
-                      }
-                      name="person_number"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter contact number",
-                        },
-                      ]}
-                    >
-                      <ConfigProvider locale={en}>
-                        <CountryPhoneInput
-                          onChange={e => {
-                            form.setFieldsValue({ person_number: e });
-                          }}
-                          value={{
-                            short: "us",
-                          }}
-                        />
-                      </ConfigProvider>
-                    </Form.Item>
-
-                    <Form.Item
-                      className="form__item contact__person_item"
-                      label={
-                        <label className="input__label">Email address</label>
-                      }
-                      name="person_email"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter email address",
-                        },
-                      ]}
-                    >
-                      <Input
-                        className="form__input"
-                        type="text"
-                        placeholder="Enter email address here..."
-                      />
-                    </Form.Item>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="form__submit__section">
-              <Form.Item wrapperCol={{ span: 24 }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  disabled={false}
-                  size="large"
-                >
-                  Create Company
-                </Button>
-              </Form.Item>
-
-              <Form.Item wrapperCol={{ span: 24 }}>
-                <Button className="login__btn" size="large">
-                  Cancel
-                </Button>
-              </Form.Item>
-            </div>
-          </Form>
+        <Col span={24}>
+          <div className="main-heading mb-16">{`${
+            isEdit ? "Update" : "Create"
+          } New Company`}</div>
         </Col>
       </Row>
-    </>
+      <div className="addCompany">
+        <Row className="addCompany__header">
+          <div className="sub-heading">Basic information</div>
+        </Row>
+        <div className="addCompany__content">
+          <Row className="addCompany__row" justify="space-between">
+            <Col span={9}>
+              <Row>
+                <label>Company Name</label>
+                <Input
+                  onChange={onChange}
+                  name="name"
+                  value={company?.name}
+                  size="large"
+                  type="text"
+                  placeholder="Enter company name here..."
+                />
+              </Row>
+              <Row>
+                <label className="mt-32">Address</label>
+                <Input
+                  onChange={onChange}
+                  value={company?.address}
+                  name="address"
+                  size="large"
+                  type="text"
+                  placeholder="Enter company address here..."
+                />
+              </Row>
+              <label className="mt-32">Postal Code</label>
+              <Input
+                value={company?.postal_code}
+                onChange={onChange}
+                name="postal_code"
+                className="mb-32"
+                size="large"
+                type="text"
+                placeholder="Enter postal code here..."
+              />
+            </Col>
+            <Col className="addCompany__col2" span={9}>
+              <div>
+                <Upload
+                  onChange={handleImage}
+                  beforeUpload={beforeUpload}
+                  showUploadList={false}
+                >
+                  <img src={ImgUpload} alt="avatar" />
+                </Upload>
+                <p className="img_description_text">UPLOAD LARGE LOGO</p>
+                <p className="img_description_size">1000 x 1000</p>
+              </div>
+            </Col>
+          </Row>
+          <div className="mt-24 mb-32 sub-heading">Corporate Information</div>
+          <Row className="addCompany__row" justify="space-between">
+            <Col span={9}>
+              <Row>
+                <label>Countries</label>
+                <Select
+                  onChange={country_id => {
+                    setCompany(prev => ({
+                      ...prev,
+                      country_id,
+                    }));
+                  }}
+                  value={company?.country_id || undefined}
+                  showArrow={true}
+                  showSearch={true}
+                  size="large"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                  placeholder="Select country from here..."
+                >
+                  {countries?.map(({ id, name }) => (
+                    <Option key={"" + id} value={"" + id}>
+                      {name}
+                    </Option>
+                  ))}
+                </Select>
+              </Row>
+              <Row>
+                <label className="mt-32">Headquarter Location</label>
+                <Input
+                  value={company?.country_headquarter}
+                  name="country_headquarter"
+                  onChange={onChange}
+                  className="form__input"
+                  type="text"
+                  placeholder="Enter location of headquater"
+                />
+              </Row>
+              <Row>
+                <label className="mt-32">Currency</label>
+                <Select
+                  value={company?.currency_id || undefined}
+                  loading={isFetchingCurrencies}
+                  onChange={currency_id =>
+                    setCompany(prev => ({
+                      ...prev,
+                      currency_id,
+                    }))
+                  }
+                  showArrow={true}
+                  showSearch={true}
+                  size="large"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                  placeholder="Select currency from here..."
+                >
+                  {currencies?.map(({ id, name, code }: ICurrency) => (
+                    <Option key={"" + id} value={"" + id}>
+                      {`${name} (${code})`}
+                    </Option>
+                  ))}
+                </Select>
+              </Row>
+              <Row>
+                <label className="mt-32">Financial Year</label>
+                <Select
+                  onChange={financial_year =>
+                    setCompany(prev => ({ ...prev, financial_year }))
+                  }
+                  value={company?.financial_year || undefined}
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toString()
+                      .toLowerCase()
+                      .indexOf(input.toString().toLowerCase()) >= 0
+                  }
+                  showSearch={true}
+                  size="large"
+                  placeholder="Select financial year from here..."
+                >
+                  {generateArrayOfYears(50)?.map((year: number) => (
+                    <Option key={year.toString()} value={year.toString()}>
+                      {year}
+                    </Option>
+                  ))}
+                </Select>
+              </Row>
+              <Row justify="space-between">
+                <label className="mt-32">Stock tracking ID</label>
+                <div
+                  className={`${
+                    !company?.stock_tracking_ids?.length && "mb-32"
+                  } addCompany__stockIds`}
+                >
+                  <Input
+                    size="large"
+                    onChange={e => setStockId(e.target.value)}
+                    value={stockId}
+                    type="text"
+                    placeholder="Enter stock ID here..."
+                  />
+                  <Button
+                    type="primary"
+                    disabled={!stockId}
+                    size="large"
+                    onClick={() => {
+                      setCompany(prev => ({
+                        ...prev,
+                        stock_tracking_ids: [
+                          ...company?.stock_tracking_ids,
+                          stockId,
+                        ],
+                      }));
+                      setStockId("");
+                      message.success("Stock tracking id added!");
+                    }}
+                  >
+                    +
+                  </Button>
+                </div>
+                {company?.stock_tracking_ids?.length ? (
+                  <div className="addCompany__stockIds__list mb-32">
+                    {company?.stock_tracking_ids?.map(id => (
+                      <div className="addCompany__stockIds__list__id">
+                        <span className="addCompany__stockIds__list__id__txt">
+                          {id}
+                        </span>
+                        <CloseOutlined
+                          onClick={() =>
+                            setCompany(prev => ({
+                              ...prev,
+                              stock_tracking_ids:
+                                company?.stock_tracking_ids?.filter(
+                                  x => x !== id
+                                ),
+                            }))
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </Row>
+            </Col>
+            <Col className="addCompany__col2" span={9}>
+              <div>
+                <Upload
+                  onChange={handleImage}
+                  beforeUpload={beforeUpload}
+                  showUploadList={false}
+                >
+                  <img src={ImgUpload} alt="avatar" />
+                </Upload>
+                <p className="img_description_text">UPLOAD SMALL LOGO</p>
+                <p className="img_description_size">260 x 260</p>
+              </div>
+            </Col>
+          </Row>
+          <div className="mt-24 mb-32 sub-heading">Contract Details</div>
+          <label>Contract Duration</label>
+          <Row className="addCompany__row" justify="space-between">
+            <Col span={12}>
+              <Row justify="space-between">
+                <Col span={11}>
+                  <DatePicker
+                    className="width-100"
+                    value={
+                      !company?.contract_start_date
+                        ? undefined
+                        : moment(company?.contract_start_date)
+                    }
+                    onChange={date => {
+                      setCompany(prev => ({
+                        ...prev,
+                        contract_start_date: moment(date)
+                          .format("YYYY-MM-DD HH:mm:ss")
+                          ?.toString() as string,
+                      }));
+                      setIsDisabled(false);
+                    }}
+                    placeholder="Starting Date (DD/MM/YY)"
+                  />
+                </Col>
+                <Col className="mb-32" span={11}>
+                  <DatePicker
+                    disabled={isDisabled}
+                    disabledDate={disabledDate}
+                    className="width-100"
+                    value={
+                      !company?.contract_end_date
+                        ? undefined
+                        : moment(company?.contract_end_date)
+                    }
+                    onChange={date =>
+                      setCompany(prev => ({
+                        ...prev,
+                        contract_end_date: moment(date)
+                          .format("YYYY-MM-DD HH:mm:ss")
+                          ?.toString() as string,
+                      }))
+                    }
+                    placeholder="Ending Date (DD/MM/YY)"
+                  />
+                </Col>
+              </Row>
+            </Col>
+            <Col span={12}></Col>
+          </Row>
+          <div className="mt-24 mb-32 sub-heading">Contact Person Details</div>
+          <Row className="addCompany__row" justify="space-between">
+            <Col span={11}>
+              <Row>
+                <label>Contact Person</label>
+                <Input
+                  size="large"
+                  name="person_name"
+                  onChange={onChange}
+                  value={company?.person_name}
+                  placeholder="Enter name of contact person..."
+                />
+              </Row>
+              <label className="mt-32"> Contact Number</label>
+              <Row className="addCompany__number">
+                <ConfigProvider locale={en}>
+                  <CountryPhoneInput
+                    placeholder="Enter contact number here..."
+                    onChange={e => {
+                      setCompany(prev => ({
+                        ...prev,
+                        person_phone_code: e.code as number,
+                        person_phone_number: e.phone as string,
+                      }));
+                    }}
+                    value={{
+                      phone: company?.person_phone_number,
+                      code: company?.person_phone_code || 92,
+                    }}
+                  />
+                </ConfigProvider>
+              </Row>
+            </Col>
+            <Col span={11}>
+              <Row>
+                <label>Contact Person's Country</label>
+                <Select
+                  onChange={person_country_id => {
+                    setCompany(prev => ({
+                      ...prev,
+                      person_country_id,
+                    }));
+                  }}
+                  value={company?.person_country_id || undefined}
+                  showArrow={true}
+                  showSearch={true}
+                  size="large"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                  placeholder="Select country from here..."
+                >
+                  {countries?.map(({ id, name }) => (
+                    <Option key={"" + id} value={"" + id}>
+                      {name}
+                    </Option>
+                  ))}
+                </Select>
+              </Row>
+              <Row className="mt-32 mb-32">
+                <label>Email Address</label>
+                <Input
+                  name="person_email"
+                  value={company?.person_email}
+                  onChange={onChange}
+                  size="large"
+                  placeholder="Enter email address here..."
+                />
+              </Row>
+            </Col>
+          </Row>
+          <Row className="addCompany__btns">
+            <Col span={24}>
+              <Button
+                type="primary"
+                disabled={validateValues(company)}
+                size="large"
+                onClick={onSubmit}
+              >
+                {isCreating || isUpdating ? (
+                  <LoadingOutlined className="spinner" />
+                ) : (
+                  `${isEdit ? "Update" : "Create"} Company`
+                )}
+              </Button>
+
+              <Button
+                size="large"
+                onClick={() =>
+                  history.push(
+                    isEdit
+                      ? `/companies/${company_id}`
+                      : paths.admin.users.companies.listing
+                  )
+                }
+              >
+                Cancel
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    </div>
   );
 };
 

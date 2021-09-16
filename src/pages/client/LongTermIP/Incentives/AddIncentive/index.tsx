@@ -102,7 +102,6 @@ const AddLongTermIncentive: FC<IAddLongTermIncentive> = ({
         country_id: country?.id,
       };
       delete longTermIncentive?.country;
-      console.log("longTer", longTermIncentive);
       setLongTermIncentive(longTermIncentive);
     }
     return () => {
@@ -113,7 +112,6 @@ const AddLongTermIncentive: FC<IAddLongTermIncentive> = ({
   const handleSubmit = async () => {
     try {
       const body = { ...longTermIncentive, plan: longTermIncentive?.plan?.id };
-      console.log("body", body);
       if (selectedLongTermIncentive) {
         await editLongTermIncentive(body);
       } else {

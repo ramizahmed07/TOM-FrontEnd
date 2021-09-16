@@ -67,9 +67,17 @@ export const admin_routeConfig: IRoute[] = [
   {
     path: paths.admin.users.companies.create,
     component: CreateCompany,
-    key: "Company New Company",
+    key: "Create New Company",
     exact: true,
     breadcrumb: "Users / Companies list / Create new company",
+    isPrivate: true,
+  },
+  {
+    path: paths.admin.users.companies.edit,
+    component: CreateCompany,
+    key: "Edit Company",
+    exact: true,
+    breadcrumb: "Users / Companies list / Edit company",
     isPrivate: true,
   },
   {

@@ -20,7 +20,6 @@ const GradeSetupVersions: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [active, setActive] = useState(false);
 
   const handleActive = async (id: number) => {
-    console.log("ID: ", id);
     try {
       await updateJobGradeVersion({ id, company_id: 1 }).unwrap();
       setActive(active);

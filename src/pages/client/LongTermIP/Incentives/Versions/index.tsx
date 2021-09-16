@@ -18,7 +18,6 @@ const LongTermIncentiveVersions: FC<IModal> = ({ isVisible, setIsVisible }) => {
   const [updateLongTermIncentiveVersion] =
     useUpdateLongTermIncentiveVersionMutation();
   const { data } = versions || {};
-  console.log("versions", versions);
   const [active, setActive] = useState(false);
 
   const handleActive = async (id: number) => {

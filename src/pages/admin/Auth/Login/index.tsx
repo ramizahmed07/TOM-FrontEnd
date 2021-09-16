@@ -33,7 +33,6 @@ const Login = () => {
         email,
         password,
       }).unwrap();
-      console.log("res", res);
       if (res?.data?.is_one_time_password) {
         history.push(paths.admin.auth.reset_password);
       } else {
