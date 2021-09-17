@@ -97,16 +97,16 @@ const AddSubIndustry: FC<AddSubIndustryProps> = ({
           {isLoading || isUpdating ? (
             <LoadingOutlined className="spinner" />
           ) : selectedSubIndustry ? (
-            "Update Sub-Industry"
+            "Update"
           ) : (
-            "Add Sub-Industry"
+            "Add"
           )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
         </Button>,
       ]}
-      title="Create a Sub-Industry"
+      title={`${selectedSubIndustry ? "Update the" : "Add a"} Sub-Industry`}
       isVisible={isVisible}
     >
       <>

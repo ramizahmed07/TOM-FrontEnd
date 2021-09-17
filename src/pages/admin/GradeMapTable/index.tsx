@@ -103,7 +103,7 @@ const GradeMapTable = () => {
     <>
       <Row>
         <Col span={24}>
-          <div className="main-heading">Companies grade map table</div>
+          <div className="main-heading">Companies Grade Map Table</div>
         </Col>
       </Row>
       <Row className="mt-16 mb-20">

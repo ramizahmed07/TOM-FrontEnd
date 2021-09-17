@@ -79,7 +79,7 @@ const SubAdminsEdit = () => {
 
   return (
     <>
-      <h1 className="form_heading">Edit sub admin</h1>
+      <h1 className="form_heading">Update the Sub-Admin</h1>
       <ConfigProvider locale={en}>
         <Form
           form={form}
@@ -210,7 +210,7 @@ const SubAdminsEdit = () => {
                 size="large"
                 loading={isLoading}
               >
-                Update Sub Admin
+                Update Sub-Admin
               </Button>
             </Form.Item>
 

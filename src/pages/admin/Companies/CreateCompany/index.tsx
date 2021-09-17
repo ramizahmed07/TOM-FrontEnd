@@ -215,8 +215,8 @@ const CreateCompany = () => {
       <Row>
         <Col span={24}>
           <div className="main-heading mb-16">{`${
-            isEdit ? "Update" : "Create"
-          } New Company`}</div>
+            isEdit ? "Update the" : "Create New"
+          } Company`}</div>
         </Col>
       </Row>
       <div className="addCompany">

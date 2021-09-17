@@ -77,16 +77,16 @@ const AddSector: FC<AddSectorProps> = ({
           {isLoading || isUpdating ? (
             <LoadingOutlined className="spinner" />
           ) : selectedSector ? (
-            "Update Sector"
+            "Update"
           ) : (
-            "Add Sector"
+            "Add"
           )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
         </Button>,
       ]}
-      title="Create a Sector"
+      title={selectedSector ? "Update the Sector" : "Add a Sector"}
       isVisible={isVisible}
     >
       <>

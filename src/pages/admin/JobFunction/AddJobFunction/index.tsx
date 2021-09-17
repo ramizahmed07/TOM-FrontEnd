@@ -40,13 +40,13 @@ const AddJobFunction: FC<IModal> = ({ isVisible, setIsVisible }) => {
           type="primary"
           loading={isLoading}
         >
-          Done
+          Add
         </Button>,
         <Button onClick={closeModal} key="2">
           Cancel
         </Button>,
       ]}
-      title="Add new job function"
+      title="Add a Job Function"
       isVisible={isVisible}
     >
       <>

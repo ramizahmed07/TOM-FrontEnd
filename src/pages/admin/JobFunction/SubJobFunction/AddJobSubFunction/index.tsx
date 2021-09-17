@@ -49,13 +49,13 @@ const AddJobSubFunction: FC<IAddJobSubFunction> = ({
           type="primary"
           loading={isLoading}
         >
-          Done
+          Add
         </Button>,
         <Button onClick={closeModal} key="2">
           Cancel
         </Button>,
       ]}
-      title="Add new job sub function"
+      title="Add a Job-Sub Function"
       isVisible={isVisible}
     >
       <>

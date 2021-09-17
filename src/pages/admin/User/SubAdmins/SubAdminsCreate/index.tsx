@@ -1,11 +1,5 @@
 import React, { useRef } from "react";
-import {
-  Button,
-  Input,
-  Form,
-  Select,
-  message,
-} from "antd";
+import { Button, Input, Form, Select, message } from "antd";
 import { Option } from "antd/lib/mentions";
 import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
 import en from "world_countries_lists/data/en/world.json";
@@ -27,16 +21,16 @@ const SubAdminsCreate = () => {
       delete payload.contact_number;
       await addSubAdmin(payload).unwrap();
       subAdminForm.current.resetFields();
-      message.success('Sub Admin has been successfully created.');
+      message.success("Sub Admin has been successfully created.");
       history.goBack();
     } catch (error) {
       ErrorServices(error);
     }
-  }
+  };
 
   return (
     <>
-      <h1 className="form_heading">Create sub admin</h1>
+      <h1 className="form_heading">Create Sub-Admin</h1>
       <ConfigProvider locale={en}>
         <Form
           name="sub_admin"
@@ -45,7 +39,7 @@ const SubAdminsCreate = () => {
           wrapperCol={{ span: 24 }}
           initialValues={{
             remember: true,
-            contact_number: { short: 'us' }
+            contact_number: { short: "us" },
           }}
           onFinish={onSubmit}
           layout="vertical"
@@ -56,12 +50,9 @@ const SubAdminsCreate = () => {
             <div className="form__section">
               <div className="form__section_container">
                 <div className="contact__person__sub_container">
-
                   <Form.Item
                     className="form__item contact__person_item"
-                    label={
-                      <label className="input__label">First name</label>
-                    }
+                    label={<label className="input__label">First name</label>}
                     name="first_name"
                     rules={[
                       {
@@ -79,9 +70,7 @@ const SubAdminsCreate = () => {
 
                   <Form.Item
                     className="form__item contact__person_item"
-                    label={
-                      <label className="input__label">Last name</label>
-                    }
+                    label={<label className="input__label">Last name</label>}
                     name="last_name"
                     rules={[
                       {
@@ -112,7 +101,7 @@ const SubAdminsCreate = () => {
                       },
                     ]}
                   >
-                    <CountryPhoneInput width='25vw' height="39.31" />
+                    <CountryPhoneInput width="25vw" height="39.31" />
                   </Form.Item>
 
                   <Form.Item
@@ -150,8 +139,11 @@ const SubAdminsCreate = () => {
                   >
                     <Select
                       className="form__select"
-                      placeholder="Select role from here...">
-                      <Select.Option value="TOM_SUPER_USER">Super User</Select.Option>
+                      placeholder="Select role from here..."
+                    >
+                      <Select.Option value="TOM_SUPER_USER">
+                        Super User
+                      </Select.Option>
                       <Select.Option value="TOM_ADMIN">Admin</Select.Option>
                       <Select.Option value="TOM_SALES">Sales</Select.Option>
                     </Select>
@@ -172,7 +164,7 @@ const SubAdminsCreate = () => {
                 size="large"
                 loading={isLoading}
               >
-                Create Sub Admin
+                Create Sub-Admin
               </Button>
             </Form.Item>
 
@@ -190,7 +182,6 @@ const SubAdminsCreate = () => {
           </div>
         </Form>
       </ConfigProvider>
-
     </>
   );
 };

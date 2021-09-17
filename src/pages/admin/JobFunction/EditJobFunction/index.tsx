@@ -58,7 +58,7 @@ const EditJobFunction: FC<IEditJobFunction> = ({
           Cancel
         </Button>,
       ]}
-      title="Edit job function"
+      title="Update the Job Function"
       isVisible={isVisible}
     >
       <>

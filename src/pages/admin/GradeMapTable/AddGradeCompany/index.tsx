@@ -202,7 +202,7 @@ const AddGradeCompany = () => {
       <Row>
         <Col span={24}>
           <div className="main-heading mb-16">
-            {isEdit ? "Update company" : "Add new company"}
+            {isEdit ? "Update the Company" : "Add a Company"}
           </div>
         </Col>
       </Row>

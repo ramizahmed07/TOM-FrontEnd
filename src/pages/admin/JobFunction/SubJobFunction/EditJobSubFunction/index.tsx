@@ -1,10 +1,10 @@
+import { useParams } from "react-router-dom";
 import React, { FC, useState, useEffect } from "react";
 import { Button, Col, Input, message, Row } from "antd";
 
 import { IModal } from "@types";
 import Modal from "@components/Modal";
 import { ErrorServices, useEditJSFMutation } from "@services";
-import { useParams } from "react-router-dom";
 
 export interface IEditJobSubFunction extends IModal {
   jsfItem: { [key: string]: any };
@@ -68,7 +68,7 @@ const EditJobSubFunction: FC<IEditJobSubFunction> = ({
           Cancel
         </Button>,
       ]}
-      title="Edit job function"
+      title="Update the Sub-Job Function"
       isVisible={isVisible}
     >
       <>

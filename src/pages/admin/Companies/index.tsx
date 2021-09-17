@@ -2,8 +2,6 @@ import { useState } from "react";
 import {
   Col,
   Row,
-  Dropdown,
-  Menu,
   TableColumnsType,
   Switch,
   Tag,
@@ -15,7 +13,6 @@ import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
 import "./companies.less";
-import { ReactComponent as MenuIcon } from "@assets/images/vertical-dots.svg";
 import { paths } from "@router";
 import {
   ErrorServices,

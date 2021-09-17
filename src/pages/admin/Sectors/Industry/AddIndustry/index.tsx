@@ -79,15 +79,17 @@ const AddIndustry: FC<AddIndustryProps> = ({
         <Button onClick={handleSubmit} key="1" type="primary">
           {isLoading || isUpdating ? (
             <LoadingOutlined className="spinner" />
+          ) : selectedIndustry ? (
+            "Update"
           ) : (
-            "Done"
+            "Add"
           )}
         </Button>,
         <Button onClick={() => setIsVisible(false)} key="2">
           Cancel
         </Button>,
       ]}
-      title="Create an Industry"
+      title={selectedIndustry ? "Update the Industry" : "Add an Industry"}
       isVisible={isVisible}
     >
       <>
