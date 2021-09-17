@@ -8,11 +8,19 @@ import AuthLandingImg from "@components/AuthLandingImg";
 import { paths } from "@router";
 import { ErrorServices, useChangePasswordMutation } from "@services";
 import { useTypedSelector } from "@/hooks";
+import { useEffect } from "react";
 
 const ResetPassword = () => {
   const history = useHistory();
   const [changePassword, { isLoading }] = useChangePasswordMutation();
   const auth = useTypedSelector(state => state.auth);
+
+  useEffect(() => {
+    if (!window.location.href.includes("?token=")) {
+      history.goBack();
+    }
+  }, [history]);
+
   const changeUserPassword = async (values: {
     password: string;
     retypePassword: string;

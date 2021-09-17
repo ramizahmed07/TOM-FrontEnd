@@ -61,7 +61,7 @@ export const gradeSetupApi = createApi({
     }),
     uploadJobGrades: builder.mutation({
       query: ({ company_id, active, body }) => ({
-        url: `/${company_id}/job-grade/upload/?active=${active}/`,
+        url: `/${company_id}/job-grade/upload/?active=${active}`,
         method: "POST",
         body,
         formData: true,
