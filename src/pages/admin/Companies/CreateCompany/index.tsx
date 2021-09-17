@@ -119,6 +119,7 @@ const CreateCompany = () => {
   const { company_id } = useParams<{ company_id: string }>();
   const { path } = useRouteMatch<{ path: string }>();
   const [stockId, setStockId] = useState("");
+  const [status, setStatus] = useState("ACTIVE");
   const [isDisabled, setIsDisabled] = useState(true);
   const { countries } = useTypedSelector(state => state.countries);
   const [createCompany, { isLoading: isCreating }] = useCreateCompanyMutation();
@@ -161,6 +162,7 @@ const CreateCompany = () => {
       delete company?.currency;
       delete company?.user;
       delete company?.person_country;
+      setStatus(company?.status);
       setCompany(company);
     }
   }, [selectedCompany, path, isEdit]);
@@ -187,15 +189,15 @@ const CreateCompany = () => {
   const onSubmit = async () => {
     try {
       if (isEdit) {
-        await editCompany(company);
+        await editCompany({ ...company, status });
       } else {
         await addCompany(company);
       }
       history.push(paths.admin.users.companies.listing);
       showSuccessPopup({
-        title: false ? "Industry Updated" : "New Company Created",
+        title: selectedCompany ? "Industry Updated" : "New Company Created",
         desc: `You have successfully ${
-          false ? "updated the" : "created new"
+          selectedCompany ? "updated the" : "created new"
         } company.`,
       });
     } catch (error) {
@@ -207,7 +209,7 @@ const CreateCompany = () => {
   const addCompany = async (body: IFormValues) =>
     await createCompany({ body }).unwrap();
 
-  const editCompany = async (body: IFormValues) =>
+  const editCompany = async (body: any) =>
     await updateCompany({ body, company_id }).unwrap();
 
   return (
@@ -248,16 +250,37 @@ const CreateCompany = () => {
                   placeholder="Enter company address here..."
                 />
               </Row>
-              <label className="mt-32">Postal Code</label>
-              <Input
-                value={company?.postal_code}
-                onChange={onChange}
-                name="postal_code"
-                className="mb-32"
+              <Row>
+                <label className="mt-32">Postal Code</label>
+                <Input
+                  value={company?.postal_code}
+                  onChange={onChange}
+                  name="postal_code"
+                  size="large"
+                  type="text"
+                  placeholder="Enter postal code here..."
+                />
+              </Row>
+              <label className="mt-32">Status</label>
+              <Select
+                disabled={!selectedCompany}
+                onChange={status => setStatus(status)}
+                value={status}
+                showArrow={true}
                 size="large"
-                type="text"
-                placeholder="Enter postal code here..."
-              />
+                className="mb-32"
+                placeholder="Select status from here..."
+              >
+                {[
+                  { value: "IN_PROGRESS", label: "In Progress" },
+                  { value: "ACTIVE", label: "Active" },
+                  { value: "EXPIRED", label: "Expired" },
+                ]?.map(({ value, label }) => (
+                  <Option key={value} value={value}>
+                    {label}
+                  </Option>
+                ))}
+              </Select>
             </Col>
             <Col className="addCompany__col2" span={9}>
               <div>

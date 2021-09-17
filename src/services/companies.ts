@@ -38,9 +38,10 @@ export const companiesApi = createApi({
     updateCompany: builder.mutation({
       query: ({ body, company_id }) => ({
         url: `/company/${company_id}/`,
-        method: "PATCH",
+        method: "PUT",
         body,
       }),
+      invalidatesTags: ["Companies"],
     }),
     updateCompanyStatus: builder.mutation({
       query: ({ status, company_id }) => ({
